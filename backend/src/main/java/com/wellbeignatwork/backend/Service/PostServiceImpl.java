@@ -29,9 +29,22 @@ public class PostServiceImpl implements PostService {
         this.postRepository=postRepository;
         this.userRepository=userRepository;
     }
+    public List<String> getAllSubjects(){
+        List<String> resultat=new ArrayList<>();
+        for(Post p:postRepository.findAll()){
+            resultat.add(p.getSubject());
+        }
+        return resultat;
+    }
     @Override
     public Post createpost(Post post) {
-        return postRepository.save(post);
+        if(getAllSubjects().contains(post.getSubject())){
+            return postRepository.findPostBySubject(post.getSubject());
+        }
+        else{
+            return postRepository.save(post);
+        }
+
     }
 
     @Override
@@ -64,7 +77,7 @@ public class PostServiceImpl implements PostService {
         Post p=postRepository.findById(id_post).orElse(null);
         File f=fileRepository.findById(id_file).orElse(null);
         List<File> list=new ArrayList<>();
-        f.setPost(p);
+        f.setPost_attachment(p);
         fileRepository.save(f);
         if(p.getFileAttachments()!=null){
             p.getFileAttachments().add(f);

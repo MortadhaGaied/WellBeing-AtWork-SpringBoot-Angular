@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface PostRepository extends CrudRepository<Post,Integer> {
     @Query("from Post p order by p.createdAt desc")
     Page<Post> findAll( Pageable pageable);
+    Post findPostBySubject(String subject);
 }

@@ -19,7 +19,7 @@ public class File {
     private String url;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
-    private Post post;
+    private Post post_attachment;
     public File(String name,String url){
         this.name=name;
         this.url=url;

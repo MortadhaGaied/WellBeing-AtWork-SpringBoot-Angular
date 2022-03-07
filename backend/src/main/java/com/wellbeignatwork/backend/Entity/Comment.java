@@ -19,5 +19,5 @@ public class Comment {
     private LocalDateTime modifyDate;
     private int idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Post post;
+    private Post post_comment;
 }

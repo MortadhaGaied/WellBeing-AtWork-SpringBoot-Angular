@@ -20,7 +20,7 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
+    private String subject;
     private String content;
     private LocalDateTime createdAt=LocalDateTime.now();
     private LocalDateTime modifiedAt;
@@ -28,9 +28,11 @@ public class Post implements Serializable {
     @CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "tags")
     private Set<Tags> tags = new HashSet<>();
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post_attachment",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<File> fileAttachments;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User user;
+    @OneToMany(mappedBy = "post_comment",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Comment> comments;
 }
