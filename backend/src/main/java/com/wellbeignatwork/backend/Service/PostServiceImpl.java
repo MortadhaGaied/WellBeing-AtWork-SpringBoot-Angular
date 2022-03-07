@@ -2,6 +2,7 @@ package com.wellbeignatwork.backend.Service;
 
 import com.wellbeignatwork.backend.Entity.File;
 import com.wellbeignatwork.backend.Entity.Post;
+import com.wellbeignatwork.backend.Entity.Tags;
 import com.wellbeignatwork.backend.Entity.User;
 import com.wellbeignatwork.backend.Repository.FileRepository;
 import com.wellbeignatwork.backend.Repository.PostRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,27 @@ public class PostServiceImpl implements PostService {
             resultat.add(p.getSubject());
         }
         return resultat;
+    }
+    public List<Post> getPostsforUser(int iduser){
+        int n;
+        List<Post> list=new ArrayList<>();
+
+        User u=userRepository.findById(iduser).orElse(null);
+        for(Post p:postRepository.findAll()){
+            List<Tags> tags=new ArrayList<>(p.getTags());
+            n=tags.size()-1;
+            while(n<0){
+                if(tags.containsAll(u.getTags())){
+                    list.add(p);
+                    tags.remove(n);
+                    n--;
+                }
+
+            }
+
+        }
+        return list;
+
     }
     @Override
     public Post createpost(Post post) {
