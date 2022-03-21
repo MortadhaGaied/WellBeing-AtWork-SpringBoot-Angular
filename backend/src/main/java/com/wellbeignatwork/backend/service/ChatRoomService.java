@@ -49,39 +49,36 @@ public class ChatRoomService {
     public List<ChatRoom> getAllRooms() {
         return chatRoomRepository.findAll();
     }
-
+    @Transactional
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(()->new ResourceNotFoundException("user with id :"+userId+"does not exist"));
-        chatRoomRepository.findById(chatRoomId)
-                .map((chatRoom -> {
-                    chatRoom.getUsers().add(user);
-                    return chatRoomRepository.save(chatRoom);
-                }))
-                .orElseThrow(()->new ResourceNotFoundException("chatRoom with id :"+chatRoomId+"does not exist"));
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user with id :" + userId + "does not exist"));
+        chatRoomRepository
+                .findById(chatRoomId)
+                .map((chatRoom -> chatRoom.getUsers().add(user)))
+                .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
-
+    @Transactional
     public void removeUserFromChatRoom(Long chatRoomId, Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(()->new ResourceNotFoundException("user with id :"+userId+"does not exist"));
-        chatRoomRepository.findById(chatRoomId)
-                .map((chatRoom -> {
-                    chatRoom.getUsers().remove(user);
-                    return chatRoomRepository.save(chatRoom);
-                }))
-                .orElseThrow(()->new ResourceNotFoundException("chatRoom with id :"+chatRoomId+"does not exist"));
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user with id :" + userId + "does not exist"));
+        chatRoomRepository
+                .findById(chatRoomId)
+                .map((chatRoom -> chatRoom.getUsers().remove(user)))
+                .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
 
 
-
-@Transactional
-    public void roomBasedChat(Message message, Long roomId , Long senderId) throws MessagingException {
+    @Transactional
+    public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException {
         User sender = userRepository
                 .findById(senderId)
-                .orElseThrow(()->new ResourceNotFoundException("user with id :"+senderId+"does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("user with id :" + senderId + "does not exist"));
         ChatRoom chatRoom = chatRoomRepository
                 .findById(roomId)
-                .orElseThrow(()->new ResourceNotFoundException("chatRoom with id :"+roomId+"does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + roomId + "does not exist"));
         message.setChatroom(chatRoom);
         message.setSender(sender);
 
@@ -89,7 +86,7 @@ public class ChatRoomService {
         messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
     }
 
-    public void publicChat(Message message){
+    public void publicChat(Message message) {
         messagingTemplate.convertAndSend("/topic/message",message);
     }
 

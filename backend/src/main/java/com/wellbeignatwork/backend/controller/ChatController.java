@@ -5,6 +5,7 @@ import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.ChatRoomService;
+import com.wellbeignatwork.backend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -19,12 +20,17 @@ import java.util.List;
 public class ChatController {
     private final ChatRoomService chatRoomService;
 
-    private final SimpMessagingTemplate messagingTemplate;
+
+    private final MessageService messageService;
 
     @Autowired
-    private ChatController(ChatRoomService chatRoomService, SimpMessagingTemplate messagingTemplate) {
+    private ChatController(
+            ChatRoomService chatRoomService
+            , MessageService messageService
+    ) {
         this.chatRoomService = chatRoomService;
-        this.messagingTemplate = messagingTemplate;
+
+        this.messageService = messageService;
     }
 
     @PostMapping("/add-room")
@@ -67,14 +73,15 @@ public class ChatController {
 
     @MessageMapping("/chat/{roomId}/{senderID}")
     public void roomBasedChat(@Payload Message message, @DestinationVariable Long roomId, @DestinationVariable Long senderID) throws MessagingException {
-        System.out.println("***************im here********************");
-    chatRoomService.roomBasedChat(message,roomId,senderID);
+
+        chatRoomService.roomBasedChat(messageService.filterBadWords(message), roomId, senderID);
 
     }
 
     @MessageMapping("/chat/public")
-    public void publicCHat(@Payload Message message){
-        chatRoomService.publicChat(message);
+    public void publicCHat(@Payload Message message) {
+        Message message1 = messageService.filterBadWords(message);
+        chatRoomService.publicChat(message1);
     }
 
 
