@@ -28,4 +28,11 @@ public class PushNotificationController {
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
     }
 
+    @PostMapping("/notification/topic")
+    public ResponseEntity<?> sendTopicNotification(@RequestBody PushNotificationRequest request) {
+        pushNotificationService.sendToTopic(request);
+
+        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    }
+
 }
