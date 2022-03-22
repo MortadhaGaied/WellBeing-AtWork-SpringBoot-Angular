@@ -3,6 +3,7 @@ package com.wellbeignatwork.backend.service;
 
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.repository.MessageRepository;
+import com.wellbeignatwork.backend.utils.BadWordFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,8 @@ public class MessageService {
     }
 
     public Message filterBadWords(Message message) {
-        //filtering logic goes here ..
-        if (message.getContent().contains("amine")) {
-
-
-            message.setContent(message.getContent().replace("amine", "****"));
-
-        }
+        String filteredContent =  BadWordFilter.getCensoredText(message.getContent());
+        message.setContent(filteredContent);
         return message;
     }
 

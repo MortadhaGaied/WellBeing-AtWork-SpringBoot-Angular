@@ -80,8 +80,7 @@ public class ChatController {
 
     @MessageMapping("/chat/public")
     public void publicCHat(@Payload Message message) {
-        Message message1 = messageService.filterBadWords(message);
-        chatRoomService.publicChat(message1);
+        chatRoomService.publicChat(messageService.filterBadWords(message));
     }
 
 
