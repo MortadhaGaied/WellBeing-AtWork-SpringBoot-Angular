@@ -15,7 +15,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChatRoomService {
@@ -49,6 +49,7 @@ public class ChatRoomService {
     public List<ChatRoom> getAllRooms() {
         return chatRoomRepository.findAll();
     }
+
     @Transactional
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
         User user = userRepository
@@ -59,6 +60,7 @@ public class ChatRoomService {
                 .map((chatRoom -> chatRoom.getUsers().add(user)))
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
+
     @Transactional
     public void removeUserFromChatRoom(Long chatRoomId, Long userId) {
         User user = userRepository
@@ -70,8 +72,22 @@ public class ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
 
+    //chatrooms that have the most users and also that have the most messages
+    public List<ChatRoom> getMostActiveChatRooms() {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+        chatRooms
+                .sort((chatRoom1, chatRoom2) -> {
+                    if (chatRoom1.getUsers().size() > chatRoom1.getUsers().size() && chatRoom1.getMessages().size() > chatRoom2.getMessages().size())
+                        return 1;
+                    else return 0;
+                });
 
-    @Transactional
+        return chatRooms;
+
+    }
+
+
+
     public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException {
         User sender = userRepository
                 .findById(senderId)
@@ -82,12 +98,11 @@ public class ChatRoomService {
         message.setChatroom(chatRoom);
         message.setSender(sender);
 
-
         messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
     }
 
     public void publicChat(Message message) {
-        messagingTemplate.convertAndSend("/topic/message",message);
+        messagingTemplate.convertAndSend("/topic/message", message);
     }
 
 }
