@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ public class User {
     private Long id;
 
     private String userName;
+
+    private String fireBaseToken;
     @JsonIgnore
     @ManyToMany(mappedBy = "users",cascade = CascadeType.ALL)
     private Set<ChatRoom> rooms=new HashSet<>();

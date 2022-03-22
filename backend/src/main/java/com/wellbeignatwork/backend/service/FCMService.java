@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+@Slf4j
 @Service
 public class FCMService {
-    private final Logger logger = LoggerFactory.getLogger(FCMService.class);
+
 
 
     public void sendMessageToToken(PushNotificationRequest request)
@@ -31,14 +32,14 @@ public class FCMService {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonOutput = gson.toJson(message);
         String response = sendAndGetResponse(message);
-        logger.info("Sent message to token. Device token: " + request.getToken() + ", " + response+ " msg "+jsonOutput);
+        log.info("Sent message to token. Device token: " + request.getToken() + ", " + response+ " msg "+jsonOutput);
     }
 
     public void sendMessageToTopic(PushNotificationRequest request)
             throws InterruptedException, ExecutionException {
         Message message = getPreconfiguredMessageWithoutData(request);
         String response = sendAndGetResponse(message);
-        logger.info("Sent message to Topic: " + request.getTopic() + ", " + response);
+        log.info("Sent message to Topic: " + request.getTopic() + ", " + response);
     }
 
     private String sendAndGetResponse(Message message) throws InterruptedException, ExecutionException {

@@ -1,11 +1,13 @@
 package com.wellbeignatwork.backend.service;
 
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
@@ -24,13 +26,19 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
+    private final PushNotificationService notificationService;
 
     @Autowired
-    public ChatRoomService(ChatRoomRepository chatRoomRepository, UserRepository userRepository, SimpMessagingTemplate messagingTemplate, MessageRepository messageRepository) {
+    public ChatRoomService(ChatRoomRepository chatRoomRepository
+            , UserRepository userRepository
+            , SimpMessagingTemplate messagingTemplate
+            , MessageRepository messageRepository
+            , PushNotificationService notificationService) {
         this.chatRoomRepository = chatRoomRepository;
         this.userRepository = userRepository;
         this.messagingTemplate = messagingTemplate;
         this.messageRepository = messageRepository;
+        this.notificationService = notificationService;
     }
 
 
@@ -87,8 +95,10 @@ public class ChatRoomService {
     }
 
 
+    public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException, FirebaseMessagingException {
 
-    public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException {
+
+        //extract the sender and the chatroom of the messsage
         User sender = userRepository
                 .findById(senderId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id :" + senderId + "does not exist"));
@@ -98,7 +108,19 @@ public class ChatRoomService {
         message.setChatroom(chatRoom);
         message.setSender(sender);
 
+
+        //send the message to the message broker to be handled and sent the client
+
         messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
+
+        //subscribe all users in the chatRoom to the specific notification topic
+        List<String> token = new ArrayList<>();
+        chatRoom.getUsers().forEach(user -> token.add(user.getFireBaseToken()));
+        notificationService.subScribeUsersToTopic(token, String.format("room_%s", roomId));
+
+        //notify all room users that a new message have been sent
+        notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getUserName(), String.format("room_%s", roomId)));
+
     }
 
     public void publicChat(Message message) {

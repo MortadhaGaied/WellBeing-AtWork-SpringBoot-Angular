@@ -16,7 +16,9 @@ public class PushNotificationRequest {
     private String token;
 
 
-
-
-
+    public PushNotificationRequest(String title,String message,String topic) {
+        this.title=title;
+        this.message=message;
+        this.topic=topic;
+    }
 }

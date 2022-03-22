@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.controller;
 
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
@@ -79,7 +80,7 @@ public class ChatController {
 
 
     @MessageMapping("/chat/{roomId}/{senderID}")
-    public void roomBasedChat(@Payload Message message, @DestinationVariable Long roomId, @DestinationVariable Long senderID) throws MessagingException {
+    public void roomBasedChat(@Payload Message message,@Valid @DestinationVariable Long roomId,@Valid @DestinationVariable Long senderID) throws MessagingException, FirebaseMessagingException {
 
         chatRoomService.roomBasedChat(messageService.filterBadWords(message), roomId, senderID);
 
@@ -97,6 +98,12 @@ public class ChatController {
     public ResponseEntity<?> saveDiscussion(@Valid @RequestBody MessageRequest request){
         messageService.saveDiscussion(request.getMessages());
        return new ResponseEntity<>(new MessageResponse(HttpStatus.OK.value(), "Discussion Saved Successfully"), HttpStatus.OK);
+    }
+
+    @GetMapping("/chatrooms/most-active-rooms")
+    @ResponseBody
+    public ResponseEntity<?> mostActiveRooms(){
+        return new ResponseEntity<>(chatRoomService.getMostActiveChatRooms(),HttpStatus.OK);
     }
 
 
