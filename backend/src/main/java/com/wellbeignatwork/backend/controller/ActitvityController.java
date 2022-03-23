@@ -1,0 +1,178 @@
+package com.wellbeignatwork.backend.controller;
+
+
+import com.google.zxing.WriterException;
+import com.lowagie.text.DocumentException;
+import com.wellbeignatwork.backend.entity.Departement;
+import com.wellbeignatwork.backend.entity.Event;
+import com.wellbeignatwork.backend.entity.Subscription;
+import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.service.ActivityServiceImp;
+import com.wellbeignatwork.backend.service.IActivityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+@RestController
+@RequestMapping("/event")
+public class ActitvityController {
+
+    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
+    @Autowired
+    private IActivityService activityService;
+
+    @PostMapping("/AddE")
+    @ResponseBody
+    public void addEvent (@RequestBody Event e){
+        activityService.addEvent(e);
+    }
+
+    @DeleteMapping("/removeE/{event-id}")
+    @ResponseBody
+    public void deleteEvent(@PathVariable("event-id")Event e){
+        activityService.deleteEvent(e);
+    }
+
+    @PutMapping("/modifyE")
+    @ResponseBody
+    public Event updateEvent( @RequestBody Event e){
+       return activityService.updateEvent(e);
+    }
+
+    @GetMapping("/getAllEvents")
+    @ResponseBody
+    public List<Event> getAllEvents(){
+        return activityService.getAllEvents();
+    }
+
+    @GetMapping("/assign-user-to-event/{id_user}/{id_event}/{codeText}/{width}/{height}")
+    @ResponseBody
+    public void assignUserToEvent (@PathVariable("id_user") Long idUser ,
+                                   @PathVariable("id_event") Long idEvent,
+                                   HttpServletResponse response,
+                                   @PathVariable("codeText") String codeText,
+                                   @PathVariable("width") Integer width,
+                                   @PathVariable("height") Integer height)throws DocumentException, IOException, WriterException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=ticket" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        activityService.assignUserToEvent(idUser,idEvent);
+        activityService.export(response,idEvent,idUser,codeText,width,height,QR_CODE_IMAGE_PATH);
+        ResponseEntity.status(HttpStatus.OK).body(ActivityServiceImp.getQRCodeImage(codeText, width, height));
+        }
+    @GetMapping("/nbr/{id-event}")
+    @ResponseBody
+    public int getNbrOfParticipant(@PathVariable("id-event") Long idEvent) {
+        return activityService.getNbrOfParticipant(idEvent);
+
+    }
+    @GetMapping("/distance/{a}/{b}")
+    @ResponseBody
+    public double calculDistance (@PathVariable("a") String a ,
+                                  @PathVariable("b") String b ){
+        return activityService.calculDistance(a,b);
+    }
+
+    @GetMapping("/sortByDistance")
+    @ResponseBody
+    public List<Event> sortedByDistance (){
+        return activityService.sortedByDistance();
+    }
+
+  /*  @GetMapping("/tags")
+    @ResponseBody
+    public List<ITagsCount> tags(){
+        return activityService.tags();
+    }*/
+
+    @GetMapping("/sortByFrais")
+    @ResponseBody
+    public List<Event> sortedByFrais(){
+        return activityService.sortedByFrais();
+    }
+   @GetMapping("/rev/{id-event}")
+   @ResponseBody
+    public double getRevenueByEvent(
+            @PathVariable("id-event") Long idEvent){
+            return activityService.getRevenueByEvent(idEvent);
+    }
+    @GetMapping("/compare/{id-user}")
+    @ResponseBody
+    public Set<Event> showEventsByUser(@PathVariable("id-user") Long idUser){
+        return activityService.showEventsByUser(idUser);
+    }
+    @GetMapping("/reduction/{id-user}/{id-event}/{familymemb}")
+    @ResponseBody
+    public void reductionEvent ( @PathVariable("id-event") Long idEvent,
+                                 @PathVariable("id-user") Long idUser,
+                                 @PathVariable("familymemb")int familyNumber){
+        activityService.reductionEvent(idEvent,idUser,familyNumber);
+
+    }
+    @GetMapping("/popularEvent")
+    @ResponseBody
+    public ResponseEntity<Event> popularEvent(){
+         return new ResponseEntity<>(activityService.popularEvent(), HttpStatus.OK);
+    }
+    @GetMapping("/assign-point/{id-u}/{id-event}")
+    @ResponseBody
+
+    public void assignPointToUser(
+                                  @PathVariable("id-event") Long idEvent,
+                                  @PathVariable("id-u") Long idUser)
+    {
+        activityService.assignPointToUser(idUser,idEvent);
+    }
+
+
+    @PostMapping("/AddU")
+    @ResponseBody
+    public void addUser (@RequestBody User u){
+        activityService.addUser(u);
+    }
+    @PostMapping("/AddS")
+    @ResponseBody
+    public void addSubscription(@RequestBody Subscription s){
+        activityService.addSubscription(s);
+    }
+    @DeleteMapping("/removeS/{sub-id}")
+    @ResponseBody
+    public void deleteSubscription(@PathVariable("sub-id")Subscription s){
+        activityService.deleteSubscription(s);
+    }
+    @GetMapping("/getAllSub")
+    @ResponseBody
+    public List<Subscription> getAllSubscriptions() {
+        return activityService.getAllSubscriptions();
+    }
+    @GetMapping("/assign-user-to-sub/{id_user}/{id_sub}")
+    @ResponseBody
+    public void assignUserToSubscription(@PathVariable("id_user") Long idUser, @PathVariable("id_sub") Long idSubscription){
+        activityService.assignUserToSubscription(idUser,idSubscription);
+    }
+    @PutMapping("/modifyS")
+    @ResponseBody
+    public void updateSubscription(@RequestBody Subscription s){
+        activityService.updateSubscription(s);
+    }
+
+    @GetMapping("/filtreByDepartement/{dep}")
+    @ResponseBody
+    public Set<Event> filtreByDepartement(@PathVariable("dep") Departement departement){
+        return activityService.filtreByDepartement(departement);
+    }
+
+}
