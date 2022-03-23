@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,14 @@ public class ChatRoom {
     private String roomName;
     //this key helps creating unique rooms for one to one chatting
     private String uniqueKey;
+
+
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> users;
     @JsonIgnore
     @OneToMany(mappedBy = "chatroom",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Message>messages;
+
+
 }

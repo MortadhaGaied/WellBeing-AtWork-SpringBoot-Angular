@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 
 public class Message {
     @Id
@@ -19,11 +20,11 @@ public class Message {
     private Long id;
     private String content;
     private Date sendAt = new Date();
-    @JsonIgnore
-    @ManyToOne()
+
+    @ManyToOne
     private User sender;
-    @JsonIgnore
-    @ManyToOne()
+
+    @ManyToOne
     private ChatRoom chatroom;
 
 }

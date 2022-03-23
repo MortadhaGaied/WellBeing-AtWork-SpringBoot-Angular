@@ -15,6 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageRequest {
-    @NotBlank
+
     List<Message>messages;
 }

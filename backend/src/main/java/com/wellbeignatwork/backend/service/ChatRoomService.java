@@ -11,6 +11,7 @@ import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-
+@Slf4j
 @Service
 public class ChatRoomService {
 
@@ -60,12 +61,13 @@ public class ChatRoomService {
 
     public List<ChatRoom> getPublicRooms() {
         List<ChatRoom> allRooms = chatRoomRepository.findAll();
+        List<ChatRoom> publicRooms=new ArrayList<>();
         allRooms.forEach(chatRoom -> {
-            if (chatRoom.getRoomName() == null) {
-                allRooms.remove(chatRoom);
+            if (chatRoom.getRoomName() != null) {
+                publicRooms.add(chatRoom);
             }
         });
-        return allRooms;
+        return publicRooms;
     }
 
     @Transactional
@@ -166,7 +168,7 @@ public class ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + roomId + "does not exist"));
         message.setChatroom(chatRoom);
         message.setSender(sender);
-
+        log.info("mess sent is : {}",message.getChatroom().getRoomName());
 
         //send the message to the message broker to be handled and sent the client
 

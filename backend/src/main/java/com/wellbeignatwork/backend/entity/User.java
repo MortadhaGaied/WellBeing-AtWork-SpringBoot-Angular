@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,11 @@ public class User {
 
     private String fireBaseToken;
     @JsonIgnore
-    @ManyToMany(mappedBy = "users",cascade = CascadeType.ALL)
-    private Set<ChatRoom> rooms=new HashSet<>();
-    @OneToMany(mappedBy = "sender")
-    private Set<Message>messages=new HashSet<>();
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+    private Set<ChatRoom> rooms;
+    @JsonIgnore
+    @OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)
+    private Set<Message>messages;
 
 
 }
