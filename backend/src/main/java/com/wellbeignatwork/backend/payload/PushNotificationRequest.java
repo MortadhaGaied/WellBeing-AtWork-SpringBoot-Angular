@@ -21,4 +21,5 @@ public class PushNotificationRequest {
         this.message=message;
         this.topic=topic;
     }
+
 }

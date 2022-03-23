@@ -3,11 +3,14 @@ package com.wellbeignatwork.backend.service;
 
 import com.google.firebase.messaging.*;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,9 +21,12 @@ public class PushNotificationService {
     private final Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
 
     private final FCMService fcmService;
+    private final UserRepository userRepository;
 
-    public PushNotificationService(FCMService fcmService) {
+    @Autowired
+    public PushNotificationService(FCMService fcmService, UserRepository userRepository) {
         this.fcmService = fcmService;
+        this.userRepository = userRepository;
     }
 
 
@@ -51,6 +57,19 @@ public class PushNotificationService {
         // The topic name can be optionally prefixed with "/topics/".
 
 
+    }
+
+
+    public void sendPushNotificationToALlUsers(String message,String title) throws FirebaseMessagingException {
+        List<String> tokens = new ArrayList<>();
+        userRepository.findAll().forEach(user -> {
+            if (user.getFireBaseToken() != null) {
+                tokens.add(user.getFireBaseToken());
+            }
+        });
+
+        subScribeUsersToTopic(tokens, "all-users");
+        sendToTopic(new PushNotificationRequest(title, message, "all-users"));
     }
 
 }

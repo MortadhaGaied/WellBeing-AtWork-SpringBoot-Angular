@@ -20,6 +20,8 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomName;
+    //this key helps creating unique rooms for one to one chatting
+    private String uniqueKey;
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private Set<User> users;

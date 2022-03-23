@@ -20,10 +20,10 @@ public class Message {
     private String content;
     private Date sendAt = new Date();
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToOne()
     private User sender;
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToOne()
     private ChatRoom chatroom;
 
 }

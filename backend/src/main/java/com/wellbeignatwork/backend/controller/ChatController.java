@@ -66,23 +66,37 @@ public class ChatController {
         return chatRoomService.getAllRooms();
     }
 
+    @GetMapping("/all-public-rooms")
+    public List<ChatRoom> getPublicRooms() {
+        return chatRoomService.getPublicRooms();
+    }
+
+
     @GetMapping("/addUserToRoom/{chatRoomId}/{userId}")
     @ResponseBody
-    public void addUserToChatRoom(@NotBlank @Valid @PathVariable Long chatRoomId,@NotBlank @Valid @PathVariable Long userId) {
+    public void addUserToChatRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
         chatRoomService.addUserToChatRoom(chatRoomId, userId);
     }
 
     @GetMapping("/removeUserFromRoom/{chatRoomId}/{userId}")
     @ResponseBody
-    public void removeUserFromRoom(@NotBlank @Valid @PathVariable Long chatRoomId,@NotBlank @Valid @PathVariable Long userId) {
+    public void removeUserFromRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
         chatRoomService.removeUserFromChatRoom(chatRoomId, userId);
     }
 
 
     @MessageMapping("/chat/{roomId}/{senderID}")
-    public void roomBasedChat(@Payload Message message,@Valid @DestinationVariable Long roomId,@Valid @DestinationVariable Long senderID) throws MessagingException, FirebaseMessagingException {
+    public void roomBasedChat(@Payload Message message, @Valid @DestinationVariable Long roomId, @Valid @DestinationVariable Long senderID) throws MessagingException, FirebaseMessagingException {
 
         chatRoomService.roomBasedChat(messageService.filterBadWords(message), roomId, senderID);
+
+    }
+
+
+    @MessageMapping("/chat/oneToOne/{senderId}/{recieverId}")
+    public void oneToOneChat(@Payload Message message, @Valid @DestinationVariable Long senderId, @Valid @DestinationVariable Long recieverId) throws MessagingException, FirebaseMessagingException {
+
+        chatRoomService.oneToOneChat(messageService.filterBadWords(message), senderId, recieverId);
 
     }
 
@@ -92,18 +106,23 @@ public class ChatController {
     }
 
 
-
     @PostMapping("/save-discussion")
     @ResponseBody
-    public ResponseEntity<?> saveDiscussion(@Valid @RequestBody MessageRequest request){
+    public ResponseEntity<?> saveDiscussion(@Valid @RequestBody MessageRequest request) {
         messageService.saveDiscussion(request.getMessages());
-       return new ResponseEntity<>(new MessageResponse(HttpStatus.OK.value(), "Discussion Saved Successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse(HttpStatus.OK.value(), "Discussion Saved Successfully"), HttpStatus.OK);
+    }
+
+    @GetMapping("/retrieve-discussion/{roomId}")
+    @ResponseBody
+    public ResponseEntity<?> retrieveDiscussions(@PathVariable Long roomId) {
+        return new ResponseEntity<>(messageService.retrieveDiscussions(roomId), HttpStatus.OK);
     }
 
     @GetMapping("/chatrooms/most-active-rooms")
     @ResponseBody
-    public ResponseEntity<?> mostActiveRooms(){
-        return new ResponseEntity<>(chatRoomService.getMostActiveChatRooms(),HttpStatus.OK);
+    public ResponseEntity<?> mostActiveRooms() {
+        return new ResponseEntity<>(chatRoomService.getMostActiveChatRooms(), HttpStatus.OK);
     }
 
 

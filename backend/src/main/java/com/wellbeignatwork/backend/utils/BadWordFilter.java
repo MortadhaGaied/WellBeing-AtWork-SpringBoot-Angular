@@ -16,7 +16,7 @@ import java.util.Map;
 
 
 public class BadWordFilter {
-    private static int largestWordLength = 0;
+    private static int largestWordLength = 20;
 
     private static final Map<String, String[]> allBadWords = new HashMap<String, String[]>();
 
@@ -30,7 +30,6 @@ public class BadWordFilter {
         loadBadWords();
 
 
-
         if (input == null) {
             return "";
         }
@@ -38,8 +37,16 @@ public class BadWordFilter {
         String modifiedInput = input;
 
         // remove leetspeak
-        modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
-                .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
+        modifiedInput = modifiedInput
+                .replace("1", "i")
+                .replace("!", "i")
+                .replace("3", "e")
+                .replace("4", "a")
+                .replace("@", "a")
+                .replace("5", "s")
+                .replace("7", "t")
+                .replace("0", "o")
+                .replace("9", "g");
 
         // ignore any character that is not a letter
         modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");

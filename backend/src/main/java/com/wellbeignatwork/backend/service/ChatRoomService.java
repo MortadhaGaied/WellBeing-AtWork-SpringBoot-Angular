@@ -58,6 +58,16 @@ public class ChatRoomService {
         return chatRoomRepository.findAll();
     }
 
+    public List<ChatRoom> getPublicRooms() {
+        List<ChatRoom> allRooms = chatRoomRepository.findAll();
+        allRooms.forEach(chatRoom -> {
+            if (chatRoom.getRoomName() == null) {
+                allRooms.remove(chatRoom);
+            }
+        });
+        return allRooms;
+    }
+
     @Transactional
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
         User user = userRepository
@@ -95,6 +105,55 @@ public class ChatRoomService {
     }
 
 
+    public void oneToOneChat(Message message, Long senderId, Long recieverId) throws FirebaseMessagingException {
+
+        //get the sender and the reciever first
+        User sender = userRepository
+                .findById(senderId)
+                .orElseThrow(() -> new ResourceNotFoundException("user with id : " + senderId + "does not exist"));
+        User reciever = userRepository
+                .findById(recieverId)
+                .orElseThrow(() -> new ResourceNotFoundException("user with id : " + recieverId + "does not exist"));
+
+        //check if there is a unique room for the 2 users to communicate else create one for them
+        ChatRoom room1 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", senderId, recieverId));
+        ChatRoom room2 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", recieverId, senderId));
+        if (room1 != null || room2 != null) {
+            messagingTemplate.convertAndSend("/topic/room/" + String.format("%s_%s", senderId, recieverId), message);
+            //subscribe all users in the chatRoom to the specific notification topic
+            List<String> subscriptionTokens = new ArrayList<>();
+            subscriptionTokens.add(sender.getFireBaseToken());
+            subscriptionTokens.add(reciever.getFireBaseToken());
+            final String format = String.format("room_%s", String.format("%s_%s", senderId, recieverId));
+            notificationService.subScribeUsersToTopic(subscriptionTokens, format);
+            //send notifications to subscribed members of the room
+            notificationService.sendToTopic(new PushNotificationRequest("hi", "received a message", format));
+        }
+        //if there is not a unique room for the 2 users to chat then we create one
+        else {
+            ChatRoom room = new ChatRoom();
+            room.setUniqueKey(String.format("%s_%s", sender.getId(), reciever.getId()));
+            Set<User> users = new HashSet<>();
+            users.add(sender);
+            users.add(reciever);
+            room.setUsers(users);
+            chatRoomRepository.save(room);
+            message.setSender(sender);
+            message.setChatroom(room);
+            messagingTemplate.convertAndSend("/topic/room/" + room.getUniqueKey(), message);
+
+            //subscribe all users in the chatRoom to the specific notification topic
+            List<String> subscriptionTokens = new ArrayList<>();
+            room.getUsers().forEach(user -> subscriptionTokens.add(user.getFireBaseToken()));
+            notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", room.getUniqueKey()));
+            //notify all room users that a new message have been sent
+            notificationService.sendToTopic(new PushNotificationRequest(room.getRoomName(), "received a message", String.format("room_%s", room.getUniqueKey())));
+
+
+        }
+    }
+
+
     public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException, FirebaseMessagingException {
 
 
@@ -114,9 +173,9 @@ public class ChatRoomService {
         messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
 
         //subscribe all users in the chatRoom to the specific notification topic
-        List<String> token = new ArrayList<>();
-        chatRoom.getUsers().forEach(user -> token.add(user.getFireBaseToken()));
-        notificationService.subScribeUsersToTopic(token, String.format("room_%s", roomId));
+        List<String> subscriptionTokens = new ArrayList<>();
+        chatRoom.getUsers().forEach(user -> subscriptionTokens.add(user.getFireBaseToken()));
+        notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", roomId));
 
         //notify all room users that a new message have been sent
         notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getUserName(), String.format("room_%s", roomId)));
