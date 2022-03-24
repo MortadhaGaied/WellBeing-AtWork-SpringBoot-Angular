@@ -12,13 +12,23 @@ import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 @Service
 public class ChatRoomService {
@@ -61,7 +71,7 @@ public class ChatRoomService {
 
     public List<ChatRoom> getPublicRooms() {
         List<ChatRoom> allRooms = chatRoomRepository.findAll();
-        List<ChatRoom> publicRooms=new ArrayList<>();
+        List<ChatRoom> publicRooms = new ArrayList<>();
         allRooms.forEach(chatRoom -> {
             if (chatRoom.getRoomName() != null) {
                 publicRooms.add(chatRoom);
@@ -69,6 +79,82 @@ public class ChatRoomService {
         });
         return publicRooms;
     }
+
+
+    //chatrooms that have the most users and also that have the most messages
+    public List<ChatRoom> getMostActiveChatRooms() {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+        chatRooms
+                .sort((chatRoom1, chatRoom2) -> {
+                    if (chatRoom1.getUsers().size() > chatRoom1.getUsers().size() && chatRoom1.getMessages().size() > chatRoom2.getMessages().size())
+                        return 1;
+                    else return 0;
+                });
+
+        return chatRooms;
+
+    }
+
+
+
+
+
+
+    @Transactional
+   // @Scheduled(fixedRate = 10000)
+    public void calculateResponseRatePerRoom() {
+
+        chatRoomRepository.findAll().forEach(chatRoom -> {
+            List<Date> sentAt = new ArrayList<>();
+            List<Long> responseTimeDurationsPerRoom = new ArrayList<>();
+
+            if (chatRoom.getMessages().isEmpty()) {
+                chatRoom.setAverageResponseTime("not calculated yet");
+
+            } else {
+                chatRoom.getMessages().forEach(message -> {
+
+                    sentAt.add(message.getSendAt());
+                });
+
+                sentAt.forEach(send -> log.info("dates are here : " + send));
+
+                if (sentAt.size() < 2) {
+                    chatRoom.setAverageResponseTime("not calculated yet");
+                } else {
+                            log.info("here");
+                    for (int i = 1; i < sentAt.size(); i++) {
+                        Date d1;
+                        Date d2;
+                        d1 = sentAt.get(i);
+                        d2 = sentAt.get(i - 1);
+                        long diffMinutes = Math.abs(d2.getTime() - d1.getTime());
+
+                        long diff = TimeUnit.SECONDS.convert(diffMinutes, TimeUnit.MILLISECONDS);
+
+                        responseTimeDurationsPerRoom.add(diff);
+                    }
+
+                    var score = responseTimeDurationsPerRoom
+                            .stream()
+                            .mapToLong(a -> a)
+                            .average()
+                            .orElse(0);
+                    log.info("score is :'(  : " + score);
+
+                    responseTimeDurationsPerRoom.forEach(timeDuration -> {
+                        log.info("time duration" + timeDuration);
+                    });
+                    chatRoom.setAverageResponseTime(Long.toString((long) score));
+
+
+                }
+
+
+            }
+        });
+    }
+
 
     @Transactional
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
@@ -92,19 +178,6 @@ public class ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
 
-    //chatrooms that have the most users and also that have the most messages
-    public List<ChatRoom> getMostActiveChatRooms() {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
-        chatRooms
-                .sort((chatRoom1, chatRoom2) -> {
-                    if (chatRoom1.getUsers().size() > chatRoom1.getUsers().size() && chatRoom1.getMessages().size() > chatRoom2.getMessages().size())
-                        return 1;
-                    else return 0;
-                });
-
-        return chatRooms;
-
-    }
 
 
     public void oneToOneChat(Message message, Long senderId, Long recieverId) throws FirebaseMessagingException {
@@ -168,7 +241,7 @@ public class ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + roomId + "does not exist"));
         message.setChatroom(chatRoom);
         message.setSender(sender);
-        log.info("mess sent is : {}",message.getChatroom().getRoomName());
+        log.info("mess sent is : {}", message.getChatroom().getRoomName());
 
         //send the message to the message broker to be handled and sent the client
 

@@ -2,6 +2,7 @@ package com.wellbeignatwork.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,13 +13,14 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date sendAt = new Date();
 
     @ManyToOne

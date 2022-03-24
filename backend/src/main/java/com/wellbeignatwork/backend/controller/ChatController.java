@@ -8,6 +8,7 @@ import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.payload.MessageRequest;
 import com.wellbeignatwork.backend.payload.MessageResponse;
 import com.wellbeignatwork.backend.payload.PushNotificationResponse;
+import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.service.ChatRoomService;
 import com.wellbeignatwork.backend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin("*")
 @RestController
 public class ChatController {
@@ -40,6 +43,9 @@ public class ChatController {
 
         this.messageService = messageService;
     }
+
+
+
 
     @PostMapping("/add-room")
     @ResponseBody
