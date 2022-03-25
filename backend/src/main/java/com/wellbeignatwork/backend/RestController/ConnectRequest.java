@@ -1,7 +1,8 @@
 package com.wellbeignatwork.backend.RestController;
 
+import com.wellbeignatwork.backend.Entity.User;
 import lombok.Data;
-import tn.pidev.spring.version0backend.Entity.User;
+
 
 @Data
 public class ConnectRequest {

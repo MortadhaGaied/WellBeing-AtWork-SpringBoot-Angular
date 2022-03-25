@@ -1,10 +1,13 @@
 package com.wellbeignatwork.backend.Service;
 
+import com.wellbeignatwork.backend.Entity.Badge;
+import com.wellbeignatwork.backend.Entity.User;
+import com.wellbeignatwork.backend.Entity.UserGift;
+import com.wellbeignatwork.backend.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import tn.pidev.spring.version0backend.Entity.*;
-import tn.pidev.spring.version0backend.Repository.*;
+
 
 import java.util.List;
 import java.util.Random;
@@ -19,8 +22,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
     @Autowired
     IntCommentRepo intCommentRepo;
-    @Autowired
-    intLikesRepo intLikesRepo;
+
     @Autowired
     IntGiftUserRepo intGiftUserRepo;
 

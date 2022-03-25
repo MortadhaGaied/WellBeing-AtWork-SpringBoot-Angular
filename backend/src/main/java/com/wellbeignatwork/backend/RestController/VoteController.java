@@ -1,11 +1,12 @@
 package com.wellbeignatwork.backend.RestController;
 
+import com.wellbeignatwork.backend.Entity.Sujet;
+import com.wellbeignatwork.backend.Entity.VoteIdea;
+import com.wellbeignatwork.backend.Service.IntVoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.pidev.spring.version0backend.Entity.Sujet;
-import tn.pidev.spring.version0backend.Entity.VoteIdea;
-import tn.pidev.spring.version0backend.Service.IntVoteService;
+
 
 import java.util.List;
 

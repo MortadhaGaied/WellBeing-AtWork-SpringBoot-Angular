@@ -1,10 +1,10 @@
 package com.wellbeignatwork.backend.Repository;
 
 
+import com.wellbeignatwork.backend.Entity.VoteIdea;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import tn.pidev.spring.version0backend.Entity.VoteIdea;
 
 
 @Repository

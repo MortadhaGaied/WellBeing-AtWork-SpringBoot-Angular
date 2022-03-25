@@ -1,9 +1,9 @@
 package com.wellbeignatwork.backend.Repository;
 
+import com.wellbeignatwork.backend.Entity.UserGift;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import tn.pidev.spring.version0backend.Entity.UserGift;
 
 import java.util.List;
 

@@ -1,12 +1,13 @@
 package com.wellbeignatwork.backend.Repository;
 
 
+import com.wellbeignatwork.backend.Entity.Answer;
+import com.wellbeignatwork.backend.Entity.Sentiment;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import tn.pidev.spring.version0backend.Entity.Answer;
-import tn.pidev.spring.version0backend.Entity.Sentiment;
+
 
 @Repository
 public interface AnswerRepo extends CrudRepository<Answer,Integer> {

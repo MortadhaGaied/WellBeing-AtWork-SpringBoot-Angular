@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.Service;
 
-import tn.pidev.spring.version0backend.Entity.User;
+
+import com.wellbeignatwork.backend.Entity.User;
 
 import java.util.List;
 

@@ -1,13 +1,14 @@
 package com.wellbeignatwork.backend.Service;
 
+import com.wellbeignatwork.backend.Entity.Sujet;
+import com.wellbeignatwork.backend.Entity.User;
+import com.wellbeignatwork.backend.Entity.VoteIdea;
+import com.wellbeignatwork.backend.Repository.IntUserRepo;
+import com.wellbeignatwork.backend.Repository.IntVoteIdeaRepo;
+import com.wellbeignatwork.backend.Repository.SujetRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.pidev.spring.version0backend.Entity.Sujet;
-import tn.pidev.spring.version0backend.Entity.User;
-import tn.pidev.spring.version0backend.Entity.VoteIdea;
-import tn.pidev.spring.version0backend.Repository.IntUserRepo;
-import tn.pidev.spring.version0backend.Repository.IntVoteIdeaRepo;
-import tn.pidev.spring.version0backend.Repository.SujetRepo;
+;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

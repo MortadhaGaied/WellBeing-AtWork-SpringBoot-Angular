@@ -1,7 +1,9 @@
 package com.wellbeignatwork.backend.Service;
 
-import tn.pidev.spring.version0backend.Entity.Sujet;
-import tn.pidev.spring.version0backend.Entity.VoteIdea;
+
+
+import com.wellbeignatwork.backend.Entity.Sujet;
+import com.wellbeignatwork.backend.Entity.VoteIdea;
 
 import java.util.List;
 

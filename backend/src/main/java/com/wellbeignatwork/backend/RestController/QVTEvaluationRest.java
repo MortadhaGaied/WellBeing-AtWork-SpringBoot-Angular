@@ -1,11 +1,12 @@
 package com.wellbeignatwork.backend.RestController;
 
+import com.wellbeignatwork.backend.Entity.Answer;
+import com.wellbeignatwork.backend.Entity.Survey;
+import com.wellbeignatwork.backend.Entity.User;
+import com.wellbeignatwork.backend.Service.IntQVTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.pidev.spring.version0backend.Entity.Answer;
-import tn.pidev.spring.version0backend.Entity.Survey;
-import tn.pidev.spring.version0backend.Entity.User;
-import tn.pidev.spring.version0backend.Service.IntQVTService;
+
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class QVTEvaluationRest {
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QrCode/QRCode.png";
 
     @PostMapping("/addUser")
-    public User adduser( @RequestBody User u)
+    public User adduser(@RequestBody User u)
     {
         return MyQVTService.addUser(u);
 
@@ -33,9 +34,9 @@ public class QVTEvaluationRest {
     }
 
     @PostMapping("/PutYourAnswerAndGetYourAdvice")
-    public void UserAnswer(@RequestBody List<Answer>  answer)
+    public String UserAnswer(@RequestBody List<Answer>  answer)
     {
-        MyQVTService.UserAnswer(answer);
+        return MyQVTService.UserAnswer(answer);
     }
 
 

@@ -1,9 +1,9 @@
 package com.wellbeignatwork.backend.RestController;
 
+import com.wellbeignatwork.backend.Entity.User;
+import com.wellbeignatwork.backend.Service.IntPointsAndGiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.pidev.spring.version0backend.Entity.User;
-import tn.pidev.spring.version0backend.Service.IntPointsAndGiftService;
 
 @RestController
 @RequestMapping("/PointsAndGift")

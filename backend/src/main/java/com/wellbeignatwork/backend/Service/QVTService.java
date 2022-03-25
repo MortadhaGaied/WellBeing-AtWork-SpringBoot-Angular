@@ -1,14 +1,16 @@
 package com.wellbeignatwork.backend.Service;
 
 
+import com.wellbeignatwork.backend.Entity.*;
+import com.wellbeignatwork.backend.Repository.AnswerRepo;
+import com.wellbeignatwork.backend.Repository.IntAdviceRepo;
+import com.wellbeignatwork.backend.Repository.IntUserRepo;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.pidev.spring.version0backend.Entity.*;
-import tn.pidev.spring.version0backend.Repository.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +29,8 @@ public class QVTService implements IntQVTService {
 
     @Override
     public User addUser(User u) {
+
+        u.setBadge(Badge.None);
         return MyUserRepo.save(u);
     }
 
@@ -109,7 +113,8 @@ public class QVTService implements IntQVTService {
 
 
     @Override
-    public void UserAnswer(List<Answer> answer) {
+    public String UserAnswer(List<Answer> answer) {
+        String Res="";
         StanfordCoreNLP stanfordCoreNLP = Pipeline.getPipeline();
         for(Answer answer1:answer)
         {
@@ -135,19 +140,33 @@ public class QVTService implements IntQVTService {
         {
             System.out.println
                     ("Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer" );
+
+
+            return  Res="Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer";
         }
 
         else if(answerRepo.nbreByStatus(Sentiment.Positive)==3 && ((answerRepo.nbreByStatus(Sentiment.Very_negative)==(answerRepo.nbreByStatus(Sentiment.Negative))   )))
         {
             System.out.println("Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ");
+
+            return Res="Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ";
         }
         else if(answerRepo.nbreByStatus(Sentiment.Very_negative)==5 | (answerRepo.nbreByStatus(Sentiment.Negative)==5)| answerRepo.nbreByStatus(Sentiment.Very_negative)==5 && (answerRepo.nbreByStatus(Sentiment.Negative)==5))
         {
             System.out.println("Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ");
+
+
+            return Res="Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ";
+
         }
 
         else
+        {
             System.out.println("Neutral ! Thank You For Your FeedBack Enjoy Your Time ");
+            return Res="Neutral ! Thank You For Your FeedBack Enjoy Your Time ";
+        }
+
+
 
     }
 
