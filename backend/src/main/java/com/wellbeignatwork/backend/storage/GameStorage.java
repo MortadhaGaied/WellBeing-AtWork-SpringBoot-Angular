@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.storage;
 
 
 
-import com.wellbeignatwork.backend.entity.Game;
+import com.wellbeignatwork.backend.entity.Evaluation.Game;
 
 import java.util.HashMap;
 import java.util.Map;
