@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.entity.Event;
+package com.wellbeignatwork.backend.entity;
 
 public enum Departement {
     RH ,IT , MAINTENANCE

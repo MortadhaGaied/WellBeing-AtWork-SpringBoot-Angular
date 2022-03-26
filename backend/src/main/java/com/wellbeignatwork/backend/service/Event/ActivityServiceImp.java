@@ -15,16 +15,19 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
+import com.wellbeignatwork.backend.entity.Tags;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.exceptions.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.util.WeatherService;
 
 import com.wellbeignatwork.backend.repository.Event.EventRepository;
 import com.wellbeignatwork.backend.repository.Event.FeedBackRep;
 import com.wellbeignatwork.backend.repository.Event.SubscriptionRepository;
-import com.wellbeignatwork.backend.repository.Event.UserRepo;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -60,7 +63,7 @@ import static javax.mail.Transport.send;
 public class ActivityServiceImp implements IActivityService{
     private StanfordCoreNLP pipeline;
     EventRepository eventRepository;
-    UserRepo userRepo;
+    UserRepository userRepo;
     SubscriptionRepository subscriptionRepository;
     @PostConstruct
     public void init() {
@@ -72,7 +75,7 @@ public class ActivityServiceImp implements IActivityService{
     @Autowired
     WeatherService weatherService;
     @Autowired
-    public ActivityServiceImp(EventRepository eventRepository,UserRepo userRepo,
+    public ActivityServiceImp(EventRepository eventRepository,UserRepository userRepo,
                               SubscriptionRepository subscriptionRepository,
                               JavaMailSender javaMailSender){
         this.eventRepository=eventRepository;
@@ -274,11 +277,11 @@ public class ActivityServiceImp implements IActivityService{
     @Override
     public List<Event> showEventsByUser(Long idUser) {
         User u=userRepo.findById(idUser).orElse(null);
-        List<Tag> tags=new ArrayList<>(u.getUserTags());
+        List<Tags> tags=new ArrayList<>(u.getUserTags());
         Map<Event,Integer> preferenceEvent = new HashMap<>();
         for(Event event : eventRepository.findAll()){
-            List<Tag> eventTag = new ArrayList<>(event.getEventTags());
-            List<Tag> communTag = new ArrayList<>(tags);
+            List<Tags> eventTag = new ArrayList<>(event.getEventTags());
+            List<Tags> communTag = new ArrayList<>(tags);
             //n3abiw les tags li yabdew kifkif (eventTag et tags)
             communTag.retainAll(event.getEventTags());
             preferenceEvent.put(event,communTag.size());
@@ -299,12 +302,12 @@ public class ActivityServiceImp implements IActivityService{
 
 
 
-    public Event randomEventByTags (List<Tag> tags){
+    public Event randomEventByTags (List<Tags> tags){
         Event result = new Event();
         Map<Event,Integer> preferenceEvent = new HashMap<>();
         for(Event event : eventRepository.findAll()){
-            List<Tag> eventTag = new ArrayList<>(event.getEventTags());
-            List<Tag> communTag = new ArrayList<>(tags);
+            List<Tags> eventTag = new ArrayList<>(event.getEventTags());
+            List<Tags> communTag = new ArrayList<>(tags);
             //n3abiw les tags li yabdew kifkif (eventTag et tags)
             communTag.retainAll(event.getEventTags());
             preferenceEvent.put(event,communTag.size());
@@ -323,7 +326,7 @@ public class ActivityServiceImp implements IActivityService{
         List<User> users = new ArrayList<>();
         userRepo.findAll().forEach(users::add);
         User max = users.stream().max(Comparator.comparing(User::getPoints)).get();
-        List<Tag> userTags = new ArrayList<>(max.getUserTags());
+        List<Tags> userTags = new ArrayList<>(max.getUserTags());
         Event eventGift = randomEventByTags(userTags);
 
             max.getEvents().add(eventGift);
@@ -408,7 +411,7 @@ public class ActivityServiceImp implements IActivityService{
     public void assignPointToUser(Long idUser, Long idEvent) {
         User u= userRepo.findById(idUser).orElse(null);
         Event event= eventRepository.findById(idEvent).orElse(null);
-        if (event.getEventTags().contains(Tag.SPORT)){
+        if (event.getEventTags().contains(Tags.SPORT)){
             u.setPoints(u.getPoints()+3);
         }
     userRepo.save(u);
@@ -441,7 +444,7 @@ public class ActivityServiceImp implements IActivityService{
        return null;
     }
 
-    public boolean compareTags(Set<Tag> eventTags, Set<Tag> userTags) {
+    public boolean compareTags(Set<Tags> eventTags, Set<Tags> userTags) {
         return eventTags.containsAll(userTags);
     }
     /*
@@ -509,7 +512,7 @@ public class ActivityServiceImp implements IActivityService{
                 throw new BadRequestException("You can't accept too many people in this event");
             }
             event.getInvitedUsers().remove(user);
-            assignUserToEvent(user.getIdUser(),event.getIdEvent());
+            assignUserToEvent(user.getId(),event.getIdEvent());
         }
     @Override
 
@@ -620,7 +623,7 @@ public class ActivityServiceImp implements IActivityService{
         return feedBackRep.getAverageRateEvent(event);
     }
     public void findMostPopularTag(){
-        List<Tag> tags=new ArrayList<Tag>(Arrays.asList(Tag.values()));
+        List<Tags> tags=new ArrayList<Tags>(Arrays.asList(Tags.values()));
         List<Integer> nbParticipantByTag=new ArrayList<>(Collections.nCopies(tags.size(),0));
         int x=0;
         for(Event e:eventRepository.findAll()){

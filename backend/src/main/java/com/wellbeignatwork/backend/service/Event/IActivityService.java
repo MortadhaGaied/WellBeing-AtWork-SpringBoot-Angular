@@ -2,7 +2,9 @@ package com.wellbeignatwork.backend.service.Event;
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
+import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.entity.User;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

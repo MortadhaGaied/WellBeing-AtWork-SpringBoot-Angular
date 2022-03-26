@@ -12,8 +12,8 @@ public interface PostService {
     public Post updatepost(Post post);
     public void deletepost(int id);
     public Post assignFileToPost(int id_file,int id_post);
-    public List<Post> groupByPreference(int idUser);
-    public Post assignUserToPost(int idUser,int idPost);
+    public List<Post> groupByPreference(Long idUser);
+    public Post assignUserToPost(Long idUser,int idPost);
     public List<Post> getTrendingPost();
 
 }

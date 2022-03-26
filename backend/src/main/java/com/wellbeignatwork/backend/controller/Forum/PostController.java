@@ -40,11 +40,11 @@ public class PostController {
         return new ResponseEntity<>(this.postService.assignFileToPost(id_post, id_file),HttpStatus.OK);
     }
     @GetMapping("/groupByPreference/{idUser}")
-    public List<Post> groupByPreference(@PathVariable int idUser){
+    public List<Post> groupByPreference(@PathVariable Long idUser){
         return this.postService.groupByPreference(idUser);
     }
     @GetMapping("assignUserToPost/{idUser}/{idPost}")
-    public Post assignUserToPost(@PathVariable int idUser,@PathVariable int idPost){
+    public Post assignUserToPost(@PathVariable Long idUser,@PathVariable int idPost){
         return postService.assignUserToPost(idUser, idPost);
     }
     @GetMapping("/TrendingPost")

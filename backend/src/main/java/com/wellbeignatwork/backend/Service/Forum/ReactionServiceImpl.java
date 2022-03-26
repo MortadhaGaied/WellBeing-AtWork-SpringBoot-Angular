@@ -17,7 +17,7 @@ public class ReactionServiceImpl implements ReactionService{
         this.postRepository=postRepository;
     }
     @Override
-    public void addReactToPost(Reaction reaction, int idPost, int idUser) {
+    public void addReactToPost(Reaction reaction, int idPost, Long idUser) {
         boolean isReacted=false;
         Post p=postRepository.findById(idPost).orElse(null);
         reaction.setIdUser(idUser);

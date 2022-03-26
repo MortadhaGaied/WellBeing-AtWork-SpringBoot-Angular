@@ -1,11 +1,14 @@
 package com.wellbeignatwork.backend.service.Forum;
 
 import com.wellbeignatwork.backend.entity.Forum.*;
+import com.wellbeignatwork.backend.entity.Tags;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.FileRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
-import com.wellbeignatwork.backend.repository.Forum.UserRepository;
+
 import com.wellbeignatwork.backend.exceptions.PostException;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -41,7 +44,7 @@ public class PostServiceImpl implements PostService {
         }
         return resultat;
     }
-    public List<Post> getPostsforUser(int iduser){
+    public List<Post> getPostsforUser(Long iduser){
         int n;
         List<Post> list=new ArrayList<>();
 
@@ -50,7 +53,7 @@ public class PostServiceImpl implements PostService {
             List<Tags> tags=new ArrayList<>(p.getTags());
             n=tags.size()-1;
             while(n<0){
-                if(tags.containsAll(u.getTags())){
+                if(tags.containsAll(u.getUserTags())){
                     list.add(p);
                     tags.remove(n);
                     n--;
@@ -117,7 +120,7 @@ public class PostServiceImpl implements PostService {
         return p;
     }
     @Override
-    public Post assignUserToPost(int id_user,int id_post){
+    public Post assignUserToPost(Long id_user,int id_post){
         Post p=postRepository.findById(id_post).orElse(null);
         User u=userRepository.findById(id_user).orElse(null);
         u.getPosts().add(p);
@@ -127,10 +130,10 @@ public class PostServiceImpl implements PostService {
         return p;
     }
     @Override
-    public List<Post> groupByPreference(int idUser)
+    public List<Post> groupByPreference(Long idUser)
     {
         User u=userRepository.findById(idUser).orElse(null);
-        List<Tags> userTags=new ArrayList<>(u.getTags());
+        List<Tags> userTags=new ArrayList<>(u.getUserTags());
         Map<Post,Integer> prefMap=new HashMap<>();
 
         for(Post p:postRepository.findAll()){

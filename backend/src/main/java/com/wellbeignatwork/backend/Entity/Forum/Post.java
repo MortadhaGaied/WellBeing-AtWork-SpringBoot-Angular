@@ -1,6 +1,8 @@
 package com.wellbeignatwork.backend.entity.Forum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.Tags;
+import com.wellbeignatwork.backend.entity.User;
 import lombok.*;
 
 import javax.persistence.*;

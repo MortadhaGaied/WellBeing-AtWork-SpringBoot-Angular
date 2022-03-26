@@ -17,7 +17,7 @@ public class Reaction implements Serializable {
     private int idReaction;
     @Enumerated(EnumType.STRING)
     private ReactionType reactionType;
-    private int idUser;
+    private Long idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Post post;
 

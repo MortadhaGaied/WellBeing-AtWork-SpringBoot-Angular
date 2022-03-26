@@ -1,6 +1,8 @@
 package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.Tags;
+import com.wellbeignatwork.backend.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,7 +37,7 @@ public class Event implements Serializable {
     @CollectionTable(name = "eventTags",joinColumns = @JoinColumn(name = "idEvent"))
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Tag> eventTags;
+    private Set<Tags> eventTags;
     @ManyToMany(fetch = FetchType.LAZY ,mappedBy ="events")
     @JsonIgnore
     private Set<User> users;

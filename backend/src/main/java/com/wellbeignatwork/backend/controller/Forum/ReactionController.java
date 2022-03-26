@@ -14,7 +14,7 @@ public class ReactionController {
         this.reactionService=reactionService;
     }
     @PostMapping("/addReaction/{idPost}/{idUser}")
-    public void addReactToPost(@RequestBody Reaction reaction, @PathVariable int idPost,@PathVariable int idUser){
+    public void addReactToPost(@RequestBody Reaction reaction, @PathVariable int idPost,@PathVariable Long idUser){
         reactionService.addReactToPost(reaction,idPost,idUser);
     }
     @DeleteMapping("/deleteReaction/{idReaction}")

@@ -3,7 +3,9 @@ package com.wellbeignatwork.backend.controller.Event;
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
+import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Event.ActivityServiceImp;
 import com.wellbeignatwork.backend.service.Event.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
