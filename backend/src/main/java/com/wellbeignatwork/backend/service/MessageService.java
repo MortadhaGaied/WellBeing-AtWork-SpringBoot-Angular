@@ -56,40 +56,43 @@ public class MessageService {
         Map<User, Integer> chatters = new HashMap<>();
         Map<User, Integer> chattesMap = new HashMap<>();
         List<User> topchatter = new ArrayList<>();
-        messageRepository
-                .findAll()
-                .forEach(message -> {
-                    chattesMap.put(message.getSender(), 0);
-                    //chattesMap.keySet().add(message.getSender());
-                    topchatter.add(message.getSender());
-                });
+        if(!messageRepository.findAll().isEmpty()){
+            messageRepository
+                    .findAll()
+                    .forEach(message -> {
+                        chattesMap.put(message.getSender(), 0);
+                        //chattesMap.keySet().add(message.getSender());
+                        topchatter.add(message.getSender());
+                    });
 
 
-        for (User user : chattesMap.keySet()) {
-            for (User value : topchatter) {
-                if (user.equals(value)) {
-                    chattesMap.put(user, chattesMap.get(user) + 1);
+            for (User user : chattesMap.keySet()) {
+                for (User value : topchatter) {
+                    if (user.equals(value)) {
+                        chattesMap.put(user, chattesMap.get(user) + 1);
 
+                    }
                 }
             }
-        }
 
-        Map.Entry<User, Integer> maxEntry = null;
-        int a = 0;
-        while (a <= 2) {
+            Map.Entry<User, Integer> maxEntry = null;
+            int a = 0;
+            while (a <= 2) {
 
-            for (Map.Entry<User, Integer> entry : chattesMap.entrySet()) {
-                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
-                    maxEntry = entry;
+                for (Map.Entry<User, Integer> entry : chattesMap.entrySet()) {
+                    if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                        maxEntry = entry;
+                    }
                 }
+                chatters.put(maxEntry.getKey(), maxEntry.getValue());
+                chattesMap.put(maxEntry.getKey(), 0);
+                a++;
             }
-            chatters.put(maxEntry.getKey(), maxEntry.getValue());
-            chattesMap.put(maxEntry.getKey(), 0);
-            a++;
-        }
 
-        for (User user : chatters.keySet()) {
-            log.info("user : + " + user + "has : " + chatters.get(user) + " messages");
+            for (User user : chatters.keySet()) {
+                log.info("user : + " + user + "has : " + chatters.get(user) + " messages");
+            }
+
         }
 
 

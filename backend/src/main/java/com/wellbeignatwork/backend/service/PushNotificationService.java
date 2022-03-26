@@ -2,6 +2,8 @@ package com.wellbeignatwork.backend.service;
 
 
 import com.google.firebase.messaging.*;
+import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +34,13 @@ public class PushNotificationService implements INotificationService{
         this.fcmService = fcmService;
         this.userRepository = userRepository;
         this.messageRepository=messageRepository;
+    }
+
+
+    @Transactional
+    public void saveFirebaseToken(Long userId, String token) {
+        User user= userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("user with id : "+userId+ " not found"));
+        user.setFireBaseToken(token);
     }
 
     @Override

@@ -251,7 +251,7 @@ public class ChatRoomService {
         notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", roomId));
 
         //notify all room users that a new message have been sent
-        notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getUserName(), String.format("room_%s", roomId)));
+        notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getDisplayName(), String.format("room_%s", roomId)));
 
     }
 

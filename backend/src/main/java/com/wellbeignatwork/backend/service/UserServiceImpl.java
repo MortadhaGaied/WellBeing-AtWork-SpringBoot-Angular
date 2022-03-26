@@ -8,6 +8,7 @@ import com.wellbeignatwork.backend.exceptions.UserAlreadyExistAuthenticationExce
 import com.wellbeignatwork.backend.entity.ConfirmationToken;
 import com.wellbeignatwork.backend.entity.Role;
 import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.RoleRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.security.oauth2.user.OAuth2UserInfo;
@@ -153,6 +154,8 @@ public class UserServiceImpl implements UserService {
         userRepository.enableAppUser(confirmationToken.getUser().getEmail());
         return "Your account is confirmed";
     }
+
+
 
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +

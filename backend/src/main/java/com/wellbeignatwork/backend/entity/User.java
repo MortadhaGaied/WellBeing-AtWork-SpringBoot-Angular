@@ -51,10 +51,18 @@ public class User implements Serializable {
 	private String password;
 
 	private String provider;
+	private String fireBaseToken;
 
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+	private Set<ChatRoom> rooms;
+	@JsonIgnore
+	@OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)
+	private Set<Message>messages;
 }
