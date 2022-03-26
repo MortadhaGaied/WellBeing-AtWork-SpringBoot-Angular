@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.service;
 
 
+import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -14,10 +15,14 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import com.wellbeignatwork.backend.exceptions.BadRequestException;
+import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.util.WeatherService;
 import com.wellbeignatwork.backend.entity.*;
 
 import com.wellbeignatwork.backend.entity.Event;
 import com.wellbeignatwork.backend.repository.EventRepository;
+import com.wellbeignatwork.backend.repository.FeedBackRep;
 import com.wellbeignatwork.backend.repository.SubscriptionRepository;
 import com.wellbeignatwork.backend.repository.UserRepo;
 import org.apache.commons.collections4.IterableUtils;
@@ -34,10 +39,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
-
+import java.time.LocalDateTime;
 import static javax.mail.Transport.send;
 
 @RestController
@@ -46,10 +54,15 @@ public class ActivityServiceImp implements IActivityService{
     EventRepository eventRepository;
     UserRepo userRepo;
     SubscriptionRepository subscriptionRepository;
-    private JavaMailSender javaMailSender;
-
     @Autowired
-    public ActivityServiceImp(EventRepository eventRepository,UserRepo userRepo,SubscriptionRepository subscriptionRepository,JavaMailSender javaMailSender){
+    FeedBackRep feedBackRep;
+    private JavaMailSender javaMailSender;
+    @Autowired
+    WeatherService weatherService;
+    @Autowired
+    public ActivityServiceImp(EventRepository eventRepository,UserRepo userRepo,
+                              SubscriptionRepository subscriptionRepository,
+                              JavaMailSender javaMailSender){
         this.eventRepository=eventRepository;
         this.userRepo=userRepo;
         this.subscriptionRepository = subscriptionRepository;
@@ -81,7 +94,7 @@ public class ActivityServiceImp implements IActivityService{
 
         User user = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
-        if  (event.getUsers().size()>=event.getNbrMaxParticipant()){
+        if  (event.getUsers().size()-1 >=event.getNbrMaxParticipant()){
             System.out.println("tu ne peux pas affecter");
         }
         else {
@@ -247,16 +260,63 @@ public class ActivityServiceImp implements IActivityService{
     }
 
     @Override
-    public Set<Event> showEventsByUser(Long idUser) {
-        Set<Event> result=new HashSet<>();
-        User u = userRepo.findById(idUser).orElse(null);
+    public List<Event> showEventsByUser(Long idUser) {
+        User u=userRepo.findById(idUser).orElse(null);
+        List<Tag> tags=new ArrayList<>(u.getUserTags());
+        Map<Event,Integer> preferenceEvent = new HashMap<>();
         for(Event event : eventRepository.findAll()){
-            if(compareTags(u.getUserTags(),event.getEventTags())){
-               result.add(event);
+            List<Tag> eventTag = new ArrayList<>(event.getEventTags());
+            List<Tag> communTag = new ArrayList<>(tags);
+            //n3abiw les tags li yabdew kifkif (eventTag et tags)
+            communTag.retainAll(event.getEventTags());
+            preferenceEvent.put(event,communTag.size());
+        }
+        //e1 old value e2 new value
+        preferenceEvent=preferenceEvent.entrySet().stream().sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(e->e.getKey(),e->e.getValue(),(e1,e2)->e2,LinkedHashMap::new));
+
+        List<Event> result= new ArrayList<>(preferenceEvent.keySet());
+
+        for(int i=0,j=result.size()-1;i<j;i++){
+            result.add(i,result.remove(j));
+        }
+        return result;
+
+
+    }
+
+
+
+    public Event randomEventByTags (List<Tag> tags){
+        Event result = new Event();
+        Map<Event,Integer> preferenceEvent = new HashMap<>();
+        for(Event event : eventRepository.findAll()){
+            List<Tag> eventTag = new ArrayList<>(event.getEventTags());
+            List<Tag> communTag = new ArrayList<>(tags);
+            //n3abiw les tags li yabdew kifkif (eventTag et tags)
+            communTag.retainAll(event.getEventTags());
+            preferenceEvent.put(event,communTag.size());
+        }
+        int maxValue = Collections.max(preferenceEvent.values());
+        for (Map.Entry<Event,Integer> entry : preferenceEvent.entrySet()) {
+            if (entry.getValue()== maxValue){
+               result = entry.getKey();
             }
         }
         return result;
     }
+
+    public void cadeauEvent (){
+
+        List<User> users = new ArrayList<>();
+        userRepo.findAll().forEach(users::add);
+        User max = users.stream().max(Comparator.comparing(User::getPoints)).get();
+        List<Tag> userTags = new ArrayList<>(max.getUserTags());
+        Event eventGift = randomEventByTags(userTags);
+
+            max.getEvents().add(eventGift);
+            userRepo.save(max);
+        }
 
     @Override
     public void reductionEvent(Long idEvent, Long idUser, int familyNumber) {
@@ -275,10 +335,9 @@ public class ActivityServiceImp implements IActivityService{
     @Scheduled(cron="*/30 * * * * *")
     public String reminderEvent (){
         String a="Mail Send Successfully";
-        Calendar cal= Calendar.getInstance();
-        cal.add(Calendar.DATE,+1);
-        Date start =cal.getTime();
-        List<Event> events=eventRepository.reminder(new Date(),start);
+
+        List<Event> events=eventRepository.reminder
+                (LocalDateTime.now(),LocalDateTime.now().plus(1, ChronoUnit.DAYS));
         if (!events.isEmpty()){
             for(Event e :events){
                 for(User u:e.getUsers()){
@@ -296,7 +355,28 @@ public class ActivityServiceImp implements IActivityService{
         }
         return a ;
     }
+    @Override
 
+    public Object getEventWeather(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElse(null);
+        if (event == null) {
+            throw new ResourceNotFoundException("Event is not exist");
+        }
+        //check if the event is already started
+        if (LocalDate.now().isAfter(event.getStartDate().toLocalDate())) {
+            throw new BadRequestException( "No need to fetch weather of an event already started or finished");
+        }
+        CurrentWeatherData currentWeatherData = weatherService.getWeatherData(event.getEventLocalisation());
+        LocalDate nextWeek = LocalDate.now().plusDays(7);
+        System.out.println(nextWeek);
+        LocalDate eventStartDate = event.getStartDate().toLocalDate();
+        if (nextWeek.isBefore(eventStartDate) || nextWeek.isEqual(eventStartDate)) {
+            return currentWeatherData.getCurrent();
+        } else {
+            int idx = 7 - Period.between(eventStartDate, nextWeek).getDays();
+            return currentWeatherData.getDailyList().get(idx);
+        }
+    }
     @Override
     public Event popularEvent() {
         Event eventMax=eventRepository.findAll().iterator().next();
@@ -365,13 +445,71 @@ public class ActivityServiceImp implements IActivityService{
      */
 
     @Override
-    public int getNbrOfParticipant(Long idEvenet) {
-        int nb =0;
-        for(Event event : eventRepository.findAll()){
-            event.getUsers().size();
-            nb ++;
+    public void getNbrOfParticipant() {
+        List<Event> events=new ArrayList<>();
+        eventRepository.findAll().forEach(events::add);
+        List<Integer> nbParticipantByEvent=new ArrayList<>(Collections.nCopies(events.size(),0));
+
+
+            for(int i=0;i<events.size();i++){
+
+
+                    nbParticipantByEvent.set(i,events.get(i).getUsers().size());
+
+            }
+
+
+
+        System.out.println(nbParticipantByEvent);
+    }
+    @Override
+
+      public void inviteUser (Long idUser,Long idEvent){
+        Event event = eventRepository.findById(idEvent).orElse(null);
+        User user = userRepo.findById(idUser).orElse(null);
+             if(event.getUsers().contains(user)){
+                 throw new BadRequestException("You can't invite someone who already participate");
+             }
+            if (event.getInvitedUsers().contains(user)) {
+                 throw new BadRequestException("You can't invite someone to an event already invited");
+            }
+            if (event.getStartDate().isBefore(LocalDateTime.now())){
+                throw new BadRequestException("You can't invite someone to an event already started or finished");
+            }
+            event.getInvitedUsers().add(user);
+            eventRepository.save(event);
+            //mail notification
+          //Send notification when inviting user
         }
-        return nb;    }
+    @Override
+
+    public void acceptInvitation (Long idEvent , Long idUser){
+            Event event = eventRepository.findById(idEvent).orElse(null);
+            User user = userRepo.findById(idUser).orElse(null);
+            System.out.println(event);
+            if (!event.getInvitedUsers().contains(user)) {
+                System.out.println(event.getInvitedUsers());
+                throw new BadRequestException("You can't accept a ueser who is not invited");
+
+            }
+
+            if (event.getUsers().size()==event.getNbrMaxParticipant()){
+                throw new BadRequestException("You can't accept too many people in this event");
+            }
+            event.getInvitedUsers().remove(user);
+            assignUserToEvent(user.getIdUser(),event.getIdEvent());
+        }
+    @Override
+
+    public void refuseAnInvitation (Long idUser, Long idEvent){
+            Event event = eventRepository.findById(idEvent).orElse(null);
+            User user = userRepo.findById(idUser).orElse(null);
+            if (!event.getInvitedUsers().contains(user)) {
+                throw new BadRequestException("You can't decline an invitation where you are not invited");
+            }
+            event.getInvitedUsers().remove(user);
+            eventRepository.save(event);
+        }
    /*
     @Override
     public void addEventToFavory(Long idUser, Event e) {
@@ -380,6 +518,24 @@ public class ActivityServiceImp implements IActivityService{
         eventRepository.save(e);
 
     }*/
+ /*  public void feedbackEvent(Long userId, Long eventId, FeedBack feedback) {
+       User usersEvents = userRepo.findById(userId).orElse(null);
+       Event event = eventRepository.findById(eventId).orElse(null);
+       if (usersEvents == null) {
+           throw new BadRequestException("Cannot give feedback for an event without participation");
+       }
+       LocalDateTime eventEndDate = usersEvents.getEvents().getEnd();
+       LocalDateTime now = LocalDateTime.now();
+       if (!usersEvents.ge()) {
+           throw new BadRequestException("Cannot give feedback for an event without participation");
+       }
+       if (!eventEndDate.isBefore(now)) {
+           throw new BadRequestException("Cannot give feedback for an event before its finish");
+       }
+       usersEvents.setFeedback(feedback.getContent());
+       usersEvents.se(feedback.getRate());
+       userRepo.save(usersEvents);
+   }*/
 
     @Override
     public void addUser(User u) {
@@ -411,6 +567,62 @@ public class ActivityServiceImp implements IActivityService{
         Subscription subscription = subscriptionRepository.findById(idSubscription).orElse(null);
         subscription.setUser(user);
         subscriptionRepository.save(subscription);
+    }
+
+    @Override
+    public void addAndAssignFeedBack(FeedBack feedBack,Long idEvent,Long idUser) {
+        Event event = eventRepository.findById(idEvent).orElse(null);
+        User user = userRepo.findById(idUser).orElse(null);
+        if(!event.getUsers().contains(user)){
+            throw new BadRequestException("You can't decline an invitation where you are not invited");
+        }
+        if(event.getEndDate().isAfter(LocalDateTime.now())){
+            throw new BadRequestException("You can't decline an invitation where you are not invited");
+        }
+        feedBack.setIdUser(idUser);
+        List<FeedBack> feedBacks=new ArrayList<>();
+        feedBacks.add(feedBack);
+        if(event.getFeedBacks()==null){
+            event.setFeedBacks(feedBacks);
+        }
+        else{
+            event.getFeedBacks().add(feedBack);
+        }
+
+        feedBack.setEvent(event);
+        feedBackRep.save(feedBack);
+    }
+
+    @Override
+    public void deleteFeedBack(FeedBack feedBack) {
+        feedBackRep.delete(feedBack);
+    }
+
+    @Override
+    public void updateFeedBack(FeedBack feedBack) {
+        feedBackRep.save(feedBack);
+    }
+    @Override
+    public Float getAverageRateEvent(Long idEvent){
+        Event event=eventRepository.findById(idEvent).orElse(null);
+        return feedBackRep.getAverageRateEvent(event);
+    }
+    public void findMostPopularTag(){
+        List<Tag> tags=new ArrayList<Tag>(Arrays.asList(Tag.values()));
+        List<Integer> nbParticipantByTag=new ArrayList<>(Collections.nCopies(tags.size(),0));
+        int x=0;
+        for(Event e:eventRepository.findAll()){
+            for(int i=0;i<tags.size();i++){
+                if(e.getEventTags().contains(tags.get(i))){
+
+                    nbParticipantByTag.set(i,nbParticipantByTag.get(i)+e.getUsers().size());
+
+                }
+            }
+
+        }
+        System.out.println(tags);
+        System.out.println(nbParticipantByTag);
     }
 
 

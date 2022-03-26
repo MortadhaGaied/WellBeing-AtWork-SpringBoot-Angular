@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.Config;
+package com.wellbeignatwork.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

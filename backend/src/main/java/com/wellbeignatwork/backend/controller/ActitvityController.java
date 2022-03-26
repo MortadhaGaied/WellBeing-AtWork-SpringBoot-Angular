@@ -3,10 +3,7 @@ package com.wellbeignatwork.backend.controller;
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
-import com.wellbeignatwork.backend.entity.Departement;
-import com.wellbeignatwork.backend.entity.Event;
-import com.wellbeignatwork.backend.entity.Subscription;
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.*;
 import com.wellbeignatwork.backend.service.ActivityServiceImp;
 import com.wellbeignatwork.backend.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import org.springframework.ui.Model;
 
 @RestController
 @RequestMapping("/event")
@@ -73,10 +71,10 @@ public class ActitvityController {
         activityService.export(response,idEvent,idUser,codeText,width,height,QR_CODE_IMAGE_PATH);
         ResponseEntity.status(HttpStatus.OK).body(ActivityServiceImp.getQRCodeImage(codeText, width, height));
         }
-    @GetMapping("/nbr/{id-event}")
+    @GetMapping("/nbr")
     @ResponseBody
-    public int getNbrOfParticipant(@PathVariable("id-event") Long idEvent) {
-        return activityService.getNbrOfParticipant(idEvent);
+    public void getNbrOfParticipant() {
+         activityService.getNbrOfParticipant();
 
     }
     @GetMapping("/distance/{a}/{b}")
@@ -111,8 +109,13 @@ public class ActitvityController {
     }
     @GetMapping("/compare/{id-user}")
     @ResponseBody
-    public Set<Event> showEventsByUser(@PathVariable("id-user") Long idUser){
+    public List<Event> showEventsByUser(@PathVariable("id-user") Long idUser){
         return activityService.showEventsByUser(idUser);
+    }
+    @GetMapping("/gift")
+    @ResponseBody
+    public void cadeauEvent (){
+        activityService.cadeauEvent();
     }
     @GetMapping("/reduction/{id-user}/{id-event}/{familymemb}")
     @ResponseBody
@@ -122,10 +125,32 @@ public class ActitvityController {
         activityService.reductionEvent(idEvent,idUser,familyNumber);
 
     }
+
+    @GetMapping("/weather")
+    @ResponseBody
+    public Object getEventWeather(@RequestParam Long eventId) {
+        return activityService.getEventWeather(eventId);
+    }
+
     @GetMapping("/popularEvent")
     @ResponseBody
     public ResponseEntity<Event> popularEvent(){
          return new ResponseEntity<>(activityService.popularEvent(), HttpStatus.OK);
+    }
+    @GetMapping("/invite/{idUser}/{idEvent}")
+    @ResponseBody
+    public void inviteUser (@PathVariable Long idUser, @PathVariable Long idEvent){
+        activityService.inviteUser(idUser,idEvent);
+    }
+    @GetMapping("/accept/{idUser}/{idEvent}")
+    @ResponseBody
+    public void acceptInvitation (@PathVariable Long idEvent , @PathVariable Long idUser){
+        activityService.acceptInvitation(idEvent,idUser);
+    }
+    @GetMapping("/refuse/{idUser}/{idEvent}")
+    @ResponseBody
+    public void refuseAnInvitation (@PathVariable Long idUser, @PathVariable Long idEvent){
+        activityService.refuseAnInvitation(idUser,idEvent);
     }
     @GetMapping("/assign-point/{id-u}/{id-event}")
     @ResponseBody
@@ -163,6 +188,7 @@ public class ActitvityController {
     public void assignUserToSubscription(@PathVariable("id_user") Long idUser, @PathVariable("id_sub") Long idSubscription){
         activityService.assignUserToSubscription(idUser,idSubscription);
     }
+
     @PutMapping("/modifyS")
     @ResponseBody
     public void updateSubscription(@RequestBody Subscription s){
@@ -173,6 +199,34 @@ public class ActitvityController {
     @ResponseBody
     public Set<Event> filtreByDepartement(@PathVariable("dep") Departement departement){
         return activityService.filtreByDepartement(departement);
+    }
+
+    @PostMapping("/AddF/{idEvent}/{idUser}")
+    @ResponseBody
+    public void addFeedBack (@RequestBody FeedBack feedBack,@PathVariable Long idEvent,@PathVariable Long idUser){
+        activityService.addAndAssignFeedBack(feedBack,idEvent,idUser);
+    }
+
+    @DeleteMapping("/removeF/{feedback-id}")
+    @ResponseBody
+    public void deleteFeedBack(@PathVariable("feedback-id")FeedBack feedBack){
+        activityService.deleteFeedBack(feedBack);
+    }
+
+    @PutMapping("/modifyF")
+    @ResponseBody
+    public void updateFeedBack( @RequestBody FeedBack feedBack){
+         activityService.updateFeedBack(feedBack);
+    }
+    @GetMapping("/AverageRateEvent/{idEvent}")
+    @ResponseBody
+    public Float getAverageRateEvent( @PathVariable  Long idEvent){
+        return activityService.getAverageRateEvent(idEvent);
+    }
+    @GetMapping("/findMostPopularTag")
+    @ResponseBody
+    public void findMostPopularTag(){
+        activityService.findMostPopularTag();
     }
 
 }

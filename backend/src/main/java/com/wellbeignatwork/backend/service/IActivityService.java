@@ -2,10 +2,7 @@ package com.wellbeignatwork.backend.service;
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
-import com.wellbeignatwork.backend.entity.Departement;
-import com.wellbeignatwork.backend.entity.Event;
-import com.wellbeignatwork.backend.entity.Subscription;
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,22 +17,33 @@ public interface IActivityService {
     public void addUser(User u);
     public void assignUserToEvent (Long idUser, Long idEvent);
     public void export(HttpServletResponse response, Long idEvent, Long idUser, String text, int width, int height, String filePath) throws DocumentException, IOException, WriterException;
-    //public static byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException;
-    public int getNbrOfParticipant(Long idEvenet);
+    public void getNbrOfParticipant();
     public double calculDistance (String a, String b);
     public List<Event> sortedByDistance();
     public List<Event> sortedByFrais();
-    //public List<ITagsCount> tags();
     public double getRevenueByEvent(Long idEvent);
-    public Set<Event> showEventsByUser (Long idUser);
+    public List<Event> showEventsByUser (Long idUser);
+    public void cadeauEvent() ;
     public void reductionEvent (Long idEvent, Long idUser, int familyNumber);
+    public Object getEventWeather(Long eventId);
+    public void inviteUser (Long idUser,Long idEvent);
+    public void acceptInvitation (Long idEvent , Long idUser);
+    public void refuseAnInvitation (Long idUser, Long idEvent);
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
-     //public void validerEvent(Long idUser, Long idEvent);
     public Set<Event> filtreByDepartement(Departement departement);
+
+
      public void addSubscription(Subscription s);
      public void deleteSubscription(Subscription s);
      public void updateSubscription(Subscription s);
      public List<Subscription> getAllSubscriptions();
      public void assignUserToSubscription (Long idUser, Long idSubscription);
+
+    public void addAndAssignFeedBack(FeedBack feedBack,Long idEvent,Long idUser) ;
+    public void deleteFeedBack(FeedBack feedBack);
+    public void updateFeedBack(FeedBack feedBack);
+    Float getAverageRateEvent(Long idEvent);
+    public void findMostPopularTag();
+
 }

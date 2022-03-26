@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,8 @@ public class Subscription implements Serializable {
     private Date endDate;
     @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
+    @JsonIgnore
+
     @ManyToOne
     private User user;
 

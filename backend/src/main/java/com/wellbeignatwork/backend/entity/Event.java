@@ -1,11 +1,15 @@
 package com.wellbeignatwork.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,8 +31,9 @@ public class Event implements Serializable {
     private double frais;
     private double revenue;
 
-    @Temporal(TemporalType.DATE)
-    private Date eventDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
     @ElementCollection
     @CollectionTable(name = "eventTags",joinColumns = @JoinColumn(name = "idEvent"))
     @Column(nullable = false)
@@ -37,6 +42,14 @@ public class Event implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY ,mappedBy ="events")
     @JsonIgnore
     private Set<User> users;
+    @JsonIgnore
 
+    @OneToMany (mappedBy = "event")
+    private List<FeedBack> feedBacks;
+    @JsonIgnore
+
+    @OneToMany
+    @JoinTable(name = "invitation")
+    private List<User> invitedUsers ;
 
 }
