@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -67,12 +69,18 @@ public class UserController {
 
 
 
-    //just for test
+    // from  Amine .. just for testing front
 
     @PostMapping("/login/{userName}/{password}")
     @ResponseBody
     public ResponseEntity<?> login(@PathVariable String userName,@PathVariable String password){
         User found = userRepository.findUserByDisplayNameAndPassword(userName,password);
         return  ResponseEntity.ok(new TestResponse(found.getId(), found.getDisplayName()));
+    }
+
+    @GetMapping("/get-all-users")
+    @ResponseBody
+    public List<User> getAllUSers(){
+        return userRepository.findAll();
     }
 }
