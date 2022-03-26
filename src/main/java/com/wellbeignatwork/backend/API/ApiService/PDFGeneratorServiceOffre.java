@@ -1,7 +1,8 @@
 package com.wellbeignatwork.backend.API.ApiService;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfWriter;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
