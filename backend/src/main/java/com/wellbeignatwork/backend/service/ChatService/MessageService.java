@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotBlank;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -65,12 +66,33 @@ public class MessageService implements IMessageService{
             messageRepository
                     .findAll()
                     .forEach(message -> {
+                        log.info(message.getSender().getDisplayName());
                         chattesMap.put(message.getSender(), 0);
+                        chatters.put(message.getSender(),0);
                         //chattesMap.keySet().add(message.getSender());
                         topchatter.add(message.getSender());
                     });
 
+            messageRepository.findAll().forEach(message -> {
+                if(chattesMap.containsKey(message.getSender())){
+                    chattesMap.put(message.getSender(),chattesMap.get(message.getSender()) +1);
+                }
 
+            });
+/*
+            for (User user : chattesMap.keySet()) {
+                log.info("user : + " + user.getDisplayName() + "has : " + chattesMap.get(user) + " messages");
+            }
+*/
+            Map<User, Integer> result = chattesMap.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue())
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+            /*
             for (User user : chattesMap.keySet()) {
                 for (User value : topchatter) {
                     if (user.equals(value)) {
@@ -78,8 +100,10 @@ public class MessageService implements IMessageService{
 
                     }
                 }
-            }
+            } */
 
+
+                /*
             Map.Entry<User, Integer> maxEntry = null;
             int a = 0;
             while (a <= 2) {
@@ -93,10 +117,8 @@ public class MessageService implements IMessageService{
                 chattesMap.put(maxEntry.getKey(), 0);
                 a++;
             }
+*/
 
-            for (User user : chatters.keySet()) {
-                log.info("user : + " + user + "has : " + chatters.get(user) + " messages");
-            }
 
         }
 
