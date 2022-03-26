@@ -2,11 +2,11 @@ package com.wellbeignatwork.backend.controller;
 
 
 import com.wellbeignatwork.backend.dto.*;
-import com.wellbeignatwork.backend.exceptions.UserAlreadyExistAuthenticationException;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.security.jwt.TokenProvider;
-import com.wellbeignatwork.backend.service.MailService;
-import com.wellbeignatwork.backend.service.UserService;
+import com.wellbeignatwork.backend.service.UserService.MailService;
+import com.wellbeignatwork.backend.service.UserService.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

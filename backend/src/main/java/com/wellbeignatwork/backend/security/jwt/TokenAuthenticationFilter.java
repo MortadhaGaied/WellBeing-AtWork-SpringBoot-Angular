@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.security.jwt;
 
-import com.wellbeignatwork.backend.service.LocalUserDetailService;
+import com.wellbeignatwork.backend.service.UserService.LocalUserDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

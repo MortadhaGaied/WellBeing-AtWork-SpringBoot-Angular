@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.UserConfig;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

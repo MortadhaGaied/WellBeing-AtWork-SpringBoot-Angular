@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.NotificationService;
 
 
 import com.google.firebase.messaging.*;
@@ -16,12 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 @Service
-public class PushNotificationService implements INotificationService{
+public class PushNotificationService implements INotificationService {
 
     private final Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
 

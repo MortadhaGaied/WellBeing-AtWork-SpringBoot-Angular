@@ -1,9 +1,9 @@
 package com.wellbeignatwork.backend.controller;
 
-import com.wellbeignatwork.backend.config.CurrentUser;
+import com.wellbeignatwork.backend.config.UserConfig.CurrentUser;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.service.UserService;
+import com.wellbeignatwork.backend.service.UserService.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

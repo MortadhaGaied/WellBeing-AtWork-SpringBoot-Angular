@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.UserService;
 
 import com.wellbeignatwork.backend.entity.ConfirmationToken;
 import com.wellbeignatwork.backend.repository.ConfirmationTokenRepository;

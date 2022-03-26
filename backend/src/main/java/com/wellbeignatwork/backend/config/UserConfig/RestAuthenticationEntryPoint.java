@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.UserConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

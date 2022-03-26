@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.NotificationService;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;

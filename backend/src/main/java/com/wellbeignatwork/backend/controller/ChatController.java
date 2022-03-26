@@ -4,13 +4,10 @@ package com.wellbeignatwork.backend.controller;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.payload.MessageRequest;
 import com.wellbeignatwork.backend.payload.MessageResponse;
-import com.wellbeignatwork.backend.payload.PushNotificationResponse;
-import com.wellbeignatwork.backend.repository.MessageRepository;
-import com.wellbeignatwork.backend.service.ChatRoomService;
-import com.wellbeignatwork.backend.service.MessageService;
+import com.wellbeignatwork.backend.service.ChatService.ChatRoomService;
+import com.wellbeignatwork.backend.service.ChatService.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +15,11 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin("*")
 @RestController

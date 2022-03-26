@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.ChatService;
 
 
 import com.wellbeignatwork.backend.entity.Message;
@@ -18,7 +18,7 @@ import java.util.*;
 
 @Slf4j
 @Service
-public class MessageService {
+public class MessageService implements IMessageService{
     private final MessageRepository messageRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;

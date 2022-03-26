@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.UserConfig;
 
 import com.wellbeignatwork.backend.entity.Role;
 import com.wellbeignatwork.backend.repository.RoleRepository;

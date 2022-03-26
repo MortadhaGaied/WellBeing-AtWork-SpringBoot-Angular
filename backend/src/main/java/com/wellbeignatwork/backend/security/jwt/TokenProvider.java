@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.security.jwt;
 
 
-import com.wellbeignatwork.backend.config.AppProperties;
+import com.wellbeignatwork.backend.config.UserConfig.AppProperties;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;

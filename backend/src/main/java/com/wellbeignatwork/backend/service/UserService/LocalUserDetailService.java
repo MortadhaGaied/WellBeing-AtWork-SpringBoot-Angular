@@ -1,8 +1,9 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.UserService;
 
 
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.service.UserService.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

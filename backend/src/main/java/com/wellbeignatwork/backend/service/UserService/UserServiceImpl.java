@@ -1,14 +1,13 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.UserService;
 
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SignUpRequest;
 import com.wellbeignatwork.backend.dto.SocialProvider;
-import com.wellbeignatwork.backend.exceptions.OAuth2AuthenticationProcessingException;
-import com.wellbeignatwork.backend.exceptions.UserAlreadyExistAuthenticationException;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.entity.ConfirmationToken;
 import com.wellbeignatwork.backend.entity.Role;
 import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.RoleRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.security.oauth2.user.OAuth2UserInfo;

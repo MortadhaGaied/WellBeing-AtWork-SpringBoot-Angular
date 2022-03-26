@@ -1,5 +1,6 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.UserConfig;
 
+import com.wellbeignatwork.backend.config.UserConfig.RestAuthenticationEntryPoint;
 import com.wellbeignatwork.backend.security.jwt.TokenAuthenticationFilter;
 import com.wellbeignatwork.backend.security.oauth2.*;
 import org.springframework.beans.factory.annotation.Autowired;

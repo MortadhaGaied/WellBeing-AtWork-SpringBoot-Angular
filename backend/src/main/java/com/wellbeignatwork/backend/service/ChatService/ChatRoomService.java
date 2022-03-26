@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.ChatService;
 
 
 import com.google.firebase.messaging.FirebaseMessagingException;
@@ -11,6 +11,7 @@ import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.service.NotificationService.PushNotificationService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
-public class ChatRoomService {
+public class ChatRoomService implements IChatService {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatRoomRepository chatRoomRepository;
@@ -89,12 +90,8 @@ public class ChatRoomService {
     }
 
 
-
-
-
-
     @Transactional
-   // @Scheduled(fixedRate = 10000)
+    // @Scheduled(fixedRate = 10000)
     public void calculateResponseRatePerRoom() {
 
         chatRoomRepository.findAll().forEach(chatRoom -> {
@@ -115,7 +112,7 @@ public class ChatRoomService {
                 if (sentAt.size() < 2) {
                     chatRoom.setAverageResponseTime("not calculated yet");
                 } else {
-                            log.info("here");
+                    log.info("here");
                     for (int i = 1; i < sentAt.size(); i++) {
                         Date d1;
                         Date d2;
@@ -170,7 +167,6 @@ public class ChatRoomService {
                 .map((chatRoom -> chatRoom.getUsers().remove(user)))
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + chatRoomId + "does not exist"));
     }
-
 
 
     public void oneToOneChat(Message message, Long senderId, Long recieverId) throws FirebaseMessagingException {
@@ -243,13 +239,12 @@ public class ChatRoomService {
         //subscribe all users in the chatRoom to the specific notification topic
         List<String> subscriptionTokens = new ArrayList<>();
         chatRoom.getUsers().forEach(user -> {
-            if(user.getFireBaseToken()!=null){
+            if (user.getFireBaseToken() != null) {
                 subscriptionTokens.add(user.getFireBaseToken());
             }
 
         });
         notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", roomId));
-
         //notify all room users that a new message have been sent
         notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getDisplayName(), String.format("room_%s", roomId)));
 

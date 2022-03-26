@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.security.oauth2;
 
-import com.wellbeignatwork.backend.exceptions.OAuth2AuthenticationProcessingException;
-import com.wellbeignatwork.backend.service.UserService;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
+import com.wellbeignatwork.backend.service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;

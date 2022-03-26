@@ -1,8 +1,8 @@
 package com.wellbeignatwork.backend.security.oauth2;
 
 import com.wellbeignatwork.backend.dto.SocialProvider;
-import com.wellbeignatwork.backend.exceptions.OAuth2AuthenticationProcessingException;
-import com.wellbeignatwork.backend.service.UserService;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
+import com.wellbeignatwork.backend.service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
