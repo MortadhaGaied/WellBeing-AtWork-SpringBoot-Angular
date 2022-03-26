@@ -23,4 +23,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int enableAppUser(String email);
 
     List<User> findUsersByMessagesIsNull();
+    User findUserByDisplayNameAndPassword(String displayName, String password);
 }

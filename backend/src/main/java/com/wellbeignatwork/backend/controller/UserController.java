@@ -3,9 +3,13 @@ package com.wellbeignatwork.backend.controller;
 import com.wellbeignatwork.backend.config.UserConfig.CurrentUser;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.service.UserService.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
+import com.wellbeignatwork.backend.util.TestResponse;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +50,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepository userRepository;
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -57,5 +63,16 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public User findUserById(@PathVariable Long id) {
         return userService.findUserById(id);
+    }
+
+
+
+    //just for test
+
+    @PostMapping("/login/{userName}/{password}")
+    @ResponseBody
+    public ResponseEntity<?> login(@PathVariable String userName,@PathVariable String password){
+        User found = userRepository.findUserByDisplayNameAndPassword(userName,password);
+        return  ResponseEntity.ok(new TestResponse(found.getId(), found.getDisplayName()));
     }
 }

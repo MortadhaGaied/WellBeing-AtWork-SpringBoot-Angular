@@ -25,6 +25,11 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 65981149772133526L;
 
+	public User(String displayName,String password){
+		this.displayName=displayName;
+		this.password=password;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
