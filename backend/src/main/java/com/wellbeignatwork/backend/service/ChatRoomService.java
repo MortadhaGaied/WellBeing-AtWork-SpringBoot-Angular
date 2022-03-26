@@ -249,7 +249,12 @@ public class ChatRoomService {
 
         //subscribe all users in the chatRoom to the specific notification topic
         List<String> subscriptionTokens = new ArrayList<>();
-        chatRoom.getUsers().forEach(user -> subscriptionTokens.add(user.getFireBaseToken()));
+        chatRoom.getUsers().forEach(user -> {
+            if(user.getFireBaseToken()!=null){
+                subscriptionTokens.add(user.getFireBaseToken());
+            }
+
+        });
         notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", roomId));
 
         //notify all room users that a new message have been sent
