@@ -1,9 +1,9 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Forum;
 
-import com.wellbeignatwork.backend.entity.Comment;
-import com.wellbeignatwork.backend.entity.Post;
-import com.wellbeignatwork.backend.repository.CommentRepository;
-import com.wellbeignatwork.backend.repository.PostRepository;
+import com.wellbeignatwork.backend.entity.Forum.Comment;
+import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
+import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 import com.wellbeignatwork.backend.exceptions.PostException;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;

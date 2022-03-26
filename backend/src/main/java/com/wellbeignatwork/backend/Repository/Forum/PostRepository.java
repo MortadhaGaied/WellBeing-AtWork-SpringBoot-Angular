@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.repository;
+package com.wellbeignatwork.backend.repository.Forum;
 
-import com.wellbeignatwork.backend.entity.Post;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;

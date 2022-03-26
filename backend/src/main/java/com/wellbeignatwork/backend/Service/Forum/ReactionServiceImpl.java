@@ -1,9 +1,9 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Forum;
 
-import com.wellbeignatwork.backend.entity.Post;
-import com.wellbeignatwork.backend.entity.Reaction;
-import com.wellbeignatwork.backend.repository.PostRepository;
-import com.wellbeignatwork.backend.repository.ReactionRepository;
+import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.entity.Forum.Reaction;
+import com.wellbeignatwork.backend.repository.Forum.PostRepository;
+import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

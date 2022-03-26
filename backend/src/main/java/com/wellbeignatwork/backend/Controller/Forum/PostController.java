@@ -1,7 +1,7 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.Forum;
 
-import com.wellbeignatwork.backend.entity.Post;
-import com.wellbeignatwork.backend.service.PostService;
+import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.service.Forum.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

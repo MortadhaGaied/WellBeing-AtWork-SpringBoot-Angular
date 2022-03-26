@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Forum;
 
-import com.wellbeignatwork.backend.entity.Post;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.Forum;
 
-import com.wellbeignatwork.backend.entity.Reaction;
-import com.wellbeignatwork.backend.service.ReactionService;
+import com.wellbeignatwork.backend.entity.Forum.Reaction;
+import com.wellbeignatwork.backend.service.Forum.ReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

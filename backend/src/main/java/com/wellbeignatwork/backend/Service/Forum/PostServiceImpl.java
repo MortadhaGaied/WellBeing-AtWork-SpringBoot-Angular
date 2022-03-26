@@ -1,10 +1,10 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Forum;
 
-import com.wellbeignatwork.backend.entity.*;
-import com.wellbeignatwork.backend.repository.CommentRepository;
-import com.wellbeignatwork.backend.repository.FileRepository;
-import com.wellbeignatwork.backend.repository.PostRepository;
-import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.entity.Forum.*;
+import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
+import com.wellbeignatwork.backend.repository.Forum.FileRepository;
+import com.wellbeignatwork.backend.repository.Forum.PostRepository;
+import com.wellbeignatwork.backend.repository.Forum.UserRepository;
 import com.wellbeignatwork.backend.exceptions.PostException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

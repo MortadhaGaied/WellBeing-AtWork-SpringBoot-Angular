@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend;
 
-import com.wellbeignatwork.backend.service.FileStorageService;
+import com.wellbeignatwork.backend.service.Forum.FileStorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
