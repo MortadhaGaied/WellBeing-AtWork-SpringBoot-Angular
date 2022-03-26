@@ -58,7 +58,7 @@ public class ReservationPDFExporter {
         }
     }
 
-    public void export(HttpServletResponse response) throws DocumentException, IOException {
+    public String export(HttpServletResponse response) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -67,14 +67,14 @@ public class ReservationPDFExporter {
         font.setSize(18);
         font.setColor(Color.BLUE);
 
-        Paragraph p = new Paragraph("List of Users", font);
+        Paragraph p = new Paragraph("List of Reservation", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
 
         document.add(p);
 
-        PdfPTable table = new PdfPTable(6);
+        PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {2f, 2f, 2.5f, 3.0f, 3f,2f});
+        table.setWidths(new float[] {2f, 2f, 2f, 2.5f, 2.5f});
         table.setSpacingBefore(10);
 
         writeTableHeader(table);
@@ -84,5 +84,6 @@ public class ReservationPDFExporter {
 
         document.close();
 
+        return null;
     }
 }

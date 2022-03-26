@@ -3,9 +3,10 @@ package com.wellbeignatwork.backend.Controller;
 import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 import com.wellbeignatwork.backend.API.OfferPDFExporter;
-import com.wellbeignatwork.backend.API.PdfAllOffre;
 import com.wellbeignatwork.backend.API.QRCodeGenerator;
+import com.wellbeignatwork.backend.API.ReservationPDFExporter;
 import com.wellbeignatwork.backend.ServiceImp.IOfferService;
+import com.wellbeignatwork.backend.ServiceImp.ISendEmailService;
 import com.wellbeignatwork.backend.model.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ public class OfferController {
     IOfferService offerService;
 
     @Autowired
-    private PdfAllOffre pdf;
+    private ISendEmailService iSendEmailService;
+
 
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/Image/QRCode.png";
 

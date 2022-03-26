@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,8 +24,8 @@ public class Offer implements Serializable {
 	long  idOffer;
 	String title;
 	String descrption;
-	Date starDateOf;
-	Date endDateOf;
+	LocalDateTime starDateOf;
+	LocalDateTime endDateOf;
 	int nplaces;
 	float promotion;
 	int percentage;

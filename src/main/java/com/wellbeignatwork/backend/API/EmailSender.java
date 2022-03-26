@@ -12,9 +12,10 @@ import java.io.File;
 
 @Service
 public class EmailSender {
+
     @Autowired
     private JavaMailSender javaMailSender;
-    public void sendMailWithAttachement (String toEmail,String body,String subject,String attchment) throws MessagingException, javax.mail.MessagingException {
+   /* public void sendMailWithAttachement (String toEmail,String body,String subject,String attchment) throws MessagingException, javax.mail.MessagingException {
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
         mimeMessageHelper.setFrom("willbieng7@gmail.com");
@@ -23,6 +24,16 @@ public class EmailSender {
 
         FileSystemResource fileSystemResource= new FileSystemResource(new File(attchment));
         mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
+        javaMailSender.send(mimeMessage);
+
+        System.out.println("Mail send sucessufully");
+    }*/
+    public void sendMail (String toEmail,String body,String subject) throws javax.mail.MessagingException {
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
+        mimeMessageHelper.setFrom("willbieng7@gmail.com");
+        mimeMessageHelper.setTo(toEmail);
+        mimeMessageHelper.setSubject(subject);
         javaMailSender.send(mimeMessage);
 
         System.out.println("Mail send sucessufully");

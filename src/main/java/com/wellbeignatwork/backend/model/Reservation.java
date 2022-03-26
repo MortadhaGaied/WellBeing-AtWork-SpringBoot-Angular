@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -20,8 +21,8 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long idReservation;
-    Date startDateRes;
-    Date endDateRes;
+    LocalDateTime startDateRes;
+    LocalDateTime endDateRes;
     int nmPalce;
 
     @ManyToOne

@@ -27,9 +27,8 @@ public class ReservationController {
 
     @Autowired
     IReservationService reservationService;
+
     @Autowired
-    private PdfAllOffre pdf;
-        @Autowired
     private ISendEmailService iServiceEmail;
 
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/Image/QRCode.png";
@@ -74,7 +73,7 @@ public class ReservationController {
 
 
         //  generatePDF(response,formateur.getEmail(),formateur.getEmail(),qrcode);
-        iServiceEmail.sendSimpleEmail("mahdijr2015@gmail.com"," add Formateur " ," add succesful ... ");
+        //iServiceEmail.sendSimpleEmail("mahdi.homrani@esprit.tn"," add Reservartion " ," add succesful ... ");
         reservationService.reservation(idUser,idOffer,r);
     }
 

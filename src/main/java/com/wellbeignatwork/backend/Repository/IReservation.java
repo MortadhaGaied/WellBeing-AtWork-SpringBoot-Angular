@@ -5,6 +5,7 @@ import com.wellbeignatwork.backend.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,5 @@ public interface IReservation  extends JpaRepository<Reservation, Long> {
 
     @Override
     List<Reservation> findAll();
+    List<Reservation> findAllByStartDateResIsBefore(LocalDateTime date);
 }

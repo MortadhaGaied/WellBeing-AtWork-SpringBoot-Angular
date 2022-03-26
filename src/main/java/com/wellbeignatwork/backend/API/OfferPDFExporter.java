@@ -62,7 +62,7 @@ public class OfferPDFExporter {
         font.setSize(18);
         font.setColor(Color.BLUE);
 
-        Paragraph p = new Paragraph("List of Users", font);
+        Paragraph p = new Paragraph("List of Offer", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
 
         document.add(p);

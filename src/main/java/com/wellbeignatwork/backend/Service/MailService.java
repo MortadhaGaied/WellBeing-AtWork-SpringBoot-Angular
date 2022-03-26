@@ -12,7 +12,8 @@ import javax.mail.internet.MimeMessage;
 @Service
     public class MailService {
 
-        @Autowired
+
+
         private JavaMailSender emailSender;
 
         @Value("${spring.mail.username}")
