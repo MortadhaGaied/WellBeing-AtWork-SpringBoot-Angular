@@ -1,6 +1,10 @@
 package com.wellbeignatwork.backend.service.ChatService;
 
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
@@ -101,10 +106,32 @@ public class MessageService implements IMessageService{
 
     // delete all Messaged evry week At 00:00 on Sunday.
     //@Scheduled(cron = "0 0 0 * * 0")
-    @Scheduled(cron = "0 0 1 * * MON")
-    public void clearMessages() {
-        messageRepository.deleteAllInBatch();
-        log.info("all Messages are Cleaned from database");
-    }
+    @Scheduled(cron = "0 0 0 * * MON")
+    public void archiveMessages() throws ExecutionException, InterruptedException {
+        Map<String,List<Message>> data=new HashMap<>();
+        List<Message>cleanedList = new ArrayList<>();
+        if(!messageRepository.findAll().isEmpty()){
+            messageRepository.findAll().forEach(message -> {
+                message.getSender().setRooms(null);
+                message.getSender().setRoles(null);
+                message.getSender().setMessages(null);
+                message.getChatroom().setUsers(null);
+                message.getChatroom().setMessages(null);
+
+                cleanedList.add(message);
+
+            });
+            //save old messages to firebase
+            data.put("messages",cleanedList);
+            Firestore dbFirestore = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> future=dbFirestore.collection("message-archive").document(new Date().toString()).set(data);
+            //delete all messages from our dataBase
+            log.info(future.get().getUpdateTime().toString());
+            messageRepository.deleteAllInBatch();
+            log.info("all Messages are Cleaned from database and moved to firebase cloud DB");
+        }
+        }
+
+
 
 }
