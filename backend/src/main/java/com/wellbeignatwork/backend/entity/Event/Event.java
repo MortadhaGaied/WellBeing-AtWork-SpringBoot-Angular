@@ -1,14 +1,11 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 

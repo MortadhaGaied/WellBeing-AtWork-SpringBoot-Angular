@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.repository;
+package com.wellbeignatwork.backend.repository.Event;
 
-import com.wellbeignatwork.backend.entity.Subscription;
+import com.wellbeignatwork.backend.entity.Event.Subscription;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

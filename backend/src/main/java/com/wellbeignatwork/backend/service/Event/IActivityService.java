@@ -1,8 +1,8 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Event;
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
-import com.wellbeignatwork.backend.entity.*;
+import com.wellbeignatwork.backend.entity.Event.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public interface IActivityService {
      public List<Subscription> getAllSubscriptions();
      public void assignUserToSubscription (Long idUser, Long idSubscription);
 
-    public void addAndAssignFeedBack(FeedBack feedBack,Long idEvent,Long idUser) ;
+    public void addAndAssignFeedBack(FeedBack feedBack, Long idEvent, Long idUser) ;
     public void deleteFeedBack(FeedBack feedBack);
     public void updateFeedBack(FeedBack feedBack);
     Float getAverageRateEvent(Long idEvent);

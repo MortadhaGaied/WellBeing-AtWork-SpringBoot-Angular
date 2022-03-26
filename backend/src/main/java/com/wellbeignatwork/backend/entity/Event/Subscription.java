@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

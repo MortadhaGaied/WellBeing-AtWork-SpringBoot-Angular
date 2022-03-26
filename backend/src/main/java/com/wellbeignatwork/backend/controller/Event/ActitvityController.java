@@ -1,11 +1,11 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.Event;
 
 
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
-import com.wellbeignatwork.backend.entity.*;
-import com.wellbeignatwork.backend.service.ActivityServiceImp;
-import com.wellbeignatwork.backend.service.IActivityService;
+import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.service.Event.ActivityServiceImp;
+import com.wellbeignatwork.backend.service.Event.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import org.springframework.ui.Model;
 
 @RestController
 @RequestMapping("/event")
@@ -203,7 +202,7 @@ public class ActitvityController {
 
     @PostMapping("/AddF/{idEvent}/{idUser}")
     @ResponseBody
-    public void addFeedBack (@RequestBody FeedBack feedBack,@PathVariable Long idEvent,@PathVariable Long idUser){
+    public void addFeedBack (@RequestBody FeedBack feedBack, @PathVariable Long idEvent, @PathVariable Long idUser){
         activityService.addAndAssignFeedBack(feedBack,idEvent,idUser);
     }
 

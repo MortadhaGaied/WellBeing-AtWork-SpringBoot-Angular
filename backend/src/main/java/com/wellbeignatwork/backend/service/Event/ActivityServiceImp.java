@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.service;
+package com.wellbeignatwork.backend.service.Event;
 
 
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
@@ -15,16 +15,16 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.exceptions.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.util.WeatherService;
-import com.wellbeignatwork.backend.entity.*;
 
-import com.wellbeignatwork.backend.entity.Event;
-import com.wellbeignatwork.backend.repository.EventRepository;
-import com.wellbeignatwork.backend.repository.FeedBackRep;
-import com.wellbeignatwork.backend.repository.SubscriptionRepository;
-import com.wellbeignatwork.backend.repository.UserRepo;
+import com.wellbeignatwork.backend.repository.Event.EventRepository;
+import com.wellbeignatwork.backend.repository.Event.FeedBackRep;
+import com.wellbeignatwork.backend.repository.Event.SubscriptionRepository;
+import com.wellbeignatwork.backend.repository.Event.UserRepo;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -570,7 +570,7 @@ public class ActivityServiceImp implements IActivityService{
     }
 
     @Override
-    public void addAndAssignFeedBack(FeedBack feedBack,Long idEvent,Long idUser) {
+    public void addAndAssignFeedBack(FeedBack feedBack, Long idEvent, Long idUser) {
         Event event = eventRepository.findById(idEvent).orElse(null);
         User user = userRepo.findById(idUser).orElse(null);
         if(!event.getUsers().contains(user)){

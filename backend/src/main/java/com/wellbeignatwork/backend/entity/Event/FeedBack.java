@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -9,7 +9,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Entity
 @Getter

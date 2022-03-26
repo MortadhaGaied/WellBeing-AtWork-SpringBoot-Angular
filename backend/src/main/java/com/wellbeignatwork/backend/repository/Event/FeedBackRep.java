@@ -1,7 +1,7 @@
-package com.wellbeignatwork.backend.repository;
-import com.wellbeignatwork.backend.entity.Event;
+package com.wellbeignatwork.backend.repository.Event;
+import com.wellbeignatwork.backend.entity.Event.Event;
 
-import com.wellbeignatwork.backend.entity.FeedBack;
+import com.wellbeignatwork.backend.entity.Event.FeedBack;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
