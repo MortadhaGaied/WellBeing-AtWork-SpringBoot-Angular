@@ -1,8 +1,8 @@
-package com.wellbeignatwork.backend.Controller;
+package com.wellbeignatwork.backend.controller;
 
-import com.wellbeignatwork.backend.Entity.File;
-import com.wellbeignatwork.backend.Repository.FileRepository;
-import com.wellbeignatwork.backend.Service.FileStorageService;
+import com.wellbeignatwork.backend.entity.File;
+import com.wellbeignatwork.backend.repository.FileRepository;
+import com.wellbeignatwork.backend.service.FileStorageService;
 import com.wellbeignatwork.backend.message.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

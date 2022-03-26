@@ -1,9 +1,9 @@
 package com.wellbeignatwork.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -11,17 +11,14 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class File {
+public class Reaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private String url;
+    private int idReaction;
+    @Enumerated(EnumType.STRING)
+    private ReactionType reactionType;
+    private int idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Post post_attachment;
-    public File(String name,String url){
-        this.name=name;
-        this.url=url;
-    }
+    private Post post;
+
 }

@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.Service;
+package com.wellbeignatwork.backend.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

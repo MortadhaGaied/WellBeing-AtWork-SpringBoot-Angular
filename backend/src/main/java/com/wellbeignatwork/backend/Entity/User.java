@@ -1,5 +1,6 @@
-package com.wellbeignatwork.backend.Entity;
+package com.wellbeignatwork.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,9 +21,11 @@ public class User implements Serializable {
     private int id;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Post> posts;
-    @ElementCollection
+    @ElementCollection(targetClass = Tags.class)
     @CollectionTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "tags")
+    @Enumerated(EnumType.STRING)
     private Set<Tags> tags = new HashSet<>();
 }

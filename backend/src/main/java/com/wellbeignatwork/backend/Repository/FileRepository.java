@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.Repository;
+package com.wellbeignatwork.backend.repository;
 
-import com.wellbeignatwork.backend.Entity.File;
+import com.wellbeignatwork.backend.entity.File;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

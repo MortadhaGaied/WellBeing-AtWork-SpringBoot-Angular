@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.Entity;
+package com.wellbeignatwork.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -24,15 +24,18 @@ public class Post implements Serializable {
     private String content;
     private LocalDateTime createdAt=LocalDateTime.now();
     private LocalDateTime modifiedAt;
-    @ElementCollection
+    @ElementCollection(targetClass = Tags.class)
     @CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "tags")
+    @Enumerated(EnumType.STRING)
     private Set<Tags> tags = new HashSet<>();
-    @OneToMany(mappedBy = "post_attachment",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post_attachment",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<File> fileAttachments;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User user;
-    @OneToMany(mappedBy = "post_comment",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post_comment",cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<Reaction> reactions;
 }

@@ -1,5 +1,6 @@
-package com.wellbeignatwork.backend.Entity;
+package com.wellbeignatwork.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,9 +16,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idComment;
     private String commentContent;
-    private LocalDateTime createDate;
+    private LocalDateTime createDate=LocalDateTime.now();
     private LocalDateTime modifyDate;
     private int idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private Post post_comment;
 }

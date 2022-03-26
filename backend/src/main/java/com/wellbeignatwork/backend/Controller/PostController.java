@@ -1,17 +1,16 @@
-package com.wellbeignatwork.backend.Controller;
+package com.wellbeignatwork.backend.controller;
 
-import com.wellbeignatwork.backend.Entity.Post;
-import com.wellbeignatwork.backend.Service.PostService;
+import com.wellbeignatwork.backend.entity.Post;
+import com.wellbeignatwork.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
-
-
 @RequestMapping("/Post")
 public class PostController {
     private PostService postService;
@@ -39,5 +38,17 @@ public class PostController {
     @GetMapping("/assignFileToPost/{id_post}/{id_file}")
     public ResponseEntity<Post> assignFileToPost(@PathVariable int id_post,@PathVariable int id_file){
         return new ResponseEntity<>(this.postService.assignFileToPost(id_post, id_file),HttpStatus.OK);
+    }
+    @GetMapping("/groupByPreference/{idUser}")
+    public List<Post> groupByPreference(@PathVariable int idUser){
+        return this.postService.groupByPreference(idUser);
+    }
+    @GetMapping("assignUserToPost/{idUser}/{idPost}")
+    public Post assignUserToPost(@PathVariable int idUser,@PathVariable int idPost){
+        return postService.assignUserToPost(idUser, idPost);
+    }
+    @GetMapping("/TrendingPost")
+    public void getTrendingPost(){
+        postService.getTrendingPost();
     }
 }

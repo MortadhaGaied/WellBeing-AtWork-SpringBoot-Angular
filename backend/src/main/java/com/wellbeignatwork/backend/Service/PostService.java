@@ -1,8 +1,9 @@
-package com.wellbeignatwork.backend.Service;
+package com.wellbeignatwork.backend.service;
 
-import com.wellbeignatwork.backend.Entity.Post;
+import com.wellbeignatwork.backend.entity.Post;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface PostService {
     public Post createpost(Post post);
@@ -11,5 +12,8 @@ public interface PostService {
     public Post updatepost(Post post);
     public void deletepost(int id);
     public Post assignFileToPost(int id_file,int id_post);
+    public List<Post> groupByPreference(int idUser);
+    public Post assignUserToPost(int idUser,int idPost);
+    public List<Post> getTrendingPost();
 
 }
