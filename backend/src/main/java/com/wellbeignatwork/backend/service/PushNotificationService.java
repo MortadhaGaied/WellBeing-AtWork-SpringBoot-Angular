@@ -86,7 +86,7 @@ public class PushNotificationService implements INotificationService{
         sendToTopic(new PushNotificationRequest(title, message, "all-users"));
     }
     @Override
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(cron ="0 0 8,10 * * *")
     public void chatReminderForInavtiveUsers() throws FirebaseMessagingException {
         List<String>tokens=new ArrayList<>();
         userRepository.findUsersByMessagesIsNull().forEach(user -> {
@@ -94,11 +94,15 @@ public class PushNotificationService implements INotificationService{
                 tokens.add(user.getFireBaseToken());
             }
         });
+        if(!tokens.isEmpty()){
+            subScribeUsersToTopic(tokens,"activityReminder");
+            sendToTopic(new PushNotificationRequest("chat-notifier"
+                    ,"remember that you can communicate with your teammates in realtime using our chat section",
+                    "activityReminder"));
+        }
 
-        subScribeUsersToTopic(tokens,"activityReminder");
-        sendToTopic(new PushNotificationRequest("chat-notifier"
-                ,"remember that you can communicate with your teammates in realtime using our chat section",
-                "activityReminder"));
+        else log.info("no users in database");
+
     }
 
 }

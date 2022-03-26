@@ -28,6 +28,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
+
 public class ChatController {
     private final ChatRoomService chatRoomService;
 
@@ -47,44 +48,44 @@ public class ChatController {
 
 
 
-    @PostMapping("/add-room")
+    @PostMapping("/chatroom/add-room")
     @ResponseBody
     public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom) {
         return chatRoomService.createChatRoom(chatRoom);
     }
 
-    @DeleteMapping("/delete-room")
+    @DeleteMapping("/chatroom/delete-room")
     @ResponseBody
     public void deleteChatRoom(@RequestBody ChatRoom chatRoom) {
         chatRoomService.deleteChatRoom(chatRoom);
     }
 
-    @PutMapping("/update-room")
+    @PutMapping("/chatroom/update-room")
     @ResponseBody
     public ChatRoom updateRoom(@RequestBody ChatRoom chatRoom) {
         return chatRoomService.updateChatRoom(chatRoom);
     }
 
-    @GetMapping("/all-rooms")
+    @GetMapping("/chatroom/all-rooms")
     @ResponseBody
     @CrossOrigin("*")
     public List<ChatRoom> getAllRooms() {
         return chatRoomService.getAllRooms();
     }
 
-    @GetMapping("/all-public-rooms")
+    @GetMapping("/chatroom/all-public-rooms")
     public List<ChatRoom> getPublicRooms() {
         return chatRoomService.getPublicRooms();
     }
 
 
-    @GetMapping("/addUserToRoom/{chatRoomId}/{userId}")
+    @GetMapping("/chatroom/addUserToRoom/{chatRoomId}/{userId}")
     @ResponseBody
     public void addUserToChatRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
         chatRoomService.addUserToChatRoom(chatRoomId, userId);
     }
 
-    @GetMapping("/removeUserFromRoom/{chatRoomId}/{userId}")
+    @GetMapping("/chatroom/removeUserFromRoom/{chatRoomId}/{userId}")
     @ResponseBody
     public void removeUserFromRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
         chatRoomService.removeUserFromChatRoom(chatRoomId, userId);
@@ -112,14 +113,14 @@ public class ChatController {
     }
 
 
-    @PostMapping("/save-discussion")
+    @PostMapping("/chatroom/save-discussion")
     @ResponseBody
     public ResponseEntity<?> saveDiscussion(@Valid @RequestBody MessageRequest request) {
         messageService.saveDiscussion(request.getMessages());
         return new ResponseEntity<>(new MessageResponse(HttpStatus.OK.value(), "Discussion Saved Successfully"), HttpStatus.OK);
     }
 
-    @GetMapping("/retrieve-discussion/{roomId}")
+    @GetMapping("/chatroom/retrieve-discussion/{roomId}")
     @ResponseBody
     public ResponseEntity<?> retrieveDiscussions(@PathVariable Long roomId) {
         return new ResponseEntity<>(messageService.retrieveDiscussions(roomId), HttpStatus.OK);
