@@ -227,5 +227,9 @@ public class ActitvityController {
     public void findMostPopularTag(){
         activityService.findMostPopularTag();
     }
+    @GetMapping("/EventSatisfaction/{idEvent}")
+    public List<Integer> PostSatisfaction(@PathVariable Long idEvent){
+        return activityService.EventSatisfaction(idEvent);
+    }
 
 }

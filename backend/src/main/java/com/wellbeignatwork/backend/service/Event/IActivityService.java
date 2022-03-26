@@ -45,5 +45,6 @@ public interface IActivityService {
     public void updateFeedBack(FeedBack feedBack);
     Float getAverageRateEvent(Long idEvent);
     public void findMostPopularTag();
+    public List<Integer> EventSatisfaction(Long idEvent);
 
 }

@@ -32,6 +32,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.awt.*;
@@ -46,14 +47,25 @@ import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
 import static javax.mail.Transport.send;
 
 @RestController
 public class ActivityServiceImp implements IActivityService{
-
+    private StanfordCoreNLP pipeline;
     EventRepository eventRepository;
     UserRepo userRepo;
     SubscriptionRepository subscriptionRepository;
+    @PostConstruct
+    public void init() {
+        pipeline = new StanfordCoreNLP("MyPropFile.properties");
+    }
     @Autowired
     FeedBackRep feedBackRep;
     private JavaMailSender javaMailSender;
@@ -623,6 +635,45 @@ public class ActivityServiceImp implements IActivityService{
         }
         System.out.println(tags);
         System.out.println(nbParticipantByTag);
+    }
+    @Override
+    public List<Integer> EventSatisfaction(Long idEvent){
+        Event event=eventRepository.findById(idEvent).orElse(null);
+        List<Integer> result=new ArrayList<>();
+        if(event.getFeedBacks()==null){
+            return null;
+        }
+        else{
+            for(FeedBack f:event.getFeedBacks()){
+                result.add(findSentiment(f.getContent()));
+            }
+            return result;
+        }
+
+    }
+    public int findSentiment(String content) {
+        int mainSentiment = 0;
+        String cleancontent = cleancontent(content);
+        if (cleancontent != null && cleancontent.length() > 0) {
+            int longest = 0;
+            Annotation annotation = pipeline.process(cleancontent);
+            for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
+                Tree tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
+                int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+                String partText = sentence.toString();
+                if (partText.length() > longest) {
+                    mainSentiment = sentiment;
+                    longest = partText.length();
+                }
+            }
+        }
+        return mainSentiment;
+    }
+    private String cleancontent(String commentContent) {
+        commentContent = commentContent.toLowerCase();
+        commentContent = commentContent.replaceAll("(@[A-Za-z0-9_]+)|([^0-9A-Za-z \\t])|(\\w+:\\/\\/\\S+)", " ");
+        System.out.println(commentContent);
+        return commentContent;
     }
 
 
