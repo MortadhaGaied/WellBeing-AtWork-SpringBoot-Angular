@@ -16,7 +16,7 @@ public interface IOfferService {
 
     Offer retrieveOffer(Long id);
 
-
+    List<Offer> listAll() ;
     
     float calculProm(long idOffer);
 

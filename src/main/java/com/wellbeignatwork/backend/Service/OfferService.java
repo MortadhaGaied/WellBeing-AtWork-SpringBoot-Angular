@@ -7,7 +7,9 @@ import com.wellbeignatwork.backend.ServiceImp.IOfferService;
 import com.wellbeignatwork.backend.model.Collaboration;
 import com.wellbeignatwork.backend.model.Happy;
 import com.wellbeignatwork.backend.model.Offer;
+import com.wellbeignatwork.backend.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -71,6 +73,9 @@ public class OfferService implements IOfferService {
 			}
 			OfferRepo.save(o);
 			return o.getPromotion();
+	}
+	public List<Offer> listAll() {
+		return OfferRepo.findAll(Sort.by("idOffer").ascending());
 	}
 }
 

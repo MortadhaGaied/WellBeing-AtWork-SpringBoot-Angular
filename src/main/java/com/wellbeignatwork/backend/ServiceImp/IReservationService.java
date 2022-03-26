@@ -14,4 +14,8 @@ public interface IReservationService {
 	Reservation findById(long idReservation);
 
 	List<Reservation> findAll();
+
+	List<Reservation> listAll() ;
+
+
 }

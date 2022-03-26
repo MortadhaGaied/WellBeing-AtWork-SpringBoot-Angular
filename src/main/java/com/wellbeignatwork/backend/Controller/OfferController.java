@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.Controller;
 
 import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
-import com.wellbeignatwork.backend.API.ApiService.PDFGeneratorServiceOffre;
+import com.wellbeignatwork.backend.API.OfferPDFExporter;
 import com.wellbeignatwork.backend.API.PdfAllOffre;
 import com.wellbeignatwork.backend.API.QRCodeGenerator;
 import com.wellbeignatwork.backend.ServiceImp.IOfferService;
@@ -30,26 +30,6 @@ public class OfferController {
 
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/Image/QRCode.png";
 
-    private final PDFGeneratorServiceOffre pdfGeneratorService;
-
-    public OfferController(PDFGeneratorServiceOffre pdfGeneratorService) {
-        this.pdfGeneratorService = pdfGeneratorService;
-    }
-
-    //Genrate Pdf
-    @GetMapping("/pdf/generate")
-    public void generatePDF(HttpServletResponse response, String p1 , String p2 , String qrcode) throws IOException, DocumentException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        this.pdfGeneratorService.exportFor(response,p1,p2,qrcode);
-    }
-
 
     //http://localhost:8080/addOffer
     @PostMapping("/addOffer/{idCollaboration}")
@@ -75,7 +55,6 @@ public class OfferController {
         String qrcode = Base64.getEncoder().encodeToString(image);
         // log.info(qrcode);
 
-        generatePDF(response,o.getTitle(),o.getLocalisation(),qrcode);
         offerService.addOffer(o,idCollaboration);
     }
 
@@ -113,5 +92,20 @@ public class OfferController {
        return offerService.calculProm(idOffer);
     }
 
+    @GetMapping("/exportOffer/pdf")
+    public void exportToPDF(HttpServletResponse response) throws IOException, com.lowagie.text.DocumentException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
 
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<Offer> listOffers = offerService.listAll();
+
+        OfferPDFExporter exporter = new OfferPDFExporter(listOffers);
+        exporter.export(response);
+
+    }
 }

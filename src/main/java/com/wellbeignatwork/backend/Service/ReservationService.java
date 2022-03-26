@@ -8,6 +8,7 @@ import com.wellbeignatwork.backend.model.Offer;
 import com.wellbeignatwork.backend.model.Reservation;
 import com.wellbeignatwork.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,11 @@ public class ReservationService implements IReservationService {
 	@Override
 	public List<Reservation> findAll() {
 		return  reservationRepo.findAll();
+	}
+
+	@Override
+	public List<Reservation> listAll() {
+		return reservationRepo.findAll(Sort.by("idReservation").ascending());
 	}
 
 }
