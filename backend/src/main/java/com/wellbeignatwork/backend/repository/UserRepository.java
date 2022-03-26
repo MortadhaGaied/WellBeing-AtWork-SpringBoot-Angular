@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.repo;
+package com.wellbeignatwork.backend.repository;
 
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

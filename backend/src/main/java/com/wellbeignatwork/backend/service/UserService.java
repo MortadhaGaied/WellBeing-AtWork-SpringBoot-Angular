@@ -3,8 +3,8 @@ package com.wellbeignatwork.backend.service;
 
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SignUpRequest;
-import com.wellbeignatwork.backend.exception.UserAlreadyExistAuthenticationException;
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.exceptions.UserAlreadyExistAuthenticationException;
+import com.wellbeignatwork.backend.entity.User;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 

@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.security.oauth2.user;
 
 import com.wellbeignatwork.backend.dto.SocialProvider;
-import com.wellbeignatwork.backend.exception.OAuth2AuthenticationProcessingException;
+import com.wellbeignatwork.backend.exceptions.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;
 

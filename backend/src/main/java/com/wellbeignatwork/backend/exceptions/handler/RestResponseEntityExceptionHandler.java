@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.exception.handler;
+package com.wellbeignatwork.backend.exceptions.handler;
 
 import com.wellbeignatwork.backend.dto.ApiResponse;
 import org.springframework.http.HttpHeaders;

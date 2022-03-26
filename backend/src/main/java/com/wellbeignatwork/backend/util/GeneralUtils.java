@@ -4,8 +4,8 @@ package com.wellbeignatwork.backend.util;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SocialProvider;
 import com.wellbeignatwork.backend.dto.UserInfo;
-import com.wellbeignatwork.backend.model.Role;
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.entity.Role;
+import com.wellbeignatwork.backend.entity.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;

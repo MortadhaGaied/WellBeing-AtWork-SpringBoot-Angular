@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.model;
+package com.wellbeignatwork.backend.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.controller;
 
 import com.wellbeignatwork.backend.config.CurrentUser;
 import com.wellbeignatwork.backend.dto.LocalUser;
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;

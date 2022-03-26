@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.repo;
+package com.wellbeignatwork.backend.repository;
 
-import com.wellbeignatwork.backend.model.Role;
+import com.wellbeignatwork.backend.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

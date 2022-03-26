@@ -1,8 +1,8 @@
 package com.wellbeignatwork.backend.config;
 
-import com.wellbeignatwork.backend.model.Role;
-import com.wellbeignatwork.backend.repo.RoleRepository;
-import com.wellbeignatwork.backend.repo.UserRepository;
+import com.wellbeignatwork.backend.entity.Role;
+import com.wellbeignatwork.backend.repository.RoleRepository;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

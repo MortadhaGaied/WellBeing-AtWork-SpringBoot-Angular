@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.security.oauth2;
 
 import com.wellbeignatwork.backend.config.AppProperties;
-import com.wellbeignatwork.backend.exception.BadRequestException;
+import com.wellbeignatwork.backend.exceptions.BadRequestException;
 import com.wellbeignatwork.backend.security.jwt.TokenProvider;
 import com.wellbeignatwork.backend.util.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;

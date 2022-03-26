@@ -1,6 +1,6 @@
-package com.wellbeignatwork.backend.repo;
+package com.wellbeignatwork.backend.repository;
 
-import com.wellbeignatwork.backend.model.ConfirmationToken;
+import com.wellbeignatwork.backend.entity.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

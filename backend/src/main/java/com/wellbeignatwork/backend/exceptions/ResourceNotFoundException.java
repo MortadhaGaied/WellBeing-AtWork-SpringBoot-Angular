@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.exception;
+package com.wellbeignatwork.backend.exceptions;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
