@@ -1,14 +1,13 @@
 package com.wellbeignatwork.backend.service;
 
 
-import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
-import com.wellbeignatwork.backend.utils.BadWordFilter;
+import com.wellbeignatwork.backend.util.BadWordFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

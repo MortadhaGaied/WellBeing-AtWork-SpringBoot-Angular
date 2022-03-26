@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.chatConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;

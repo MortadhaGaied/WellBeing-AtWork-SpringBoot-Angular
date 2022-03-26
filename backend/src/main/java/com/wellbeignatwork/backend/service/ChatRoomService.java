@@ -6,26 +6,19 @@ import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.ChatRoom;
 import com.wellbeignatwork.backend.entity.Message;
 import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 

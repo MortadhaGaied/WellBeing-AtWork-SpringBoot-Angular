@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.config;
+package com.wellbeignatwork.backend.config.NotificationConfig;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
