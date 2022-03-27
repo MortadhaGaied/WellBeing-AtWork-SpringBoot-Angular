@@ -189,7 +189,7 @@ public class ChatRoomService implements IChatService {
         ChatRoom room1 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", senderId, recieverId));
         ChatRoom room2 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", recieverId, senderId));
         if (room1 != null || room2 != null) {
-            messagingTemplate.convertAndSend("/topic/room/" + String.format("%s_%s", senderId, recieverId), message);
+            messagingTemplate.convertAndSend("/topic2/room/" + String.format("%s_%s", senderId, recieverId), message);
             //subscribe all users in the chatRoom to the specific notification topic
             List<String> subscriptionTokens = new ArrayList<>();
             subscriptionTokens.add(sender.getFireBaseToken());
@@ -210,7 +210,7 @@ public class ChatRoomService implements IChatService {
             chatRoomRepository.save(room);
             message.setSender(sender);
             message.setChatroom(room);
-            messagingTemplate.convertAndSend("/topic/room/" + room.getUniqueKey(), message);
+            messagingTemplate.convertAndSend("/topic2/room/" + room.getUniqueKey(), message);
 
             //subscribe all users in the chatRoom to the specific notification topic
             List<String> subscriptionTokens = new ArrayList<>();
@@ -240,7 +240,7 @@ public class ChatRoomService implements IChatService {
 
         //send the message to the message broker to be handled and sent the client
 
-        messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
+        messagingTemplate.convertAndSend("/topic2/room/" + roomId, message);
 
         //subscribe all users in the chatRoom to the specific notification topic
         List<String> subscriptionTokens = new ArrayList<>();
@@ -257,7 +257,7 @@ public class ChatRoomService implements IChatService {
     }
 
     public void publicChat(Message message) {
-        messagingTemplate.convertAndSend("/topic/message", message);
+        messagingTemplate.convertAndSend("/topic2/message", message);
     }
 
 }

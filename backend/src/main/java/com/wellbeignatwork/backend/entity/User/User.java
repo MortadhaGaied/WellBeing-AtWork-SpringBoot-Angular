@@ -70,7 +70,7 @@ public class User implements Serializable {
 
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
 
@@ -84,21 +84,21 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Departement departement;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "userTags",joinColumns = @JoinColumn(name = "idUser"))
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Set<Tags> userTags;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Event> events;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Subscription> subscriptions;
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<Post> posts;
 	@JsonIgnore
-	@OneToMany(mappedBy = "idUser")
+	@OneToMany(mappedBy = "idUser",fetch = FetchType.EAGER)
 	private Set<UserGift> CadeauUser;
 
 	@Enumerated(EnumType.STRING)
