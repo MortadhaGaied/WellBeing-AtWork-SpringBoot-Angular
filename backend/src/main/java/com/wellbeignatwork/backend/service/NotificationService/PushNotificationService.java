@@ -7,6 +7,7 @@ import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundExc
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.MessageRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.service.UserService.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +28,17 @@ public class PushNotificationService implements INotificationService {
     private final FCMService fcmService;
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
+    private final MailService mailService;
 
     @Autowired
-    public PushNotificationService(FCMService fcmService, UserRepository userRepository,MessageRepository messageRepository) {
+    public PushNotificationService(FCMService fcmService,
+                                   UserRepository userRepository,
+                                   MessageRepository messageRepository,
+                                   MailService mailService) {
         this.fcmService = fcmService;
         this.userRepository = userRepository;
         this.messageRepository=messageRepository;
+        this.mailService=mailService;
     }
 
 
@@ -89,10 +95,18 @@ public class PushNotificationService implements INotificationService {
     public void chatReminderForInavtiveUsers() throws FirebaseMessagingException {
         List<String>tokens=new ArrayList<>();
         userRepository.findUsersByMessagesIsNull().forEach(user -> {
+            //sendEmails
+
+            mailService.sendMail(user.getEmail(),
+                    "chat inactivity reminder",
+                    "remember that you can communicate with your teammates in realtime using our chat section",
+                    false);
+
             if(user.getFireBaseToken()!=null){
                 tokens.add(user.getFireBaseToken());
             }
         });
+        //sendNotifications
         if(!tokens.isEmpty()){
             subScribeUsersToTopic(tokens,"activityReminder");
             sendToTopic(new PushNotificationRequest("chat-notifier"

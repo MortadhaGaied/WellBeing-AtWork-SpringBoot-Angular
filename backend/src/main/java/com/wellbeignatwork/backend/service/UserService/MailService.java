@@ -1,5 +1,7 @@
 package com.wellbeignatwork.backend.service.UserService;
 
+import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,6 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 
 @Service
@@ -14,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 
         @Autowired
         private JavaMailSender emailSender;
+        @Autowired
+        private UserRepository userRepository;
 
         @Value("${spring.mail.username}")
         private String from;
@@ -27,11 +32,28 @@ import javax.mail.internet.MimeMessage;
                 helper.setSubject(subject);
                 helper.setFrom(from, "Well Been");
                 emailSender.send(mimeMessage);
+
             } catch(Exception e) {
                 e.printStackTrace();
             }
 
         }
+
+
+        public void sendMailToAllUsers(String subject, String content, Boolean html){
+             userRepository.findAll().forEach(user -> {
+
+                sendMail(user.getEmail(),subject,content,html);
+            });
+        }
+
+
+        public void sendMailToGroupOfUsers(List<User> users, String subject, String content, Boolean html){
+            users.forEach(user -> {
+                sendMail(user.getEmail(),subject,content,html);
+            });
+        }
+
 
     }
 

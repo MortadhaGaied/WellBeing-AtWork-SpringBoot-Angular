@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.service.ChatService;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.Message;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,6 @@ public interface IMessageService {
     public Message filterBadWords(Message message);
     public void saveDiscussion(List<Message> messages);
     public List<Message> retrieveDiscussions(@NotBlank Long roomId);
-    public void getTopChattersGlobally();
-    public void archiveMessages() throws ExecutionException, InterruptedException;
+    public void getTopChattersGlobally() throws FirebaseMessagingException;
+    public void archiveMessages() throws ExecutionException, InterruptedException, FirebaseMessagingException;
 }

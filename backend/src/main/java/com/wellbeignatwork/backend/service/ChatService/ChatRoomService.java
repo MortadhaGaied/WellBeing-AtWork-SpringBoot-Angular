@@ -1,6 +1,8 @@
 package com.wellbeignatwork.backend.service.ChatService;
 
 
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.ChatRoom;
@@ -17,6 +19,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -80,7 +83,7 @@ public class ChatRoomService implements IChatService {
         List<ChatRoom> chatRooms = chatRoomRepository.findAll();
         chatRooms
                 .sort((chatRoom1, chatRoom2) -> {
-                    if (chatRoom1.getUsers().size() > chatRoom1.getUsers().size() && chatRoom1.getMessages().size() > chatRoom2.getMessages().size())
+                    if (chatRoom1.getUsers().size() > chatRoom1.getUsers().size() && chatRoom2.getMessages().size() > chatRoom2.getMessages().size())
                         return 1;
                     else return 0;
                 });
@@ -91,9 +94,9 @@ public class ChatRoomService implements IChatService {
 
 
     @Transactional
-    // @Scheduled(fixedRate = 10000)
+     @Scheduled(fixedRate = 30000)
     public void calculateResponseRatePerRoom() {
-
+        Map<String,String> data=new HashMap<>();
         chatRoomRepository.findAll().forEach(chatRoom -> {
             List<Date> sentAt = new ArrayList<>();
             List<Long> responseTimeDurationsPerRoom = new ArrayList<>();
@@ -137,12 +140,15 @@ public class ChatRoomService implements IChatService {
                     });
                     chatRoom.setAverageResponseTime(Long.toString((long) score));
 
-
+                    data.put(chatRoom.getRoomName(),Long.toString((long) score));
                 }
 
-
+                Firestore dbFirestore = FirestoreClient.getFirestore();
+                dbFirestore.collection("Room-Response-Time").document("room-responseRate").set(data);
             }
         });
+
+
     }
 
 
