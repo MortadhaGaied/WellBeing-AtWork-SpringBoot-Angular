@@ -38,11 +38,16 @@ public class ReservationController {
         return reservationService.prixTotale(idReservation,idOffer);
     }
 
-    //http://localhost:8080/Reservation/1/stripe
+    //http://localhost:8080/Reservation/stripe/1/1
     @PostMapping("/stripe/{idUser}/{idReservation}")
     @ResponseBody
-    public Payment index(@PathVariable long idUser,@PathVariable long idReservation , @RequestBody Payment p ) throws StripeException {
+    public Payment index(@PathVariable long idUser ,@PathVariable long idReservation , @RequestBody Payment p ) throws StripeException {
         return stripeService.payment(idUser,idReservation,p);
     }
 
+    @PostMapping("/stripe/{email}/{token}/{idUser}/{idReservation}/{idOffer}")
+    @ResponseBody
+    public Reservation createCharge(@PathVariable String email,@PathVariable String token,@PathVariable Long idUser,@PathVariable Long idReservation,@PathVariable Long idOffer,@RequestBody Reservation r) throws StripeException, MessagingException {
+        return stripeService.createCharge(email,token,idUser,idReservation,idOffer,r);
+    }
 }

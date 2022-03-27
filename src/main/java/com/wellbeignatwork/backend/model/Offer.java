@@ -42,11 +42,4 @@ public class Offer implements Serializable {
 	@OneToMany(mappedBy="offers", cascade=CascadeType.ALL)
 	private Set<Publicity>  publicity;
 
-
-
-	
-
-
-
-
 }

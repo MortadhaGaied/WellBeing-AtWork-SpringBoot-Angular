@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
@@ -25,14 +26,11 @@ public class Reservation implements Serializable {
     int priceTotal;
 
 
-
+    @JsonIgnore
     @ManyToOne
     Offer offersRes;
-    
+    @JsonIgnore
     @ManyToOne
     User userRes;
-
-
-
 
 }
