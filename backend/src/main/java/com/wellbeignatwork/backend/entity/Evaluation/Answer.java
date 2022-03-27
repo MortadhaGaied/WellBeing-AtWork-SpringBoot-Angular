@@ -22,8 +22,12 @@ public class Answer implements Serializable {
     private Date CreatedAt;
     private String content;
     private Integer questionId;
-    @JsonIgnore
+
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Sentiment Sentiment;
+
+
+
 
 }

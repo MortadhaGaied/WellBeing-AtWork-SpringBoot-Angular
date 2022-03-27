@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.entity.Forum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.Evaluation.VoteIdea;
 import com.wellbeignatwork.backend.entity.Tags;
 import com.wellbeignatwork.backend.entity.User;
 import lombok.*;
@@ -24,6 +25,8 @@ public class Post implements Serializable {
     private int id;
     private String subject;
     private String content;
+    private int nbYes;
+    private int nbNo;
     private LocalDateTime createdAt=LocalDateTime.now();
     private LocalDateTime modifiedAt;
     @ElementCollection(targetClass = Tags.class)
@@ -40,4 +43,7 @@ public class Post implements Serializable {
     private List<Comment> comments;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<Reaction> reactions;
+    @OneToMany(mappedBy = "idSujet")
+    @JsonIgnore
+    public Set<VoteIdea> votesSujet;
 }

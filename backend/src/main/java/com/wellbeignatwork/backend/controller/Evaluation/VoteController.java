@@ -46,13 +46,15 @@ public class VoteController {
 
 
 
-    @PostMapping("/addsujet")
+  /*  @PostMapping("/addsujet")
     @ResponseBody
     public void addSujet(@RequestBody Sujet sujet)
     {
         intVoteService.addSujet(sujet);
     }
 
+
+   */
 
     @GetMapping("/GetNbrYes/{sujetId}")
     @ResponseBody

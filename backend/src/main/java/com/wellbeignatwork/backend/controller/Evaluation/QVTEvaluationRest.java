@@ -5,6 +5,10 @@ import com.wellbeignatwork.backend.entity.Evaluation.Survey;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Evaluation.IntQVTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -28,12 +32,26 @@ public class QVTEvaluationRest {
     { return MyQVTService.retrieveAllSurveys(); }
 
     @PostMapping("/PutYourAnswerAndGetYourAdvice")
-    public String UserAnswer(@RequestBody List<Answer>  answer)
-    { return MyQVTService.UserAnswer(answer); }
+    public void UserAnswer(@RequestBody List<Answer>  answer)
+    {  MyQVTService.UserAnswer(answer); }
 
      @GetMapping("/Stastic")
      public String nbreSentiment()
     { return MyQVTService.nbreSentiment();}
+
+
+
+  @GetMapping("/download")
+  public ResponseEntity<InputStreamResource> getFile() {
+    String filename = "FeedBack.csv";
+    InputStreamResource file = new InputStreamResource(MyQVTService.load());
+
+    return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+            .contentType(MediaType.parseMediaType("application/csv"))
+            .body(file);
+  }
+
 
 
 
