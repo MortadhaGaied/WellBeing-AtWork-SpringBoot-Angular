@@ -58,7 +58,7 @@ public class MessageService implements IMessageService {
 
 
     public void saveDiscussion(List<Message> messages) {
-        messages.forEach(messageRepository::save);
+        messageRepository.saveAll(messages);
 
     }
 
@@ -108,6 +108,7 @@ public class MessageService implements IMessageService {
             //sendNotifications
             pushNotificationService.sendPushNotificationToALlUsers("weekly top chatters",res.toString());
             //send data to firebase
+
             Firestore dbFirestore = FirestoreClient.getFirestore();
              dbFirestore.collection("top-chatters").document("top-chatters").set(data);
 
