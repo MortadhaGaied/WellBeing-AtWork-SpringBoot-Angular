@@ -21,5 +21,11 @@ public class PushNotificationRequest {
         this.message=message;
         this.topic=topic;
     }
+    public PushNotificationRequest(String title,String message) {
+        this.title=title;
+        this.message=message;
+
+    }
+
 
 }
