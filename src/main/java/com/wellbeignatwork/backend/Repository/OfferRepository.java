@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IOffer extends JpaRepository<Offer, Long> {
+public interface OfferRepository extends JpaRepository<Offer, Long> {
 
      Optional<Offer> findByIdOffer(int id);
      List<Offer> findAll();
-    void inviteUsersToOffer(List<Long> usersId, Long offerId);
     }

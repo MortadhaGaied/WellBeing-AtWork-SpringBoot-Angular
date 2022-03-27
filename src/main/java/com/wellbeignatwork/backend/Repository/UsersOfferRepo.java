@@ -17,12 +17,9 @@ public interface UsersOfferRepo extends JpaRepository<UsersOffer, UsersOfferKey>
     List<UsersOffer> findByUserIdAndIsInvitedTrue(Long userId);
 
     List<UsersOffer> findByUserIdAndIsAcceptedTrue(Long userId);
-
-    List<UsersOffer> findByOfferIdAndIsAcceptedTrue(Long idOffer);
-
-    List<UsersOffer> findByOfferIdAndIsInvitedTrue(Long idOffer);
-
-    UsersOffer findByIdUserIdAndOfferId(Long userId, Long idOffer);
+    List<UsersOffer> findByOfferAndAndIsInvitedTrue(Long idOffer);
+    List<UsersOffer> findByOfferIdOfferAndAndIsAcceptedTrue(Long idOffer);
+    UsersOffer findByUserIdAndOfferIdOffer(Long userId, Long idOffer);
 
     @Query("SELECT o FROM UsersOffer o WHERE o.isAccepted = true AND o.offer.starDateOf >= ?1 AND o.offer.starDateOf <= ?2")
     List<UsersOffer> getByOfferStartDate(LocalDateTime inf, LocalDateTime sup);

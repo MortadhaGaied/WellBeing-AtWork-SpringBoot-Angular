@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.Service;
 
-import com.wellbeignatwork.backend.Repository.IOffer;
+import com.wellbeignatwork.backend.Repository.OfferRepository;
 import com.wellbeignatwork.backend.Repository.UserRepository;
 import com.wellbeignatwork.backend.Repository.UsersOfferRepo;
 import com.wellbeignatwork.backend.ServiceImp.IUsersOfferService;
@@ -21,7 +21,7 @@ public class UsersOfferService implements IUsersOfferService {
     UserRepository userRepo;
 
     @Autowired
-    IOffer offerRepo;
+    OfferRepository offerRepo;
 
     @Autowired
     UsersOfferRepo usersOfferRepo;
@@ -68,7 +68,7 @@ public class UsersOfferService implements IUsersOfferService {
 
     @Override
     public void acceptOffer(Long userId, Long offerId) {
-        UsersOffer usersOffers = usersOfferRepo.findByIdUserIdAndOfferId(userId, offerId);
+        UsersOffer usersOffers = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
         if (usersOffers == null) {
             throw new BadRequestException("Cannot accept an event without invitation");
         }
@@ -88,7 +88,7 @@ public class UsersOfferService implements IUsersOfferService {
 
     @Override
     public void feedbackOffer(Long userId, Long offerId, Feedback feedback) {
-        UsersOffer usersOffer = usersOfferRepo.findByIdUserIdAndOfferId(userId, offerId);
+        UsersOffer usersOffer = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
         if (usersOffer == null) {
             throw new BadRequestException("Cannot give feedback for an event without participation");
         }
@@ -118,7 +118,7 @@ public class UsersOfferService implements IUsersOfferService {
         if (!offerRepo.existsById(eventId)) {
             throw new ResourceNotFoundException("Event doesn't exist");
         }
-        List<UsersOffer> usersOffers = usersOfferRepo.findByOfferIdAndIsAcceptedTrue(eventId);
+        List<UsersOffer> usersOffers = usersOfferRepo.findByOfferIdOfferAndAndIsAcceptedTrue(eventId);
         List<OfferFeedbacks> feedbacks = new ArrayList<>();
         for (UsersOffer ue : usersOffers) {
             OfferFeedbacks res = new OfferFeedbacks(ue.getUser().getId(), ue.getUser().getName());
@@ -130,7 +130,7 @@ public class UsersOfferService implements IUsersOfferService {
     }
 
     public UsersOffer getOrCreateUsersOffer(Long userId, Long offerId) {
-        UsersOffer usersOffer= usersOfferRepo.findByIdUserIdAndOfferId(userId, offerId);
+        UsersOffer usersOffer= usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
         if (usersOffer != null) {
             return usersOffer;
         }

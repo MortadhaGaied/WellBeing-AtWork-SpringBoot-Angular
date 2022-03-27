@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface IReservation extends JpaRepository<Reservation, Long> {
+public interface IReservationRepository extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findAllByStartDateResIsBefore(LocalDateTime date);
 

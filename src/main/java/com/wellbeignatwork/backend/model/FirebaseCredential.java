@@ -19,4 +19,5 @@ public class FirebaseCredential {
     String token_uri;
     String auth_provider_x509_cert_url;
     String client_x509_cert_url;
+
 }

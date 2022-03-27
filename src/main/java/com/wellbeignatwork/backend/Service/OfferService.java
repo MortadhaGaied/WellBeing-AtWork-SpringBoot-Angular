@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class OfferService implements IOfferService {
 	@Autowired
-	IOffer OfferRepo;
+    OfferRepository OfferRepo;
 
 	@Autowired
 	ICollaboration CollaborationRepo;
@@ -123,7 +123,7 @@ public class OfferService implements IOfferService {
 			User user = userRepository.findById(userId).orElse(null);
 			if (user == null) break;
 			boolean alreadyInvited = false;
-			UsersOffer uo = usersOfferRepo.findByIdUserIdAndOfferId(userId, offerId);
+			UsersOffer uo = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
 			//Check if already this user has been invited
 			if (uo != null) {
 				if (!uo.getIsInvited()) {

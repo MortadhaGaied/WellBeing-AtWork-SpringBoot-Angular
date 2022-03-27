@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.Service;
 
 
 import com.wellbeignatwork.backend.Repository.ICollaboration;
-import com.wellbeignatwork.backend.Repository.IOffer;
+import com.wellbeignatwork.backend.Repository.OfferRepository;
 import com.wellbeignatwork.backend.Repository.IPublicity;
 import com.wellbeignatwork.backend.Repository.UserRepository;
 import com.wellbeignatwork.backend.ServiceImp.ICollaborationService;
@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 public class CollaborationService implements ICollaborationService {
 	@Autowired
-	IOffer OfferRepo;
+	OfferRepository OfferRepo;
 	
 	@Autowired
 	ICollaboration CollaborationRepo;

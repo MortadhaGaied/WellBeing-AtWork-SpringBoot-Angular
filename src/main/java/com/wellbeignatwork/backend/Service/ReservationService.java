@@ -1,6 +1,5 @@
 package com.wellbeignatwork.backend.Service;
 
-import com.itextpdf.text.DocumentException;
 import com.wellbeignatwork.backend.API.EmailSender;
 import com.wellbeignatwork.backend.API.ReservationPDFExporter;
 import com.wellbeignatwork.backend.Repository.*;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +20,7 @@ import java.util.List;
 @Service
 public class ReservationService implements IReservationService {
 	@Autowired
-	IOffer OfferRepo;
+    OfferRepository OfferRepo;
 
 	@Autowired
 	ICollaboration CollaborationRepo;
@@ -35,7 +32,7 @@ public class ReservationService implements IReservationService {
 	UserRepository userRepo;
 	
 	@Autowired
-	IReservation reservationRepo;
+    IReservationRepository reservationRepo;
 
 	@Autowired
 	private EmailSender emailSender;

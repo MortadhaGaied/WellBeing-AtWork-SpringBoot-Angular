@@ -24,6 +24,7 @@ public class ReservationController {
     StripeService stripeService;
 
     //http://localhost:8080/Reservation/addResevation/1/1
+    //local date time 2022-03-24T12:59:11.332
     @PostMapping("/addResevation/{idOffer}/{idUser}")
     @ResponseBody
     public void addOffer(@RequestBody Reservation r, @PathVariable long idUser, @PathVariable long idOffer) throws MessagingException {
@@ -38,10 +39,10 @@ public class ReservationController {
     }
 
     //http://localhost:8080/Reservation/1/stripe
-    @PostMapping("/stripe/{idUser}")
+    @PostMapping("/stripe/{idUser}/{idReservation}")
     @ResponseBody
-    public Payment index(@PathVariable long idUser , @RequestBody Payment p ) throws StripeException {
-        return stripeService.payment(idUser,p);
+    public Payment index(@PathVariable long idUser,@PathVariable long idReservation , @RequestBody Payment p ) throws StripeException {
+        return stripeService.payment(idUser,idReservation,p);
     }
 
 }

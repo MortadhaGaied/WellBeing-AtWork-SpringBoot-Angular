@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.Service;
 
 import com.wellbeignatwork.backend.API.FirebaseStorage;
 import com.wellbeignatwork.backend.Repository.ICollaboration;
-import com.wellbeignatwork.backend.Repository.IOffer;
+import com.wellbeignatwork.backend.Repository.OfferRepository;
 import com.wellbeignatwork.backend.Repository.IPublicity;
 import com.wellbeignatwork.backend.Repository.ImageRepo;
 import com.wellbeignatwork.backend.ServiceImp.IPublicityService;
@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class PublicityService implements IPublicityService {
 	@Autowired
-	IOffer OfferRepo;
+    OfferRepository OfferRepo;
 
 	@Autowired
 	ICollaboration CollaborationRepo;
