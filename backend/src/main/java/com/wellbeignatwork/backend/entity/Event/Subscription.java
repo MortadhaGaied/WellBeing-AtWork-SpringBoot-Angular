@@ -1,7 +1,6 @@
 package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

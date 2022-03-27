@@ -19,9 +19,8 @@ import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Tags;
-import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.exceptions.BadRequestException;
-import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
+import com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.util.WeatherService;
 

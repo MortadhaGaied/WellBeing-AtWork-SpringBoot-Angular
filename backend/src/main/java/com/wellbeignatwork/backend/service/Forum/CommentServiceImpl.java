@@ -4,7 +4,7 @@ import com.wellbeignatwork.backend.entity.Forum.Comment;
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
-import com.wellbeignatwork.backend.exceptions.PostException;
+import com.wellbeignatwork.backend.exceptions.Forum.PostException;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -13,7 +13,6 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

@@ -2,7 +2,6 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Evaluation.AnswerRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.IntAdviceRepo;
 import com.wellbeignatwork.backend.repository.UserRepository;

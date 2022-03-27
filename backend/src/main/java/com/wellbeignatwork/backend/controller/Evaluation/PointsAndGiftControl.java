@@ -1,6 +1,5 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Evaluation.IntPointsAndGiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

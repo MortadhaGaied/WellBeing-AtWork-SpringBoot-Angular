@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.exceptions;
+package com.wellbeignatwork.backend.exceptions.Evaluation;
 
 public class InvalidGameException extends Exception {
     private String message;
