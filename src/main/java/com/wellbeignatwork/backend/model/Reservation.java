@@ -24,6 +24,9 @@ public class Reservation implements Serializable {
     LocalDateTime startDateRes;
     LocalDateTime endDateRes;
     int nmPalce;
+    int priceTotal;
+
+
 
     @ManyToOne
     Offer offersRes;

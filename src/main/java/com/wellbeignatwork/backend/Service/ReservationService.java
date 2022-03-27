@@ -1,10 +1,7 @@
 package com.wellbeignatwork.backend.Service;
 
-
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 import com.wellbeignatwork.backend.API.EmailSender;
-import com.wellbeignatwork.backend.API.OfferPDFExporter;
-import com.wellbeignatwork.backend.API.PdfAllOffre;
 import com.wellbeignatwork.backend.API.ReservationPDFExporter;
 import com.wellbeignatwork.backend.Repository.*;
 import com.wellbeignatwork.backend.ServiceImp.IReservationService;
@@ -12,7 +9,6 @@ import com.wellbeignatwork.backend.model.Offer;
 import com.wellbeignatwork.backend.model.Reservation;
 import com.wellbeignatwork.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,14 +38,15 @@ public class ReservationService implements IReservationService {
 	IReservation reservationRepo;
 
 	@Autowired
-	EmailSender emailSender;
+	private EmailSender emailSender;
 
 
+	
 
 
 	@Override
 	@Transactional
-	public Reservation reservation(long idUser, long idOffer, Reservation r) {
+	public Reservation reservation(long idUser, long idOffer, Reservation r) throws MessagingException {
 
 		User u = userRepo.findById(idUser).orElse(null);
 		Offer o = OfferRepo.findById(idOffer).orElse(null);
@@ -58,6 +55,7 @@ public class ReservationService implements IReservationService {
 		if(o.getEndDateOf().isBefore(r.getEndDateRes()))throw  new RuntimeException("Vous avez passer la date fin");
 		r.setUserRes(u);
 		r.setOffersRes(o);
+		//emailSender.sendMailWithAttachement(u.getEmail()," add Reservartion " ," add succesful ... ");
 		reservationRepo.save(r);
 		o.setNplaces(o.getNplaces()-r.getNmPalce());
 		return r;
@@ -73,30 +71,35 @@ public class ReservationService implements IReservationService {
 	}
 
 	@Override
-	public Reservation findById(long idReservation) {
-		return reservationRepo.findById(idReservation).orElse(null);
-	}
-
-	@Override
 	public List<Reservation> findAll() {
 		return  reservationRepo.findAll();
 	}
 
 	@Override
 	public List<Reservation> listAll() {
-		return reservationRepo.findAll(Sort.by("idReservation").ascending());
+		return reservationRepo.findAll();
 	}
 
+
+
 	@Scheduled(cron="*/30 * * * * *")
-	public void findAllByStartDateResIsBefore() throws MessagingException {
-		List<Reservation> reservationsWeek = reservationRepo.findAllByStartDateResIsBefore(LocalDateTime.now().plusDays(7));
+	public void findAllByStartDateResIsBefore( ) throws MessagingException {
+		List<Reservation> reservationsWeek= reservationRepo.findAllByStartDateResIsBefore(LocalDateTime.now().plusDays(7));
 		List<Reservation> reservationsDay = reservationRepo.findAllByStartDateResIsBefore(LocalDateTime.now().plusDays(1));
-		for (Reservation r : reservationsWeek) {
+		for (Reservation r : reservationsWeek){
 			r.getUserRes().getEmail();
 			List<Reservation> listReservations = listAll();
 			ReservationPDFExporter exporter = new ReservationPDFExporter(listReservations);
-			emailSender.sendMail("mahdi.homrani@esprit.tn"," add Reservartion " ," add succesful ... ");}
-
+			emailSender.sendMail(r.getUserRes().getEmail(), " Reservation in this week " ," your reservation for this week ");
+		}
+		for (Reservation r : reservationsDay){
+			r.getUserRes().getEmail();
+			List<Reservation> listReservations = listAll();
+			ReservationPDFExporter exporter = new ReservationPDFExporter(listReservations);
+			emailSender.sendMail(r.getUserRes().getEmail(), " reservation Tomorrow " ,"you have a Reservation for tomorrow ");
 		}
 	}
+}
+
+
 

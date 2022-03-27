@@ -74,7 +74,7 @@ public class ReservationPDFExporter {
 
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {2f, 2f, 2f, 2.5f, 2.5f});
+        table.setWidths(new float[]{2f, 2f, 2f, 2.5f, 2.5f});
         table.setSpacingBefore(10);
 
         writeTableHeader(table);

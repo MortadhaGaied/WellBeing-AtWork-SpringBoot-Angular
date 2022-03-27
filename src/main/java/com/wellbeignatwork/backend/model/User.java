@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -27,4 +28,8 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String email;
+	private String name ;
+	@OneToMany(mappedBy = "userRes")
+	Set<Reservation> reservations;
+
 }

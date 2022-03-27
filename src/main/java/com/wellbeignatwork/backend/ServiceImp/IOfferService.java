@@ -21,4 +21,5 @@ public interface IOfferService {
     float calculProm(long idOffer);
 
 
+    Object getOfferWeather(Long idOffer);
 }

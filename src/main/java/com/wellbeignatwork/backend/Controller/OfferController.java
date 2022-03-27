@@ -9,6 +9,7 @@ import com.wellbeignatwork.backend.ServiceImp.IOfferService;
 import com.wellbeignatwork.backend.ServiceImp.ISendEmailService;
 import com.wellbeignatwork.backend.model.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -109,5 +110,12 @@ public class OfferController {
         OfferPDFExporter exporter = new OfferPDFExporter(listOffers);
         exporter.export(response);
 
+    }
+
+    //http://localhost:8080/Offer/weather?idOffer=1
+    @GetMapping("/weather")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public Object getOfferWeather(@RequestParam Long idOffer) {
+        return offerService.getOfferWeather(idOffer);
     }
 }
