@@ -8,6 +8,7 @@ import com.wellbeignatwork.backend.repository.Forum.FileRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 
 import com.wellbeignatwork.backend.exceptions.PostException;
+import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,14 @@ public class PostServiceImpl implements PostService {
     private FileRepository fileRepository;
     private UserRepository userRepository;
     private CommentRepository commentRepository;
+    private ReactionRepository reactionRepository;
     @Autowired
-    public PostServiceImpl(PostRepository postRepository,FileRepository fileRepository,UserRepository userRepository,CommentRepository commentRepository){
+    public PostServiceImpl(PostRepository postRepository,FileRepository fileRepository,UserRepository userRepository,CommentRepository commentRepository,ReactionRepository reactionRepository){
         this.fileRepository=fileRepository;
         this.postRepository=postRepository;
         this.userRepository=userRepository;
         this.commentRepository=commentRepository;
+        this.reactionRepository=reactionRepository;
     }
     public List<String> getAllSubjects(){
         List<String> resultat=new ArrayList<>();
@@ -156,11 +159,7 @@ public class PostServiceImpl implements PostService {
     public List<Double> postInteraction(List<Post> posts){
         List<Double> result=new ArrayList<>();
         for(Post p:posts){
-            for(Comment c:commentRepository.findAll()){
-                if(c.getCreateDate().isAfter(LocalDateTime.now().minus(7,ChronoUnit.DAYS))){
-                    result.add((double)(p.getComments().size()));
-                }
-            }
+            result.add((double)commentRepository.NbrCommentByPost(p)+(double) reactionRepository.NbrReactionByPost(p));
 
         }
         return result;
