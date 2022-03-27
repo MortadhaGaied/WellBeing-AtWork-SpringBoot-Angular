@@ -31,7 +31,7 @@ public class Sujet implements Serializable {
     private int nbpoint;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "USER_ID")
+    @JoinColumn(name = "idUser", referencedColumnName = "id")
     private User idUser;
     @OneToMany(mappedBy = "idSujet")
     @JsonIgnore

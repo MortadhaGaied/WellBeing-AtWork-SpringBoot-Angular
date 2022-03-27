@@ -23,13 +23,13 @@ public class VoteIdea implements Serializable {
     private  int nbNo;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "USER_ID")
+    @JoinColumn(name = "idUser", referencedColumnName = "id")
     @JsonIgnore
     private User idUser;
 
 
     @ManyToOne
-    @JoinColumn(name = "idSujet", referencedColumnName = "USER_ID")
+    @JoinColumn(name = "idSujet", referencedColumnName = "id")
 
     @JsonIgnore
     Sujet idSujet;

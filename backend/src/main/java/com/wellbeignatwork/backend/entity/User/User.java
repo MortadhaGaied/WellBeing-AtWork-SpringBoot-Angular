@@ -40,7 +40,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USER_ID")
+
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -71,7 +71,7 @@ public class User implements Serializable {
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
 
 	@JsonIgnore
