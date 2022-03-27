@@ -1,6 +1,5 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
-
 import lombok.Data;
 
 
