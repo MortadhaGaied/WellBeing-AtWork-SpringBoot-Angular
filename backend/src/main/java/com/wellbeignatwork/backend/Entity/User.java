@@ -1,6 +1,8 @@
 package com.wellbeignatwork.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.Evaluation.Badge;
+import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import lombok.*;
@@ -20,7 +22,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private int points;
+    private int pointFidelite;
     @Enumerated(EnumType.STRING)
     private Departement departement;
 
@@ -37,5 +39,11 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Post> posts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "idUser")
+    private Set<UserGift> CadeauUser;
+
+    @Enumerated(EnumType.STRING)
+    private Badge badge;
 
 }

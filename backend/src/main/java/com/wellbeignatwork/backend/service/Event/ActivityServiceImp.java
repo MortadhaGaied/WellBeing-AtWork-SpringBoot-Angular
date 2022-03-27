@@ -325,7 +325,7 @@ public class ActivityServiceImp implements IActivityService{
 
         List<User> users = new ArrayList<>();
         userRepo.findAll().forEach(users::add);
-        User max = users.stream().max(Comparator.comparing(User::getPoints)).get();
+        User max = users.stream().max(Comparator.comparing(User::getPointFidelite)).get();
         List<Tags> userTags = new ArrayList<>(max.getUserTags());
         Event eventGift = randomEventByTags(userTags);
 
@@ -412,7 +412,7 @@ public class ActivityServiceImp implements IActivityService{
         User u= userRepo.findById(idUser).orElse(null);
         Event event= eventRepository.findById(idEvent).orElse(null);
         if (event.getEventTags().contains(Tags.SPORT)){
-            u.setPoints(u.getPoints()+3);
+            u.setPointFidelite(u.getPointFidelite()+3);
         }
     userRepo.save(u);
 

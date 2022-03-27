@@ -11,13 +11,13 @@ import org.springframework.stereotype.Repository;
 public interface IntVoteIdeaRepo extends CrudRepository<VoteIdea,Integer> {
 
     @Query(value="select * from vote_idea where id_sujet= ?1 AND id_user= ?2",nativeQuery=true)
-     VoteIdea getVoteBySujetAndUser(int sujetId, int userId);
+     VoteIdea getVoteBySujetAndUser(int sujetId, Long userId);
 
     @Query(value="select * from vote_idea where id_sujet= ?1 AND id_user= ?2 and nb_yes=1",nativeQuery=true)
-     VoteIdea getVoteBySujetAndUserYes(int sujetId, int userId);
+     VoteIdea getVoteBySujetAndUserYes(int sujetId, Long userId);
 
     @Query(value="select * from vote_idea where id_sujet=?1 AND id_user=?2 and nb_no=1",nativeQuery=true)
-     VoteIdea getVoteBySujetAndUserNO(int sujetId, int userId);
+     VoteIdea getVoteBySujetAndUserNO(int sujetId, Long userId);
 
 
     @Query(value = "select count(*) from vote_idea where nb_yes=1 and id_sujet= ?1", nativeQuery = true)

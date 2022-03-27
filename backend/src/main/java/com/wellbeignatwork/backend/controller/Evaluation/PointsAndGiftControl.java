@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
-import com.wellbeignatwork.backend.entity.Evaluation.User;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Evaluation.IntPointsAndGiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ public class PointsAndGiftControl {
     IntPointsAndGiftService intPointsAndGiftService;
 
     @GetMapping("/points/{idUser}")
-    public int CollectPoints(@PathVariable("idUser") int idUser)
+    public int CollectPoints(@PathVariable("idUser") Long idUser)
     {
         return intPointsAndGiftService.CollectPoints(idUser);
     }
@@ -26,7 +26,7 @@ public class PointsAndGiftControl {
     }
 
     @GetMapping("/Gift/{idUser}")
-    public int UserGift(@PathVariable("idUser") int idUser)
+    public int UserGift(@PathVariable("idUser") Long idUser)
     {
         return intPointsAndGiftService.UserGift(idUser);
     }

@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
+import com.wellbeignatwork.backend.entity.User;
 import lombok.Data;
 
 import java.io.Serializable;

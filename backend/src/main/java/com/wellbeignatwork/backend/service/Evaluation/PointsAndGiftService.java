@@ -1,12 +1,14 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
-import com.wellbeignatwork.backend.entity.Evaluation.User;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
-import com.wellbeignatwork.backend.repository.Evaluation.IntCommentRepo;
-import com.wellbeignatwork.backend.repository.Evaluation.IntEventsRepo;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntGiftUserRepo;
-import com.wellbeignatwork.backend.repository.Evaluation.IntUserRepo;
+import com.wellbeignatwork.backend.repository.Event.EventRepository;
+import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
+import com.wellbeignatwork.backend.repository.Forum.PostRepository;
+import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,18 +21,20 @@ import java.util.Random;
 public class PointsAndGiftService implements IntPointsAndGiftService {
 
     @Autowired
-    IntUserRepo intUserRepo;
+    UserRepository intUserRepo;
     @Autowired
-    IntEventsRepo intEventsRepo;
+    EventRepository intEventsRepo;
 
     @Autowired
-    IntCommentRepo intCommentRepo;
+    CommentRepository intCommentRepo;
 
     @Autowired
     IntGiftUserRepo intGiftUserRepo;
+    @Autowired
+    ReactionRepository reactionRepository;
 
     @Override
-    public int CollectPoints(int idUser) {
+    public int CollectPoints(Long idUser) {
         User user = intUserRepo.findById(idUser).orElse(null);
         int scoreEvent=0;
         int scoreComment=0;
@@ -41,16 +45,14 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
             }
 
-        if(user.getComments()!=null)
-        {
-            scoreComment=user.getComments().size()*10;
 
-        }
-        if(user.getLikes()!=null)
-        {
-            scoreLikes=user.getLikes().size()*10;
+            scoreComment=intCommentRepo.NbrCommentByUser(user.getId())*10;
 
-        }
+
+
+            scoreLikes=reactionRepository.NbrReactByUser(user.getId());
+
+
         int total = scoreComment+scoreEvent+scoreLikes;
         user.setPointFidelite(total);
         UserBadge(idUser);
@@ -105,7 +107,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
 
     @Override
-    public int UserGift(int idUser) {
+    public int UserGift(Long idUser) {
      User user =intUserRepo.findById(idUser).orElse(null);
      int a = 0;
         float montant =0;
@@ -234,7 +236,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
     }
 
     @Override
-    public void UserBadge(int idUser) {
+    public void UserBadge(Long idUser) {
         User user = intUserRepo.findById(idUser).orElse(null);
         String badge;
         if (user.getPointFidelite()==0)

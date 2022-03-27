@@ -1,11 +1,11 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Sujet;
-import com.wellbeignatwork.backend.entity.Evaluation.User;
 import com.wellbeignatwork.backend.entity.Evaluation.VoteIdea;
-import com.wellbeignatwork.backend.repository.Evaluation.IntUserRepo;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntVoteIdeaRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.SujetRepo;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 ;
@@ -20,7 +20,7 @@ public class VoteService implements IntVoteService {
     @Autowired
     private SujetRepo MySUjetRepo;
     @Autowired
-    private IntUserRepo MyUserRepo;
+    private UserRepository MyUserRepo;
 
     @Autowired
     private IntVoteIdeaRepo MyVoteIdeaRepo;
@@ -32,7 +32,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public int AddYes(VoteIdea v, int sujetId, int idUser) {
+    public int AddYes(VoteIdea v, int sujetId, Long idUser) {
         v.setNbYes(1);
         v.setNbNo(0);
         Sujet sujet = MySUjetRepo.findById(sujetId).orElse(null);
@@ -45,7 +45,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public int AddNo(VoteIdea v, int sujetId, int userId) {
+    public int AddNo(VoteIdea v, int sujetId, Long userId) {
 
         v.setNbYes(0);
         v.setNbNo(1);
@@ -60,7 +60,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public VoteIdea getVote(int sujetId, int userId) {
+    public VoteIdea getVote(int sujetId, Long userId) {
 
         return MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId,userId);
     }
@@ -103,14 +103,14 @@ public class VoteService implements IntVoteService {
 
 
     @Override
-    public void deletevoteById(int sujetId, int userId) {
+    public void deletevoteById(int sujetId, Long userId) {
         VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId, userId);
         MyVoteIdeaRepo.delete(v);
 
     }
 
     @Override
-    public void UpdateYes(int sujetId, int userId) {
+    public void UpdateYes(int sujetId, Long userId) {
         VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId, userId);
         v.setNbYes(1);
         v.setNbNo(0);
@@ -119,7 +119,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public void UpdateNo(int sujetId, int userId) {
+    public void UpdateNo(int sujetId, Long userId) {
         VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId, userId);
         v.setNbYes(0);
         v.setNbNo(1);
@@ -127,7 +127,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public Boolean verificationvote(int sujetId, int userId) {
+    public Boolean verificationvote(int sujetId, Long userId) {
         VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId, userId);
         if (v == null)
             return false;
@@ -135,7 +135,7 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public String VerifYourChoice(int userId, int sujetId) {
+    public String VerifYourChoice(Long userId, int sujetId) {
         String AucunVote="there is No Vote For this user ";
         String AlreadyVotedForYes="this User Voted With Yes";
         String AlreadyVotedForNo="this User Voted With No";

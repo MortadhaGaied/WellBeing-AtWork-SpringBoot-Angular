@@ -2,9 +2,10 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
+import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Evaluation.AnswerRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.IntAdviceRepo;
-import com.wellbeignatwork.backend.repository.Evaluation.IntUserRepo;
+import com.wellbeignatwork.backend.repository.UserRepository;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -21,7 +22,7 @@ import java.util.List;
 public class QVTService implements IntQVTService {
 
     @Autowired
-    private IntUserRepo MyUserRepo;
+    private UserRepository MyUserRepo;
     @Autowired
     private IntAdviceRepo MyAdviceRepo;
 

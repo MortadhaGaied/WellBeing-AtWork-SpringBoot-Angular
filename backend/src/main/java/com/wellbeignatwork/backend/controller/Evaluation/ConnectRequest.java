@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
-import com.wellbeignatwork.backend.entity.Evaluation.User;
+import com.wellbeignatwork.backend.entity.User;
 import lombok.Data;
 
 

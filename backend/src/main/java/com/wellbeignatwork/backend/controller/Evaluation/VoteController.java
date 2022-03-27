@@ -23,7 +23,7 @@ public class VoteController {
     @PostMapping("/ajouterPour/{sujetId}/{userId}")
     @ResponseBody
     public ResponseEntity<?> ajouterPour(@PathVariable(value = "sujetId") int sujetid,
-                                         @PathVariable(value = "userId") int userid,
+                                         @PathVariable(value = "userId") Long userid,
                                         @RequestBody VoteIdea v )
     {
 
@@ -34,7 +34,7 @@ public class VoteController {
     @PostMapping("/ajouterContre/{sujetId}/{userId}")
     @ResponseBody
     public ResponseEntity<?> ajouterContre(@PathVariable(value = "sujetId") int sujetid,
-                                         @PathVariable(value = "userId") int userid,
+                                         @PathVariable(value = "userId") Long userid,
                                          @RequestBody VoteIdea v )
     {
 
@@ -75,7 +75,7 @@ public class VoteController {
     @GetMapping("/GetVote/{sujetId}/{iduser}")
     @ResponseBody
     public ResponseEntity<?> getVote(@PathVariable(value = "sujetId") int sujetId,
-                                          @PathVariable("iduser") int iduser) {
+                                          @PathVariable("iduser") Long iduser) {
         VoteIdea vote;
         vote=intVoteService.getVote(sujetId, iduser) ;
         return 	ResponseEntity.ok().body(vote);
@@ -91,14 +91,14 @@ public class VoteController {
 
     @PutMapping("/UpDateYes/{sujetId}/{userId}")
     @ResponseBody
-    public void UpdateYes(@PathVariable("sujetId") int sujetId,@PathVariable("userId") int userId)
+    public void UpdateYes(@PathVariable("sujetId") int sujetId,@PathVariable("userId") Long userId)
     {
         intVoteService.UpdateYes(sujetId,userId);
 
     }
     @PutMapping("/UpdateNo/{sujetId}/{userId}")
     @ResponseBody
-    public void UpdateNo(@PathVariable("sujetId") int sujetId,@PathVariable("userId") int userId)
+    public void UpdateNo(@PathVariable("sujetId") int sujetId,@PathVariable("userId") Long userId)
     {
         intVoteService.UpdateNo(sujetId,userId);
     }
@@ -107,7 +107,7 @@ public class VoteController {
 
     @PutMapping(value = "/delete/{idsujet}/{iduser}")
     @ResponseBody
-    public ResponseEntity<?> deleteVote(@PathVariable("idsujet") int idsujet, @PathVariable("iduser") int iduser) {
+    public ResponseEntity<?> deleteVote(@PathVariable("idsujet") int idsujet, @PathVariable("iduser") Long iduser) {
         intVoteService.deletevoteById(idsujet, iduser);
         return ResponseEntity.ok().build();
     }
@@ -116,12 +116,12 @@ public class VoteController {
 
     @GetMapping("/Verification/{userId}/{sujetId}")
     @ResponseBody
-    public String verificationvoteChoix(@PathVariable("userId") int userId,@PathVariable("sujetId") int sujetId)
+    public String verificationvoteChoix(@PathVariable("userId") Long userId,@PathVariable("sujetId") int sujetId)
     { return intVoteService.VerifYourChoice(userId,sujetId); }
 
     @GetMapping("/verification/{sujetId}/{iduser}")
     @ResponseBody
-    public Boolean verificationvote(@PathVariable("sujetId") int sujetId,@PathVariable("iduser") int userId)
+    public Boolean verificationvote(@PathVariable("sujetId") int sujetId,@PathVariable("iduser") Long userId)
     { return intVoteService.verificationvote(sujetId,userId);}
 
 
