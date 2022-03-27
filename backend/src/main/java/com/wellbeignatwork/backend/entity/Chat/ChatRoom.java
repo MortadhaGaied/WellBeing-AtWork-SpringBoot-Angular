@@ -1,11 +1,10 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.Chat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

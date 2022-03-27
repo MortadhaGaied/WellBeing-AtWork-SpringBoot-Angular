@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;

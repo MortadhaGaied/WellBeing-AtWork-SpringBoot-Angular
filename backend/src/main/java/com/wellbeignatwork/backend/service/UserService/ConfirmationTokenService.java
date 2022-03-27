@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.UserService;
 
-import com.wellbeignatwork.backend.entity.ConfirmationToken;
-import com.wellbeignatwork.backend.repository.ConfirmationTokenRepository;
+import com.wellbeignatwork.backend.entity.User.ConfirmationToken;
+import com.wellbeignatwork.backend.repository.User.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

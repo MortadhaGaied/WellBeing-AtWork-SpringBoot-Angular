@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.UserService;
 
-import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;

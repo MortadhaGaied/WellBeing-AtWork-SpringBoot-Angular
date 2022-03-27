@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class Sujet implements Serializable {
     private int nbpoint;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "id")
+    @JoinColumn(name = "idUser", referencedColumnName = "USER_ID")
     private User idUser;
     @OneToMany(mappedBy = "idSujet")
     @JsonIgnore

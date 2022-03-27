@@ -2,8 +2,8 @@ package com.wellbeignatwork.backend.service.ChatService;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
-import com.wellbeignatwork.backend.entity.ChatRoom;
-import com.wellbeignatwork.backend.entity.Message;
+import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 import org.springframework.messaging.MessagingException;
 
 import java.util.List;

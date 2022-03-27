@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.ChatService;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.wellbeignatwork.backend.entity.Message;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

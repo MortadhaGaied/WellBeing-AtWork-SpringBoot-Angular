@@ -1,6 +1,13 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Evaluation.Badge;
+import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
+import com.wellbeignatwork.backend.entity.Event.Event;
+import com.wellbeignatwork.backend.entity.Event.Subscription;
+import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +15,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,6 +42,8 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
 	private Long id;
+	private String firstName;
+	private String lastName;
 
 	@Column(name = "PROVIDER_USER_ID")
 	private String providerUserId;
@@ -70,4 +80,27 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)
 	private Set<Message>messages;
+	private int pointFidelite;
+	@Enumerated(EnumType.STRING)
+	private Departement departement;
+
+	@ElementCollection
+	@CollectionTable(name = "userTags",joinColumns = @JoinColumn(name = "idUser"))
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Set<Tags> userTags;
+	@ManyToMany
+	@JsonIgnore
+	private Set<Event> events;
+	@OneToMany(mappedBy = "user")
+	private Set<Subscription> subscriptions;
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JsonIgnore
+	private List<Post> posts;
+	@JsonIgnore
+	@OneToMany(mappedBy = "idUser")
+	private Set<UserGift> CadeauUser;
+
+	@Enumerated(EnumType.STRING)
+	private Badge badge;
 }

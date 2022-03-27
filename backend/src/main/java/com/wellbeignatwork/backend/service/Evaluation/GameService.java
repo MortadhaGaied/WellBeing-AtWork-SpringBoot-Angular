@@ -1,6 +1,7 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.storage.GameStorage;
 import com.wellbeignatwork.backend.exceptions.Evaluation.GameNotFound;
 import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidGameException;

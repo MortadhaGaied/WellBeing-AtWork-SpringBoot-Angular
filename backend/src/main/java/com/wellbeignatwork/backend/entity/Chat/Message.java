@@ -1,11 +1,9 @@
-package com.wellbeignatwork.backend.entity;
+package com.wellbeignatwork.backend.entity.Chat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity

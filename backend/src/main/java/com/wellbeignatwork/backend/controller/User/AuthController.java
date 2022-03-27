@@ -1,9 +1,9 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.User;
 
 
 import com.wellbeignatwork.backend.dto.*;
 import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.security.jwt.TokenProvider;
 import com.wellbeignatwork.backend.service.UserService.MailService;
 import com.wellbeignatwork.backend.service.UserService.UserService;

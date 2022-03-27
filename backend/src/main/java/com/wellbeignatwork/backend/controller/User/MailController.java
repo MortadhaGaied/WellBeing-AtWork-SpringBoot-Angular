@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.User;
 
 import com.wellbeignatwork.backend.service.UserService.MailService;
 import org.springframework.beans.factory.annotation.Autowired;

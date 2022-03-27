@@ -1,9 +1,9 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.Chat;
 
 
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.wellbeignatwork.backend.entity.ChatRoom;
-import com.wellbeignatwork.backend.entity.Message;
+import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.payload.MessageRequest;
 import com.wellbeignatwork.backend.payload.MessageResponse;
 import com.wellbeignatwork.backend.service.ChatService.ChatRoomService;

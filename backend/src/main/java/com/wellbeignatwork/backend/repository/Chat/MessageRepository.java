@@ -1,9 +1,9 @@
-package com.wellbeignatwork.backend.repository;
+package com.wellbeignatwork.backend.repository.Chat;
 
 
-import com.wellbeignatwork.backend.entity.ChatRoom;
-import com.wellbeignatwork.backend.entity.Message;
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

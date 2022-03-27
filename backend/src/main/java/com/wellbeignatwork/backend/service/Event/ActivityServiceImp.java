@@ -15,13 +15,14 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.wellbeignatwork.backend.entity.Departement;
+import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
-import com.wellbeignatwork.backend.entity.Tags;
+import com.wellbeignatwork.backend.entity.User.Tags;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException;
-import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.util.WeatherService;
 
 import com.wellbeignatwork.backend.repository.Event.EventRepository;

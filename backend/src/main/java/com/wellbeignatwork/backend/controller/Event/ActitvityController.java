@@ -2,8 +2,10 @@ package com.wellbeignatwork.backend.controller.Event;
 
 
 import com.google.zxing.WriterException;
+import com.wellbeignatwork.backend.entity.User.User;
+
 import com.lowagie.text.DocumentException;
-import com.wellbeignatwork.backend.entity.Departement;
+import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.service.Event.ActivityServiceImp;
 import com.wellbeignatwork.backend.service.Event.IActivityService;

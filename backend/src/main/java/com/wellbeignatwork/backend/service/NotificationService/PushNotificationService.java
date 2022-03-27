@@ -2,11 +2,11 @@ package com.wellbeignatwork.backend.service.NotificationService;
 
 
 import com.google.firebase.messaging.*;
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
-import com.wellbeignatwork.backend.repository.MessageRepository;
-import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.repository.Chat.MessageRepository;
+import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.UserService.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

@@ -2,11 +2,12 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntGiftUserRepo;
 import com.wellbeignatwork.backend.repository.Event.EventRepository;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
-import com.wellbeignatwork.backend.repository.UserRepository;
+import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

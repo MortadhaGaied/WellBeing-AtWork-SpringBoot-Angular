@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.controller;
+package com.wellbeignatwork.backend.controller.Chat;
 
 
 

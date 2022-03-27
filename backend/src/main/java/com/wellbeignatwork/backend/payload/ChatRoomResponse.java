@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.payload;
 
-import com.wellbeignatwork.backend.entity.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

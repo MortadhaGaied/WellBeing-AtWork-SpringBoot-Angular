@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.dto;
 
-import com.wellbeignatwork.backend.entity.User;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
