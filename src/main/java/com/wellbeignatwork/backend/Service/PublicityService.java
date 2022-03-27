@@ -1,15 +1,19 @@
 package com.wellbeignatwork.backend.Service;
 
+import com.wellbeignatwork.backend.API.FirebaseStorage;
 import com.wellbeignatwork.backend.Repository.ICollaboration;
 import com.wellbeignatwork.backend.Repository.IOffer;
 import com.wellbeignatwork.backend.Repository.IPublicity;
+import com.wellbeignatwork.backend.Repository.ImageRepo;
 import com.wellbeignatwork.backend.ServiceImp.IPublicityService;
+import com.wellbeignatwork.backend.exception.ResourceNotFoundException;
+import com.wellbeignatwork.backend.model.Image;
 import com.wellbeignatwork.backend.model.Offer;
 import com.wellbeignatwork.backend.model.Publicity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +33,11 @@ public class PublicityService implements IPublicityService {
 	@Autowired
 	IPublicity PublicityRepo;
 
+	@Autowired
+	ImageRepo imageRepo;
+
+	@Autowired
+	FirebaseStorage firebaseStorage;
 
 	@Override
 	public List<Publicity> retrieveAllPublicitys() {
@@ -84,4 +93,39 @@ public class PublicityService implements IPublicityService {
 		Files.write(path,bytes);
 	}
 
+	@Override
+	public void uploadImageToPub(MultipartFile img, Long idPublicity) throws IOException {
+		Publicity pub = PublicityRepo.findById(idPublicity).orElse(null);
+		if (pub == null) {
+			throw new ResourceNotFoundException("Event is not exist");
+		}
+		String name = firebaseStorage.uploadFile(img);
+		Image image = new Image();
+		image.setName(name);
+		image.setPublicity(pub);
+		imageRepo.save(image);
+	}
+
+	@Override
+	public void uploadPubBanner(MultipartFile img, Long eventId) throws IOException {
+		Publicity pub = PublicityRepo.findById(eventId).orElse(null);
+		if (pub == null) {
+			throw new ResourceNotFoundException("Event is not exist");
+		}
+		String name = firebaseStorage.uploadFile(img);
+		pub.setBanner(name);
+		PublicityRepo.save(pub);
+	}
+
+	@Override
+	@Transactional
+	public void deleteImage(String imgName) {
+		if (!imageRepo.existsByName(imgName)) {
+			throw new ResourceNotFoundException("Image doesn't exist");
+		}
+		if (!firebaseStorage.deleteFile(imgName)) {
+			throw new RuntimeException("Something went wrong when deleting image");
+		}
+		imageRepo.deleteByName(imgName);
+	}
 }

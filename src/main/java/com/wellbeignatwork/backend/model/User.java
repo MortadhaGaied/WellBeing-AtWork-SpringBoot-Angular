@@ -1,9 +1,8 @@
 package com.wellbeignatwork.backend.model;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,10 +13,13 @@ import java.util.Set;
  * The persistent class for the user database table.
  * 
  */
-@Entity
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
+@Entity
 public class User implements Serializable {
 
 	/**

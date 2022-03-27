@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 @Entity
-
 public class Offer implements Serializable {
 	private static final long serialVersionUID = 1L;
 

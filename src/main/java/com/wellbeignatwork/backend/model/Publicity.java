@@ -1,21 +1,21 @@
 package com.wellbeignatwork.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 @Entity
-
 public class Publicity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,4 +30,10 @@ public class Publicity implements Serializable {
 
 	@ManyToOne
 	Offer offers;
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "publicity")
+	Set<Image> images;
+
+	@Nullable
+	String banner;
 }

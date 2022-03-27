@@ -1,11 +1,11 @@
 package com.wellbeignatwork.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
 
 @Getter
 @Setter
@@ -14,25 +14,13 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 @Entity
-public class Reservation implements Serializable {
-
+public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long idReservation;
-    LocalDateTime startDateRes;
-    LocalDateTime endDateRes;
-    int nmPalce;
-    int priceTotal;
+    Long id;
+    String name;
 
-
-
+    @JsonIgnore
     @ManyToOne
-    Offer offersRes;
-    
-    @ManyToOne
-    User userRes;
-
-
-
-
+    Publicity publicity;
 }

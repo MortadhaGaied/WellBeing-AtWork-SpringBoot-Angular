@@ -23,4 +23,7 @@ public interface IPublicityService {
     public boolean dateOffer(long idPublicity, Date starDateOf, Date finDateOf);
 
     public void saveImage(MultipartFile imageFile,Publicity publicity) throws IOException;
+    void uploadImageToPub(MultipartFile file, Long eventId) throws IOException;
+    void uploadPubBanner(MultipartFile file, Long eventId) throws IOException;
+    void deleteImage(String imgName);
 }
