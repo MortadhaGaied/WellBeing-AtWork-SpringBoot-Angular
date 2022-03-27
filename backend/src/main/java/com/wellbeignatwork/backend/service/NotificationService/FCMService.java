@@ -28,10 +28,12 @@ public class FCMService {
 
     public void sendMessageToToken(PushNotificationRequest request)
             throws InterruptedException, ExecutionException {
+        log.info(" sendMessageToToken invoked");
         Message message = getPreconfiguredMessageToToken(request);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonOutput = gson.toJson(message);
         String response = sendAndGetResponse(message);
+        log.info("response : "+response);
         log.info("Sent message to token. Device token: " + request.getToken() + ", " + response+ " msg "+jsonOutput);
     }
 
