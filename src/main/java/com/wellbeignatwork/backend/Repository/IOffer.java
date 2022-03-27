@@ -13,4 +13,5 @@ public interface IOffer extends JpaRepository<Offer, Long> {
 
      Optional<Offer> findByIdOffer(int id);
      List<Offer> findAll();
+    void inviteUsersToOffer(List<Long> usersId, Long offerId);
     }

@@ -22,4 +22,6 @@ public interface IOfferService {
 
 
     Object getOfferWeather(Long idOffer);
+
+    void inviteUsersToOffer(List<Long> usersId, Long offerId);
 }
