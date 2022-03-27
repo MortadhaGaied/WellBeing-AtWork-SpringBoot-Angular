@@ -87,13 +87,13 @@ public class ReservationService implements IReservationService {
 			r.getUserRes().getEmail();
 			List<Reservation> listReservations = listAll();
 			ReservationPDFExporter exporter = new ReservationPDFExporter(listReservations);
-			emailSender.sendMail(r.getUserRes().getEmail(), " Reservation in this week " ," your reservation for this week ");
+			//emailSender.sendMail(r.getUserRes().getEmail(), " Reservation in this week " ," your reservation for this week ");
 		}
 		for (Reservation r : reservationsDay){
 			r.getUserRes().getEmail();
 			List<Reservation> listReservations = listAll();
 			ReservationPDFExporter exporter = new ReservationPDFExporter(listReservations);
-			emailSender.sendMail(r.getUserRes().getEmail(), " reservation Tomorrow " ,"you have a Reservation for tomorrow ");
+			//emailSender.sendMail(r.getUserRes().getEmail(), " reservation Tomorrow " ,"you have a Reservation for tomorrow ");
 		}
 	}
 }

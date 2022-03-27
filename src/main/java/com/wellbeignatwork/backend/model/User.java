@@ -50,4 +50,11 @@ public class User implements Serializable {
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Formation> formationE;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy ="User")
+	@JsonIgnore
+	private Session session;
+	
+	@Column(name = "DISPLAY_NAME")
+	private String displayName;
 }
