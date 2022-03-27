@@ -3,7 +3,7 @@ package com.wellbeignatwork.backend.entity.Forum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.Tags;
 import lombok.*;
-
+import com.wellbeignatwork.backend.entity.User;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;

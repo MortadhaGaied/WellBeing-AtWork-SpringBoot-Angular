@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-
+import com.wellbeignatwork.backend.entity.User;
 @Entity
 @Getter
 @Setter

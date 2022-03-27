@@ -7,7 +7,7 @@ import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidGameException;
 import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidParamException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import com.wellbeignatwork.backend.entity.User;
 
 import java.util.UUID;
 

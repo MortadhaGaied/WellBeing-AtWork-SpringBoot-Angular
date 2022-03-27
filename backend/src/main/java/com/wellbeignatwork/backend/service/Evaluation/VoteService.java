@@ -7,7 +7,7 @@ import com.wellbeignatwork.backend.repository.Evaluation.SujetRepo;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-;
+import com.wellbeignatwork.backend.entity.User;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

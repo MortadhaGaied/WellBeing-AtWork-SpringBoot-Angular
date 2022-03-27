@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
+import com.wellbeignatwork.backend.entity.User;
 @Entity
 @Getter
 @Setter

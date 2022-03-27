@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
-
+import com.wellbeignatwork.backend.entity.User;
 import java.util.List;
 
 public interface IntPointsAndGiftService {

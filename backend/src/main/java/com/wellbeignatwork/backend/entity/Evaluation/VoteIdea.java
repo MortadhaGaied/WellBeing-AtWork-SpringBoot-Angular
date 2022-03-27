@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import com.wellbeignatwork.backend.entity.User;
 @Entity
 @Getter
 @Setter
