@@ -10,7 +10,7 @@ import java.util.List;
 public interface IServicesQuiz {
 
 
-    void addQuiz(QuizCourses quiz, Integer idF);
+    void addQuiz(QuizTheme quiz, Integer idF);
     void addQuestionAndAsigntoQuiz(Question question, Integer idQuiz);
    // void addAnswerAndAsigntoQuestion(Answer answer,Integer idQuestion,Integer idQuiz);
 
@@ -25,13 +25,14 @@ public interface IServicesQuiz {
     Object EmployeewithMaxScore(@Param("id") Integer id);
     Integer MaxScoreInTest();
 
-    List<Object> getApprenantWithScoreQuiz(@Param("id") Integer id);
+    List<Object> EmployeeWithScoreQuiz(@Param("id") Integer id);
 
     List<Result> getTopScore();
 
     Integer getScore( Long idU);
+    User EmployeewithMaxScoreQuiz(Integer id);
 
-    List<QuizCourses> getQuizByTest(Integer idF);
+    List<QuizTheme> getQuizByTest(Integer idF);
 
     void DeleteQuiz(Integer idQ);
 

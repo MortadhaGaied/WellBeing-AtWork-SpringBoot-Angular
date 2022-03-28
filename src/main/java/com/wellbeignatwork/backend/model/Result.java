@@ -41,7 +41,7 @@ public class Result {
 
     @ManyToOne
     @JsonIgnore
-    private QuizCourses quiz;
+    private QuizTheme quiz;
 
     @ManyToOne
     @JsonIgnore

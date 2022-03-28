@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table( name = "QuizCourses")
-public class QuizCourses  {
+public class QuizTheme {
 
 
     @Id

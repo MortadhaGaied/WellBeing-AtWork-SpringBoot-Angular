@@ -48,7 +48,7 @@ public class Question {
 
     @ManyToOne
     @JsonIgnore
-    private QuizCourses quiz;
+    private QuizTheme quiz;
 
 
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 
@@ -41,7 +40,7 @@ public class Test {
 
     @OneToMany(mappedBy = "test" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
-    private Set<QuizCourses> quizzes;
+    private Set<QuizTheme> quizzes;
 
 
     @OneToMany(mappedBy = "test",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})

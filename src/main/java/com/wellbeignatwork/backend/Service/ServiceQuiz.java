@@ -3,9 +3,7 @@ package com.wellbeignatwork.backend.Service;
 
 import com.wellbeignatwork.backend.Repository.*;
 import com.wellbeignatwork.backend.ServiceImp.IServicesQuiz;
-import com.wellbeignatwork.backend.model.Question;
-import com.wellbeignatwork.backend.model.QuestionTheme;
-import com.wellbeignatwork.backend.model.Result;
+import com.wellbeignatwork.backend.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -44,20 +42,18 @@ public class ServiceQuiz implements IServicesQuiz {
 
 
     @Override
-    public void addQuiz(QuizCourses quiz, Integer idF) {
-        Formation formation = this.iFormationRepo.findById(idF).orElse(null);
-        quiz.setFormation(formation);
+    public void addQuiz(QuizTheme quiz, Integer IdTest) {
+        Test test = this.iTestRepo.findById(IdTest).orElse(null);
+        quiz.setTest(test);
         quiz.setCreateAt(new Date());
         iQuizRepo.save(quiz);
     }
 
     @Override
     public void addQuestionAndAsigntoQuiz(Question question, Integer idQuiz) {
-    QuizCourses quiz = iQuizRepo.findById(idQuiz).orElse(null);
-
-    question.setQuiz(quiz);
-
-    iQuestionRepo.save(question);
+        QuizTheme quiz = iQuizRepo.findById(idQuiz).orElse(null);
+       question.setQuiz(quiz);
+       iQuestionRepo.save(question);
     }
 
 
@@ -78,9 +74,7 @@ public class ServiceQuiz implements IServicesQuiz {
             qList.add(allQues.get(rand));
             allQues.remove(rand);
         }
-
         return qList;
-
     }
 
 
@@ -96,7 +90,6 @@ public class ServiceQuiz implements IServicesQuiz {
             qList.add(allQues.get(rand));
             allQues.remove(rand);
         }
-
         return qList;
     }
 
@@ -106,7 +99,6 @@ public class ServiceQuiz implements IServicesQuiz {
         for(Question q: qForm.getQuestions())
             if(q.getAns() == q.getChose())
                 correct++;
-
         return correct;
     }
 
@@ -115,7 +107,7 @@ public class ServiceQuiz implements IServicesQuiz {
         Result saveResult = new Result();
 
         User user = this.iUserRepo.findById(idUser).orElse(null);
-        QuizCourses quiz = this.iQuizRepo.findById(idQuiz).orElse(null);
+        QuizTheme quiz = this.iQuizRepo.findById(idQuiz).orElse(null);
         if (iResultRepo.findUserQuiz(idUser,idQuiz) == 0)
         {
             saveResult.setSUser(user);
@@ -136,23 +128,20 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    public User ApprenentwithMaxScoreInFormation(Integer id) {
-        return this.iUserRepo.ApprenentwithMaxScoreInFormation(id);
+    public User EmployeewithMaxScoreInTest(Integer id) {
+        return this.iUserRepo.EmployeewithMaxScoreInTest(id);
     }
 
     @Override
-    public Object ApprenentwithMaxScore(Integer id) {
-        Formation f = iFormationRepo.findById(id).orElse(null);
-
-        return  iUserRepo.getApprenantWithScoreQuiz(id).get(0);
-
-
+    public List<Object> EmployeeWithScoreQuiz(Integer id) {
+        Test test = iTestRepo.findById(id).orElse(null);
+        return (List<Object>) iUserRepo.getEmployeeWithScoreQuiz(id).get(0);
     }
 
     @Override
-    public User ApprenentwithMaxScoreQuiz(Integer id) {
+    public User EmployeewithMaxScoreQuiz(Integer id) {
 
-        return iUserRepo.getApprenantWithScoreForGifts(id).get(0);
+        return iUserRepo.getEmployeeWithScoreForGifts(id).get(0);
     }
 
     @Override
@@ -164,22 +153,21 @@ public class ServiceQuiz implements IServicesQuiz {
         Date date = new Date();
         boolean status=false;
 
-        for(Formation form : iFormationRepo.findAll())
+        for(Test form : iTestRepo.findAll())
         {
-            if(iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).size()!=0 )
+            if(iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).size()!=0 )
             {
-                user = iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).get(0);
+                user = iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).get(0);
 
-                Date tomorrow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 48));
-                log.info("Date : "+tomorrow);
-                if (date.after(form.getEnd()) && date.before(tomorrow) && iResultRepo.getNbrQuiz(user.getId()) == 5)
+
+                if ( iResultRepo.getNbrQuiz(user.getId()) == 15)
                 {
                     status=true;
                 }
 
                 if (status)
                 {
-                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " we have max Score in courses   ", "Congratulations Mr's : " + user.getLastName() + "--" + user.getFirstName() + " We have Courses free and access in all domain Formation Id : "+ form.getIdFormation() + " .");
+                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " we have max Score in courses   ", "Congratulations Mr's : " + user.getName()  + " We have Courses free and access in all domain Formation Id : "+ form.getIdTest() + " .");
                     status=false;
                 }
             }

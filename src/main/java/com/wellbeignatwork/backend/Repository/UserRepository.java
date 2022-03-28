@@ -35,11 +35,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer MaxScoreInTest();
 
 
-    @Query(value = "select result.sUser from Test test join test.quizzes quiz join quiz.results result where" +
-            " result.totalCorrect=(select Max(result.totalCorrect) from User user join user.TestEmployee f join f.quizzes q join q.results r " +
-            " where user.profession='EMPLOYEE') and test.idTest=:id")
-    User EmployeewithMaxScoreInTest(@Param("id") Integer id);
-
     @Query(value = "select result.sUser,SUM (result.totalCorrect) from Result result join result.quiz quiz join quiz.test test where test.idTest=:id group by result.sUser order by SUM (result.totalCorrect) desc")
     List<Object> getEmployeeWithScoreQuiz(@Param("id") Integer id);
 
@@ -47,5 +42,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select result.sUser from Result result join result.quiz quiz join quiz.test test where test.idTest=:id group by result.sUser order by SUM (result.totalCorrect) desc")
     List<User> getEmployeeWithScoreForGifts(@Param("id") Integer id);
 
+    @Query(value = "select result.sUser from Test test join test.quizzes quiz join quiz.results result where" +
+            " result.totalCorrect=(select Max(r.totalCorrect) from User u join u.TestEmployee f join f.quizzes q join q.results r " +
+            " where u.profession='LEARNER') and test.idTest=:id")
+    User EmployeewithMaxScoreInTest(@Param("id") Integer id);
 
 }
