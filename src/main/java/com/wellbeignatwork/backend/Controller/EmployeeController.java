@@ -19,14 +19,14 @@ public class EmployeeController {
 	User user = LoginController.user;
 	
 	@GetMapping("/startQuiz/{id}")
-	public void startQuiz(@PathVariable int quizID) {
+	public void startQuiz(@PathVariable Long quizID) {
 		quiz = QuizService.quizes.get(quizID);
 		totalMarks = 0;
 		currQuesId = 0;
 	}
 	
 	@PostMapping("/questions/{id}")
-	public void submitAnswer(@PathVariable int id, @RequestBody String Answer) {
+	public void submitAnswer(@PathVariable Long id, @RequestBody String Answer) {
 		Question ques = quiz.getQuestions().get(id);
 		if(ques.getAnswer()== Answer) {
 			totalMarks+=ques.getMarks();
@@ -35,8 +35,8 @@ public class EmployeeController {
 	
 	@PostMapping("/submit")
 	public void submitQuiz() {
-		Result rs = new Result(quiz.getId(), Math.toIntExact(user.getId()), totalMarks);
-		results.add(rs);
+		//Result rs = new Result(quiz.getId(), Math.toIntExact(user.getId()), totalMarks);
+		//results.add(rs);
 	}
 	@GetMapping("/Results")
 	public ArrayList<Result> Results() {

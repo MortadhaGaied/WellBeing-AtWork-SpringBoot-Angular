@@ -17,9 +17,9 @@ public class PatronController {
 		this.quizS.addQuiz(quiz);
 	}
 	
-	@PostMapping("/editQuiz")
-	public void editQuiz(@RequestBody Quiz quiz) {
-		this.quizS.updateQuiz(quiz);
+	@PutMapping("/editQuiz/{id}")
+	public void editQuiz(@RequestBody Quiz quiz,@PathVariable Long id) {
+		this.quizS.updateQuiz(quiz,id);
 	}
 	
 	@PostMapping("/addQuestion")
@@ -34,12 +34,12 @@ public class PatronController {
 	}
 	
 	@PostMapping("/deleteQuestion/{quizID}/{id}")
-	public void deleteQuestion(@PathVariable int quizID, @PathVariable int id) {
+	public void deleteQuestion(@PathVariable Long quizID, @PathVariable Long id) {
 		this.quizS.deleteQues(id, quizID);
 	}
 	
 	@GetMapping("/deleteQuiz/{id}")
-	public void deleteQuiz(@PathVariable int id) {
+	public void deleteQuiz(@PathVariable Long id) {
 		this.quizS.deleteQuiz(id);
 	}
 	

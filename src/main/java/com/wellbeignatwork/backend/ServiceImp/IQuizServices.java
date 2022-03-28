@@ -10,12 +10,12 @@ public interface IQuizServices {
 
 	Quiz addQuiz(Quiz quiz);
 
-	public void deleteQuiz(int id);
-	public void updateQuiz(Quiz quiz);
+	public void deleteQuiz(Long id);
+	Quiz updateQuiz(Quiz quiz,Long id);
 	
-	public List<Question> getQuestions(int id);
+	public List<Question> getQuestions(Long id);
 	public void addQuestion(Question ques);
-	public void deleteQues(int id, int quizID);
+	public void deleteQues(Long id, Long quizID);
 	public void updateQues(Question ques);
 	 
 }

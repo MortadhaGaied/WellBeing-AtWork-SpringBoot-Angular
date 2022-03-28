@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Question implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
     private String question;
     private String answer;
     private int marks;
@@ -53,10 +53,10 @@ public class Question implements Serializable {
 	public void setOptionD(String optionD) {
 		this.optionD = optionD;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getQuestion() {

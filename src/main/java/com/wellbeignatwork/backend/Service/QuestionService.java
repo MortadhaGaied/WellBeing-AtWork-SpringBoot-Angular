@@ -10,7 +10,7 @@ public class QuestionService implements IQuestionService {
 
 	QuizService quizS = new QuizService();
 	@Override
-	public List<Question> getQuestions(int id) {
+	public List<Question> getQuestions(Long id) {
 
 		return null;
 	}
