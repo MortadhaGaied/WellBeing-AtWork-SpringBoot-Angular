@@ -24,7 +24,7 @@ public interface IResultRepo extends CrudRepository<Result,Integer> {
     @Query(value = "select sum(r.totalCorrect) from Result r join r.sUser u where u.id=:idu group by r.sUser ")
     Integer getScore(@Param("idu") Long idU);
 
-    @Query(value = "select r from Test f join f.quizzes q join q.results r join r.sUser u where u.id=:idu and f.idTest=:idf and r.status=false and f.end < current_date  group by r")
+    @Query(value = "select r from Test f join f.quizzes q join q.results r join r.sUser u where u.id=:idu and f.idTest=:idf and r.status=false ")
     List<Result>  getResultByIdUserAndAndIdTest(@Param("idu") Long idU, @Param("idf") Integer idF);
 
 }

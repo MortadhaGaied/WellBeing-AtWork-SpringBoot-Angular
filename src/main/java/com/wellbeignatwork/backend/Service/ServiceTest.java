@@ -76,26 +76,6 @@ public class ServiceTest implements IServiceTest {
     }
 
 
-    @Override
-    public List<Test> SearchMultiple(String key) {
-        return null;
-    }
-
-    @Override
-    public Integer getNbrEmployeeByTest(String title) {
-        return null;
-    }
-
-    @Override
-    public Integer getNbrTestByEmployee(Long idApp, Domain domain, Date dateDebut, Date dateFin) {
-        return null;
-    }
-
-    @Override
-    public List<User> getEmployeeByTest(Integer idF) {
-        return null;
-    }
-
 
     @Override
    // @Scheduled(cron = "0 0/1 * * * *")
@@ -155,10 +135,7 @@ public class ServiceTest implements IServiceTest {
     public void affecterEmployeeWithMaxTest(Long idUser, Integer idTest) {
 
         Test test = iTestRepo.findById(idTest).orElse(null);
-
         User employee = iUserRepo.findById(idUser).orElse(null);
-
-        LocalDate currentdDate1 =  LocalDate.now();
         User user = new User();
 
         ///User with gifts Free for MAx Score
@@ -198,7 +175,6 @@ public class ServiceTest implements IServiceTest {
     }
 
     }
-
 
     @Override
     public void AffecterEmployeeATest(Long idUser, Integer idTest) {

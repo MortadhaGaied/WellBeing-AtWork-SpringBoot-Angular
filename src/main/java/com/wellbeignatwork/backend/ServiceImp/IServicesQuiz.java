@@ -45,8 +45,4 @@ public interface IServicesQuiz {
 
     void giftsToUserMaxScoreInCourses();
 
-
-
-
-
 }

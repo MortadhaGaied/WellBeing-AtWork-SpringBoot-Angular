@@ -22,15 +22,7 @@ public interface IServiceTest {
     void CertifactionEmployee();
 
 
-    List<Test>  SearchMultiple(String key);
-
     void affecterEmployeeWithMaxTest(Long idEmployee, Integer idTest);
-
-    Integer getNbrEmployeeByTest(String title);
-
-    Integer getNbrTestByEmployee(Long idApp, Domain domain , Date dateDebut, Date dateFin);
-
-    List<User> getEmployeeByTest(Integer idF);
 
     void AffecterEmployeeATest(Long idUser, Integer idTest);
 

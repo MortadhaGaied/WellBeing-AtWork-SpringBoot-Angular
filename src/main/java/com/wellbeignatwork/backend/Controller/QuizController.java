@@ -2,11 +2,14 @@ package com.wellbeignatwork.backend.Controller;
 
 import com.wellbeignatwork.backend.ServiceImp.IServiceTest;
 import com.wellbeignatwork.backend.ServiceImp.IServicesQuiz;
+import com.wellbeignatwork.backend.model.Domain;
 import com.wellbeignatwork.backend.model.Test;
 import com.wellbeignatwork.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -49,11 +52,18 @@ public class QuizController {
         return iServiceTest.afficherEmployee();
     }
 
-    @RequestMapping(value = {"/affecterApprenantFormation/{idA}/{idF}"}, method = RequestMethod.POST)
+    @PostMapping(  "/AffecterEmployeeATest/{idEmployee}/{idTest}")
     @ResponseBody
-    @ApiOperation(value = "ajouter Et Affecter Formation A Formateur  ")
-    public void affecterApprenantFormation(@PathVariable(name = "idA") Long idApprenant,@PathVariable(name = "idF") Integer idFormation)
+    public void affecterApprenantFormation(@PathVariable(name = "idEmployee") Long idEmployee,@PathVariable(name = "idTest") Integer idTest)
     {
-        iServiceFormation.affecterApprenantFormation(idApprenant, idFormation);
+        iServiceTest.AffecterEmployeeATest(idEmployee, idTest);
     }
+
+    @RequestMapping(value = {"/affecterEmployeeWithMaxTest/{idEmployee}/{idTest}"}, method = RequestMethod.POST)
+    @ResponseBody
+    public void affecterEmployeeWithMaxTest(@PathVariable(name = "idEmployee") Long idEmployee,@PathVariable(name = "idTest") Integer idTest)
+    {
+        iServiceTest.affecterEmployeeWithMaxTest(idEmployee, idTest);
+    }
+
 }
