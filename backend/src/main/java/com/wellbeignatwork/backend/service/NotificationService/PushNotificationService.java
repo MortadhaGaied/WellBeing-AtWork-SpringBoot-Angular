@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
@@ -116,6 +117,11 @@ public class PushNotificationService implements INotificationService {
 
         else log.info("no users in database");
 
+    }
+
+    @Override
+    public void sendMessageToTokenWithExtraData(PushNotificationRequest request) throws InterruptedException, ExecutionException {
+        fcmService.sendMessageToTokenWithExtraData(request);
     }
 
 }

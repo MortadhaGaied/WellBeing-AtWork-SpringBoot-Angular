@@ -45,10 +45,8 @@ public class Event implements Serializable {
 
     @OneToMany (mappedBy = "event")
     private List<FeedBack> feedBacks;
-    @JsonIgnore
 
-    @OneToMany
-    @JoinTable(name = "invitation")
-    private List<User> invitedUsers ;
+
+
 
 }

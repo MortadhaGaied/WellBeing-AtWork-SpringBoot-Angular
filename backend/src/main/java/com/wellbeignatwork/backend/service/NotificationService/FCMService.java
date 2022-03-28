@@ -37,6 +37,15 @@ public class FCMService {
         log.info("Sent message to token. Device token: " + request.getToken() + ", " + response+ " msg "+jsonOutput);
     }
 
+    public void sendMessageToTokenWithExtraData(PushNotificationRequest request) throws ExecutionException, InterruptedException {
+        Message message =getPreconfiguredMessageWithData(request);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonOutput = gson.toJson(message);
+        String response = sendAndGetResponse(message);
+        log.info("response : "+response);
+        log.info("Sent message to token. Device token: " + request.getToken() + ", " + response+ " msg "+jsonOutput);
+    }
+
     public void sendMessageToTopic(PushNotificationRequest request)
             throws InterruptedException, ExecutionException {
         Message message = getPreconfiguredMessageWithoutData(request);
@@ -68,8 +77,8 @@ public class FCMService {
         return getPreconfiguredMessageBuilder(request).setTopic(request.getTopic())
                 .build();
     }
-    private Message getPreconfiguredMessageWithData(Map<String, String> data, PushNotificationRequest request) {
-        return getPreconfiguredMessageBuilder(request).putAllData(data).setToken(request.getToken())
+    private Message getPreconfiguredMessageWithData(PushNotificationRequest request) {
+        return getPreconfiguredMessageBuilder(request).putAllData(request.getData()).setToken(request.getToken())
                 .build();
     }
     private Message.Builder getPreconfiguredMessageBuilder(PushNotificationRequest request) {

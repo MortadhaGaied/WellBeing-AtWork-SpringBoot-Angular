@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/notification")
 public class PushNotificationController {
@@ -43,6 +45,13 @@ public class PushNotificationController {
     @PostMapping("/token/{userId}/{t}")
     public void saveUserFirebaseTokens(@PathVariable Long userId, @PathVariable String t){
         pushNotificationService.saveFirebaseToken(userId,t);
+    }
+
+    //http://localhost:8081/WellBeingAtwork/notitification/data
+    @PostMapping("/data")
+    public ResponseEntity<?> sendNotificationToUserWithData(@RequestBody PushNotificationRequest request) throws FirebaseMessagingException, ExecutionException, InterruptedException {
+        pushNotificationService.sendMessageToTokenWithExtraData(request);
+        return  new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent to user."), HttpStatus.OK);
     }
 
 }

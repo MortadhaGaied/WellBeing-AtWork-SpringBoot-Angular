@@ -78,7 +78,7 @@ public class FirebaseStorage {
                 log.info("File " + filePath + " uploaded to bucket " + BUCKETNAME + " as " + fileName + " blobId " + blobId);
                 return fileName;
             } catch (Exception e) {
-               
+
                 throw new BadRequestException("File uploaded must be of type image only");
 
             }

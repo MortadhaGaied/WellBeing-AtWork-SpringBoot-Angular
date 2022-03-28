@@ -30,7 +30,6 @@ public interface IActivityService {
     public Object getEventWeather(Long eventId);
     public void inviteUser (Long idUser,Long idEvent);
     public void acceptInvitation (Long idEvent , Long idUser);
-    public void refuseAnInvitation (Long idUser, Long idEvent);
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
     public Set<Event> filtreByDepartement(Departement departement);

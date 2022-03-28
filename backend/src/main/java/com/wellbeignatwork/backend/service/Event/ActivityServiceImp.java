@@ -51,6 +51,7 @@ import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
@@ -505,7 +506,7 @@ public class ActivityServiceImp implements IActivityService {
         // this.httpp.port (/accept invitaion))
         //bouton ignore
 
-        Event event = eventRepository.findById(idEvent).orElseThrow(()->{
+        Event event = eventRepository.findById(idEvent).orElseThrow(() -> {
             throw new ResourceNotFoundException("user with this id : " + idEvent + " not found");
         });
         //true event
@@ -514,17 +515,30 @@ public class ActivityServiceImp implements IActivityService {
                             if (event.getUsers().contains(user1)) {
                                 throw new BadRequestException("You can't invite someone who already participate");
                             }
-                            if (event.getInvitedUsers().contains(user1)) {
-                                throw new BadRequestException("You can't invite someone to an event already invited");
-                            }
+
                             if (event.getStartDate().isBefore(LocalDateTime.now())) {
                                 throw new BadRequestException("You can't invite someone to an event already started or finished");
                             }
 
+                            //prep data
+                            String redirectionLink = "http://localhost:8081/Wellbeignatwork/event/accept/" + idUser + "/" + idEvent;
+                            Map<String, String> data = new HashMap<>();
+                            data.put("redirectionLink", redirectionLink);
+                            //prep request
+                            PushNotificationRequest request = new PushNotificationRequest();
+                            request.setTitle("Event Invitation");
+                            request.setMessage("you have been invited to Event : " + event.getEventName());
+                            request.setToken(user1.getFireBaseToken());
+                            request.setData(data);
+
                             //mail sent
-                            mailService.sendMail(user1.getEmail(), "Event Invitation", "you have been invited to Event" + event.getEventName()+"\n"+"click this link to accept the invitation"+"\n"+"http://localhost:8081/Wellbeignatwork/event/accept/"+idUser+"/"+idEvent, false);
+                            mailService.sendMail(user1.getEmail(), "Event Invitation", "you have been invited to Event" + event.getEventName() + "\n" + "click this link to accept the invitation" + "\n" + "http://localhost:8081/Wellbeignatwork/event/accept/" + idUser + "/" + idEvent, false);
                             //notification sent
-                            notificationService.sendPushNotificationToToken(new PushNotificationRequest("Event Invitation", "you have been invited to Event" + event.getEventName()+"\n"+String.format("%s_%s", idUser, idEvent),"",user1.getFireBaseToken()));
+                            try {
+                                notificationService.sendMessageToTokenWithExtraData(request);
+                            } catch (InterruptedException | ExecutionException e) {
+                                e.printStackTrace();
+                            }
                             return user1;
                         }
                 )
@@ -538,39 +552,51 @@ public class ActivityServiceImp implements IActivityService {
     @Override
 
     public void acceptInvitation(Long idEvent, Long idUser) {
+        PushNotificationRequest request = new PushNotificationRequest();
+        request.setTitle("Event Invitation");
         // route to to execute the AssignUserToEvent method
 
-        User user = userRepo.findById(idUser).orElse(null);
+        User user = userRepo.findById(idUser)
+                .map(user1 ->{
+                    request.setToken(user1.getFireBaseToken());
+                    return user1;
+                })
+                .orElseThrow(()->new ResourceNotFoundException("user with id : "+idUser+" doesnt exist"));
+
         //System.out.println(event);
-         eventRepository.findById(idEvent).map((event1 -> {
+        eventRepository.findById(idEvent).map((event1 -> {
             if (event1.getUsers().size() == event1.getNbrMaxParticipant()) {
+
+                //prep request
+                request.setMessage("sorry our event is already full");
                 //send decline notification
-                notificationService.sendPushNotificationToToken(new PushNotificationRequest("Event Invitation","sorry our event is already full","",user.getFireBaseToken()));
+                notificationService.sendPushNotificationToToken(request);
 
             }
-            // all things good
-            assignUserToEvent(idUser,idEvent);
-             //acceptence notification
-             notificationService.sendPushNotificationToToken(new PushNotificationRequest("Event Invitation"," you have been succesfully joined our event : "+event1.getEventName(),"",user.getFireBaseToken()));
+
+            if (event1.getUsers().contains(user)) {
+                //senda notification to tell the user that he already joined the Event
+                //prepare the request
+                request.setMessage("you are subscribed to this event ");
+                //send decline notification
+                notificationService.sendPushNotificationToToken(request);
+            }
+            else {
+                // all things good
+                assignUserToEvent(idUser, idEvent);
+                //acceptence notification
+                //prepare the request
+                request.setMessage(" you have been succesfully joined our event : " + event1.getEventName());
+                notificationService.sendPushNotificationToToken(request);
+            }
+
 
             return event1;
-        })).orElseThrow(()->new ResourceNotFoundException("event  with id : "+idEvent+" not found"));
-
+        })).orElseThrow(() -> new ResourceNotFoundException("event  with id : " + idEvent + " not found"));
 
 
     }
 
-    @Override
-
-    public void refuseAnInvitation(Long idUser, Long idEvent) {
-        Event event = eventRepository.findById(idEvent).orElse(null);
-        User user = userRepo.findById(idUser).orElse(null);
-        if (!event.getInvitedUsers().contains(user)) {
-            throw new BadRequestException("You can't decline an invitation where you are not invited");
-        }
-        event.getInvitedUsers().remove(user);
-        eventRepository.save(event);
-    }
    /*
     @Override
     public void addEventToFavory(Long idUser, Event e) {

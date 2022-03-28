@@ -149,11 +149,7 @@ public class ActitvityController {
     public void acceptInvitation (@PathVariable Long idEvent , @PathVariable Long idUser){
         activityService.acceptInvitation(idEvent,idUser);
     }
-    @GetMapping("/refuse/{idUser}/{idEvent}")
-    @ResponseBody
-    public void refuseAnInvitation (@PathVariable Long idUser, @PathVariable Long idEvent){
-        activityService.refuseAnInvitation(idUser,idEvent);
-    }
+
     @GetMapping("/assign-point/{id-u}/{id-event}")
     @ResponseBody
 
