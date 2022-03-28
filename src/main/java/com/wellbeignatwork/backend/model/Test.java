@@ -35,6 +35,10 @@ public class Test {
     @JsonIgnore
     private Set<User> employee ;
 
+    @ManyToMany
+    @JsonIgnore
+    private Set<User> intern ;
+
     @OneToMany(mappedBy = "test" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<QuizCourses> quizzes;

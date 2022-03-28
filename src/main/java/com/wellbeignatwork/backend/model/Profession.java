@@ -1,5 +1,5 @@
 package com.wellbeignatwork.backend.model;
 
 public enum Profession {
-    EMPLOYEE, ADMIN
+    EMPLOYEE, ADMIN , INTERN
 }

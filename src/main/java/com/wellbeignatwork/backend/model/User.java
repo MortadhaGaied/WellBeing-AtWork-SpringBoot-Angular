@@ -59,9 +59,10 @@ public class User implements Serializable {
 	@Column(name = "DISPLAY_NAME")
 	private String displayName;
 
-	@OneToMany(mappedBy = "formateur")
+	@ManyToMany(mappedBy = "intern", fetch = FetchType.EAGER
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
-	private Set<Test> TestF;
+	private Set<Test> TestIntern;
 
 	@ManyToMany(mappedBy = "employee", fetch = FetchType.EAGER
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
