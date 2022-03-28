@@ -18,63 +18,41 @@ public class UsersOfferController {
     @Autowired
     IUsersOfferService usersOfferService;
 
-/*
-    @PutMapping("/accept-offer")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Response acceptOffer(@RequestParam Long offerId, Authentication authentication) {
-        UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-        Long userId = currentUser.getId();
-        try {
-            usersOfferService.acceptOffer(userId, offerId);
-            return new Response("You have accepted the invitation request", true);
-        } catch (Exception e) {
-            return new Response(e.getMessage(), false);
-        }
-    }
-
     @PutMapping("/add-offer-fav")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Response addFav(@RequestParam Long offerId, Authentication authentication) {
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public Response addFav(@RequestParam Long offerId, Long userId) {
         try {
-            UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-            Long userId = currentUser.getId();
+            /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
+            Long userId = currentUser.getId();*/
             usersOfferService.addOfferToFav(userId, offerId);
-            return new Response("Event is added successfully to your favorite list", true);
+            return new Response("Offer is added successfully to your favorite list", true);
         } catch (Exception e) {
             return new Response(e.getMessage(), false);
         }
     }
 
     @GetMapping("/get-offers-fav")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<Offer> getFav(Authentication authentication) {
-        UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-        Long userId = currentUser.getId();
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public List<Offer> getFav(Long userId) {
+        /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
+        Long userId = currentUser.getId();*/
         return usersOfferService.getFavOffer(userId);
     }
 
     @GetMapping("/get-invited-offers")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<Offer> getInvited(Authentication authentication) {
-        UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-        Long userId = currentUser.getId();
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public List<Offer> getInvited(Long userId) {
+        /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
+        Long userId = currentUser.getId();*/
         return usersOfferService.getInvitedOffers(userId);
     }
 
-    @GetMapping("/get-accepted-offers")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<Offer> getAccepted(Authentication authentication) {
-        UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-        Long userId = currentUser.getId();
-        return usersOfferService.getAcceptedOffers(userId);
-    }
-
     @PutMapping("/feedback-offer")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Response feedbackOffer(@RequestParam Long offerId, @Valid @RequestBody Feedback feedback, Authentication authentication) {
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public Response feedbackOffer(@RequestParam Long offerId, @Valid @RequestBody Feedback feedback, Long userId) {
         try {
-            UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-            Long userId = currentUser.getId();
+            /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
+            Long userId = currentUser.getId();*/
             usersOfferService.feedbackOffer(userId, offerId, feedback);
             return new Response("Thank you for your feedback", true);
         } catch (Exception e) {
@@ -83,7 +61,7 @@ public class UsersOfferController {
     }
 
     @GetMapping("/avg-rating")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getAverageRatingOffer(@RequestParam Long offerId) {
         try {
             return Map.of("average", usersOfferService.getAverageRateOffer(offerId));
@@ -93,8 +71,8 @@ public class UsersOfferController {
     }
 
     @GetMapping("/get-offer-feedbacks")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<OfferFeedbacks> getOfferFeedbacks(@RequestParam Long offerId) {
         return usersOfferService.getFeedbackOffer(offerId);
-    }*/
+    }
 }

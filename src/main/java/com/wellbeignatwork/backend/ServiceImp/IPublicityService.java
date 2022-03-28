@@ -2,9 +2,11 @@ package com.wellbeignatwork.backend.ServiceImp;
 
 
 import com.wellbeignatwork.backend.model.Publicity;
+import org.apache.tomcat.jni.Local;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,4 +28,7 @@ public interface IPublicityService {
     void uploadImageToPub(MultipartFile file, Long eventId) throws IOException;
     void uploadPubBanner(MultipartFile file, Long eventId) throws IOException;
     void deleteImage(String imgName);
+    List<Publicity> retrieveByTitle(String title);
+    List<Publicity> retrieveBeforeOfferStartDate();
+    List<Publicity> retrieveByOfferLocalisation(String loc);
 }

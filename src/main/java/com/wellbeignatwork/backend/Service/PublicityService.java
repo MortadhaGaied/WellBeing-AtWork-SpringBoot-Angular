@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -127,5 +128,20 @@ public class PublicityService implements IPublicityService {
 			throw new RuntimeException("Something went wrong when deleting image");
 		}
 		imageRepo.deleteByName(imgName);
+	}
+
+	@Override
+	public List<Publicity> retrieveByTitle(String title) {
+		return PublicityRepo.findByOffersTitle(title);
+	}
+
+	@Override
+	public List<Publicity> retrieveBeforeOfferStartDate() {
+		return PublicityRepo.getPublicityBeforeOfferStartDate(LocalDateTime.now().plusDays(7));
+	}
+
+	@Override
+	public List<Publicity> retrieveByOfferLocalisation(String loc) {
+		return PublicityRepo.findByOffersLocalisation(loc);
 	}
 }

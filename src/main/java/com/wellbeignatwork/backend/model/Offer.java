@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -35,7 +36,8 @@ public class Offer implements Serializable {
 	
 	@Enumerated(EnumType.STRING)
 	Happy happy;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	Collaboration collaboration;
 

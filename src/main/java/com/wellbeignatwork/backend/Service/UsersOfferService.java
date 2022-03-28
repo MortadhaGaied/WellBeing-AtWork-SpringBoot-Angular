@@ -31,7 +31,7 @@ public class UsersOfferService implements IUsersOfferService {
         User user = userRepo.findById(userId).orElse(null);
         Offer offer = offerRepo.findById(offerId).orElse(null);
         if (offer == null) {
-            throw new ResourceNotFoundException("Event doesn't exist");
+            throw new ResourceNotFoundException("Offer doesn't exist");
         }
         if (user != null) {
             UsersOffer usersOffer = getOrCreateUsersOffer(userId, offerId);
@@ -136,6 +136,7 @@ public class UsersOfferService implements IUsersOfferService {
         }
         usersOffer = new UsersOffer();
         usersOffer.setId(new UsersOfferKey(userId, offerId));
+
         return usersOffer;
     }
 }
