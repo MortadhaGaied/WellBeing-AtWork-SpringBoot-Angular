@@ -35,7 +35,7 @@ public class User implements Serializable {
 	private String name ;
 	private String password;
 	private String type; // Two type=>"Patron"or "Employee"
-	private int score;
+	private int Score;
 	@Enumerated(EnumType.STRING)
 	private ERole role;
 
@@ -49,8 +49,6 @@ public class User implements Serializable {
 	private Integer tarifHoraire;
 	//@Positive
 	private double salary;
-
-	private int Score;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles",
