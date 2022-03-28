@@ -20,24 +20,28 @@ public interface IServicesQuiz {
 
     Integer saveScore(Result result, Long idUser, Integer idQuiz);
 
-    User EmployeewithMaxScoreInTest(Integer idUser);
 
-    Object EmployeewithMaxScore(@Param("id") Integer id);
+
     Integer MaxScoreInTest();
 
     List<Object> EmployeeWithScoreQuiz(@Param("id") Integer id);
 
+    List<Object> getEmployeeWithScoreQuiz(Integer id);
+
     List<Result> getTopScore();
 
     Integer getScore( Long idU);
-    User EmployeewithMaxScoreQuiz(Integer id);
 
-    List<QuizTheme> getQuizByTest(Integer idF);
+
+
+    List<QuizTheme> getQuizByTest(Integer IdTest);
 
     void DeleteQuiz(Integer idQ);
 
     User TestwithMaxScoreQuiz(Integer id);
 
+
+    User EmployeewithMaxScoreQuiz(Integer id);
 
     void giftsToUserMaxScoreInCourses();
 

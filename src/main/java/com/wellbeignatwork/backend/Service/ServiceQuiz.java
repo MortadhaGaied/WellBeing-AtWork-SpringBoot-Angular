@@ -128,11 +128,6 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    public User EmployeewithMaxScoreInTest(Integer id) {
-        return this.iUserRepo.EmployeewithMaxScoreInTest(id);
-    }
-
-    @Override
     public List<Object> EmployeeWithScoreQuiz(Integer id) {
         Test test = iTestRepo.findById(id).orElse(null);
         return (List<Object>) iUserRepo.getEmployeeWithScoreQuiz(id).get(0);
@@ -140,7 +135,6 @@ public class ServiceQuiz implements IServicesQuiz {
 
     @Override
     public User EmployeewithMaxScoreQuiz(Integer id) {
-
         return iUserRepo.getEmployeeWithScoreForGifts(id).get(0);
     }
 
@@ -177,13 +171,13 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    public Integer MaxScoreInFormation() {
-        return this.iUserRepo.MaxScoreInFormation();
+    public Integer MaxScoreInTest() {
+        return this.iUserRepo.MaxScoreInTest();
     }
 
     @Override
-    public List<Object> getApprenantWithScoreQuiz(Integer id) {
-        return this.iUserRepo.getApprenantWithScoreQuiz(id);
+    public List<Object> getEmployeeWithScoreQuiz(Integer id) {
+        return this.iUserRepo.getEmployeeWithScoreQuiz(id);
     }
     @Override
      public List<Result> getTopScore() {
@@ -198,8 +192,8 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    public List<QuizCourses> getQuizByFormation(Integer idF) {
-        return this.iQuizRepo.getQuizByCourses(idF);
+    public List<QuizTheme> getQuizByTest(Integer IdTest) {
+        return this.iQuizRepo.getQuizByTest(IdTest);
     }
 
     @Override
@@ -208,7 +202,9 @@ public class ServiceQuiz implements IServicesQuiz {
         this.iQuizRepo.deleteById(idQ);
     }
 
-
-
+    @Override
+    public User TestwithMaxScoreQuiz(Integer id) {
+        return null;
+    }
 
 }
