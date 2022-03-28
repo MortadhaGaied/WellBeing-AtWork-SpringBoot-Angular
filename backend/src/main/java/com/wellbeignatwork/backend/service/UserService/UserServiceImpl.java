@@ -250,7 +250,7 @@ public class UserServiceImpl implements UserService {
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "http://localhost:8080/api/auth/confirm?token=" + token;
+        String link = "http://localhost:8081/Wellbeignatwork/api/auth/confirm?token=" + token;
 
         String content = buildEmail(user.getDisplayName(), link);
 

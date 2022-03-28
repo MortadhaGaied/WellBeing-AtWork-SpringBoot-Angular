@@ -59,9 +59,6 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         try {
             User user = userService.registerNewUser(signUpRequest);
-            //Send Mail Confirmations
-            mailService.sendMail(user.getEmail(), "Thank you for Joining", "Welcome", false);
-
         } catch (UserAlreadyExistAuthenticationException e) {
             log.error("Exception Ocurred", e);
             return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
