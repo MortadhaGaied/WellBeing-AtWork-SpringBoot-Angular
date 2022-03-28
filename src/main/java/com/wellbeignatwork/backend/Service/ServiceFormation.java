@@ -54,13 +54,13 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public void addFormation(Formation formation) {
+    public void addFormation(Test formation) {
         iFormationRepo.save(formation);
     }
 
     @Override
-    public void updateFormation(Formation formation, Integer idFormateur) {
-        Formation f = iFormationRepo.findById(idFormateur).orElse(null);
+    public void updateFormation(Test formation, Integer idFormateur) {
+        Test f = iFormationRepo.findById(idFormateur).orElse(null);
 
         f.setTitle(formation.getTitle());
         f.setDomain(formation.getDomain());
@@ -76,14 +76,14 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public void deleteFormation(Integer idFormation) {
-        Formation f = iFormationRepo.findById(idFormation).orElse(null);
+        Test f = iFormationRepo.findById(idFormation).orElse(null);
         iFormationRepo.delete(f);
     }
 
 
     @Override
-    public List<Formation> afficherFormation() {
-        List<Formation> f =   (List<Formation>)iFormationRepo.findAll();
+    public List<Test> afficherFormation() {
+        List<Test> f =   (List<Test>)iFormationRepo.findAll();
             return  f;
     }
 
@@ -149,7 +149,7 @@ public class ServiceFormation implements IServiceFormation {
 
       //   if(lastDayOfMonth.equals(lastDayOfMonth))
        //  {
-        for (Formation f : this.iFormationRepo.findAll()) {
+        for (Test f : this.iFormationRepo.findAll()) {
             if (f.getStart().after(firstDayOfMonth) && f.getEnd().before(lastDayOfMonth)) {
 
                 map.put(this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth), f.getFormateur().getId().toString());
@@ -162,7 +162,7 @@ public class ServiceFormation implements IServiceFormation {
         if (status) {
 
 
-            for (Formation f : this.iFormationRepo.findAll()) {
+            for (Test f : this.iFormationRepo.findAll()) {
 
                 for (User user : iUserRepo.getFormateurByFormation(f.getIdFormation())) {
                     user.setSalary(this.iFormationRepo.getFormateurRemunerationByDate(user.getId(), firstDayOfMonth, lastDayOfMonth));
@@ -172,7 +172,7 @@ public class ServiceFormation implements IServiceFormation {
             log.info(" liste" + map);
             log.info(" Max Salaire " + max);
 
-            for (Formation f : this.iFormationRepo.findAll()) {
+            for (Test f : this.iFormationRepo.findAll()) {
                 if (f.getStart().after(firstDayOfMonth) && f.getEnd().before(lastDayOfMonth)) {
                     if (this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth) == max) {
 
@@ -207,7 +207,7 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusDays(15).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusDays(15).atStartOfDay(defaultZoneId).toInstant());
 
-        for (Formation f: this.iFormationRepo.findAll()) {
+        for (Test f: this.iFormationRepo.findAll()) {
             if (f.getStart().after(dd) && f.getEnd().before(df) )
             {
                 map.put(this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(),dd,df),f.getFormateur());
@@ -244,7 +244,7 @@ public class ServiceFormation implements IServiceFormation {
         try {
 
 
-            for (Formation f : iFormationRepo.findAll())
+            for (Test f : iFormationRepo.findAll())
             {
                 for (User u : iUserRepo.getApprenantByFormation(f.getIdFormation()))
                 {
@@ -300,11 +300,11 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public List<Formation> SearchMultiple(String key) {
+    public List<Test> SearchMultiple(String key) {
 
         if (key.equals(""))
         {
-            return (List<Formation>) iFormationRepo.findAll();
+            return (List<Test>) iFormationRepo.findAll();
         }else
         {
             return iFormationRepo.rech(key);
@@ -320,7 +320,7 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public void ajouterEtAffecterFormationAFormateur(Formation formation, Long idFormateur) {
+    public void ajouterEtAffecterFormationAFormateur(Test formation, Long idFormateur) {
 
         User formateur = iUserRepo.findById(idFormateur).orElse(null);
 
@@ -346,7 +346,7 @@ public class ServiceFormation implements IServiceFormation {
     }
 
 
-    public Formation getFile(Integer fileId) throws FileNotFoundException {
+    public Test getFile(Integer fileId) throws FileNotFoundException {
         return iFormationRepo.findById(fileId).orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
     }
 
@@ -355,7 +355,7 @@ public class ServiceFormation implements IServiceFormation {
    // @Scheduled(cron = "*/30 * * * * *")
     public void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation) {
 
-        Formation formation = iFormationRepo.findById(idFormation).orElse(null);
+        Test formation = iFormationRepo.findById(idFormation).orElse(null);
 
         User apprenant = iUserRepo.findById(idApprenant).orElse(null);
 
@@ -370,7 +370,7 @@ public class ServiceFormation implements IServiceFormation {
         ///User with gifts Free for MAx Score
 
 
-       for(Formation form : iFormationRepo.listFormationParApprenant(idApprenant)) {
+       for(Test form : iFormationRepo.listFormationParApprenant(idApprenant)) {
           if(iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).size()!=0)
            {
                user = iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).get(0);
@@ -417,7 +417,7 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public void affecterApprenantFormation(Long idApprenant, Integer idFormation) {
         User apprenant = iUserRepo.findById(idApprenant).orElse(null);
-        Formation formation = iFormationRepo.findById(idFormation).orElse(null);
+        Test formation = iFormationRepo.findById(idFormation).orElse(null);
 
         formation.getApprenant().add(apprenant);
         iFormationRepo.save(formation);
@@ -471,7 +471,7 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public Integer getRevenueByFormation(Integer idFormation) {
-        Formation f = iFormationRepo.findById(idFormation).orElse(null);
+        Test f = iFormationRepo.findById(idFormation).orElse(null);
 
         Integer revenue =  (f.getFrais()*iUserRepo.getRevenueByFormation(idFormation).size());
         return  revenue;
@@ -479,7 +479,7 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public void likeFormation(Integer idF) {
-        Formation formation = iFormationRepo.findById(idF).orElse(null);
+        Test formation = iFormationRepo.findById(idF).orElse(null);
 
         formation.setLikes(formation.getLikes()+1);
         iFormationRepo.save(formation);
@@ -489,7 +489,7 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public void dislikeFormation(Integer idF) {
-        Formation formation = iFormationRepo.findById(idF).orElse(null);
+        Test formation = iFormationRepo.findById(idF).orElse(null);
 
         formation.setDislikes(formation.getDislikes()+1);
         iFormationRepo.save(formation);

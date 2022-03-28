@@ -25,7 +25,7 @@ public class DatabaseFile {
     private byte[] data;
 
     @ManyToOne
-    private Formation formation;
+    private Test formation;
 
     public DatabaseFile() {
 

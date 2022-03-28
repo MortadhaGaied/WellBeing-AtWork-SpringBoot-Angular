@@ -60,9 +60,9 @@ public class UsersOfferService implements IUsersOfferService {
 
     @Override
     public List<Offer> getAcceptedOffers(Long userId) {
-        List<UsersOffer> usersEvents = usersOfferRepo.findByUserIdAndIsAcceptedTrue(userId);
+        List<UsersOffer> usersOffers = usersOfferRepo.findByUserIdAndIsAcceptedTrue(userId);
         List<Offer> offers = new ArrayList<>();
-        usersEvents.forEach(uo -> offers.add(uo.getOffer()));
+        usersOffers.forEach(uo -> offers.add(uo.getOffer()));
         return offers;
     }
 
@@ -70,19 +70,19 @@ public class UsersOfferService implements IUsersOfferService {
     public void acceptOffer(Long userId, Long offerId) {
         UsersOffer usersOffers = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
         if (usersOffers == null) {
-            throw new BadRequestException("Cannot accept an event without invitation");
+            throw new BadRequestException("Cannot accept an Offer without invitation");
         }
         if (usersOffers.getIsAccepted()) {
             throw new BadRequestException("Your already accepted the invitation");
         }
-        /*if (usersEvents.getEvent().getFees() > 0) {
-            throw new BadRequestException("You must pay event fees first");
+        /*if (usersOffers.getOffer().getFees() > 0) {
+            throw new BadRequestException("You must pay Offer fees first");
         }*/
         if (usersOffers.getIsInvited()) {
             usersOffers.setIsAccepted(true);
             usersOfferRepo.save(usersOffers);
         } else {
-            throw new BadRequestException("Cannot accept an event without invitation");
+            throw new BadRequestException("Cannot accept an Offer without invitation");
         }
     }
 
@@ -90,15 +90,15 @@ public class UsersOfferService implements IUsersOfferService {
     public void feedbackOffer(Long userId, Long offerId, Feedback feedback) {
         UsersOffer usersOffer = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);
         if (usersOffer == null) {
-            throw new BadRequestException("Cannot give feedback for an event without participation");
+            throw new BadRequestException("Cannot give feedback for an Offer without participation");
         }
-        LocalDateTime eventEndDate = usersOffer.getOffer().getEndDateOf();
+        LocalDateTime OfferEndDate = usersOffer.getOffer().getEndDateOf();
         LocalDateTime now = LocalDateTime.now();
         if (!usersOffer.getIsAccepted()) {
-            throw new BadRequestException("Cannot give feedback for an event without participation");
+            throw new BadRequestException("Cannot give feedback for an Offer without participation");
         }
-        if (!eventEndDate.isBefore(now)) {
-            throw new BadRequestException("Cannot give feedback for an event before its finish");
+        if (!OfferEndDate.isBefore(now)) {
+            throw new BadRequestException("Cannot give feedback for an Offer before its finish");
         }
         usersOffer.setFeedback(feedback.getContent());
         usersOffer.setRate(feedback.getRate());
@@ -108,17 +108,17 @@ public class UsersOfferService implements IUsersOfferService {
     @Override
     public Float getAverageRateOffer(Long offerId) {
         if (!offerRepo.existsById(offerId)) {
-            throw new ResourceNotFoundException("Event doesn't exist");
+            throw new ResourceNotFoundException("Offer doesn't exist");
         }
         return usersOfferRepo.getAverageRateOffer(offerId);
     }
 
     @Override
-    public List<OfferFeedbacks> getFeedbackOffer(Long eventId) {
-        if (!offerRepo.existsById(eventId)) {
-            throw new ResourceNotFoundException("Event doesn't exist");
+    public List<OfferFeedbacks> getFeedbackOffer(Long offerId) {
+        if (!offerRepo.existsById(offerId)) {
+            throw new ResourceNotFoundException("Offer doesn't exist");
         }
-        List<UsersOffer> usersOffers = usersOfferRepo.findByOfferIdOfferAndAndIsAcceptedTrue(eventId);
+        List<UsersOffer> usersOffers = usersOfferRepo.findByOfferIdOfferAndAndIsAcceptedTrue(offerId);
         List<OfferFeedbacks> feedbacks = new ArrayList<>();
         for (UsersOffer ue : usersOffers) {
             OfferFeedbacks res = new OfferFeedbacks(ue.getUser().getId(), ue.getUser().getName());

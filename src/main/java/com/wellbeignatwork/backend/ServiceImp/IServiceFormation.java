@@ -3,7 +3,7 @@ package com.wellbeignatwork.backend.ServiceImp;
 
 
 import com.wellbeignatwork.backend.model.Domain;
-import com.wellbeignatwork.backend.model.Formation;
+import com.wellbeignatwork.backend.model.Test;
 import com.wellbeignatwork.backend.model.User;
 
 import java.io.FileNotFoundException;
@@ -16,10 +16,10 @@ public interface IServiceFormation {
     void ajouterFormateur(User formateur);
 
 
-    void addFormation(Formation formation);
-    void updateFormation(Formation formation, Integer idFormateur);
+    void addFormation(Test formation);
+    void updateFormation(Test formation, Integer idFormateur);
     void deleteFormation(Integer idFormation);
-    List<Formation> afficherFormation();
+    List<Test> afficherFormation();
     List<User> afficherFormateur();
     List<User> afficherApprenant();
 
@@ -34,7 +34,7 @@ public interface IServiceFormation {
     void CertifactionStudents();
 
 
-    List<Formation>  SearchMultiple(String key);
+    List<Test>  SearchMultiple(String key);
 
 
 
@@ -43,8 +43,8 @@ public interface IServiceFormation {
 
 
     void ajouterApprenant(User apprenant);
-    void ajouterEtAffecterFormationAFormateur(Formation formation, Long idFormateur);
-    Formation getFile(Integer fileId) throws FileNotFoundException;
+    void ajouterEtAffecterFormationAFormateur(Test formation, Long idFormateur);
+    Test getFile(Integer fileId) throws FileNotFoundException;
 
 
     void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation);

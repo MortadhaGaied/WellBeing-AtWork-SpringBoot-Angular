@@ -15,12 +15,12 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table( name = "Courses")
-public class Formation {
+public class Test {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idFormation;
+    private Integer idTest;
     private String title;
     @Enumerated(EnumType.STRING)
     private Level level;

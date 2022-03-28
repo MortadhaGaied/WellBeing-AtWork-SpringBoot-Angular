@@ -33,7 +33,7 @@ public class QuizCourses  {
 
     @ManyToOne
     @JsonIgnore
-    private Formation formation;
+    private Test formation;
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
