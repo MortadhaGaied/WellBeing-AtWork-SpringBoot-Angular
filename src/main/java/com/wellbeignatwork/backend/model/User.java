@@ -33,7 +33,9 @@ public class User implements Serializable {
 	private Long id;
 	private String email;
 	private String name ;
-
+	private String password;
+	private String type; // Two type=>"Patron"or "Employee"
+	private int score;
 	@Enumerated(EnumType.STRING)
 	private ERole role;
 

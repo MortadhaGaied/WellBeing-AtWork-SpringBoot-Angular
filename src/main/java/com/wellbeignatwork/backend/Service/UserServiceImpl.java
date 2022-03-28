@@ -11,7 +11,7 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+	ArrayList<User> users = new ArrayList<User>();
 	@Autowired
 	private UserRepository userRepository;
 
@@ -56,5 +56,23 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByEmail(final String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User getUser(String username, String password) {
+		for(int i=0;i<users.size();i++) {
+			if(users.get(i).getName()==username && users.get(i).getPassword()==password) {
+				return users.get(i);
+			}
+		}
+		System.out.println("User Not Found");
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<User> getUsers() {
+
+		return users;
 	}
 }
