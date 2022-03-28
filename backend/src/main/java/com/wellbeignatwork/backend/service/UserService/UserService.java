@@ -3,11 +3,13 @@ package com.wellbeignatwork.backend.service.UserService;
 
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SignUpRequest;
-import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -28,5 +30,6 @@ public interface UserService {
 
     public String confirmToken(String token);
 
+    public void uploadProfilePic(MultipartFile img, Long userId) throws IOException;
 
 }

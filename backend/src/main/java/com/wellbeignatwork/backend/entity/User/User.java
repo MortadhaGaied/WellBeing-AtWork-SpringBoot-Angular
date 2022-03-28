@@ -2,13 +2,13 @@ package com.wellbeignatwork.backend.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Event.Subscription;
 import com.wellbeignatwork.backend.entity.Forum.Opinion;
 import com.wellbeignatwork.backend.entity.Forum.Post;
-import com.wellbeignatwork.backend.entity.Chat.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +21,13 @@ import java.util.Set;
 
 /**
  * The persistent class for the user database table.
- * 
  */
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 public class User implements Serializable {
+
 
 	/**
 	 * 
@@ -106,4 +106,13 @@ public class User implements Serializable {
 	private Badge badge;
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Opinion> opinions;
+	private String picture;
+
+
+
+
+
+
+
+
 }
