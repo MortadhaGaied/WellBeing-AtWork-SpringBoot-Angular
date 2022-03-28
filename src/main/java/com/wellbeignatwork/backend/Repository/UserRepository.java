@@ -33,8 +33,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> getApprenantByFormation(@Param("id") Integer idF );
 
 
-    @Query(value = "select f.formateur from  Test f  where f.idTest = :id")
-    List<User> getFormateurByFormation(@Param("id") Integer idF );
+    @Query(value = "select test.formateur from  Test test  where test.idTest = :id")
+    List<User> getFormateurByTest(@Param("id") Integer idTest );
 
 
     @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Test f where f.formateur.id=:id and f.start>=:dateD and f.end<=:dateF")

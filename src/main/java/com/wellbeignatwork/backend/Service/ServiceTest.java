@@ -3,12 +3,11 @@ package com.wellbeignatwork.backend.Service;
 
 import com.google.zxing.WriterException;
 import com.wellbeignatwork.backend.API.QRCodeGenerator;
-import com.wellbeignatwork.backend.Repository.IFormationRepo;
 import com.wellbeignatwork.backend.Repository.IResultRepo;
 import com.wellbeignatwork.backend.Repository.ISearchRepo;
 import com.wellbeignatwork.backend.Repository.ITestRepo;
 import com.wellbeignatwork.backend.Repository.UserRepository;
-import com.wellbeignatwork.backend.ServiceImp.IServiceFormation;
+import com.wellbeignatwork.backend.ServiceImp.IServiceTest;
 import com.wellbeignatwork.backend.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import java.util.TreeMap;
 
 @Slf4j
 @Service
-public class ServiceFormation implements IServiceFormation {
+public class ServiceTest implements IServiceTest {
 
     @Autowired
     private UserRepository iUserRepo;
@@ -55,35 +54,35 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public void addFormation(Test formation) {
-        iTestRepo.save(formation);
+    public void addTest(Test test) {
+        iTestRepo.save(test);
     }
 
     @Override
-    public void updateFormation(Test formation, Integer idFormateur) {
-        Test f = iTestRepo.findById(idFormateur).orElse(null);
+    public void updateTest(Test test, Integer idTest) {
+        Test f = iTestRepo.findById(idTest).orElse(null);
 
-        f.setTitle(formation.getTitle());
-        f.setDomain(formation.getDomain());
-        f.setStart(formation.getStart());
-        f.setEnd(formation.getEnd());
-        f.setFrais(formation.getFrais());
-        f.setNbrHeures(formation.getNbrHeures());
-        f.setNbrMaxParticipant(formation.getNbrMaxParticipant());
+        f.setTitle(test.getTitle());
+        f.setDomain(test.getDomain());
+        f.setStart(test.getStart());
+        f.setEnd(test.getEnd());
+        f.setFrais(test.getFrais());
+        f.setNbrHeures(test.getNbrHeures());
+        f.setNbrMaxParticipant(test.getNbrMaxParticipant());
 
         //  formation.setFormateur(formateur);
         iTestRepo.save(f);
     }
 
     @Override
-    public void deleteFormation(Integer idFormation) {
-        Test f = iTestRepo.findById(idFormation).orElse(null);
+    public void deleteTest(Integer idTest) {
+        Test f = iTestRepo.findById(idTest).orElse(null);
         iTestRepo.delete(f);
     }
 
 
     @Override
-    public List<Test> afficherFormation() {
+    public List<Test> afficherTest() {
         List<Test> f =   (List<Test>)iTestRepo.findAll();
             return  f;
     }
@@ -165,7 +164,7 @@ public class ServiceFormation implements IServiceFormation {
 
             for (Test f : this.iTestRepo.findAll()) {
 
-                for (User user : iUserRepo.getFormateurByFormation(f.getIdTest())) {
+                for (User user : iUserRepo.getFormateurByTest(f.getIdTest())) {
                     user.setSalary(this.iTestRepo.getFormateurRemunerationByDate(user.getId(), firstDayOfMonth, lastDayOfMonth));
                     iUserRepo.save(user);
                 }
