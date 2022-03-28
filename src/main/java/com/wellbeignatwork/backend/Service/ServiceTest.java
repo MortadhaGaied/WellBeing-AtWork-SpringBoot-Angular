@@ -164,7 +164,7 @@ public class ServiceFormation implements IServiceFormation {
 
             for (Test f : this.iFormationRepo.findAll()) {
 
-                for (User user : iUserRepo.getFormateurByFormation(f.getIdFormation())) {
+                for (User user : iUserRepo.getFormateurByFormation(f.getIdTest())) {
                     user.setSalary(this.iFormationRepo.getFormateurRemunerationByDate(user.getId(), firstDayOfMonth, lastDayOfMonth));
                     iUserRepo.save(user);
                 }
@@ -246,13 +246,13 @@ public class ServiceFormation implements IServiceFormation {
 
             for (Test f : iFormationRepo.findAll())
             {
-                for (User u : iUserRepo.getApprenantByFormation(f.getIdFormation()))
+                for (User u : iUserRepo.getApprenantByFormation(f.getIdTest()))
                 {
                     if(iResultRepo.getScore(u.getId()) >= 200 && iResultRepo.getScore(u.getId()) <=250 && iResultRepo.getNbrQuiz(u.getId()) == 5 )
                     {
                         fin=false;
 
-                        for (Result r : iResultRepo.getResultByIdUAndAndIdF(u.getId(),f.getIdFormation()))
+                        for (Result r : iResultRepo.getResultByIdUAndAndIdF(u.getId(),f.getIdTest()))
                         {
 
                             if (!r.isStatus())
@@ -371,9 +371,9 @@ public class ServiceFormation implements IServiceFormation {
 
 
        for(Test form : iFormationRepo.listFormationParApprenant(idApprenant)) {
-          if(iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).size()!=0)
+          if(iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).size()!=0)
            {
-               user = iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).get(0);
+               user = iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).get(0);
                 //}
 
 

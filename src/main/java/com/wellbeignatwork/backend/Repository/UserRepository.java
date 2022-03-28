@@ -22,18 +22,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /////////////////////////////////   Mahdi User methode       /////////////////////////////
     @Query(value= "select f.title , count(a.id) from Test f join f.apprenant a group by f")
-    List<Object[]> getNbrApprenantByFormation();
+    List<Object[]> getNbrApprenantByTest();
 
 
-    @Query(value="select f.apprenant from  Test f  where f.idFormation = :id")
-    List<User> getRevenueByFormation(@Param("id") Integer idFormation);
+    @Query(value="select f.apprenant from  Test f  where f.idTest = :id")
+    List<User> getRevenueByFormation(@Param("id") Integer idTest);
 
 
-    @Query(value = "select f.apprenant from  Test f  where f.idFormation = :id")
+    @Query(value = "select f.apprenant from  Test f  where f.idTest = :id")
     List<User> getApprenantByFormation(@Param("id") Integer idF );
 
 
-    @Query(value = "select f.formateur from  Test f  where f.idFormation = :id")
+    @Query(value = "select f.formateur from  Test f  where f.idTest = :id")
     List<User> getFormateurByFormation(@Param("id") Integer idF );
 
 
@@ -60,7 +60,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 
-    @Query(value = "select Max(r.totalCorrect) from User u join u.formationA f join f.quizzes q join q.results r  where u.profession='LEARNER'")
+    @Query(value = "select Max(r.totalCorrect) from User u join u.TestA f join f.quizzes q join q.results r  where u.profession='LEARNER'")
     Integer MaxScoreInFormation();
 
 
@@ -69,12 +69,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " where u.profession='LEARNER') and f.idFormation=:id")
     User ApprenentwithMaxScoreInFormation(@Param("id") Integer id);
 
-    @Query(value = "select r.sUser,SUM (r.totalCorrect) from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
+    @Query(value = "select r.sUser,SUM (r.totalCorrect) from Result r join r.quiz q join q.test f where f.idTest=:id group by r.sUser order by SUM (r.totalCorrect) desc")
     List<Object> getApprenantWithScoreQuiz(@Param("id") Integer id);
 
 
 
-    @Query(value = "select r.sUser from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
+    @Query(value = "select r.sUser from Result r join r.quiz q join q.test f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
     List<User> getApprenantWithScoreForGifts(@Param("id") Integer id);
 
     //////////////////////////////             03/19/2022             ///////////////////////////////

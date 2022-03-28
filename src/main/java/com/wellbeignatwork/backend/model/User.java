@@ -61,12 +61,12 @@ public class User implements Serializable {
 
 	@OneToMany(mappedBy = "formateur")
 	@JsonIgnore
-	private Set<Test> formationF;
+	private Set<Test> TestF;
 
 	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.EAGER
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
-	private Set<Test> formationA;
+	private Set<Test> TestA;
 
 
 }

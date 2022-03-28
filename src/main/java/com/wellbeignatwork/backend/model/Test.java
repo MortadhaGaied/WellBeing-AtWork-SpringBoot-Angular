@@ -46,12 +46,12 @@ public class Test {
     @JsonIgnore
     private Set<User> apprenant ;
 
-    @OneToMany(mappedBy = "formation" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "test" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<QuizCourses> quizzes;
 
 
-    @OneToMany(mappedBy = "formation",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "test",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<DatabaseFile> databaseFiles;
 
