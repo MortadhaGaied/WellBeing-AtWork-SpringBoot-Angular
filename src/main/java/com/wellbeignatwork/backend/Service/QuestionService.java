@@ -1,13 +1,16 @@
 package com.wellbeignatwork.backend.Service;
 
+import com.wellbeignatwork.backend.Repository.QuestionRepo;
 import com.wellbeignatwork.backend.ServiceImp.IQuestionService;
 import com.wellbeignatwork.backend.model.Question;
 import com.wellbeignatwork.backend.model.Quiz;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class QuestionService implements IQuestionService {
-
+	@Autowired
+	QuestionRepo questionRepo;
 	QuizService quizS = new QuizService();
 	@Override
 	public List<Question> getQuestions(Long id) {
@@ -16,10 +19,8 @@ public class QuestionService implements IQuestionService {
 	}
 
 	@Override
-	public void addQuestion(String question, String answer, Long marks, Quiz quiz, String optA, String optB, String optC,
-							String optD) {
-		// TODO Auto-generated method stub
-
+	public void addQuestion(Question question) {
+		questionRepo.save(question);
 	}
 
 	@Override

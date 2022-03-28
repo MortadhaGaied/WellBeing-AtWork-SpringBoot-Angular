@@ -42,8 +42,9 @@ public class QuizService implements IQuizServices {
 	}
 
 	@Override
-	public List<Question> getQuestions(Long id) {
-		return quizes.get(id).getQuestions();
+	public List<Question> getQuestions(Long idQuiz) {
+		Quiz q = quizRepo.findById(idQuiz).orElse(null);
+		return q.getQuestions();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class QuizService implements IQuizServices {
 
 	@Override
 	public void deleteQues(Long id, Long quizID) {
-		quizes.get(quizID).getQuestions().remove(id);
+		//quizes.get(quizID).getQuestions().remove(id);
 	}
 
 	@Override

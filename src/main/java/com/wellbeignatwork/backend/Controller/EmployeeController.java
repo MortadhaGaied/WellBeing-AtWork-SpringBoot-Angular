@@ -20,17 +20,17 @@ public class EmployeeController {
 	
 	@GetMapping("/startQuiz/{id}")
 	public void startQuiz(@PathVariable Long quizID) {
-		quiz = QuizService.quizes.get(quizID);
+		/*quiz = QuizService.quizes.get(quizID);
 		totalMarks = 0;
-		currQuesId = 0;
+		currQuesId = 0;*/
 	}
 	
 	@PostMapping("/questions/{id}")
 	public void submitAnswer(@PathVariable Long id, @RequestBody String Answer) {
-		Question ques = quiz.getQuestions().get(id);
+		/*Question ques = quiz.getQuestions().get(id);
 		if(ques.getAnswer()== Answer) {
 			totalMarks+=ques.getMarks();
-		}
+		}*/
 	}
 	
 	@PostMapping("/submit")
