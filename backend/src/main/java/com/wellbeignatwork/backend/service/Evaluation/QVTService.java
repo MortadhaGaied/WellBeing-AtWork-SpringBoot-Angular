@@ -84,12 +84,6 @@ public class QVTService implements IntQVTService {
         questionsRepo.saveAll(questions);
         MysurveyRepo.save(survey);
 
-
-
-
-
-
-
         return  questionsRepo.findQuestionsBySurvey(survey);
     }
 
