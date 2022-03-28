@@ -18,7 +18,7 @@ public class Comment {
     private String commentContent;
     private LocalDateTime createDate=LocalDateTime.now();
     private LocalDateTime modifyDate;
-    private int idUser;
+    private Long idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private Post post_comment;

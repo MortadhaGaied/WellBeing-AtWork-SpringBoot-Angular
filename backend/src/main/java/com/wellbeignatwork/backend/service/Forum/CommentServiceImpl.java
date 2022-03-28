@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService{
 
     }
     @Override
-    public Comment createcomment(Comment comment,int idPost,int idUser) {
+    public Comment createcomment(Comment comment,int idPost,Long idUser) {
         Post p=postRepository.findById(idPost).orElse(null);
         if(p.getComments()==null){
             p.setComments(Collections.singletonList( comment ));

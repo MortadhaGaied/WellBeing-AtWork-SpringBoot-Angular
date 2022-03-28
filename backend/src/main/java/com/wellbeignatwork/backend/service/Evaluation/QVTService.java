@@ -11,6 +11,7 @@ import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -122,14 +123,16 @@ public class QVTService implements IntQVTService {
 
 
     @Override
-    public String UserAnswer(List<Answer> answer) {
-        String Res = "";
+    public String UserAnswer(List<Answer> answer)
+    { String Res="";
+
         StanfordCoreNLP stanfordCoreNLP = Pipeline.getPipeline();
         for (Answer answer1 : answer) {
             String text = answer1.getContent();
             CoreDocument coreDocument = new CoreDocument(text);
             stanfordCoreNLP.annotate(coreDocument);
             List<CoreSentence> sentences = coreDocument.sentences();
+            System.out.println(sentences);
             for (CoreSentence sentence : sentences) {
                 String sentiment = sentence.sentiment();
                 System.out.println(sentiment + "\t" + sentence);
@@ -141,29 +144,48 @@ public class QVTService implements IntQVTService {
                 answerRepo.save(answer1);
             }
         }
-        if (answerRepo.nbreByStatus(Sentiment.Positive) > (answerRepo.nbreByStatus(Sentiment.Very_negative) | (answerRepo.nbreByStatus(Sentiment.Negative)))) {
+        System.out.println(answerRepo.getLastAnswer(PageRequest.of(0, 4)));
+        int nbVeryBad = 0;
+        int nbPositive = 0;
+        int nbNeutral = 0;
+        int nbBad = 0;
+        for (Answer a : answerRepo.getLastAnswer(PageRequest.of(0, 4))) {
+            if (a.getSentiment().equals(Sentiment.Very_negative)) {
+                nbVeryBad++;
+            } else if (a.getSentiment().equals(Sentiment.Negative)) {
+                nbBad++;
+            } else if (a.getSentiment().equals(Sentiment.Neutral)) {
+                nbNeutral++;
+            } else {
+                nbPositive++;
+            }
+        }
+        System.out.println(nbBad);
+        System.out.println(nbNeutral);
+        System.out.println(nbPositive);
+        System.out.println(nbVeryBad);
+        if (nbPositive == 4) {
             System.out.println
                     ("Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer");
-
-
-            return Res = "Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer";
-        } else if (answerRepo.nbreByStatus(Sentiment.Positive) == 3 && ((answerRepo.nbreByStatus(Sentiment.Very_negative) == (answerRepo.nbreByStatus(Sentiment.Negative))))) {
-            System.out.println("Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ");
-
-            return Res = "Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ";
-        } else if (answerRepo.nbreByStatus(Sentiment.Very_negative) == 5 | (answerRepo.nbreByStatus(Sentiment.Negative) == 5) | answerRepo.nbreByStatus(Sentiment.Very_negative) == 5 && (answerRepo.nbreByStatus(Sentiment.Negative) == 5)) {
+            return Res="Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer";
+        } else if (((nbVeryBad == 4))|(nbBad)==2 &&(nbVeryBad)==2) {
+            //  System.out.println("Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ");
             System.out.println("Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ");
-
-
-            return Res = "Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ";
-
-        } else {
-            System.out.println("Neutral ! Thank You For Your FeedBack Enjoy Your Time ");
-            return Res = "Neutral ! Thank You For Your FeedBack Enjoy Your Time ";
+            return Res="Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ";
         }
+      /*  else if(nbVeryBad==5 | (nbBad==5)| nbVeryBad==5 && (nbBad==5)){
+            System.out.println("Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ");
+        }
+
+       */
+
+        else
+            System.out.println("Neutral ! Thank You For Your FeedBack Enjoy Your Time ");
+        return Res="Neutral ! Thank You For Your FeedBack Enjoy Your Time ";
 
 
     }
+
 
 
 
