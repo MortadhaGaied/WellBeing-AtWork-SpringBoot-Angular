@@ -32,7 +32,7 @@ public interface IActivityService {
     public void acceptInvitation (Long idEvent , Long idUser);
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
-    public Set<Event> filtreByDepartement(Departement departement);
+    public List<Event> filtreByDepartement(Departement departement);
 
 
      public void addSubscription(Subscription s);

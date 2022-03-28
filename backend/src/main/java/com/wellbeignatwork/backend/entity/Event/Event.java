@@ -38,12 +38,12 @@ public class Event implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Tags> eventTags;
-    @ManyToMany(fetch = FetchType.LAZY ,mappedBy ="events")
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY ,mappedBy ="events")
     @JsonIgnore
     private Set<User> users;
     @JsonIgnore
 
-    @OneToMany (mappedBy = "event")
+    @OneToMany (mappedBy = "event",cascade = CascadeType.ALL)
     private List<FeedBack> feedBacks;
 
 
