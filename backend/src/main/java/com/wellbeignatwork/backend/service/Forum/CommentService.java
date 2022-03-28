@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CommentService {
-    public Comment createcomment(Comment comment,int idPost,int idUser);
+    public Comment createcomment(Comment comment,int idPost,Long idUser);
     public Collection<Comment> getAll();
     public Comment updatecomment(Comment comment);
     public void deletecomment(int id);

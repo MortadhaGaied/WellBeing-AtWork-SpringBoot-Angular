@@ -19,7 +19,7 @@ public class CommentController {
         this.commentService=commentService;
     }
     @PostMapping("/add-comment/{idPost}/{idUser}")
-    public ResponseEntity<Comment> createPost(@RequestBody Comment comment,@PathVariable int idPost,@PathVariable int idUser) {
+    public ResponseEntity<Comment> createPost(@RequestBody Comment comment,@PathVariable int idPost,@PathVariable Long idUser) {
         return new ResponseEntity<>(this.commentService.createcomment(comment,idPost,idUser), HttpStatus.OK);
     }
     @GetMapping("/all-comment")

@@ -50,12 +50,15 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
 
             scoreLikes=reactionRepository.NbrReactByUser(user.getId());
+        int total = scoreComment+scoreEvent+scoreLikes;
 
-
+/*
         int total = scoreComment+scoreEvent+scoreLikes;
         user.setPointFidelite(total);
         UserBadge(idUser);
         intUserRepo.save(user);
+        */
+
         return total;
     }
 

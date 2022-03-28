@@ -498,7 +498,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
 
-    public void inviteUser(Long idUser, Long idEvent) {
+    public void inviteUser(Long idUser, Long idEvent) {/*
         //send notification to the specific user ( user , event )
 
 
@@ -545,6 +545,7 @@ public class ActivityServiceImp implements IActivityService {
                 .orElseThrow(() -> {
                     throw new ResourceNotFoundException("user with this id : " + idUser + " not found");
                 });
+                */
 
 
     }
