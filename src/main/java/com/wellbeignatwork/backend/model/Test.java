@@ -24,27 +24,16 @@ public class Test {
     private String title;
     @Enumerated(EnumType.STRING)
     private Level level;
-    @Temporal (TemporalType.TIMESTAMP)
-    private Date start;
-    @Temporal (TemporalType.TIMESTAMP)
-    private Date end;
     private Integer nbrHeures;
     @Enumerated(EnumType.STRING)
     private Domain domain;
-
-    private Integer nbrMaxParticipant;
-    private Integer frais;
-
+    private Integer nbrParticipant;
     private Integer likes;
     private Integer dislikes;
 
-    @ManyToOne
-    @JsonIgnore
-    private User formateur;
-
     @ManyToMany
     @JsonIgnore
-    private Set<User> apprenant ;
+    private Set<User> employee ;
 
     @OneToMany(mappedBy = "test" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore

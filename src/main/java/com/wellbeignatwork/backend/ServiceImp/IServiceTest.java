@@ -13,77 +13,31 @@ import java.util.TreeMap;
 
 public interface IServiceTest {
 
-    void ajouterFormateur(User formateur);
-
-
-    void addFormation(Test formation);
-    void updateFormation(Test formation, Integer idFormateur);
-    void deleteFormation(Integer idFormation);
-    List<Test> afficherFormation();
-    List<User> afficherFormateur();
-    List<User> afficherApprenant();
-
-    User FormateurwithMaxHo();
-
-     User getFormateurRemunerationMaxSalaire();
-
-     TreeMap<Integer, User> getFormateurRemunerationMaxSalaireTrie();
-
-    List<Object> getFormateurRemunerationByDateTrie();
+    void addTest(Test test);
+    void updateTest(Test test, Integer idTest);
+    void deleteTest(Integer idTest);
+    List<Test> afficherTest();
+    List<User> afficherTest();
+    List<User> afficherEmployee();
 
     void CertifactionStudents();
 
 
     List<Test>  SearchMultiple(String key);
 
+    void affecterEmployeeWithMaxTest(Long idEmployee, Integer idTest);
 
+    Integer getNbrEmployeeByTest(String title);
+    void getNbrEmployeeByTest();
 
+    Integer getNbrTestByEmployee(Long idApp, Domain domain , Date dateDebut, Date dateFin);
 
+    List<Object[]> getNbrEmployeeByTest();
 
+    List<User> getEmployeeByTest(Integer idF);
 
-
-    void ajouterApprenant(User apprenant);
-    void ajouterEtAffecterFormationAFormateur(Test formation, Long idFormateur);
-    Test getFile(Integer fileId) throws FileNotFoundException;
-
-
-    void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation);
-
-    void affecterApprenantFormation(Long idApprenant,Integer idFormation);
-
-
-
-
-    Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin);
-
-    Integer getNbrApprenantByFormation(String title);
-    void getNbrApprenantByFormationn();
-
-    Integer getNbrFormationByApprenant(Long idApp, Domain domain , Date dateDebut, Date dateFin);
-
-    List<Object[]> getNbrApprenantByFormation();
-
-
-
-
-    List<User> getApprenantByFormation(Integer idF);
-
-
-    Integer getFormateurRemunerationByDate(Long idFormateur, Date dateDebut,Date dateFin);
-    Integer getRevenueByFormation(Integer idFormation);
-
-
-
-    void likeFormation(Integer idF);
-    void dislikeFormation(Integer idF);
-
-
-
+    void likeTest(Integer idF);
+    void dislikeTest(Integer idF);
     void SearchHistorique(String keyword);
-
-
-
-
-
 
 }

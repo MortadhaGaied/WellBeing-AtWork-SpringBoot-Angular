@@ -46,13 +46,6 @@ public class ServiceTest implements IServiceTest {
 
 
 
-
-
-    @Override
-    public void ajouterFormateur(User formateur) {
-        iUserRepo.save(formateur);
-    }
-
     @Override
     public void addTest(Test test) {
         iTestRepo.save(test);
@@ -64,28 +57,23 @@ public class ServiceTest implements IServiceTest {
 
         f.setTitle(test.getTitle());
         f.setDomain(test.getDomain());
-        f.setStart(test.getStart());
-        f.setEnd(test.getEnd());
-        f.setFrais(test.getFrais());
         f.setNbrHeures(test.getNbrHeures());
-        f.setNbrMaxParticipant(test.getNbrMaxParticipant());
-
+        f.setNbrParticipant(test.getNbrParticipant());
         //  formation.setFormateur(formateur);
         iTestRepo.save(f);
     }
 
     @Override
     public void deleteTest(Integer idTest) {
-        Test f = iTestRepo.findById(idTest).orElse(null);
-        iTestRepo.delete(f);
+        Test test = iTestRepo.findById(idTest).orElse(null);
+        iTestRepo.delete(test);
     }
 
 
     @Override
     public List<Test> afficherTest() {
-        List<Test> f =   (List<Test>)iTestRepo.findAll();
-            return  f;
-    }
+        return (List<Test>) iTestRepo.findAll();
+   }
 
 
 

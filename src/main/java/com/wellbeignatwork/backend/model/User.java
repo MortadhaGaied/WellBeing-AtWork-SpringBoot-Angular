@@ -63,10 +63,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<Test> TestF;
 
-	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.EAGER
+	@ManyToMany(mappedBy = "employee", fetch = FetchType.EAGER
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
-	private Set<Test> TestA;
+	private Set<Test> TestEmployee;
 
 
 }
