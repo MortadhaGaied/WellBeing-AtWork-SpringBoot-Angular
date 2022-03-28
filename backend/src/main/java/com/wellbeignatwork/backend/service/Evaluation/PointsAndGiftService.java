@@ -33,6 +33,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
     @Autowired
     ReactionRepository reactionRepository;
 
+
     @Override
     public int CollectPoints(Long idUser) {
         User user = intUserRepo.findById(idUser).orElse(null);
