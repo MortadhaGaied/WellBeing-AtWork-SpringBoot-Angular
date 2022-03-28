@@ -1,4 +1,5 @@
 package com.wellbeignatwork.backend.util;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.ReadChannel;
@@ -20,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Objects;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -41,9 +44,9 @@ import java.util.Objects;
 public class FirebaseStorage {
     @Value("${app.firebase-configuration-file}")
     private String firebaseConfigPath;
-    private final String BUCKETNAME="web-notifications-53dec.appspot.com";
-    private  StorageOptions storageOptions ;
-    private final String PROJECTID="web-notifications-53dec";
+    private final String BUCKETNAME = "web-notifications-53dec.appspot.com";
+    private StorageOptions storageOptions;
+    private final String PROJECTID = "web-notifications-53dec";
 
 
     private StorageOptions getStorageOptions() throws IOException {
@@ -56,28 +59,27 @@ public class FirebaseStorage {
     }
 
 
-
     public String uploadFile(MultipartFile multipartFile) throws IOException {
         //Check if the file uploaded is image type
         try (InputStream input = multipartFile.getInputStream()) {
             try {
                 ImageIO.read(input).toString();
                 File file = convertMultiPartToFile(multipartFile);
-                log.info("*******************************"+file.getName());
+
                 String extension = FilenameUtils.getExtension(file.getName());
                 Path filePath = file.toPath();
-                log.info("*******************************"+filePath);
+
                 String fileName = generateFileName(multipartFile);
                 Storage storage = getStorageOptions().getService();
-                log.info("******************"+String.valueOf(storage));
+
                 BlobId blobId = BlobId.of(BUCKETNAME, fileName);
                 BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/" + extension).build();
                 Blob blob = storage.create(blobInfo, Files.readAllBytes(filePath));
                 log.info("File " + filePath + " uploaded to bucket " + BUCKETNAME + " as " + fileName + " blobId " + blobId);
                 return fileName;
             } catch (Exception e) {
-                log.info("****************"+e.getCause());
-                            throw new BadRequestException("File uploaded must be of type image only");
+               
+                throw new BadRequestException("File uploaded must be of type image only");
 
             }
         }
