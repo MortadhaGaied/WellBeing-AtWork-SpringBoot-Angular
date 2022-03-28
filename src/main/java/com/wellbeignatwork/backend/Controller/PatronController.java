@@ -14,7 +14,7 @@ public class PatronController {
 	
 	@PostMapping("/addQuiz")
 	public void addQuiz(@RequestBody Quiz quiz) {
-		this.quizS.addQuiz(quiz.getTitle(), quiz.getDescription());
+		this.quizS.addQuiz(quiz);
 	}
 	
 	@PostMapping("/editQuiz")

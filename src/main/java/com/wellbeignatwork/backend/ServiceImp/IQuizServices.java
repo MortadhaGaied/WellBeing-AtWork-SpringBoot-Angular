@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IQuizServices {
 	public List<Quiz> getQuizes();
-	public Quiz addQuiz(String title, String description);
+
+	Quiz addQuiz(Quiz quiz);
+
 	public void deleteQuiz(int id);
 	public void updateQuiz(Quiz quiz);
 	

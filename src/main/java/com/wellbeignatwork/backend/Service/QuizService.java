@@ -1,8 +1,10 @@
 package com.wellbeignatwork.backend.Service;
 
+import com.wellbeignatwork.backend.Repository.QuizRepo;
 import com.wellbeignatwork.backend.ServiceImp.IQuizServices;
 import com.wellbeignatwork.backend.model.Question;
 import com.wellbeignatwork.backend.model.Quiz;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,7 +12,8 @@ import java.util.List;
 
 @Service
 public class QuizService implements IQuizServices {
-
+	@Autowired
+	QuizRepo quizRepo;
 	public static List<Quiz> quizes = new ArrayList<Quiz>();
 	@Override
 	public List<Quiz> getQuizes() {
@@ -18,10 +21,10 @@ public class QuizService implements IQuizServices {
 	}
 
 	@Override
-	public Quiz addQuiz(String title, String description) {
-		Quiz quiz = new Quiz(title, description);
-		quizes.add(quiz);
-		return quiz;
+	public Quiz addQuiz(Quiz quiz) {
+		Quiz q = quizRepo.save(quiz);
+
+		return q;
 	}
 
 	@Override
