@@ -4,10 +4,8 @@ import com.wellbeignatwork.backend.ServiceImp.IServiceTest;
 import com.wellbeignatwork.backend.ServiceImp.IServicesQuiz;
 import com.wellbeignatwork.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -128,7 +126,7 @@ public class QuizController {
 
     @GetMapping("/getQuizByFormation/{idTest}")
     @ResponseBody
-    public List<Question> getQuizByFormation(@PathVariable("idTest") Integer idTest)
+    public List<QuizTheme> getQuizByFormation(@PathVariable("idTest") Integer idTest)
     {
         return this.iServicesQuiz.getQuizByTest(idTest);
     }
