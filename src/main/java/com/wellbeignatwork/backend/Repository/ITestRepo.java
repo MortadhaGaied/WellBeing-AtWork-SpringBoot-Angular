@@ -35,4 +35,7 @@ public interface ITestRepo extends CrudRepository<Test,Integer> {
     @Query(value = "select count(f.idTest) from Test f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")
     Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
+    @Query(value="select count(employee.id) from Test test join test.employee employee where test.title=:titre")
+    Integer getNbrEmployeeByTestt(@Param("titre") String titre);
+
 }

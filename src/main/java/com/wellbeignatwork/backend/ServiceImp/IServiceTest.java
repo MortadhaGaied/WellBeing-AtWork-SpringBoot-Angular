@@ -34,6 +34,8 @@ public interface IServiceTest {
 
     void AffecterEmployeeATest(Long idUser, Integer idTest);
 
+    Integer getNbrEmployeeByTestt(String title);
+
     void likeTest(Integer idF);
     void dislikeTest(Integer idF);
     void SearchHistorique(String keyword);

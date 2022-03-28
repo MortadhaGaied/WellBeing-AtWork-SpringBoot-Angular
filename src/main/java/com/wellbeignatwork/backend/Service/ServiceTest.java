@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -212,51 +211,13 @@ public class ServiceTest implements IServiceTest {
 
 
     @Override
-    public Integer getNbrApprenantByFormation(String title) {
-        return  iTestRepo.getNbrEmployeeByTest(title);
+    public Integer getNbrEmployeeByTestt(String title) {
+        return  iTestRepo.getNbrEmployeeByTestt(title);
     }
 
 
-    @Override
-   // @Scheduled(cron = "*/30 * * * * *")
-    public void getNbrApprenantByFormationn() {
-
-        log.info("La formation : Spring contient : " +iFormationRepo.getNbrApprenantByFormation("Spring") + " Apprenant ");
-        log.info("La formation : Devops contient : " +iFormationRepo.getNbrApprenantByFormation("DevOps") + " Apprenant ");
-
-    }
-
-    @Override
-    public Integer getNbrFormationByApprenant(Long idApp , Domain domain, Date dateDebut, Date dateFin) {
-        return iFormationRepo.getNbrFormationByApprenant(idApp,domain, dateDebut, dateFin);
-    }
-
-    @Override
-    public List<Object[]> getNbrApprenantByFormation() {
-
-        return iUserRepo.getNbrApprenantByFormation();
-    }
-
-    @Override
-    public List<User> getApprenantByFormation(Integer idF) {
-        return iUserRepo.getApprenantByFormation(idF);
-    }
-
-    @Override
-    public Integer getFormateurRemunerationByDate(Long idFormateur, Date dateDebut, Date dateFin) {
-
-        return iFormationRepo.getFormateurRemunerationByDate(idFormateur, dateDebut, dateFin);
-
-    }
 
 
-    @Override
-    public Integer getRevenueByFormation(Integer idFormation) {
-        Test f = iFormationRepo.findById(idFormation).orElse(null);
-
-        Integer revenue =  (f.getFrais()*iUserRepo.getRevenueByFormation(idFormation).size());
-        return  revenue;
-    }
 
     @Override
     public void likeTest(Integer idF) {
@@ -270,40 +231,12 @@ public class ServiceTest implements IServiceTest {
 
     @Override
     public void dislikeTest(Integer idF) {
-
-    }
-
-    @Override
-    public void dislikeFormation(Integer idF) {
         Test test = iTestRepo.findById(idF).orElse(null);
 
         test.setDislikes(test.getDislikes()+1);
         iTestRepo.save(test);
 
     }
-
-
-
-
-    //////////////// Search historique ////////////////
-
-    @Override
-    public void SearchHistorique(String keyword) {
-
-        if(keyword!=null)
-        {
-            String s = iSearchRepo.keyWord(keyword);
-            Search search = new Search();
-
-            search.setKeyword(s);
-            search.setAtDate(new Date());
-
-            iSearchRepo.save(search);
-        }
-
-
-    }
-
 
 
 
