@@ -41,11 +41,19 @@ public class QuizController {
 
         return iServiceTest.afficherTest();
     }
+
     @GetMapping("/retrieveEmployee")
     @ResponseBody
     public List<User> afficherEmployee()
     {
         return iServiceTest.afficherEmployee();
     }
-    
+
+    @RequestMapping(value = {"/affecterApprenantFormation/{idA}/{idF}"}, method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "ajouter Et Affecter Formation A Formateur  ")
+    public void affecterApprenantFormation(@PathVariable(name = "idA") Long idApprenant,@PathVariable(name = "idF") Integer idFormation)
+    {
+        iServiceFormation.affecterApprenantFormation(idApprenant, idFormation);
+    }
 }
