@@ -31,6 +31,6 @@ public class FeedBack {
     private String content;
     private Long idUser;
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Event event;
 }

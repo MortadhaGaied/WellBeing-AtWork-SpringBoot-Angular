@@ -32,11 +32,11 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
-    public int AddYes(VoteIdea v, int sujetId, Long idUser) {
+    public int AddYes(VoteIdea v, int sujetId, Long userId) {
         v.setNbYes(1);
         v.setNbNo(0);
         Sujet sujet = MySUjetRepo.findById(sujetId).orElse(null);
-        User user = MyUserRepo.findById(idUser).orElse(null);
+        User user = MyUserRepo.findById(userId).orElse(null);
         v.setIdUser(user);
         v.setIdSujet(sujet);
         MyVoteIdeaRepo.save(v);
@@ -67,7 +67,21 @@ public class VoteService implements IntVoteService {
 
 
 
+    @Override
+    public String VerifYourChoice(Long userId, int sujetId) {
+        String AucunVote="there is No Vote For this user ";
+        String AlreadyVotedForYes="this User Voted With Yes";
+        String AlreadyVotedForNo="this User Voted With No";
 
+        VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUserYes(sujetId, userId);
+        VoteIdea v1 = MyVoteIdeaRepo.getVoteBySujetAndUserNO(sujetId, userId);
+        if (v == null && v1 == null)
+            return AucunVote;
+        else if (v != null && v1 == null)
+            return AlreadyVotedForYes;
+        else
+            return AlreadyVotedForNo;
+    }
 
     @Override
     public int countYes(int sujetId) {
@@ -133,29 +147,6 @@ public class VoteService implements IntVoteService {
             return false;
         return true;
     }
-
-    @Override
-    public String VerifYourChoice(Long userId, int sujetId) {
-        String AucunVote="there is No Vote For this user ";
-        String AlreadyVotedForYes="this User Voted With Yes";
-        String AlreadyVotedForNo="this User Voted With No";
-
-        VoteIdea v = MyVoteIdeaRepo.getVoteBySujetAndUserYes(sujetId, userId);
-        VoteIdea v1 = MyVoteIdeaRepo.getVoteBySujetAndUserNO(sujetId, userId);
-        if (v == null && v1 == null)
-            return AucunVote;
-        else if (v != null && v1 == null)
-            return AlreadyVotedForYes;
-        else
-            return AlreadyVotedForNo;
-
-    }
-
-
-
-
-
-
 
 
 

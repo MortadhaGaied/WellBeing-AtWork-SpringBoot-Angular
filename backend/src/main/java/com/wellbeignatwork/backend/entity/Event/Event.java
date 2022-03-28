@@ -29,7 +29,7 @@ public class Event implements Serializable {
     private int nbrMaxParticipant;
     private double frais;
     private double revenue;
-
+    String image;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
@@ -43,7 +43,7 @@ public class Event implements Serializable {
     private Set<User> users;
     @JsonIgnore
 
-    @OneToMany (mappedBy = "event")
+    @OneToMany (mappedBy = "event",cascade = CascadeType.ALL)
     private List<FeedBack> feedBacks;
 
 

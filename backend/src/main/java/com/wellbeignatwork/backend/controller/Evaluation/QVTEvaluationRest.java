@@ -1,12 +1,16 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Answer;
+import com.wellbeignatwork.backend.entity.Evaluation.Question;
 import com.wellbeignatwork.backend.entity.Evaluation.Survey;
 import com.wellbeignatwork.backend.service.Evaluation.IntQVTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.wellbeignatwork.backend.entity.User.User;
-
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -23,19 +27,29 @@ public class QVTEvaluationRest {
     public User adduser(@RequestBody User u)
     { return MyQVTService.addUser(u); }
 
-    @GetMapping("/Survey")
-    public List<Survey> retrieveAllSurveys()
-    { return MyQVTService.retrieveAllSurveys(); }
+  @GetMapping("/Survey")
+  public List<Question> SendAllSurveys()
+  {
+    return MyQVTService.SendSurvey();
 
+  }
     @PostMapping("/PutYourAnswerAndGetYourAdvice")
-    public String UserAnswer(@RequestBody List<Answer>  answer)
-    { return MyQVTService.UserAnswer(answer); }
-
+    public void UserAnswer(@RequestBody List<Answer>  answer)
+    {  MyQVTService.UserAnswer(answer); }
      @GetMapping("/Stastic")
      public String nbreSentiment()
     { return MyQVTService.nbreSentiment();}
 
+  @GetMapping("/download")
+  public ResponseEntity<InputStreamResource> getFile() {
+    String filename = "FeedBack.csv";
+    InputStreamResource file = new InputStreamResource(MyQVTService.load());
 
+    return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+            .contentType(MediaType.parseMediaType("application/csv"))
+            .body(file);
+  }
 
 /*
     @GetMapping(value = "generateRandomCODEPROMO")

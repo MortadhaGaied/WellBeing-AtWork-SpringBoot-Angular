@@ -5,6 +5,7 @@ import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.User.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface IActivityService {
+    public void addEvent(Event e, MultipartFile file) throws IOException ;
     public void addEvent(Event e);
     public void deleteEvent(Event e);
     public Event updateEvent(Event e);
@@ -32,7 +34,7 @@ public interface IActivityService {
     public void acceptInvitation (Long idEvent , Long idUser);
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
-    public Set<Event> filtreByDepartement(Departement departement);
+    public List<Event> filtreByDepartement(Departement departement);
 
 
      public void addSubscription(Subscription s);

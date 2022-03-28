@@ -5,6 +5,8 @@ import com.wellbeignatwork.backend.entity.Evaluation.*;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Evaluation.AnswerRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.IntAdviceRepo;
+import com.wellbeignatwork.backend.repository.Evaluation.QuestionRepo;
+import com.wellbeignatwork.backend.repository.Evaluation.SurveyRepo;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,69 +30,59 @@ public class QVTService implements IntQVTService {
     private UserRepository MyUserRepo;
     @Autowired
     private IntAdviceRepo MyAdviceRepo;
-
-
+    @Autowired
+    private AnswerRepo MyAnswerRepo ;
+    @Autowired
+    private SurveyRepo MysurveyRepo;
+    @Autowired
+    private QuestionRepo questionsRepo;
     @Override
     public User addUser(User u) {
 
         u.setBadge(Badge.None);
         return MyUserRepo.save(u);
     }
-
+    public QVTService() throws IOException {
+    }
 
     private static List<Survey> surveys = new ArrayList<>();
 
-    static {
-        Question question1 = new Question(1,
-                "you feel physicaly safe in job ?");
-        Question question2 = new Question(2,
-                "your job provides good health benefits ?");
-        Question question3 = new Question(3,
-                "your salary job does well with your familly needs ?");
-        Question question4 = new Question(4,
-                "Any suggestions ?");
-        Question question5 = new Question(5,
-                "Any suggestions ?");
-
-        List<Question> questions = new ArrayList<>(Arrays.asList(question1,
-                question2, question3, question4));
-
-        Survey survey = new Survey("1", "quality of life at work",
-                "Description of the Survey", questions);
-
-        surveys.add(survey);
-    }
-
-
-    static {
-        Question question1 = new Question(1,
-                "you feel physicaly safe in job ?");
-        Question question2 = new Question(2,
-                "your job provides good health benefits ?");
-        Question question3 = new Question(3,
-                "your salary job does well with your familly needs ?");
-        Question question4 = new Question(4,
-                "Any suggestions ?");
-        Question question5 = new Question(5,
-                "Any suggestions ?");
-
-        List<Question> questions = new ArrayList<>(Arrays.asList(question1,
-                question2, question3, question4));
-
-        Survey survey = new Survey("2", "Evaluate Your responsible",
-                "Description of the Survey", questions);
-
-        surveys.add(survey);
-    }
-
-    @Autowired
-    private AnswerRepo answerRepo;
-
-
     @Override
-    public List<Survey> retrieveAllSurveys() {
-        return surveys;
+    public List<Question> SendSurvey() {
+        Question question1 = new Question(
+                "you feel physicaly safe in job ?");
+        Question question2 = new Question(
+                "your job provides good health benefits ?");
+        Question question3 = new Question(
+                "your salary job does well with your familly needs ?");
+        Question question4 = new Question(
+                "Any suggestions ?");
+
+
+        List<Question> questions = new ArrayList<>(Arrays.asList(question1,
+                question2, question3, question4));
+
+        Survey survey = new Survey();
+        survey.setTitle("quality of life at work");
+        survey.setDescription("Description of the Survey");
+        MysurveyRepo.save(survey);
+        question1.setSurvey(survey);
+        question2.setSurvey(survey);
+        question3.setSurvey(survey);
+        question4.setSurvey(survey);
+        questionsRepo.saveAll(questions);
+        MysurveyRepo.save(survey);
+
+        return  questionsRepo.findQuestionsBySurvey(survey);
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -124,7 +118,8 @@ public class QVTService implements IntQVTService {
 
     @Override
     public String UserAnswer(List<Answer> answer)
-    { String Res="";
+    {
+        String Res="";
 
         StanfordCoreNLP stanfordCoreNLP = Pipeline.getPipeline();
         for (Answer answer1 : answer) {
@@ -141,15 +136,15 @@ public class QVTService implements IntQVTService {
                 } else {
                     answer1.setSentiment(Sentiment.Very_negative);
                 }
-                answerRepo.save(answer1);
+                MyAnswerRepo.save(answer1);
             }
         }
-        System.out.println(answerRepo.getLastAnswer(PageRequest.of(0, 4)));
+        System.out.println(MyAnswerRepo.getLastAnswer(PageRequest.of(0, 4)));
         int nbVeryBad = 0;
         int nbPositive = 0;
         int nbNeutral = 0;
         int nbBad = 0;
-        for (Answer a : answerRepo.getLastAnswer(PageRequest.of(0, 4))) {
+        for (Answer a : MyAnswerRepo.getLastAnswer(PageRequest.of(0, 4))) {
             if (a.getSentiment().equals(Sentiment.Very_negative)) {
                 nbVeryBad++;
             } else if (a.getSentiment().equals(Sentiment.Negative)) {
@@ -168,7 +163,8 @@ public class QVTService implements IntQVTService {
             System.out.println
                     ("Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer");
             return Res="Exellent ! Your Work Life Is Very Positive,i wish you much success in your carreer";
-        } else if (((nbVeryBad == 4))|(nbBad)==2 &&(nbVeryBad)==2) {
+        } else if(((nbBad==2 )&&(nbNeutral==1)&&(nbVeryBad==1))|(nbBad)==4|(nbVeryBad)==4)
+        {
             //  System.out.println("Your Survey Is Positive :),You Have Some Issues Don't Wory We Will Fix That ");
             System.out.println("Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ");
             return Res="Very Negative ! Thank You For Your FeedBack We Will Take This In Hand ";
@@ -192,23 +188,20 @@ public class QVTService implements IntQVTService {
 
 
     @Override
-    public String nbreSentiment( ) {
-        String Res = "";
+    public String nbreSentiment(){
+        String Res="";
 
-      /*  log.info("Total Sentiment Positive = "+answerRepo.nbreByStatus(Sentiment.Positive));
+        return Res="Total Sentiment Positive = "+MyAnswerRepo.nbreByStatus(Sentiment.Positive)+" "
+                +"Total Sentiment Negative = "+MyAnswerRepo.nbreByStatus(Sentiment.Negative)+" "+
+                "Total Sentiment Neutral = "+MyAnswerRepo.nbreByStatus(Sentiment.Neutral)+" "+
+                "Total Sentiment Neutral = "+MyAnswerRepo.nbreByStatus(Sentiment.Neutral)+" "+
+                "Total Sentiment Very negative = "+MyAnswerRepo.nbreByStatus(Sentiment.Very_negative);
+    }
+    public ByteArrayInputStream load() {
+        List<Answer> answers = (List<Answer>) MyAnswerRepo.findAll();
 
-        log.info("Total Sentiment Negative = "+answerRepo.nbreByStatus(Sentiment.Negative));
-
-        log.info("Total Sentiment Neutral = "+answerRepo.nbreByStatus(Sentiment.Neutral));
-        log.info("Total Sentiment Very negative = "+answerRepo.nbreByStatus(Sentiment.Very_negative));
-
-       */
-            return Res = "Positive Sentiment = " + " " + answerRepo.nbreByStatus(Sentiment.Positive) + " " +
-                    "Negative Sentiment = " + " " + answerRepo.nbreByStatus(Sentiment.Negative) + " " +
-                    " Neutral Sentiment = " + " " + answerRepo.nbreByStatus(Sentiment.Neutral) + " " +
-                    " Very negative Sentiment = " + " " + answerRepo.nbreByStatus(Sentiment.Very_negative);
-
-
+        ByteArrayInputStream in = CsvHelper.ToCSV(answers);
+        return in;
     }
 
 }

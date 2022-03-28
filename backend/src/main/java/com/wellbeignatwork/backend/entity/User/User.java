@@ -2,31 +2,33 @@ package com.wellbeignatwork.backend.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
+import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Event.Subscription;
+import com.wellbeignatwork.backend.entity.Forum.Opinion;
 import com.wellbeignatwork.backend.entity.Forum.Post;
-import com.wellbeignatwork.backend.entity.Chat.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 /**
  * The persistent class for the user database table.
- * 
  */
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 public class User implements Serializable {
+
 
 	/**
 	 * 
@@ -57,11 +59,11 @@ public class User implements Serializable {
 	private String displayName;
 
 	@Column(name = "created_date", nullable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date createdDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date modifiedDate;
+	protected LocalDateTime createdDate;
+
+
+	protected LocalDateTime modifiedDate;
 
 	private String password;
 
@@ -103,4 +105,15 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Badge badge;
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+	private Set<Opinion> opinions;
+	private String picture;
+
+
+
+
+
+
+
+
 }

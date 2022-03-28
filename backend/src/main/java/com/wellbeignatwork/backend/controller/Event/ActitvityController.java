@@ -1,7 +1,9 @@
 package com.wellbeignatwork.backend.controller.Event;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.User.User;
 
 import com.lowagie.text.DocumentException;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,10 +33,17 @@ public class ActitvityController {
     @Autowired
     private IActivityService activityService;
 
+    @PostMapping("/AddEvent")
+    @ResponseBody
+    public void addEvent (@RequestParam("file") MultipartFile file, @RequestParam("event")String event)throws IOException{
+        Event e = new ObjectMapper().readValue(event, Event.class);
+        activityService.addEvent(e,file);
+
+    }
     @PostMapping("/AddE")
     @ResponseBody
-    public void addEvent (@RequestBody Event e){
-        activityService.addEvent(e);
+    public void addEvent (@RequestBody Event event){
+        activityService.addEvent(event);
     }
 
     @DeleteMapping("/removeE/{event-id}")
@@ -54,14 +64,13 @@ public class ActitvityController {
         return activityService.getAllEvents();
     }
 
-    @GetMapping("/assign-user-to-event/{id_user}/{id_event}/{codeText}/{width}/{height}")
+    @GetMapping("/assign-user-to-event/{id_user}/{id_event}")
     @ResponseBody
     public void assignUserToEvent (@PathVariable("id_user") Long idUser ,
                                    @PathVariable("id_event") Long idEvent,
-                                   HttpServletResponse response,
-                                   @PathVariable("codeText") String codeText,
-                                   @PathVariable("width") Integer width,
-                                   @PathVariable("height") Integer height)throws DocumentException, IOException, WriterException {
+                                   HttpServletResponse response
+                                   )throws DocumentException, IOException, WriterException {
+        String codeText=idUser+"-"+idEvent;
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -70,8 +79,8 @@ public class ActitvityController {
         String headerValue = "attachment; filename=ticket" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
         activityService.assignUserToEvent(idUser,idEvent);
-        activityService.export(response,idEvent,idUser,codeText,width,height,QR_CODE_IMAGE_PATH);
-        ResponseEntity.status(HttpStatus.OK).body(ActivityServiceImp.getQRCodeImage(codeText, width, height));
+        activityService.export(response,idEvent,idUser,codeText,100,100,QR_CODE_IMAGE_PATH);
+        ResponseEntity.status(HttpStatus.OK).body(ActivityServiceImp.getQRCodeImage(codeText, 100, 100));
         }
     @GetMapping("/nbr")
     @ResponseBody
@@ -195,7 +204,7 @@ public class ActitvityController {
 
     @GetMapping("/filtreByDepartement/{dep}")
     @ResponseBody
-    public Set<Event> filtreByDepartement(@PathVariable("dep") Departement departement){
+    public List<Event> filtreByDepartement(@PathVariable("dep") Departement departement){
         return activityService.filtreByDepartement(departement);
     }
 

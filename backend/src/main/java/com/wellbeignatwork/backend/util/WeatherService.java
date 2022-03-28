@@ -45,5 +45,20 @@ public class WeatherService {
                 .retrieve()
                 .asJava();
     }
+    public Coordinate getCoordinateByCityName(String city){
+        OpenWeatherMapClient openWeatherClient = new OpenWeatherMapClient(env.getProperty("OWM_API_KEY"));
+
+        // To be able to get coordinates from the given city
+        final Weather weather = openWeatherClient
+                .currentWeather()
+                .single()
+                .byCityName(city)
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
+        Coordinate c = weather.getLocation().getCoordinate();
+        return c;
+    }
 
 }
