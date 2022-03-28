@@ -1,27 +1,50 @@
 package com.wellbeignatwork.backend.model;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
 
+@Component
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-@Entity
-public class Result implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
-	Long quizId;
-	int studentId;
-	int totalMarks;
+@Table( name = "Result")
+public class Result {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String username;
+    private int totalCorrect = 0;
+    private int correctAnswer = 0;
+    private int inCorrectAnswer = 0;
+    private boolean status;
+
+    public Result() {
+        super();
+    }
+
+    public Result(int id, String username, int totalCorrect, int correctAnswer, int inCorrectAnswer , boolean status) {
+        super();
+        this.id = id;
+        this.username = username;
+        this.totalCorrect = totalCorrect;
+        this.correctAnswer = correctAnswer;
+        this.inCorrectAnswer = inCorrectAnswer;
+        this.status = status;
+    }
+
+    @ManyToOne
+    @JsonIgnore
+    private QuizCourses quiz;
+
+    @ManyToOne
+    @JsonIgnore
+    private User sUser;
 
 }
