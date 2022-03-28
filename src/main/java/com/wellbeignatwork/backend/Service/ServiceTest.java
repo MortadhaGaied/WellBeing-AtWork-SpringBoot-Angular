@@ -162,11 +162,6 @@ public class ServiceTest implements IServiceTest {
         LocalDate currentdDate1 =  LocalDate.now();
         User user = new User();
 
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-
-        Date dd =Date.from(currentdDate1.minusMonths(3).atStartOfDay(defaultZoneId).toInstant());
-        Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
-
         ///User with gifts Free for MAx Score
 
 
@@ -180,23 +175,23 @@ public class ServiceTest implements IServiceTest {
                 if (iTestRepo.getNbrEmployeeByTestId(idTest) < test.getNbrParticipant() && employee.getProfession() == Profession.EMPLOYEE) {
 
                     if (iTestRepo.getNbrEmployeeByTest(idTest, test.getDomain()) < 2 || employee.getId().equals(user.getId())) {
-                        if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
+                        if (iTestRepo.getNbrEmployeeByTest(Math.toIntExact(idUser), test.getDomain()) < 3) {
 
-                            log.info("nbr "+iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
-                            formation.getApprenant().add(apprenant);
-                            iTestRepo.save(formation);
+                            log.info("nbr "+iTestRepo.getNbrEmployeeByTest(idTest, test.getDomain()));
+                            test.getEmployee().add(employee);
+                            iTestRepo.save(test);
                         } else {
                             log.info("this apprenant we have 3 (MAX formation in this domain ");
-                            this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getName() + " .");
+                            this.emailSenderService.sendSimpleEmail(employee.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + employee.getName() + " .");
                         }
 
                     } else {
-                        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getName() + " .");
+                        this.emailSenderService.sendSimpleEmail(employee.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + employee.getName() + " .");
                         log.info("this apprenant we have 2 (MAX formation in this domain ");
                     }
                 } else {
-                    this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getName() + " .");
-                    log.info(" Learner list complete Max learner " + formation.getNbrMaxParticipant());
+                    this.emailSenderService.sendSimpleEmail(employee.getEmail(), "Learner list complete  ", " We have in this courses " + test.getNbrParticipant() + " number of learner Maximum" + employee.getName() + " .");
+                    log.info(" Learner list complete Max learner " + test.getNbrParticipant());
                 }
             }
 
@@ -216,15 +211,9 @@ public class ServiceTest implements IServiceTest {
     }
 
 
-
-    @Override
-    public Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin) {
-        return this.iTestRepo.nbrCoursesParFormateur(idF, dateDebut, dateFin);
-    }
-
     @Override
     public Integer getNbrApprenantByFormation(String title) {
-        return  iTestRepo.getNbrApprenantByTest(title);
+        return  iTestRepo.getNbrEmployeeByTest(title);
     }
 
 
