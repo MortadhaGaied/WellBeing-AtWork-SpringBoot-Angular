@@ -3,6 +3,7 @@ package com.wellbeignatwork.backend.Controller;
 import com.wellbeignatwork.backend.ServiceImp.IServiceTest;
 import com.wellbeignatwork.backend.ServiceImp.IServicesQuiz;
 import com.wellbeignatwork.backend.model.Domain;
+import com.wellbeignatwork.backend.model.QuizTheme;
 import com.wellbeignatwork.backend.model.Test;
 import com.wellbeignatwork.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,12 @@ public class QuizController {
     {
         iServiceTest.affecterEmployeeWithMaxTest(idEmployee, idTest);
     }
+
+    @PostMapping("/addQuiz/{idTest}")
+    public void addQuiz(@RequestBody QuizTheme quiz, @PathVariable(name = "idTest") Integer idTest)
+    {
+        iServicesQuiz.addQuiz(quiz,idTest);
+    }
+
 
 }
