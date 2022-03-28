@@ -11,17 +11,13 @@ import com.wellbeignatwork.backend.ServiceImp.IServiceTest;
 import com.wellbeignatwork.backend.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TreeMap;
 
 
 @Slf4j
@@ -82,6 +78,27 @@ public class ServiceTest implements IServiceTest {
 
 
     @Override
+    public List<Test> SearchMultiple(String key) {
+        return null;
+    }
+
+    @Override
+    public Integer getNbrEmployeeByTest(String title) {
+        return null;
+    }
+
+    @Override
+    public Integer getNbrTestByEmployee(Long idApp, Domain domain, Date dateDebut, Date dateFin) {
+        return null;
+    }
+
+    @Override
+    public List<User> getEmployeeByTest(Integer idF) {
+        return null;
+    }
+
+
+    @Override
    // @Scheduled(cron = "0 0/1 * * * *")
     public void CertifactionEmployee() {
 
@@ -134,28 +151,9 @@ public class ServiceTest implements IServiceTest {
 
     }
 
-
-    @Override
-    public void ajouterEtAffecterEmployeeATest(Test test, Long idTest) {
-
-        User employee = iUserRepo.findById(idTest).orElse(null);
-
-                test.setLikes(0);
-                test.setDislikes(0);
-                iTestRepo.save(test);
-
-    }
-
-
-
-    @Override
-    public Test getFile(Integer fileId) throws FileNotFoundException {
-        return iTestRepo.findById(fileId).orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
-    }
-
     @Override
    // @Scheduled(cron = "*/30 * * * * *")
-    public void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation) {
+    public void affecterEmployeeWithMaxTest(Long idApprenant, Integer idFormation) {
 
         Test formation = iTestRepo.findById(idFormation).orElse(null);
 
@@ -172,14 +170,14 @@ public class ServiceTest implements IServiceTest {
         ///User with gifts Free for MAx Score
 
 
-       for(Test form : iTestRepo.listFormationParApprenant(idApprenant)) {
-          if(iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).size()!=0)
+       for(Test form : iTestRepo.listEmployeeParTest(idApprenant)) {
+          if(iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).size()!=0)
            {
-               user = iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).get(0);
+               user = iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).get(0);
                 //}
 
 
-                if (iTestRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
+                if (iTestRepo.getNbrApprenantByTestId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
 
                     if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
                         if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
@@ -206,23 +204,15 @@ public class ServiceTest implements IServiceTest {
     }
 
     }
-/*
-    @EventListener(ApplicationReadyEvent.class)
-    public void sendMail()
-    {
-        emailSenderService.sendEmail("mahdijr2015@gmail.com","we don't add two coursus in same domain " ,"this apprenant we have 2 (MAX formation in this domain");
-    }
 
 
- */
-    ///////////////  Affectation 3adiya  ////////////////////
     @Override
-    public void affecterApprenantFormation(Long idApprenant, Integer idFormation) {
-        User apprenant = iUserRepo.findById(idApprenant).orElse(null);
-        Test formation = iTestRepo.findById(idFormation).orElse(null);
+    public void AffecterEmployeeATest(Long idUser, Integer idTest) {
+        User user = iUserRepo.findById(idUser).orElse(null);
+        Test test = iTestRepo.findById(idTest).orElse(null);
 
-        formation.getApprenant().add(apprenant);
-        iTestRepo.save(formation);
+        test.getEmployee().add(user);
+        iTestRepo.save(test);
     }
 
 
@@ -286,6 +276,11 @@ public class ServiceTest implements IServiceTest {
         test.setLikes(test.getLikes()+1);
         iTestRepo.save(test);
 
+
+    }
+
+    @Override
+    public void dislikeTest(Integer idF) {
 
     }
 
