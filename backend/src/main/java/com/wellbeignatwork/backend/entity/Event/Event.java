@@ -29,7 +29,7 @@ public class Event implements Serializable {
     private int nbrMaxParticipant;
     private double frais;
     private double revenue;
-
+    String image;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 

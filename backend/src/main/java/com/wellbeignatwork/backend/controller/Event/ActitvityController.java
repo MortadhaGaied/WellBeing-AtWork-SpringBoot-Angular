@@ -1,7 +1,9 @@
 package com.wellbeignatwork.backend.controller.Event;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.User.User;
 
 import com.lowagie.text.DocumentException;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,8 +35,10 @@ public class ActitvityController {
 
     @PostMapping("/AddE")
     @ResponseBody
-    public void addEvent (@RequestBody Event e){
-        activityService.addEvent(e);
+    public void addEvent (@RequestParam("file") MultipartFile file, @RequestParam("event")String event)throws IOException{
+        Event e = new ObjectMapper().readValue(event, Event.class);
+        activityService.addEvent(e,file);
+
     }
 
     @DeleteMapping("/removeE/{event-id}")

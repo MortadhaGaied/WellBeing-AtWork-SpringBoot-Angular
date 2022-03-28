@@ -32,6 +32,7 @@ import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.NotificationService.PushNotificationService;
 import com.wellbeignatwork.backend.service.UserService.MailService;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import com.wellbeignatwork.backend.util.WeatherService;
 
 import com.wellbeignatwork.backend.repository.Event.EventRepository;
@@ -68,6 +69,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import static javax.mail.Transport.send;
 
@@ -79,6 +81,7 @@ public class ActivityServiceImp implements IActivityService {
     SubscriptionRepository subscriptionRepository;
     private final PushNotificationService notificationService;
     private final MailService mailService;
+    private final FirebaseStorage firebaseStorage;
 
     @PostConstruct
     public void init() {
@@ -96,18 +99,22 @@ public class ActivityServiceImp implements IActivityService {
                               SubscriptionRepository subscriptionRepository,
                               JavaMailSender javaMailSender,
                               PushNotificationService notificationService,
-                              MailService mailService) {
+                              MailService mailService,
+                              FirebaseStorage firebaseStorage) {
         this.eventRepository = eventRepository;
         this.userRepo = userRepo;
         this.subscriptionRepository = subscriptionRepository;
         this.javaMailSender = javaMailSender;
         this.notificationService = notificationService;
         this.mailService = mailService;
+        this.firebaseStorage=firebaseStorage;
     }
 
 
     @Override
-    public void addEvent(Event e) {
+    public void addEvent(Event e, MultipartFile file) throws IOException {
+        String fileData = firebaseStorage.uploadFile(file);
+        e.setImage(fileData);
         eventRepository.save(e);
     }
 
