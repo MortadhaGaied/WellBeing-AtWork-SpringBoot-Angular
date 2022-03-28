@@ -42,6 +42,14 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "userRes")
 	Set<Reservation> reservations;
 
+	@Enumerated(EnumType.STRING)
+	private Profession profession;
+
+	//@Positive
+	private Integer tarifHoraire;
+	//@Positive
+	private double salary;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -50,4 +58,13 @@ public class User implements Serializable {
 
 	@Column(name = "DISPLAY_NAME")
 	private String displayName;
+
+	@OneToMany(mappedBy = "formateur")
+	@JsonIgnore
+	private Set<Formation> formationF;
+
+	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.EAGER
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Formation> formationA;
 }
