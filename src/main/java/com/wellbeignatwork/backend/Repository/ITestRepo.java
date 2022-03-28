@@ -25,20 +25,20 @@ public interface ITestRepo extends CrudRepository<Test,Integer> {
     Integer getFormateurRemuneration(@Param("id") Long idFormateur);
 
     @Query(value="select count(a.id) from Test f join f.apprenant a where f.title=:titre")
-    Integer getNbrApprenantByFormation(@Param("titre") String titre);
+    Integer getNbrApprenantByTest(@Param("titre") String titre);
 
     @Query(value="select count(a.id) from Test f join f.apprenant a where f.idTest=:id")
-    Integer getNbrApprenantByFormationId(@Param("id") Integer id);
+    Integer getNbrApprenantByTestId(@Param("id") Integer id);
 
     @Query(value = "select count(f.idTest) from Test f join f.apprenant a where a.id=:id and f.start>=:dateD and f.end<=:dateF and f.domain=:domain")
-    Integer getNbrFormationByApprenant(@Param("id") Long idApp, @Param("domain") Domain domain, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
+    Integer getNbrTestByApprenant(@Param("id") Long idApp, @Param("domain") Domain domain, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
 
     @Query(value = "select f from Test f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by sum(f.likes-f.dislikes) desc")
     List<Test> rech(String keyword);
 
     @Query(value = "select f from Test f join f.apprenant a where a.id=:id")
-    List<Test> listFormationParApprenant(@Param("id") Long idApp);
+    List<Test> listTestParApprenant(@Param("id") Long idApp);
 
 
     @Query(value = "select count(f.idTest) from Test f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")

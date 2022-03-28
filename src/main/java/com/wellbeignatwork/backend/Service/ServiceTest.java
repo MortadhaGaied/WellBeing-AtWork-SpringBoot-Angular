@@ -6,6 +6,7 @@ import com.wellbeignatwork.backend.API.QRCodeGenerator;
 import com.wellbeignatwork.backend.Repository.IFormationRepo;
 import com.wellbeignatwork.backend.Repository.IResultRepo;
 import com.wellbeignatwork.backend.Repository.ISearchRepo;
+import com.wellbeignatwork.backend.Repository.ITestRepo;
 import com.wellbeignatwork.backend.Repository.UserRepository;
 import com.wellbeignatwork.backend.ServiceImp.IServiceFormation;
 import com.wellbeignatwork.backend.model.*;
@@ -32,7 +33,7 @@ public class ServiceFormation implements IServiceFormation {
     private UserRepository iUserRepo;
 
     @Autowired
-    private IFormationRepo iFormationRepo;
+    private ITestRepo iTestRepo;
     @Autowired
     private IResultRepo iResultRepo;
     @Autowired
@@ -55,12 +56,12 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public void addFormation(Test formation) {
-        iFormationRepo.save(formation);
+        iTestRepo.save(formation);
     }
 
     @Override
     public void updateFormation(Test formation, Integer idFormateur) {
-        Test f = iFormationRepo.findById(idFormateur).orElse(null);
+        Test f = iTestRepo.findById(idFormateur).orElse(null);
 
         f.setTitle(formation.getTitle());
         f.setDomain(formation.getDomain());
@@ -71,19 +72,19 @@ public class ServiceFormation implements IServiceFormation {
         f.setNbrMaxParticipant(formation.getNbrMaxParticipant());
 
         //  formation.setFormateur(formateur);
-        iFormationRepo.save(f);
+        iTestRepo.save(f);
     }
 
     @Override
     public void deleteFormation(Integer idFormation) {
-        Test f = iFormationRepo.findById(idFormation).orElse(null);
-        iFormationRepo.delete(f);
+        Test f = iTestRepo.findById(idFormation).orElse(null);
+        iTestRepo.delete(f);
     }
 
 
     @Override
     public List<Test> afficherFormation() {
-        List<Test> f =   (List<Test>)iFormationRepo.findAll();
+        List<Test> f =   (List<Test>)iTestRepo.findAll();
             return  f;
     }
 
@@ -149,12 +150,12 @@ public class ServiceFormation implements IServiceFormation {
 
       //   if(lastDayOfMonth.equals(lastDayOfMonth))
        //  {
-        for (Test f : this.iFormationRepo.findAll()) {
+        for (Test f : this.iTestRepo.findAll()) {
             if (f.getStart().after(firstDayOfMonth) && f.getEnd().before(lastDayOfMonth)) {
 
-                map.put(this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth), f.getFormateur().getId().toString());
-                if (this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth) > max) {
-                    max = this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth);
+                map.put(this.iTestRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth), f.getFormateur().getId().toString());
+                if (this.iTestRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth) > max) {
+                    max = this.iTestRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth);
                 }
             }
         }
@@ -162,19 +163,19 @@ public class ServiceFormation implements IServiceFormation {
         if (status) {
 
 
-            for (Test f : this.iFormationRepo.findAll()) {
+            for (Test f : this.iTestRepo.findAll()) {
 
                 for (User user : iUserRepo.getFormateurByFormation(f.getIdTest())) {
-                    user.setSalary(this.iFormationRepo.getFormateurRemunerationByDate(user.getId(), firstDayOfMonth, lastDayOfMonth));
+                    user.setSalary(this.iTestRepo.getFormateurRemunerationByDate(user.getId(), firstDayOfMonth, lastDayOfMonth));
                     iUserRepo.save(user);
                 }
             }
             log.info(" liste" + map);
             log.info(" Max Salaire " + max);
 
-            for (Test f : this.iFormationRepo.findAll()) {
+            for (Test f : this.iTestRepo.findAll()) {
                 if (f.getStart().after(firstDayOfMonth) && f.getEnd().before(lastDayOfMonth)) {
-                    if (this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth) == max) {
+                    if (this.iTestRepo.getFormateurRemunerationByDate(f.getFormateur().getId(), firstDayOfMonth, lastDayOfMonth) == max) {
 
                         u = this.iUserRepo.findById(f.getFormateur().getId()).orElse(null);
                     }
@@ -207,10 +208,10 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusDays(15).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusDays(15).atStartOfDay(defaultZoneId).toInstant());
 
-        for (Test f: this.iFormationRepo.findAll()) {
+        for (Test f: this.iTestRepo.findAll()) {
             if (f.getStart().after(dd) && f.getEnd().before(df) )
             {
-                map.put(this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(),dd,df),f.getFormateur());
+                map.put(this.iTestRepo.getFormateurRemunerationByDate(f.getFormateur().getId(),dd,df),f.getFormateur());
 
             }
 
@@ -230,7 +231,7 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusDays(15).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusDays(15).atStartOfDay(defaultZoneId).toInstant());
 
-        return this.iFormationRepo.getFormateurRemunerationByDateTrie(dd,df);
+        return this.iTestRepo.getFormateurRemunerationByDateTrie(dd,df);
     }
 
     @Override
@@ -244,7 +245,7 @@ public class ServiceFormation implements IServiceFormation {
         try {
 
 
-            for (Test f : iFormationRepo.findAll())
+            for (Test f : iTestRepo.findAll())
             {
                 for (User u : iUserRepo.getApprenantByFormation(f.getIdTest()))
                 {
@@ -304,10 +305,10 @@ public class ServiceFormation implements IServiceFormation {
 
         if (key.equals(""))
         {
-            return (List<Test>) iFormationRepo.findAll();
+            return (List<Test>) iTestRepo.findAll();
         }else
         {
-            return iFormationRepo.rech(key);
+            return iTestRepo.rech(key);
         }
 
     }
@@ -331,12 +332,12 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusMonths(3).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
 
-            if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
+            if (this.iTestRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
             {
                 formation.setLikes(0);
                 formation.setDislikes(0);
                 formation.setFormateur(formateur);
-                iFormationRepo.save(formation);
+                iTestRepo.save(formation);
             }else
             {
                 this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"we don't have acces to have two coursus in same semester " ,"we have 2 (MAX formation in this semester) NAME : "+formateur.getName() +" .");
@@ -347,7 +348,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     public Test getFile(Integer fileId) throws FileNotFoundException {
-        return iFormationRepo.findById(fileId).orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
+        return iTestRepo.findById(fileId).orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
     }
 
 
@@ -355,7 +356,7 @@ public class ServiceFormation implements IServiceFormation {
    // @Scheduled(cron = "*/30 * * * * *")
     public void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation) {
 
-        Test formation = iFormationRepo.findById(idFormation).orElse(null);
+        Test formation = iTestRepo.findById(idFormation).orElse(null);
 
         User apprenant = iUserRepo.findById(idApprenant).orElse(null);
 
@@ -370,21 +371,21 @@ public class ServiceFormation implements IServiceFormation {
         ///User with gifts Free for MAx Score
 
 
-       for(Test form : iFormationRepo.listFormationParApprenant(idApprenant)) {
+       for(Test form : iTestRepo.listFormationParApprenant(idApprenant)) {
           if(iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).size()!=0)
            {
                user = iUserRepo.getApprenantWithScoreForGifts(form.getIdTest()).get(0);
                 //}
 
 
-                if (iFormationRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
+                if (iTestRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
 
-                    if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
-                        if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
+                    if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
+                        if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
 
-                            log.info("nbr "+iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
+                            log.info("nbr "+iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
                             formation.getApprenant().add(apprenant);
-                            iFormationRepo.save(formation);
+                            iTestRepo.save(formation);
                         } else {
                             log.info("this apprenant we have 3 (MAX formation in this domain ");
                             this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getName() + " .");
@@ -417,22 +418,22 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public void affecterApprenantFormation(Long idApprenant, Integer idFormation) {
         User apprenant = iUserRepo.findById(idApprenant).orElse(null);
-        Test formation = iFormationRepo.findById(idFormation).orElse(null);
+        Test formation = iTestRepo.findById(idFormation).orElse(null);
 
         formation.getApprenant().add(apprenant);
-        iFormationRepo.save(formation);
+        iTestRepo.save(formation);
     }
 
 
 
     @Override
     public Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin) {
-        return this.iFormationRepo.nbrCoursesParFormateur(idF, dateDebut, dateFin);
+        return this.iTestRepo.nbrCoursesParFormateur(idF, dateDebut, dateFin);
     }
 
     @Override
     public Integer getNbrApprenantByFormation(String title) {
-        return  iFormationRepo.getNbrApprenantByFormation(title);
+        return  iTestRepo.getNbrApprenantByTest(title);
     }
 
 
@@ -478,21 +479,21 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public void likeFormation(Integer idF) {
-        Test formation = iFormationRepo.findById(idF).orElse(null);
+    public void likeTest(Integer idF) {
+        Test test = iTestRepo.findById(idF).orElse(null);
 
-        formation.setLikes(formation.getLikes()+1);
-        iFormationRepo.save(formation);
+        test.setLikes(test.getLikes()+1);
+        iTestRepo.save(test);
 
 
     }
 
     @Override
     public void dislikeFormation(Integer idF) {
-        Test formation = iFormationRepo.findById(idF).orElse(null);
+        Test test = iTestRepo.findById(idF).orElse(null);
 
-        formation.setDislikes(formation.getDislikes()+1);
-        iFormationRepo.save(formation);
+        test.setDislikes(test.getDislikes()+1);
+        iTestRepo.save(test);
 
     }
 
