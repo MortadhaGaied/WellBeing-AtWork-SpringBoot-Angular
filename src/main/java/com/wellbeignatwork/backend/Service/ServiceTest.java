@@ -153,11 +153,11 @@ public class ServiceTest implements IServiceTest {
 
     @Override
    // @Scheduled(cron = "*/30 * * * * *")
-    public void affecterEmployeeWithMaxTest(Long idApprenant, Integer idFormation) {
+    public void affecterEmployeeWithMaxTest(Long idUser, Integer idTest) {
 
-        Test formation = iTestRepo.findById(idFormation).orElse(null);
+        Test test = iTestRepo.findById(idTest).orElse(null);
 
-        User apprenant = iUserRepo.findById(idApprenant).orElse(null);
+        User employee = iUserRepo.findById(idUser).orElse(null);
 
         LocalDate currentdDate1 =  LocalDate.now();
         User user = new User();
@@ -170,16 +170,16 @@ public class ServiceTest implements IServiceTest {
         ///User with gifts Free for MAx Score
 
 
-       for(Test form : iTestRepo.listEmployeeParTest(idApprenant)) {
+       for(Test form : iTestRepo.listEmployeeParTest(idUser)) {
           if(iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).size()!=0)
            {
                user = iUserRepo.getEmployeeWithScoreForGifts(form.getIdTest()).get(0);
                 //}
 
 
-                if (iTestRepo.getNbrApprenantByTestId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
+                if (iTestRepo.getNbrEmployeeByTestId(idTest) < test.getNbrParticipant() && employee.getProfession() == Profession.EMPLOYEE) {
 
-                    if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
+                    if (iTestRepo.getNbrEmployeeByTest(idTest, test.getDomain()) < 2 || employee.getId().equals(user.getId())) {
                         if (iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
 
                             log.info("nbr "+iTestRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));

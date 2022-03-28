@@ -30,8 +30,8 @@ public interface ITestRepo extends CrudRepository<Test,Integer> {
     @Query(value="select count(employee.id) from Test test join test.employee employee where test.idTest=:id")
     Integer getNbrEmployeeByTestId(@Param("id") Integer id);
 
-    @Query(value = "select count(f.idTest) from Test f join f.apprenant a where a.id=:id and f.start>=:dateD and f.end<=:dateF and f.domain=:domain")
-    Integer getNbrTestByApprenant(@Param("id") Long idApp, @Param("domain") Domain domain, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
+    @Query(value = "select count(test.idTest) from Test test join test.employee employee where employee.id=:id and test.domain=:domain")
+    Integer getNbrEmployeeByTest(@Param("id") int idUser, @Param("domain") Domain domain);
 
 
     @Query(value = "select f from Test f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by sum(f.likes-f.dislikes) desc")
