@@ -38,7 +38,7 @@ public class Event implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Tags> eventTags;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY ,mappedBy ="events")
+    @ManyToMany(fetch = FetchType.LAZY ,mappedBy ="events")
     @JsonIgnore
     private Set<User> users;
     @JsonIgnore

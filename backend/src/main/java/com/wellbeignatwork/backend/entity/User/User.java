@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -58,11 +59,11 @@ public class User implements Serializable {
 	private String displayName;
 
 	@Column(name = "created_date", nullable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date createdDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date modifiedDate;
+	protected LocalDateTime createdDate;
+
+
+	protected LocalDateTime modifiedDate;
 
 	private String password;
 

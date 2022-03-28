@@ -14,6 +14,7 @@ import java.util.Set;
 
 public interface IActivityService {
     public void addEvent(Event e, MultipartFile file) throws IOException ;
+    public void addEvent(Event e);
     public void deleteEvent(Event e);
     public Event updateEvent(Event e);
     public List<Event> getAllEvents();

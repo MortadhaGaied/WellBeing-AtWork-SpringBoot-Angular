@@ -33,12 +33,17 @@ public class ActitvityController {
     @Autowired
     private IActivityService activityService;
 
-    @PostMapping("/AddE")
+    @PostMapping("/AddEvent")
     @ResponseBody
     public void addEvent (@RequestParam("file") MultipartFile file, @RequestParam("event")String event)throws IOException{
         Event e = new ObjectMapper().readValue(event, Event.class);
         activityService.addEvent(e,file);
 
+    }
+    @PostMapping("/AddE")
+    @ResponseBody
+    public void addEvent (@RequestBody Event event){
+        activityService.addEvent(event);
     }
 
     @DeleteMapping("/removeE/{event-id}")

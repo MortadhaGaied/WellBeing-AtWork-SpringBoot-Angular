@@ -120,7 +120,20 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void deleteEvent(Event e) {
-        eventRepository.delete(e);
+        if(e.getUsers()==null){
+            eventRepository.delete(e);
+        }
+        else{
+            for(User u:e.getUsers()){
+                u.getEvents().remove(e);
+                userRepo.save(u);
+            }
+            e.setUsers(null);
+            eventRepository.save(e);
+            eventRepository.delete(e);
+        }
+
+
     }
 
     @Override
@@ -686,7 +699,12 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void addUser(User u) {
+        u.setCreatedDate(LocalDateTime.now());
         userRepo.save(u);
+    }
+    @Override
+    public void addEvent(Event e){
+        eventRepository.save(e);
     }
 
     @Override
