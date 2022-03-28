@@ -58,7 +58,7 @@ public class ReservationPDFExporter {
         }
     }
 
-    public String export(HttpServletResponse response) throws DocumentException, IOException {
+    public String export(HttpServletResponse response, String p1, String p2, String qrcode) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 

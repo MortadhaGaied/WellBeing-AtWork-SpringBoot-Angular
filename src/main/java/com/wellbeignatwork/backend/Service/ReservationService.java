@@ -1,9 +1,9 @@
 package com.wellbeignatwork.backend.Service;
 
-import com.wellbeignatwork.backend.API.EmailSender;
 import com.wellbeignatwork.backend.API.ReservationPDFExporter;
 import com.wellbeignatwork.backend.Repository.*;
 import com.wellbeignatwork.backend.ServiceImp.IReservationService;
+import com.wellbeignatwork.backend.ServiceImp.ISendEmailService;
 import com.wellbeignatwork.backend.model.Offer;
 import com.wellbeignatwork.backend.model.Reservation;
 import com.wellbeignatwork.backend.model.User;
@@ -35,7 +35,7 @@ public class ReservationService implements IReservationService {
     IReservationRepository reservationRepo;
 
 	@Autowired
-	private EmailSender emailSender;
+	private ISendEmailService emailSender;
 
 
 	
@@ -52,7 +52,7 @@ public class ReservationService implements IReservationService {
 		if(o.getEndDateOf().isBefore(r.getEndDateRes()))throw  new RuntimeException("Vous avez passer la date fin");
 		r.setUserRes(u);
 		r.setOffersRes(o);
-		//emailSender.sendMailWithAttachement(u.getEmail()," add Reservartion " ," add succesful ... ");
+		emailSender.sendSimpleEmail(u.getEmail()," add Reservartion " ," add succesful ... ");
 		reservationRepo.save(r);
 		o.setNplaces(o.getNplaces()-r.getNmPalce());
 		return r;

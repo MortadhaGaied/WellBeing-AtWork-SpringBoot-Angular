@@ -33,4 +33,5 @@ public class UsersOffer implements Serializable {
 
     Float rate;
     String feedback;
+
 }

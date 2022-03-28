@@ -6,10 +6,9 @@ import com.stripe.model.Charge;
 import com.stripe.model.Customer;
 import com.wellbeignatwork.backend.Repository.IReservationRepository;
 import com.wellbeignatwork.backend.Repository.UserRepository;
+import com.wellbeignatwork.backend.Repository.UsersOfferRepo;
 import com.wellbeignatwork.backend.Service.ReservationService;
-import com.wellbeignatwork.backend.model.Payment;
-import com.wellbeignatwork.backend.model.Reservation;
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,10 @@ public class StripeService {
     IReservationRepository reservationRepository;
     @Autowired
     ReservationService reservationService;
+    @Autowired
+    UsersOfferRepo usersOfferRepo;
+
+
 
     @Value("sk_test_51Khl7ZAmmAEwNuySJwTRMgb230wvzoZdIK2y9TshyH9zw23VcRLJtZFu9X3oL4CHhPUUjdnwFZKs7i3GCsLYaAhI00CeUoUGzp")
     String stripeKey;
@@ -46,7 +49,7 @@ public class StripeService {
     }
 
     public Reservation createCharge(String email, String token, Long idUser, Long idReservation, Long idOffer, Reservation r) throws StripeException, MessagingException {
-        User user = userRepository.findById(idUser).get();
+        UsersOffer user = usersOfferRepo.findByUserIdAndOfferIdOffer(idUser,idOffer);
         Reservation reservation = reservationRepository.findById(idReservation).get();
         String id;
         Stripe.apiKey = stripeKey;

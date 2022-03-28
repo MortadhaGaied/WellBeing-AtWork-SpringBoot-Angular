@@ -1,7 +1,6 @@
 package com.wellbeignatwork.backend.Service;
 
 import com.wellbeignatwork.backend.ServiceImp.ISendEmailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendEmailService implements ISendEmailService {
     private JavaMailSender mailSender;
+
+    public SendEmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
     public void sendSimpleEmail( String toEmail,
                                 String body,
                                 String subject) {

@@ -16,16 +16,17 @@ public class EmailSender {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    public void sendMailWithAttachement (String toEmail,String body,String subject,String attchment) throws MessagingException {
+
+    public void sendMailWithAttachement(String toEmail, String body, String subject) throws MessagingException {
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
         mimeMessageHelper.setFrom("willbieng7@gmail.com");
         mimeMessageHelper.setTo(toEmail);
         mimeMessageHelper.setSubject(subject);
 
-        FileSystemResource fileSystemResource= new FileSystemResource(new File(attchment));
+       /* FileSystemResource fileSystemResource= new FileSystemResource(new File(attchment));
         mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
-        javaMailSender.send(mimeMessage);
+        javaMailSender.send(mimeMessage);*/
 
         System.out.println("Mail send sucessufully");
     }
