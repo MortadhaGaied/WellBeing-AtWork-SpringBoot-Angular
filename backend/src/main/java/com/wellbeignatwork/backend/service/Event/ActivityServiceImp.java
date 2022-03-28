@@ -1,7 +1,12 @@
 package com.wellbeignatwork.backend.service.Event;
 
 
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -15,6 +20,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
@@ -125,9 +131,13 @@ public class ActivityServiceImp implements IActivityService {
 
         User user = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
+        if(event.getStartDate().isBefore(LocalDateTime.now()) ){
+            throw new BadRequestException("event already started");
+        }
         if (event.getUsers().size() - 1 >= event.getNbrMaxParticipant()) {
-            System.out.println("tu ne peux pas affecter");
-        } else {
+            throw new BadRequestException("event is full");
+        }
+        else {
             user.getEvents().add(event);
             event.setRevenue(event.getRevenue() + event.getFrais());
             userRepo.save(user);
@@ -172,20 +182,38 @@ public class ActivityServiceImp implements IActivityService {
                        Long idUser, String text,
                        int width, int height, String filePath)
             throws DocumentException, IOException, WriterException {
+        Event e=eventRepository.findById(idEvent).orElse(null);
+        User u=userRepo.findById(idUser).orElse(null);
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setSize(18);
-        font.setColor(Color.BLUE);
+        Font font = FontFactory.getFont(FontFactory.COURIER);
+        font.setSize(60);
+        font.setColor(Color.RED);
 
-        Paragraph p = new Paragraph("List of Events" +
-                "", font);
+        Paragraph p = new Paragraph("Ticket");
         p.setAlignment(Paragraph.ALIGN_CENTER);
+        p.setFont(font);
 
+
+        Font font1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(14);
+        font.setColor(Color.BLACK);
+        Paragraph p1=new Paragraph("Event Name :"+e.getEventName(),font1);
+        p1.setAlignment(Paragraph.ALIGN_LEFT);
+        Paragraph p2=new Paragraph("Event Locatisation :"+e.getEventLocalisation(),font1);
+        p2.setAlignment(Paragraph.ALIGN_LEFT);
+        Paragraph p3=new Paragraph("Fees :"+e.getFrais(),font1);
+        p3.setAlignment(Paragraph.ALIGN_LEFT);
+        Paragraph p4=new Paragraph("User Name :"+u.getDisplayName(),font1);
+        p4.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(p);
-
+        document.add(p1);
+        document.add(p2);
+        document.add(p3);
+        document.add(p4);
+/*
         PdfPTable table = new PdfPTable(4);
         table.setWidthPercentage(100f);
         table.setWidths(new float[]{1.5f, 3.5f, 3.0f, 1.5f});
@@ -195,6 +223,8 @@ public class ActivityServiceImp implements IActivityService {
         writeTableData(table, idEvent, idUser);
 
         document.add(table);
+
+ */
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 
@@ -240,20 +270,27 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public double calculDistance(String a, String b) {
-        double lata = convertRad(Double.parseDouble(getlatitudelieu(a)));
-        double latb = convertRad(Double.parseDouble(getlatitudelieu(b)));
-        double longa = convertRad(Double.parseDouble(getlongitudelieu(a)));
-        double longb = convertRad(Double.parseDouble(getlongitudelieu(b)));
+
+        Coordinate ac=weatherService.getCoordinateByCityName(a);
+        Coordinate bc=weatherService.getCoordinateByCityName(b);
+
+
+        double lata = convertRad(ac.getLatitude());
+        double latb = convertRad(bc.getLatitude());
+        double longa = convertRad(ac.getLongitude());
+        double longb = convertRad(bc.getLongitude());
         double rayon = 6378137;
         double distance = Math.acos((Math.sin(lata) * Math.sin(latb))
                 + Math.cos(lata) * Math.cos(latb) * (Math.cos(longb - longa)));
         return distance * rayon / 1000;
+
+
     }
 
     public List<Event> sortedByDistance() {
         Map<Event, Double> envdis = new HashMap<>();
         for (Event e : eventRepository.findAll()) {
-            envdis.put(e, calculDistance("36.718854,9.199704", e.getEventLocalisation()));
+            envdis.put(e, calculDistance("ariana", e.getEventLocalisation()));
         }
         List<Map.Entry<Event, Double>> list = new ArrayList<>(envdis.entrySet());
         list.sort(Map.Entry.comparingByValue());
@@ -374,6 +411,7 @@ public class ActivityServiceImp implements IActivityService {
             for (Event e : events) {
                 for (User u : e.getUsers()) {
                     System.out.println("vous avez un evenement : " + u.getFirstName());
+                    /*
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setFrom("wellbeingatworkevent@gmail.com");
                     message.setTo("nourhene.maaouia@esprit.tn");
@@ -381,6 +419,8 @@ public class ActivityServiceImp implements IActivityService {
                     message.setText("Test Body ");
 
                     javaMailSender.send(message);
+
+                     */
 
                 }
             }
@@ -438,29 +478,41 @@ public class ActivityServiceImp implements IActivityService {
     }
 
     @Override
-    public Set<Event> filtreByDepartement(Departement departement) {
+    public List<Event> filtreByDepartement(Departement departement) {
         Event e1 = new Event();
         int i = 0;
         int size = IterableUtils.size(eventRepository.findAll());
         List<Integer> list = new ArrayList<Integer>(Collections.nCopies(size, 0));
+        Map<Event,Integer> filterbydep=new HashMap<>();
         for (Event e : eventRepository.findAll()) {
             for (User u : e.getUsers()) {
                 if (u.getDepartement().equals(departement)) {
+
                     int a = list.get(i);
                     list.set(i, a += 1);
                 }
             }
             i++;
         }
+        int j=0;
+        for(Event e:eventRepository.findAll()){
+            if(list.get(j)!=0){
 
-        int x = 0;
-        Iterator<Event> iter = eventRepository.findAll().iterator();
-        while (x <= list.indexOf(Collections.max(list))) {
-            e1 = iter.next();
-            x++;
+                filterbydep.put(e,list.get(j));
+            }
+
+            j++;
+
         }
-        System.out.println(e1);
-        return null;
+        LinkedHashMap<Event, Integer> reverseSortedMap = new LinkedHashMap<>();
+
+        filterbydep.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+        System.out.println(reverseSortedMap);
+
+        return new ArrayList<Event>(reverseSortedMap.keySet());
     }
 
     public boolean compareTags(Set<Tags> eventTags, Set<Tags> userTags) {
@@ -663,9 +715,11 @@ public class ActivityServiceImp implements IActivityService {
         Event event = eventRepository.findById(idEvent).orElse(null);
         User user = userRepo.findById(idUser).orElse(null);
         if (!event.getUsers().contains(user)) {
+
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }
         if (event.getEndDate().isAfter(LocalDateTime.now())) {
+
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }
         feedBack.setIdUser(idUser);
