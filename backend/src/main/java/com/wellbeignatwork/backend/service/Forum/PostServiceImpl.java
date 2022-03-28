@@ -10,12 +10,14 @@ import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 import com.wellbeignatwork.backend.exceptions.Forum.PostException;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -31,13 +34,21 @@ public class PostServiceImpl implements PostService {
     private UserRepository userRepository;
     private CommentRepository commentRepository;
     private ReactionRepository reactionRepository;
+    private final FirebaseStorage firebaseStorage;
+
     @Autowired
-    public PostServiceImpl(PostRepository postRepository,FileRepository fileRepository,UserRepository userRepository,CommentRepository commentRepository,ReactionRepository reactionRepository){
+    public PostServiceImpl(PostRepository postRepository,
+                           FileRepository fileRepository,
+                           UserRepository userRepository,
+                           CommentRepository commentRepository,
+                           ReactionRepository reactionRepository,
+                           FirebaseStorage firebaseStorage){
         this.fileRepository=fileRepository;
         this.postRepository=postRepository;
         this.userRepository=userRepository;
         this.commentRepository=commentRepository;
         this.reactionRepository=reactionRepository;
+        this.firebaseStorage=firebaseStorage;
     }
     public List<String> getAllSubjects(){
         List<String> resultat=new ArrayList<>();
@@ -68,7 +79,8 @@ public class PostServiceImpl implements PostService {
 
     }
     @Override
-    public Post createpost(Post post) {
+    public Post createpost(Post post,MultipartFile file) throws IOException {
+        String fileData = firebaseStorage.uploadFile(file);
         Post isSubjectExist=null;
         for(Post p: postRepository.findAll()){
             if(similarity(p.getSubject(),post.getSubject())>0.6){
@@ -76,9 +88,11 @@ public class PostServiceImpl implements PostService {
             }
         }
         if(isSubjectExist!=null){
+
             return isSubjectExist;
         }
         else{
+            post.setFile(fileData);
             return postRepository.save(post);
         }
 
@@ -113,7 +127,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post assignFileToPost(int id_file, int id_post) {
-        Post p=postRepository.findById(id_post).orElse(null);
+      /*  Post p=postRepository.findById(id_post).orElse(null);
         File f=fileRepository.findById(id_file).orElse(null);
         List<File> list=new ArrayList<>();
         f.setPost_attachment(p);
@@ -126,6 +140,9 @@ public class PostServiceImpl implements PostService {
         }
         postRepository.save(p);
         return p;
+
+       */
+        return null;
     }
     @Override
     public Post assignUserToPost(Long id_user,int id_post){

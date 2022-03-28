@@ -23,6 +23,7 @@ public class FCMInitializer {
     public void initialize() {
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setStorageBucket("web-notifications-53dec.appspot.com")
                     .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream()))
                     .setDatabaseUrl("https://web-notifications-53dec-default-rtdb.europe-west1.firebasedatabase.app")
                     .build();

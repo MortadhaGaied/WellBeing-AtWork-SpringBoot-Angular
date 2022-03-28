@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,9 +32,7 @@ public class Post implements Serializable {
     @Column(name = "tags")
     @Enumerated(EnumType.STRING)
     private Set<Tags> tags = new HashSet<>();
-    @OneToMany(mappedBy = "post_attachment",cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<File> fileAttachments;
+    String file;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User user;
     @OneToMany(mappedBy = "post_comment",cascade = CascadeType.ALL)
