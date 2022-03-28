@@ -38,6 +38,5 @@ public interface IServiceTest {
 
     void likeTest(Integer idF);
     void dislikeTest(Integer idF);
-    void SearchHistorique(String keyword);
 
 }
