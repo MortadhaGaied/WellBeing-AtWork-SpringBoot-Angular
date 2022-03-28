@@ -192,7 +192,7 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    public List<QuizTheme> getQuizByTest(Integer IdTest) {
+    public List<Question> getQuizByTest(Integer IdTest) {
         return this.iQuizRepo.getQuizByTest(IdTest);
     }
 

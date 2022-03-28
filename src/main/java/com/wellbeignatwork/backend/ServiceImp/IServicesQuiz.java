@@ -34,7 +34,7 @@ public interface IServicesQuiz {
 
 
 
-    List<QuizTheme> getQuizByTest(Integer IdTest);
+    List<Question> getQuizByTest(Integer IdTest);
 
     void DeleteQuiz(Integer idQ);
 
