@@ -83,24 +83,22 @@ public class ServiceTest implements IServiceTest {
 
     @Override
    // @Scheduled(cron = "0 0/1 * * * *")
-    public void CertifactionStudents() {
+    public void CertifactionEmployee() {
 
         boolean status = false;
         boolean fin;
 
 
         try {
-
-
             for (Test f : iTestRepo.findAll())
             {
-                for (User u : iUserRepo.getApprenantByFormation(f.getIdTest()))
+                for (User u : iUserRepo.getEmployeeByTest(f.getIdTest()))
                 {
-                    if(iResultRepo.getScore(u.getId()) >= 200 && iResultRepo.getScore(u.getId()) <=250 && iResultRepo.getNbrQuiz(u.getId()) == 5 )
+                    if(iResultRepo.getScore(u.getId()) >= 1000 && iResultRepo.getScore(u.getId()) <=1500 && iResultRepo.getNbrQuiz(u.getId()) == 15 )
                     {
                         fin=false;
 
-                        for (Result r : iResultRepo.getResultByIdUAndAndIdF(u.getId(),f.getIdTest()))
+                        for (Result r : iResultRepo.getResultByIdUserAndAndIdTest(u.getId(),f.getIdTest()))
                         {
 
                             if (!r.isStatus())
@@ -121,22 +119,11 @@ public class ServiceTest implements IServiceTest {
 
 
                         }
-
-
-
-
                     }
 
                 }
 
             }
-
-
-
-
-
-
-
 
         } catch (WriterException | IOException e) {
 
@@ -147,57 +134,24 @@ public class ServiceTest implements IServiceTest {
 
     }
 
-    @Override
-    public List<Test> SearchMultiple(String key) {
 
-        if (key.equals(""))
-        {
-            return (List<Test>) iTestRepo.findAll();
-        }else
-        {
-            return iTestRepo.rech(key);
-        }
+    @Override
+    public void ajouterEtAffecterEmployeeATest(Test test, Long idTest) {
+
+        User employee = iUserRepo.findById(idTest).orElse(null);
+
+                test.setLikes(0);
+                test.setDislikes(0);
+                iTestRepo.save(test);
 
     }
 
 
 
     @Override
-    public void ajouterApprenant(User apprenant) {
-            iUserRepo.save(apprenant);
-    }
-
-    @Override
-    public void ajouterEtAffecterFormationAFormateur(Test formation, Long idFormateur) {
-
-        User formateur = iUserRepo.findById(idFormateur).orElse(null);
-
-        LocalDate currentdDate1 =  LocalDate.now();
-
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-
-        Date dd =Date.from(currentdDate1.minusMonths(3).atStartOfDay(defaultZoneId).toInstant());
-        Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
-
-            if (this.iTestRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
-            {
-                formation.setLikes(0);
-                formation.setDislikes(0);
-                formation.setFormateur(formateur);
-                iTestRepo.save(formation);
-            }else
-            {
-                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"we don't have acces to have two coursus in same semester " ,"we have 2 (MAX formation in this semester) NAME : "+formateur.getName() +" .");
-                log.info("we have 2 (MAX formation in this Semester ");
-            }
-
-    }
-
-
     public Test getFile(Integer fileId) throws FileNotFoundException {
         return iTestRepo.findById(fileId).orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
     }
-
 
     @Override
    // @Scheduled(cron = "*/30 * * * * *")

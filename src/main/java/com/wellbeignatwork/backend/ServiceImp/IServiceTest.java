@@ -28,11 +28,9 @@ public interface IServiceTest {
     void affecterEmployeeWithMaxTest(Long idEmployee, Integer idTest);
 
     Integer getNbrEmployeeByTest(String title);
-    void getNbrEmployeeByTest();
+    public void ajouterEtAffecterEmployeeATest(Test test, Long idTest);
 
     Integer getNbrTestByEmployee(Long idApp, Domain domain , Date dateDebut, Date dateFin);
-
-    List<Object[]> getNbrEmployeeByTest();
 
     List<User> getEmployeeByTest(Integer idF);
 

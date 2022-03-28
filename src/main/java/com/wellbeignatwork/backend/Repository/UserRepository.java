@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Query(value = "select test.employee from  Test test  where test.idTest = :id")
-    List<User> getEmployeeByFormation(@Param("id") Integer idTest );
+    List<User> getEmployeeByTest(@Param("id") Integer idTest );
 
 
     @Query(value="select user from User user where user.profession=1")
