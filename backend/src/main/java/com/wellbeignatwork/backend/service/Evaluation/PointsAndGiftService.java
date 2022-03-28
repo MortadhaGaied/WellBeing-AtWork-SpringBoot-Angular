@@ -57,7 +57,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
         int total = scoreComment+scoreEvent+scoreLikes;
 
 
-        int total = scoreComment+scoreEvent+scoreLikes;
+        total = scoreComment + scoreEvent + scoreLikes;
         user.setPointFidelite(total);
         UserBadge(idUser);
         intUserRepo.save(user);

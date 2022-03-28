@@ -152,6 +152,8 @@ public class ChatRoomService implements IChatService {
     }
 
 
+
+
     @Transactional
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
         User user = userRepository
@@ -175,8 +177,37 @@ public class ChatRoomService implements IChatService {
     }
 
 
-    public void oneToOneChat(Message message, Long senderId, Long recieverId) throws FirebaseMessagingException {
 
+    public ChatRoom findRoomByUsersAndUniqueKey(Long user1Id,Long user2Id){
+
+        User user1 = userRepository.findById(user1Id).orElseThrow(()->new ResourceNotFoundException("user not found"));
+        User user2 = userRepository.findById(user2Id).orElseThrow(()-> new ResourceNotFoundException("user not found "));
+        log.info("**************************"+user2.getDisplayName());
+        log.info("**************************"+user1.getDisplayName());
+         ChatRoom found =null;
+         Set<User>users=new HashSet<>();
+         users.add(user1);
+         users.add(user2);
+        for (ChatRoom chatRoom : chatRoomRepository.findByRoomNameIsNull()) {
+            log.info(String.valueOf(users.size()));
+            log.info(String.valueOf(chatRoom.getUsers().size()));
+             log.info(String.valueOf(chatRoom.getUsers().contains(user1)));
+
+            if (chatRoom.getUsers().contains(user1) && (chatRoom.getUsers().contains(user2) ) &&(chatRoom.getUniqueKey()!=null)
+                    && (chatRoom.getUniqueKey().equals(String.format("%s_%s",user1.getId().toString(),user2.getId().toString()))
+                    || chatRoom.getUniqueKey().equals(String.format("%s_%s",user2.getId().toString(),user1.getId().toString())))
+            ){
+                found= chatRoom;
+            }
+        }
+        return found;
+    }
+
+
+    public void oneToOneChat(Message message, Long recieverId, Long senderId,String roomUniqueKey) throws FirebaseMessagingException {
+        ChatRoom chatRoom = chatRoomRepository.findByUniqueKey(roomUniqueKey);
+        //ChatRoom roomExists = findRoomByUsersAndUniqueKey(recieverId,senderId);
+        log.info("***********************"+chatRoom.getUniqueKey());
         //get the sender and the reciever first
         User sender = userRepository
                 .findById(senderId)
@@ -186,10 +217,14 @@ public class ChatRoomService implements IChatService {
                 .orElseThrow(() -> new ResourceNotFoundException("user with id : " + recieverId + "does not exist"));
 
         //check if there is a unique room for the 2 users to communicate else create one for them
-        ChatRoom room1 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", senderId, recieverId));
-        ChatRoom room2 = chatRoomRepository.findByUniqueKey(String.format("%s_%s", recieverId, senderId));
-        if (room1 != null || room2 != null) {
-            messagingTemplate.convertAndSend("/topic2/room/" + String.format("%s_%s", senderId, recieverId), message);
+
+
+        if (chatRoom!=null) {
+            log.info("entered if statement !!!!!");
+            message.setSender(sender);
+            message.setChatroom(chatRoom);
+            messagingTemplate.convertAndSend("/topic2/room/private/" + chatRoom.getId().toString(), message);
+
             //subscribe all users in the chatRoom to the specific notification topic
             List<String> subscriptionTokens = new ArrayList<>();
             subscriptionTokens.add(sender.getFireBaseToken());
@@ -201,16 +236,20 @@ public class ChatRoomService implements IChatService {
         }
         //if there is not a unique room for the 2 users to chat then we create one
         else {
+            log.info("entered else statement");
             ChatRoom room = new ChatRoom();
-            room.setUniqueKey(String.format("%s_%s", sender.getId(), reciever.getId()));
+            room.setUniqueKey(String.format("%s_%s", reciever.getId(), sender.getId()));
             Set<User> users = new HashSet<>();
             users.add(sender);
             users.add(reciever);
             room.setUsers(users);
+
             chatRoomRepository.save(room);
+
             message.setSender(sender);
             message.setChatroom(room);
-            messagingTemplate.convertAndSend("/topic2/room/" + room.getUniqueKey(), message);
+            messagingTemplate.convertAndSend("/topic2/room/private/" + room.getId().toString(), message);
+
 
             //subscribe all users in the chatRoom to the specific notification topic
             List<String> subscriptionTokens = new ArrayList<>();
@@ -256,8 +295,13 @@ public class ChatRoomService implements IChatService {
 
     }
 
-    public void publicChat(Message message) {
+    public void publicChat(Message message) throws FirebaseMessagingException {
+
+
+
         messagingTemplate.convertAndSend("/topic2/message", message);
+        //notify all room users that a new message have been sent
+        notificationService.sendPushNotificationToALlUsers(message.getContent(),"public room");
     }
 
 }

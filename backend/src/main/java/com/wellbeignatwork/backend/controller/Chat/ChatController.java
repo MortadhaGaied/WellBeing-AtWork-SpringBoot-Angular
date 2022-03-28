@@ -86,6 +86,12 @@ public class ChatController {
         chatRoomService.removeUserFromChatRoom(chatRoomId, userId);
     }
 
+    @GetMapping("/chatroom/findChatroomByUsersAndUniqueKey/{user1ID}/{user2ID}")
+    @ResponseBody
+    public ChatRoom findChatroomByUsersAndUniqueKey(@PathVariable Long user1ID,@PathVariable Long user2ID){
+        return chatRoomService.findRoomByUsersAndUniqueKey(user1ID,user2ID);
+    }
+
 
     @MessageMapping("/chat/{roomId}/{senderID}")
     public void roomBasedChat(@Payload Message message, @Valid @DestinationVariable Long roomId, @Valid @DestinationVariable Long senderID) throws MessagingException, FirebaseMessagingException {
@@ -95,15 +101,18 @@ public class ChatController {
     }
 
 
-    @MessageMapping("/chat/oneToOne/{senderId}/{recieverId}")
-    public void oneToOneChat(@Payload Message message, @Valid @DestinationVariable Long senderId, @Valid @DestinationVariable Long recieverId) throws MessagingException, FirebaseMessagingException {
 
-        chatRoomService.oneToOneChat(messageService.filterBadWords(message), senderId, recieverId);
+    @MessageMapping("/chat/oneToOne/{senderId}/{recieverId}/{roomUniqueKey}")
+    public void oneToOneChat(@Payload Message message, @Valid @DestinationVariable Long senderId
+            , @Valid @DestinationVariable Long recieverId
+            ,@DestinationVariable String roomUniqueKey) throws MessagingException, FirebaseMessagingException {
+
+        chatRoomService.oneToOneChat(messageService.filterBadWords(message), senderId, recieverId,roomUniqueKey);
 
     }
 
     @MessageMapping("/chat/public")
-    public void publicCHat(@Payload Message message) {
+    public void publicCHat(@Payload Message message) throws FirebaseMessagingException {
         chatRoomService.publicChat(messageService.filterBadWords(message));
     }
 
