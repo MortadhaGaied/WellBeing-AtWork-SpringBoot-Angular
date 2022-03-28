@@ -1,7 +1,6 @@
 package com.wellbeignatwork.backend.controller.Forum;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wellbeignatwork.backend.entity.Forum.File;
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.service.Forum.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Slf4j

@@ -4,7 +4,6 @@ import com.wellbeignatwork.backend.entity.Forum.*;
 import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
-import com.wellbeignatwork.backend.repository.Forum.FileRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 
 import com.wellbeignatwork.backend.exceptions.Forum.PostException;
@@ -30,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
-    private FileRepository fileRepository;
+
     private UserRepository userRepository;
     private CommentRepository commentRepository;
     private ReactionRepository reactionRepository;
@@ -38,12 +37,12 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
-                           FileRepository fileRepository,
+
                            UserRepository userRepository,
                            CommentRepository commentRepository,
                            ReactionRepository reactionRepository,
                            FirebaseStorage firebaseStorage){
-        this.fileRepository=fileRepository;
+
         this.postRepository=postRepository;
         this.userRepository=userRepository;
         this.commentRepository=commentRepository;
