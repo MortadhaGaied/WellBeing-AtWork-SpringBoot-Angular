@@ -46,15 +46,6 @@ public class User implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@ManyToMany(mappedBy = "employee", fetch = FetchType.EAGER
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-	@JsonIgnore
-	private Set<Formation> formationE;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy ="User")
-	@JsonIgnore
-	private Session session;
-	
 	@Column(name = "DISPLAY_NAME")
 	private String displayName;
 }
