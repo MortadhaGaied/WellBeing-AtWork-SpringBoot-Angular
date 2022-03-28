@@ -48,7 +48,7 @@ public class ReservationController {
 
 
     @GetMapping("/pdf/generate")
-    public void generatePDF(HttpServletResponse response, String p1 , String p2 , String qrcode) throws IOException, DocumentException, com.lowagie.text.DocumentException {
+    public void generatePDF(HttpServletResponse response, String p1 , String p2 , String qrcode) throws IOException, DocumentException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -85,7 +85,7 @@ public class ReservationController {
         // log.info(qrcode);
 
         generatePDF(response,u.getEmail(),u.getEmail(),qrcode);
-        iServiceEmail.sendSimpleEmail("mahdi.homrani@esprit.tn","  add Resevation " ," add succesful ... ");
+        iServiceEmail.sendMailWithAttachement("mahdi.homrani@esprit.tn","  add Resevation " ," add succesful ... ","generatePDF(response,u.getEmail(),u.getEmail(),qrcode)");
         reservationService.reservation(idUser,idOffer,r);
     }
 

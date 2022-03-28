@@ -26,9 +26,9 @@ public class EmailSender {
 
        /* FileSystemResource fileSystemResource= new FileSystemResource(new File(attchment));
         mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
-        javaMailSender.send(mimeMessage);*/
+        javaMailSender.send(mimeMessage);
 
-        System.out.println("Mail send sucessufully");
+        System.out.println("Mail send sucessufully");*/
     }
     public void sendMail (String toEmail,String body,String subject) throws javax.mail.MessagingException {
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
