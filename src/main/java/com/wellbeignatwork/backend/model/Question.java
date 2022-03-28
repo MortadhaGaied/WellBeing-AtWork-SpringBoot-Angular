@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table( name = "QuestionCourses")
-public class QuestionCourses {
+public class Question {
 
 
     @Id
@@ -30,11 +30,11 @@ public class QuestionCourses {
     private int ans;
     private int chose;
 
-    public QuestionCourses() {
+    public Question() {
         super();
     }
 
-    public QuestionCourses(int quesId, String title, String optionA, String optionB, String optionC,String optionD, int ans, int chose) {
+    public Question(int quesId, String title, String optionA, String optionB, String optionC, String optionD, int ans, int chose) {
         super();
         this.quesId = quesId;
         this.title = title;

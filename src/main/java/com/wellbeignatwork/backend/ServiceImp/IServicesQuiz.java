@@ -11,12 +11,12 @@ public interface IServicesQuiz {
 
 
     void addQuiz(QuizCourses quiz, Integer idF);
-    void addQuestionAndAsigntoQuiz(QuestionCourses question, Integer idQuiz);
+    void addQuestionAndAsigntoQuiz(Question question, Integer idQuiz);
    // void addAnswerAndAsigntoQuestion(Answer answer,Integer idQuestion,Integer idQuiz);
 
-    List<QuestionCourses> getQuizQuestion(Integer idQuiz);
-    List<QuestionCourses> getQuestions();
-    int getResult(QuestionForm qForm);
+    List<Question> getQuizQuestion(Integer idQuiz);
+    List<Question> getQuestions();
+    int getResult(QuestionTheme qForm);
 
     Integer saveScore(Result result, Long idUser, Integer idQuiz);
 

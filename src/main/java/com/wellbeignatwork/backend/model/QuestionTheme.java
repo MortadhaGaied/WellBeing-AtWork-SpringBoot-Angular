@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class QuestionForm {
+public class QuestionTheme {
 
-    private List<QuestionCourses> questions;
+    private List<Question> questions;
 
-    public List<QuestionCourses> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<QuestionCourses> questions) {
+    public void setQuestions(List<Question> questions) {
 
         this.questions = questions;
 

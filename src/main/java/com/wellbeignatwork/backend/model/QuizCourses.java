@@ -37,7 +37,7 @@ public class QuizCourses  {
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
-    private Set<QuestionCourses> question;
+    private Set<Question> question;
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
