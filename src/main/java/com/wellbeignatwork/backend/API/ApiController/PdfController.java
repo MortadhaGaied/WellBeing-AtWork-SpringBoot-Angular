@@ -25,9 +25,9 @@ public class PdfController {
     @GetMapping("/exportPDF")
     @ResponseBody
     public ResponseEntity<InputStreamResource> exportPDF() throws IOException {
-        ByteArrayInputStream bais = export.FormationPDFReport(iOfferService.retrieveAllOffers());
+        ByteArrayInputStream bais = export.OfferPDFReport(iOfferService.retrieveAllOffers());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","Inline ;filename=formation.pdf");
+        headers.add("Content-Disposition","Inline ;filename=Offer.pdf");
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
     }
 }

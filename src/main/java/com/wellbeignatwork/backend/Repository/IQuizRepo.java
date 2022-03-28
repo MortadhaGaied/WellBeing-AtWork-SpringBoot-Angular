@@ -17,7 +17,7 @@ public interface IQuizRepo extends CrudRepository<QuizCourses,Integer> {
     List<QuestionCourses> getQuizQuestion(@Param("id") Integer idQ);
 
 
-    @Query(value = "select  q from QuizCourses q join q.formation f where f.idFormation=:id")
+    @Query(value = "select  q from QuizCourses q join q.test f where f.idTest=:id")
     List<QuizCourses> getQuizByCourses(@Param("id") Integer idF);
 
 

@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @Service
 public class PdfAllOffre {
 
-            public static ByteArrayInputStream FormationPDFReport(List<Offer> offres) throws IOException {
+            public static ByteArrayInputStream OfferPDFReport(List<Offer> offres) throws IOException {
             Document document=new Document();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             try {
@@ -25,7 +25,7 @@ public class PdfAllOffre {
                 document.open();
                 //add text to pdf file
                 Font font= FontFactory.getFont(FontFactory.COURIER,12,BaseColor.LIGHT_GRAY);
-                Paragraph para = new Paragraph("Formation List ",font);
+                Paragraph para = new Paragraph("Offer List ",font);
                 para.setAlignment(Element.ALIGN_CENTER);
                 document.add(para);
                 document.add(Chunk.NEWLINE);

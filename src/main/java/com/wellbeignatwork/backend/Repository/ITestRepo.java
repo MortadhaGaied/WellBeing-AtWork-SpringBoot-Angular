@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface IFormationRepo extends CrudRepository<Test,Integer> {
+public interface ITestRepo extends CrudRepository<Test,Integer> {
 
     @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Test f where f.formateur.id=:id and f.start>=:dateD and f.end<=:dateF")
     Integer getFormateurRemunerationByDate(@Param("id") Long idFormateur, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
@@ -27,10 +27,10 @@ public interface IFormationRepo extends CrudRepository<Test,Integer> {
     @Query(value="select count(a.id) from Test f join f.apprenant a where f.title=:titre")
     Integer getNbrApprenantByFormation(@Param("titre") String titre);
 
-    @Query(value="select count(a.id) from Test f join f.apprenant a where f.idFormation=:id")
+    @Query(value="select count(a.id) from Test f join f.apprenant a where f.idTest=:id")
     Integer getNbrApprenantByFormationId(@Param("id") Integer id);
 
-    @Query(value = "select count(f.idFormation) from Test f join f.apprenant a where a.id=:id and f.start>=:dateD and f.end<=:dateF and f.domain=:domain")
+    @Query(value = "select count(f.idTest) from Test f join f.apprenant a where a.id=:id and f.start>=:dateD and f.end<=:dateF and f.domain=:domain")
     Integer getNbrFormationByApprenant(@Param("id") Long idApp, @Param("domain") Domain domain, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
 
@@ -41,7 +41,7 @@ public interface IFormationRepo extends CrudRepository<Test,Integer> {
     List<Test> listFormationParApprenant(@Param("id") Long idApp);
 
 
-    @Query(value = "select count(f.idFormation) from Test f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")
+    @Query(value = "select count(f.idTest) from Test f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")
     Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
 }
