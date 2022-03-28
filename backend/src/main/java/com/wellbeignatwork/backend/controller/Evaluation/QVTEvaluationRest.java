@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Answer;
-import com.wellbeignatwork.backend.entity.Evaluation.Survey;
+import com.wellbeignatwork.backend.entity.Evaluation.Question;
 import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Evaluation.IntQVTService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,12 @@ public class QVTEvaluationRest {
     public User adduser(@RequestBody User u)
     { return MyQVTService.addUser(u); }
 
-    @GetMapping("/Survey")
-    public List<Survey> retrieveAllSurveys()
-    { return MyQVTService.retrieveAllSurveys(); }
+  @GetMapping("/Survey")
+  public List<Question> SendAllSurveys()
+  {
+    return MyQVTService.SendSurvey();
+
+  }
 
     @PostMapping("/PutYourAnswerAndGetYourAdvice")
     public void UserAnswer(@RequestBody List<Answer>  answer)

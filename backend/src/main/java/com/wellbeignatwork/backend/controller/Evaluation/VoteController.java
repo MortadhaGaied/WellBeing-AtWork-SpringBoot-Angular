@@ -46,7 +46,7 @@ public class VoteController {
 
 
 
-  /*  @PostMapping("/addsujet")
+ @PostMapping("/addsujet")
     @ResponseBody
     public void addSujet(@RequestBody Sujet sujet)
     {
@@ -54,7 +54,7 @@ public class VoteController {
     }
 
 
-   */
+
 
     @GetMapping("/GetNbrYes/{sujetId}")
     @ResponseBody

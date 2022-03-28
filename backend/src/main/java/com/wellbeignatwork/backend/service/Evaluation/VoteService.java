@@ -26,6 +26,7 @@ public class VoteService implements IntVoteService {
     private IntVoteIdeaRepo MyVoteIdeaRepo;
 
 
+
     @Override
     public int AddYes(VoteIdea v, int sujetId, Long userId) {
         v.setNbYes(1);
