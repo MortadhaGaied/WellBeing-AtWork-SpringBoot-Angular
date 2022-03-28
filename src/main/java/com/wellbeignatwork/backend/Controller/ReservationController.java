@@ -85,7 +85,7 @@ public class ReservationController {
         // log.info(qrcode);
 
         generatePDF(response,u.getEmail(),u.getEmail(),qrcode);
-        iServiceEmail.sendMailWithAttachement("mahdi.homrani@esprit.tn","  add Resevation " ," add succesful ... ","generatePDF(response,u.getEmail(),u.getEmail(),qrcode)");
+        iServiceEmail.sendSimpleEmail("mahdi.homrani@esprit.tn","  add Resevation " ," add succesful ... ");
         reservationService.reservation(idUser,idOffer,r);
     }
 

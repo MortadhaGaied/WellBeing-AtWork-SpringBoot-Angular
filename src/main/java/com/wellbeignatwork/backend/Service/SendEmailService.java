@@ -2,12 +2,16 @@ package com.wellbeignatwork.backend.Service;
 
 import com.wellbeignatwork.backend.ServiceImp.ISendEmailService;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
@@ -33,17 +37,29 @@ public class SendEmailService implements ISendEmailService {
         mailSender.send(message);
         System.out.println("Mail Sent successfully......");
     }
-    public void sendMailWithAttachement(String toEmail, String body, String subject,String attchment) throws MessagingException {
-        MimeMessage mimeMessage=mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
-        mimeMessageHelper.setFrom("willbieng7@gmail.com");
-        mimeMessageHelper.setTo(toEmail);
-        mimeMessageHelper.setSubject(subject);
+    public void sendMailWithAttachment(String to, String subject, String body, String fileToAttach)
+    {
+        MimeMessagePreparator preparator = new MimeMessagePreparator()
+        {
+            public void prepare(MimeMessage mimeMessage) throws Exception
+            {
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                mimeMessage.setFrom(new InternetAddress("admin@gmail.com"));
+                mimeMessage.setSubject(subject);
+                mimeMessage.setText(body);
 
-        FileSystemResource fileSystemResource= new FileSystemResource(new File(attchment));
-        mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
-        mailSender.send(mimeMessage);
+                FileSystemResource file = new FileSystemResource(new File(fileToAttach));
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+                helper.addAttachment("logo.jpg", file);
+            }
+        };
 
-        System.out.println("Mail send sucessufully");
+        try {
+            mailSender.send(preparator);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+        }
     }
 }
