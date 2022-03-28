@@ -3,15 +3,16 @@ package com.wellbeignatwork.backend.service.UserService;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SignUpRequest;
 import com.wellbeignatwork.backend.dto.SocialProvider;
-import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
-import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.entity.User.ConfirmationToken;
 import com.wellbeignatwork.backend.entity.User.Role;
 import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
+import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.repository.User.RoleRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.security.oauth2.user.OAuth2UserInfo;
 import com.wellbeignatwork.backend.security.oauth2.user.OAuth2UserInfoFactory;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,9 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -45,6 +48,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private FirebaseStorage firebaseStorage;
 
     @Override
     @Transactional(value = "transactionManager")
@@ -154,6 +160,13 @@ public class UserServiceImpl implements UserService {
         return "Your account is confirmed";
     }
 
+    @Override
+    public void uploadProfilePic(MultipartFile img, Long userId) throws IOException {
+        User user = userRepository.findById(userId).orElse(null);
+        String picName = firebaseStorage.uploadFile(img);
+        user.setPicture(picName);
+        userRepository.save(user);
+    }
 
 
     private String buildEmail(String name, String link) {
