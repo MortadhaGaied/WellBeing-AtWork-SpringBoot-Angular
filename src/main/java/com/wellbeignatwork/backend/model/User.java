@@ -49,6 +49,7 @@ public class User implements Serializable {
 	private Integer tarifHoraire;
 	//@Positive
 	private double salary;
+	private int Score;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles",

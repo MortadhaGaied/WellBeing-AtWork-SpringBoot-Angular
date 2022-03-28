@@ -2,13 +2,13 @@ package com.wellbeignatwork.backend.Service;
 
 
 import com.google.zxing.WriterException;
+import com.wellbeignatwork.backend.API.QRCodeGenerator;
 import com.wellbeignatwork.backend.Repository.IFormationRepo;
 import com.wellbeignatwork.backend.Repository.IResultRepo;
 import com.wellbeignatwork.backend.Repository.ISearchRepo;
 import com.wellbeignatwork.backend.Repository.UserRepository;
 import com.wellbeignatwork.backend.ServiceImp.IServiceFormation;
-import com.wellbeignatwork.backend.model.Formation;
-import com.wellbeignatwork.backend.model.User;
+import com.wellbeignatwork.backend.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -183,7 +183,7 @@ public class ServiceFormation implements IServiceFormation {
 
             u.setSalary(max + 200 );
             iUserRepo.save(u);
-            this.emailSenderService.sendSimpleEmail(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $  : " + u.getSalary()+ "$  Name " + u.getLastName() + "--" + u.getFirstName() + " . ");
+            this.emailSenderService.sendSimpleEmail(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $  : " + u.getSalary()+ "$  Name " + u.getName() + " . ");
             return u;
         }
 
@@ -267,7 +267,7 @@ public class ServiceFormation implements IServiceFormation {
                             {
                                 log.info( " Status  true ");
                                 QRCodeGenerator.generateQRCodeImage(f.getDomain().toString(),150,150,QR_CODE_IMAGE_PATH);
-                                this.emailSenderService.sendSimpleEmail(u.getEmail()," Congratulations Mr's : "+u.getLastName()+" "+u.getFirstName()+" you have finished your Courses  " ," Certification At : "+ new Date()+"  in Courses of Domain "+f.getDomain()+" "+" And Niveau : " +f.getLevel() +" .");
+                                this.emailSenderService.sendSimpleEmail(u.getEmail()," Congratulations Mr's : "+u.getName()+" you have finished your Courses  " ," Certification At : "+ new Date()+"  in Courses of Domain "+f.getDomain()+" "+" And Niveau : " +f.getLevel() +" .");
                                 fin=true; /// return /////
                             }
 
@@ -339,7 +339,7 @@ public class ServiceFormation implements IServiceFormation {
                 iFormationRepo.save(formation);
             }else
             {
-                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"we don't have acces to have two coursus in same semester " ,"we have 2 (MAX formation in this semester) NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" .");
+                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"we don't have acces to have two coursus in same semester " ,"we have 2 (MAX formation in this semester) NAME : "+formateur.getName() +" .");
                 log.info("we have 2 (MAX formation in this Semester ");
             }
 
@@ -387,15 +387,15 @@ public class ServiceFormation implements IServiceFormation {
                             iFormationRepo.save(formation);
                         } else {
                             log.info("this apprenant we have 3 (MAX formation in this domain ");
-                            this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
+                            this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getName() + " .");
                         }
 
                     } else {
-                        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
+                        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getName() + " .");
                         log.info("this apprenant we have 2 (MAX formation in this domain ");
                     }
                 } else {
-                    this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
+                    this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getName() + " .");
                     log.info(" Learner list complete Max learner " + formation.getNbrMaxParticipant());
                 }
             }

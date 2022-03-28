@@ -16,7 +16,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
-
     boolean existsByEmail(String email);
     @Query("select u from User u where u.profession='Doctor' order by u.Score desc ")
     List<User> classementDoctor();
