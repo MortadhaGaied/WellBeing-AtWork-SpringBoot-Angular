@@ -49,6 +49,7 @@ public class User implements Serializable {
 	private Integer tarifHoraire;
 	//@Positive
 	private double salary;
+
 	private int Score;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -68,4 +69,6 @@ public class User implements Serializable {
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Formation> formationA;
+
+
 }
