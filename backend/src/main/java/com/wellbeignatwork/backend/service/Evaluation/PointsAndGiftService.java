@@ -3,11 +3,13 @@ package com.wellbeignatwork.backend.service.Evaluation;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.Evaluation.IntGiftUserRepo;
 import com.wellbeignatwork.backend.repository.Event.EventRepository;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.service.NotificationService.PushNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,8 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
     IntGiftUserRepo intGiftUserRepo;
     @Autowired
     ReactionRepository reactionRepository;
+    @Autowired
+    PushNotificationService notificationService;
 
     @Override
     public int CollectPoints(Long idUser) {
@@ -56,6 +60,13 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
         user.setPointFidelite(total);
         UserBadge(idUser);
         intUserRepo.save(user);
+        //prepare the notification request
+        PushNotificationRequest notification = new PushNotificationRequest();
+        notification.setTitle("You Badge IS ");
+        notification.setMessage(user.getBadge().name());
+        notification.setToken(user.getFireBaseToken());
+        //send the notification
+        notificationService.sendPushNotificationToToken(notification);
         return total;
     }
 
