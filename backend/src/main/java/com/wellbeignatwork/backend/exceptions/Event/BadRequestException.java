@@ -1,4 +1,4 @@
-package com.wellbeignatwork.backend.exceptions;
+package com.wellbeignatwork.backend.exceptions.Event;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

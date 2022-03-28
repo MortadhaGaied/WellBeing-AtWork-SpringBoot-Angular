@@ -19,9 +19,8 @@ import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Tags;
-import com.wellbeignatwork.backend.entity.User;
-import com.wellbeignatwork.backend.exceptions.BadRequestException;
-import com.wellbeignatwork.backend.exceptions.ResourceNotFoundException;
+import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
+import com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import com.wellbeignatwork.backend.util.WeatherService;
 
@@ -34,7 +33,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.wellbeignatwork.backend.entity.User;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;

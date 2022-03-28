@@ -18,17 +18,26 @@ public class ReactionServiceImpl implements ReactionService{
     }
     @Override
     public void addReactToPost(Reaction reaction, int idPost, Long idUser) {
-        boolean isReacted=false;
+        Reaction isReacted=null;
+        Reaction isReactedSame=null;
         Post p=postRepository.findById(idPost).orElse(null);
         reaction.setIdUser(idUser);
         reaction.setPost(p);
         for(Reaction r:reactionRepository.findAll()){
-            if(r.getIdUser()==idUser && r.getPost().getId()==idPost && r.getReactionType().equals(reaction.getReactionType())){
-                isReacted=true;
+            if(r.getIdUser()==idUser && r.getPost().getId()==idPost ){
+                if( r.getReactionType().equals(reaction.getReactionType())){
+                    isReactedSame=r;
+                }
+                isReacted=r;
+
             }
         }
-        if(isReacted){
+        if(isReactedSame!=null){
             System.out.println("You have already reacted to this post");
+        }
+        else if(isReacted!=null){
+            isReacted.setReactionType(reaction.getReactionType());
+            reactionRepository.save(isReacted);
         }
         else{
             reactionRepository.save(reaction);

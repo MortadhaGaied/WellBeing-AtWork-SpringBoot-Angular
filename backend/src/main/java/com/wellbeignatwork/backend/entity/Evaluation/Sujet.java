@@ -1,14 +1,13 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-
+import com.wellbeignatwork.backend.entity.User;
 @Entity
 @Getter
 @Setter

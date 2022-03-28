@@ -4,7 +4,7 @@ import com.wellbeignatwork.backend.entity.Forum.Comment;
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
-import com.wellbeignatwork.backend.exceptions.PostException;
+import com.wellbeignatwork.backend.exceptions.Forum.PostException;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;

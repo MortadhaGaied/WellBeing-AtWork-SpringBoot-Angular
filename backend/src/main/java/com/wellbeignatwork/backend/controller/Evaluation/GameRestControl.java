@@ -2,11 +2,10 @@ package com.wellbeignatwork.backend.controller.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Game;
 import com.wellbeignatwork.backend.entity.Evaluation.GamePlay;
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Evaluation.GameService;
-import com.wellbeignatwork.backend.exceptions.GameNotFound;
-import com.wellbeignatwork.backend.exceptions.InvalidGameException;
-import com.wellbeignatwork.backend.exceptions.InvalidParamException;
+import com.wellbeignatwork.backend.exceptions.Evaluation.GameNotFound;
+import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidGameException;
+import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidParamException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.wellbeignatwork.backend.entity.User;
 @RestController
 @RequestMapping("/Game")
 @Slf4j

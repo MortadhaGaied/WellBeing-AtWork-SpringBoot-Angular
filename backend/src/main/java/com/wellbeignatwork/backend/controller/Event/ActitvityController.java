@@ -5,14 +5,13 @@ import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.service.Event.ActivityServiceImp;
 import com.wellbeignatwork.backend.service.Event.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.wellbeignatwork.backend.entity.User;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;

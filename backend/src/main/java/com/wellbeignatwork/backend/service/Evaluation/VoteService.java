@@ -2,12 +2,13 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Sujet;
 import com.wellbeignatwork.backend.entity.Evaluation.VoteIdea;
-import com.wellbeignatwork.backend.entity.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntVoteIdeaRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.SujetRepo;
 import com.wellbeignatwork.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.wellbeignatwork.backend.entity.User;
 
 
 import javax.transaction.Transactional;
