@@ -47,6 +47,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select result.sUser from Result result join result.quiz quiz join quiz.test test where test.idTest=:id group by result.sUser order by SUM (result.totalCorrect) desc")
     List<User> getEmployeeWithScoreForGifts(@Param("id") Integer id);
 
-    //////////////////////////////             03/19/2022             ///////////////////////////////
 
 }

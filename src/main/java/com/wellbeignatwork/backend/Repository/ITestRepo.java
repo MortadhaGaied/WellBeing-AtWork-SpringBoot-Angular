@@ -25,16 +25,8 @@ public interface ITestRepo extends CrudRepository<Test,Integer> {
     Integer getNbrEmployeeByTest(@Param("id") int idUser, @Param("domain") Domain domain);
 
 
-    @Query(value = "select f from Test f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by sum(f.likes-f.dislikes) desc")
-    List<Test> rech(String keyword);
-
     @Query(value = "select test from Test test join test.employee employee where employee.id=:id")
     List<Test> listEmployeeParTest(@Param("id") Long idApp);
-
-
-    @Query(value = "select count(f.idTest) from Test f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")
-    Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
-
     @Query(value="select count(employee.id) from Test test join test.employee employee where test.title=:titre")
     Integer getNbrEmployeeByTestt(@Param("titre") String titre);
 
