@@ -129,7 +129,7 @@ public class QuizController {
         return iServicesQuiz.EmployeewithMaxScoreQuiz(idTest);
     }
 
-    @GetMapping("/getQuizByFormation/{idTest}")
+    @GetMapping("/getQuizByTest/{idTest}")
     @ResponseBody
     public List<QuizTheme> getQuizByTest(@PathVariable("idTest") Integer idTest)
     {
