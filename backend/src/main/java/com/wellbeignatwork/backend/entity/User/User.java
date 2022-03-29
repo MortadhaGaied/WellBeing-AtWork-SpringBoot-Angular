@@ -72,6 +72,9 @@ public class User implements Serializable {
 
 	private String provider;
 	private String fireBaseToken;
+	private int banDuration=3;
+	private Date bannStartDate;
+	private int badWordsCount=0;
 
 	// bi-directional many-to-many association to Role
 	@JsonIgnore

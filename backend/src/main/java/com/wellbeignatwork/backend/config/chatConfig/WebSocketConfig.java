@@ -29,7 +29,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.enableSimpleBroker("/topic", "/topic2");
         config.setApplicationDestinationPrefixes("/app");
     }
-
+/*
     @Override
     public boolean configureMessageConverters(List messageConverters) {
         DefaultContentTypeResolver resolver = new DefaultContentTypeResolver();
@@ -40,5 +40,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         messageConverters.add(converter);
         return false;
     }
-
+*/
 }

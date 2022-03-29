@@ -79,7 +79,7 @@ public class ChatController {
     public void addUserToChatRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
         chatRoomService.addUserToChatRoom(chatRoomId, userId);
     }
-
+    //http://localhost:8081/Wellbeignatwork/chatroom/save-discussion"
     @GetMapping("/chatroom/removeUserFromRoom/{chatRoomId}/{userId}")
     @ResponseBody
     public void removeUserFromRoom(@NotBlank @Valid @PathVariable Long chatRoomId, @NotBlank @Valid @PathVariable Long userId) {
@@ -116,20 +116,20 @@ public class ChatController {
         chatRoomService.publicChat(messageService.filterBadWords(message));
     }
 
-
+    //http://localhost:8081/Wellbeignatwork/chatroom/save-discussion"
     @PostMapping("/chatroom/save-discussion")
     @ResponseBody
     public ResponseEntity<?> saveDiscussion(@Valid @RequestBody MessageRequest request) {
         messageService.saveDiscussion(request.getMessages());
         return new ResponseEntity<>(new MessageResponse(HttpStatus.OK.value(), "Discussion Saved Successfully"), HttpStatus.OK);
     }
-
+    //http://localhost:8081/Wellbeignatwork/chatroom/retrieve-discussion/{roomId}"
     @GetMapping("/chatroom/retrieve-discussion/{roomId}")
     @ResponseBody
     public ResponseEntity<?> retrieveDiscussions(@PathVariable Long roomId) {
         return new ResponseEntity<>(messageService.retrieveDiscussions(roomId), HttpStatus.OK);
     }
-
+    //http://localhost:8081/Wellbeignatwork/chatrooms/most-active-rooms"
     @GetMapping("/chatrooms/most-active-rooms")
     @ResponseBody
     public ResponseEntity<?> mostActiveRooms() {
@@ -137,4 +137,26 @@ public class ChatController {
     }
 
 
+ //http://localhost:8081/Wellbeignatwork/chatroom/inviteUserToRoom/{roomId}/{userId}
+
+    @GetMapping("/chatroom/inviteUserToRoom/{roomId}/{userId}")
+    public void inviteUserToRoom(@PathVariable Long roomId,@PathVariable Long userId){
+        chatRoomService.inviteUserToChatRoom(userId,roomId);
+    }
+
+    //http://localhost:8081/Wellbeignatwork/chatroom/acceptInvitation/1/2
+    @GetMapping("/chatroom/acceptInvitation/{roomId}/{userId}")
+    public void acceptInvitation(@PathVariable Long roomId,@PathVariable Long userId){
+        chatRoomService.acceptInvitation(userId,roomId);
+    }
+    //http://localhost:8081/Wellbeignatwork/chatroom/bannUserFromRoom/{userId}/{roomId}"
+    @GetMapping("/chatroom/bannUserFromRoom/{userId}/{roomId}")
+    public void bannUserFromRoom(@PathVariable Long userId,@PathVariable Long roomId){
+        chatRoomService.bannUserFromChatRoom(userId,roomId);
+    }
+
+    @GetMapping("/chatroom/unbannUserFromRoom/{userId}/{roomId}")
+    public void unbannUserFromRoom(@PathVariable Long userId,@PathVariable Long roomId){
+        chatRoomService.unbannUserFromChatRoom(userId,roomId);
+    }
 }

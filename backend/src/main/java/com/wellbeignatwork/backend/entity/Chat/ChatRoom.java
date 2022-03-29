@@ -21,6 +21,7 @@ public class ChatRoom {
     private String roomName;
     //this key helps creating unique rooms for one to one chatting
     private String uniqueKey;
+    private int MaxBadWords;
 
     private String averageResponseTime;
 
