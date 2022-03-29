@@ -34,7 +34,7 @@ public class OfferController {
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/Image/QRCode.png";
 
 
-    //http://localhost:8080/addOffer
+    //http://localhost:8081/addOffer
     @PostMapping("/addOffer/{idCollaboration}")
     @ResponseBody
     public void addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
@@ -61,28 +61,28 @@ public class OfferController {
         offerService.addOffer(o,idCollaboration);
     }
 
-    //http://localhost:8080/deleteOffer/id
+    //http://localhost:8081/deleteOffer/id
     @DeleteMapping("/deleteOffer/{id}")
     @ResponseBody
     public void deleteOffer(@PathVariable Long id){
         offerService.deleteOffer(id);
     }
 
-    //http://localhost:8080/Offer/updateOffer
+    //http://localhost:8081/Offer/updateOffer
     @PutMapping("/Offer/updateOffer")
     @ResponseBody
     public Offer updateOffer(@RequestBody Offer o){
         return offerService.updateOffer(o);
     }
 
-    //http://localhost:8080/Offer/retrieveAllOffers
+    //http://localhost:8081/Offer/retrieveAllOffers
     @GetMapping("/Offer/retrieveAllOffers")
     @ResponseBody
     public List<Offer> retrieveAllOffers(){
         return offerService.retrieveAllOffers();
     }
 
-    //http://localhost:8080/Offer/retrieveAllOffers/id
+    //http://localhost:8081/Offer/retrieveAllOffers/id
     @GetMapping("/Offer/retrieveOffer/{id}")
     @ResponseBody
     public Offer retrieveOffer(@PathVariable Long id){
@@ -95,6 +95,7 @@ public class OfferController {
        return offerService.calculProm(idOffer);
     }
 
+    //http://localhost:8081/Offer/exportOffer/pdf
     @GetMapping("/exportOffer/pdf")
     public void exportToPDF(HttpServletResponse response) throws IOException, com.lowagie.text.DocumentException {
         response.setContentType("application/pdf");
@@ -112,7 +113,7 @@ public class OfferController {
 
     }
 
-    //http://localhost:8080/Offer/weather?idOffer=1
+    //http://localhost:8081/Offer/weather?idOffer=1
     @GetMapping("/weather")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getOfferWeather(@RequestParam Long idOffer) {
