@@ -22,13 +22,18 @@ public class PostController {
     public PostController(PostService postService){
         this.postService=postService;
     }
-    @PostMapping("/add-post")
+    @PostMapping("/create-post")
     public ResponseEntity<Post> createPost(@RequestParam("file") MultipartFile file, @RequestParam("post")String post) throws IOException {
 
         Post p = new ObjectMapper().readValue(post, Post.class);
         log.info("post : "+p.getContent());
 
         return new ResponseEntity<>(this.postService.createpost(p,file), HttpStatus.OK);
+    }
+    @PostMapping("/add-post/{idUser}")
+    public ResponseEntity<Post> addPost(@RequestBody Post post,@PathVariable Long idUser) {
+
+        return new ResponseEntity<>(this.postService.addPost(post,idUser), HttpStatus.OK);
     }
     @GetMapping("/all-post")
     public ResponseEntity<Collection<Post>> getAllPosts() {
@@ -43,10 +48,7 @@ public class PostController {
         this.postService.deletepost(id);
         return new ResponseEntity(HttpStatus.OK);
     }
-    @GetMapping("/assignFileToPost/{id_post}/{id_file}")
-    public ResponseEntity<Post> assignFileToPost(@PathVariable int id_post,@PathVariable int id_file){
-        return new ResponseEntity<>(this.postService.assignFileToPost(id_post, id_file),HttpStatus.OK);
-    }
+
     @GetMapping("/groupByPreference/{idUser}")
     public List<Post> groupByPreference(@PathVariable Long idUser){
         return this.postService.groupByPreference(idUser);
