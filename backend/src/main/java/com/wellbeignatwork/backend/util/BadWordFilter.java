@@ -87,10 +87,10 @@ public class BadWordFilter {
 
         int readCounter = 0;
         try {
-            // The following spreadsheet is from: https://gist.github.com/PimDeWitte/c04cc17bc5fa9d7e3aee6670d4105941
+
             // (If the spreadsheet ever ceases to exist, then this application will still function normally otherwise - it just won't censor any swear words.)
 
-            FileReader fr = new FileReader("C:\\Users\\Mortadha\\Desktop\\Programming\\ProjetSpringAngular\\WellBeing-AtWork-SpringBoot-Angular\\backend\\src\\main\\resources\\badwords.csv");
+            FileReader fr = new FileReader("C:\\Users\\mouha\\Desktop\\PIDEV\\WellBeing-AtWork-SpringBoot-Angular\\backend\\src\\main\\resources\\badwords.csv");
             BufferedReader reader = new BufferedReader(fr);
 
 //    	BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(

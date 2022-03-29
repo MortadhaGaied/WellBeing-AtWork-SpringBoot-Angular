@@ -108,9 +108,9 @@ public class MessageService implements IMessageService {
             pushNotificationService.sendPushNotificationToALlUsers("weekly top chatters",res.toString());
             //send data to firebase
 
-            Firestore dbFirestore = FirestoreClient.getFirestore();
+           /* Firestore dbFirestore = FirestoreClient.getFirestore();
              dbFirestore.collection("top-chatters").document("top-chatters").set(data);
-
+            */
         }
 
 
