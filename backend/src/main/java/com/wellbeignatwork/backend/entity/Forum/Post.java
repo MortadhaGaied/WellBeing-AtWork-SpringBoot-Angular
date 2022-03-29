@@ -33,10 +33,13 @@ public class Post implements Serializable {
     @Enumerated(EnumType.STRING)
     private Set<Tags> tags = new HashSet<>();
     String file;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnore
     private User user;
-    @OneToMany(mappedBy = "post_comment",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post_comment",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JsonIgnore
     private List<Comment> comments;
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JsonIgnore
     private List<Reaction> reactions;
 }

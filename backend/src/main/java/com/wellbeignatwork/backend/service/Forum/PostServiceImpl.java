@@ -1,5 +1,7 @@
 package com.wellbeignatwork.backend.service.Forum;
 
+import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Forum.*;
 import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
@@ -9,6 +11,7 @@ import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 import com.wellbeignatwork.backend.exceptions.Forum.PostException;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.util.BadWordFilter;
 import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +60,8 @@ public class PostServiceImpl implements PostService {
         return resultat;
     }
     public List<Post> getPostsforUser(Long iduser){
+
+
         int n;
         List<Post> list=new ArrayList<>();
 
@@ -92,9 +97,33 @@ public class PostServiceImpl implements PostService {
         }
         else{
             post.setFile(fileData);
+            post.setContent(BadWordFilter.getCensoredText(post.getContent()));
+            post.setCreatedAt(LocalDateTime.now());
             return postRepository.save(post);
         }
 
+    }
+    @Override
+    public Post addPost(Post post,Long idUser){
+
+        Post isSubjectExist=null;
+        for(Post p: postRepository.findAll()){
+            if(similarity(p.getSubject(),post.getSubject())>0.6){
+                isSubjectExist=p;
+            }
+        }
+        if(isSubjectExist!=null){
+
+            return isSubjectExist;
+        }
+        else{
+
+            post.setContent(BadWordFilter.getCensoredText(post.getContent()));
+            post.setCreatedAt(LocalDateTime.now());
+            postRepository.save(post);
+
+            return assignUserToPost(idUser,post.getId());
+        }
     }
 
     @Override
@@ -124,25 +153,7 @@ public class PostServiceImpl implements PostService {
        postRepository.delete(postRepository.findById(id).orElse(null));
     }
 
-    @Override
-    public Post assignFileToPost(int id_file, int id_post) {
-      /*  Post p=postRepository.findById(id_post).orElse(null);
-        File f=fileRepository.findById(id_file).orElse(null);
-        List<File> list=new ArrayList<>();
-        f.setPost_attachment(p);
-        fileRepository.save(f);
-        if(p.getFileAttachments()!=null){
-            p.getFileAttachments().add(f);
-        }
-        else{
-            p.setFileAttachments(list);
-        }
-        postRepository.save(p);
-        return p;
 
-       */
-        return null;
-    }
     @Override
     public Post assignUserToPost(Long id_user,int id_post){
         Post p=postRepository.findById(id_post).orElse(null);
@@ -185,14 +196,24 @@ public class PostServiceImpl implements PostService {
         }
         return result;
     }
-    public HashMap<String, List> analyzeDataForSignals(List<Double> data, Double threshold, Double influence) {
-        int lag=0;
-        if(data.size()<10){
-            lag=1;
+    public List<Post> sortPostByInteraction(List<Post> posts){
+        HashMap<Post,Double> postDoubleHashMap=new HashMap<>();
+        List<Double> interactions=postInteraction(posts);
+
+        for(int i=0;i<interactions.size();i++){
+            postDoubleHashMap.put(posts.get(i),interactions.get(i));
         }
-        else{
-            lag=5;
-        }
+        LinkedHashMap<Post, Double> reverseSortedMap = new LinkedHashMap<>();
+
+        postDoubleHashMap.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+        return new ArrayList<Post>(reverseSortedMap.keySet());
+
+    }
+    public HashMap<String, List> analyzepostInteractionForSignals(List<Double> data, Double threshold, Double influence) {
+        int lag=2;
         SummaryStatistics stats = new SummaryStatistics();
         List<Integer> signals = new ArrayList<Integer>(Collections.nCopies(data.size(), 0));
         List<Double> filteredData = new ArrayList<Double>(data);
@@ -243,6 +264,7 @@ public class PostServiceImpl implements PostService {
     }
     @Override
     public List<Post> getTrendingPost(){
+
         DecimalFormat df = new DecimalFormat("#0.000");
         List<Post> allPosts=new ArrayList<>();
         postRepository.findAll().forEach(allPosts::add);
@@ -256,7 +278,7 @@ public class PostServiceImpl implements PostService {
 
 
 
-            HashMap<String, List> resultsMap = analyzeDataForSignals(data, threshold, influence);
+            HashMap<String, List> resultsMap = analyzepostInteractionForSignals(data, threshold, influence);
             signalsList = resultsMap.get("signals");
             for(int i=0;i<allPosts.size();i++){
                 sortTrendPost.put(allPosts.get(i),signalsList.get(i));
@@ -277,8 +299,38 @@ public class PostServiceImpl implements PostService {
             }
         }
         System.out.println();
-        sortTrendPost.forEach((key, value) -> System.out.println(key.getSubject() + ":" + value));
-        return null;
+        LinkedHashMap<Post, Integer> reverseSortedMap = new LinkedHashMap<>();
+
+        sortTrendPost.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+        System.out.println(reverseSortedMap);
+        List<Post> peakpost=new ArrayList<>();
+        List<Post> avgpost=new ArrayList<>();
+        List<Post> poorPost=new ArrayList<>();
+        for(Map.Entry<Post, Integer> entry:reverseSortedMap.entrySet()) {
+            if(entry.getValue()==1){
+                peakpost.add(entry.getKey());
+            }
+            else if(entry.getValue()==0){
+                avgpost.add(entry.getKey());
+            }
+            else{
+                poorPost.add(entry.getKey());
+            }
+
+        }
+
+        peakpost=sortPostByInteraction(peakpost);
+        avgpost=sortPostByInteraction(avgpost);
+        poorPost=sortPostByInteraction(poorPost);
+        List<Post> sortPostByPeaks=new ArrayList<>();
+        sortPostByPeaks.addAll(peakpost);
+        sortPostByPeaks.addAll(avgpost);
+        sortPostByPeaks.addAll(poorPost);
+        return sortPostByPeaks;
+
     }
     public double similarity(String s1, String s2) {
         String longer = s1, shorter = s2;
@@ -319,5 +371,12 @@ public class PostServiceImpl implements PostService {
         }
         return costs[s2.length()];
     }
+    public String filterBadWords(String string) {
+        System.out.println(string);
+        String filteredContent = BadWordFilter.getCensoredText(string);
+        System.out.println(filteredContent);
+        return string;
+    }
+
 
 }

@@ -40,7 +40,7 @@ public class publicitycontroller {
     }
 
 
-    
+
 
     //http://localhost:8080/Publicity/upload-image/1
     @PostMapping("/upload-image/{idPublicity}")
