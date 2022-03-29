@@ -32,7 +32,7 @@ public class publicitycontroller {
 
 
 
-    //http://localhost:8085/Offer/datePublicity/idPublicity/starDate/finDate
+    //http://localhost:8081/Publicity/datePublicity/idPublicity/starDate/finDate
     @GetMapping("/datePublicity/{idPublicity}/{starDateOf}/{finDateOf}")
     @ResponseBody
     public boolean dateOffer(@PathVariable long idPublicity, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date starDateOf, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date finDateOf){
@@ -40,9 +40,7 @@ public class publicitycontroller {
     }
 
 
-
-
-    //http://localhost:8080/Publicity/upload-image/1
+    //http://localhost:8081/Publicity/upload-image/1
     @PostMapping("/upload-image/{idPublicity}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response uploadImageToEvent(@RequestParam MultipartFile[] imgs, @PathVariable Long idPublicity) {
@@ -55,7 +53,7 @@ public class publicitycontroller {
             return new Response(e.getMessage(), false);
         }
     }
-    //http://localhost:8080/Publicity/upload-banner
+    //http://localhost:8081/Publicity/upload-banner
     @PutMapping("/upload-banner/{idPublicity}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response uploadBanner(@RequestParam MultipartFile img, @PathVariable Long idPublicity) {
@@ -67,6 +65,7 @@ public class publicitycontroller {
         }
     }
 
+    //http://localhost:8081/Publicity/delete-image
     @DeleteMapping("/delete-image/{name}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response deleteImage(@PathVariable String name) {
@@ -77,17 +76,18 @@ public class publicitycontroller {
             return new Response(e.getMessage(), false);
         }
     }
-
+    //http://localhost:8081/Publicity/retrieve-by-title
     @GetMapping("/retrieve-by-title")
     public List<Publicity> retrieveByTitle(@RequestParam String title) {
         return publicityService.retrieveByTitle(title);
     }
-
+    //http://localhost:8081/Publicity/retrieve-by-date
     @GetMapping("/retrieve-by-date")
     public List<Publicity> retrieveBeforeOfferStartDate() {
         return publicityService.retrieveBeforeOfferStartDate();
     }
 
+    //http://localhost:8081/Publicity/retrieve-by-localisation
     @GetMapping("/retrieve-by-localisation")
     public List<Publicity> retrieveByOfferLocalisation(@RequestParam String loc) {
         return publicityService.retrieveByOfferLocalisation(loc);
