@@ -3,6 +3,9 @@ package com.wellbeignatwork.backend.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.Collaboration.Profession;
+import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
+import com.wellbeignatwork.backend.entity.Collaboration.Test;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.Event;
@@ -108,6 +111,20 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Opinion> opinions;
 	private String picture;
+	@ManyToMany(mappedBy = "intern", fetch = FetchType.EAGER
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Test> TestIntern;
+
+	@ManyToMany(mappedBy = "employee", fetch = FetchType.EAGER
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Test> TestEmployee;
+	@Enumerated(EnumType.STRING)
+	private Profession profession;
+	@OneToMany(mappedBy = "userRes")
+	Set<Reservation> reservations;
+
 
 
 
