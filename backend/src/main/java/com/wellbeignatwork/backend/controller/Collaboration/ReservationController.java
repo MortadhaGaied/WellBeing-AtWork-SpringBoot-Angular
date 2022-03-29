@@ -103,7 +103,7 @@ public class ReservationController {
     public Payment index(@PathVariable long idUser , @PathVariable long idReservation , @RequestBody Payment p ) throws StripeException {
         return stripeService.payment(idUser,idReservation,p);
     }
-
+    //http://localhost:8080/Reservation/stripe/1/1
     @PostMapping("/stripe/{email}/{token}/{idUser}/{idReservation}/{idOffer}")
     @ResponseBody
     public Reservation createCharge(@PathVariable String email,@PathVariable String token,@PathVariable Long idUser,@PathVariable Long idReservation,@PathVariable Long idOffer,@RequestBody Reservation r) throws StripeException, MessagingException {

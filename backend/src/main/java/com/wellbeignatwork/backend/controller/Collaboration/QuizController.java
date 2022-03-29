@@ -131,7 +131,7 @@ public class QuizController {
 
     @GetMapping("/getQuizByFormation/{idTest}")
     @ResponseBody
-    public List<QuizTheme> getQuizByFormation(@PathVariable("idTest") Integer idTest)
+    public List<QuizTheme> getQuizByTest(@PathVariable("idTest") Integer idTest)
     {
         return this.iServicesQuiz.getQuizByTest(idTest);
     }
