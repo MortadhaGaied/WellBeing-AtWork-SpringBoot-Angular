@@ -99,11 +99,11 @@ public class OfferService implements IOfferService {
 	public Object getOfferWeather(Long idOffer) {
 		Offer offer = OfferRepo.findById(idOffer).orElse(null);
 		if (offer == null) {
-			throw new ResourceNotFoundException("Event is not exist");
+			throw new ResourceNotFoundException("Offer is not exist");
 		}
-		//check if the event is already started
+		//check if the Offer is already started
 		if (LocalDate.now().isAfter(offer.getStarDateOf().toLocalDate())) {
-			return new Response("No need to fetch weather of an event already started or finished", false);
+			return new Response("No need to fetch weather of an Offer already started or finished", false);
 		}
 		CurrentWeatherData currentWeatherData = weatherService.getWeatherData(offer.getLocalisation());
 		LocalDate nextWeek = LocalDate.now().plusDays(7);
@@ -120,10 +120,10 @@ public class OfferService implements IOfferService {
 	public void inviteUsersToOffer(List<Long> usersId, Long offerId) {
 		Offer offer = OfferRepo.findById(offerId).orElse(null);
         if (offer == null) {
-		throw new ResourceNotFoundException("Event doesn't exist");
+		throw new ResourceNotFoundException("Offer doesn't exist");
 	}
         if (offer.getStarDateOf().isBefore(LocalDateTime.now())) {
-		throw new BadRequestException("You can't invite someone to an event already started or finished");
+		throw new BadRequestException("You can't invite someone to an Offer already started or finished");
 	}
         for (Long userId : usersId) {
 			User user = userRepository.findById(userId).orElse(null);
