@@ -63,11 +63,6 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
 
-
-
-
-
-
     @Override
     public List<QuestionCollaboration> getQuizQuestion(Integer idQuiz ) {
         List<QuestionCollaboration> allQues =  iQuizRepo.getQuizQuestion(idQuiz);
@@ -147,7 +142,7 @@ public class ServiceQuiz implements IServicesQuiz {
     @Override
     @Scheduled(cron = "0 0/1 * * * *")
    // @Scheduled(cron = "0 0 20 ? * *") //every day 20:00
-    public void giftsToUserMaxScoreInCourses() {
+    public void giftsToUserMaxScoreInTest() {
         User user = new User();
 
         Date date = new Date();
