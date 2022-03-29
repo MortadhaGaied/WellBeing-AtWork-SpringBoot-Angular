@@ -8,11 +8,11 @@ import java.util.List;
 public interface ICollaborationService {
     List<Collaboration> retrieveAllCollaborations();
 
-    void addCollaboration(Collaboration c,Long idUser);
+    void updateCollaboration(Collaboration c,Long idUser);
 
     void deleteCollaboration(Long id);
 
-    Collaboration updateCollaboration(Collaboration c);
+    Collaboration addCollaboration(Collaboration c);
 
     Collaboration retrieveCollaboration(Long id);
 

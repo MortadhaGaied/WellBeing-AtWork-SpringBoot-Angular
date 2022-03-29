@@ -37,7 +37,7 @@ public class CollaborationService implements ICollaborationService {
 	}
 
 	@Override
-	public void addCollaboration(Collaboration c,Long idUser) {
+	public void updateCollaboration(Collaboration c,Long idUser) {
 		User user = userRepo.findById(idUser).orElse(null);
 		c.setUsers(user);
 		CollaborationRepo.save(c);
@@ -50,7 +50,7 @@ public class CollaborationService implements ICollaborationService {
 	}
 
 	@Override
-	public Collaboration updateCollaboration(Collaboration c) {
+	public Collaboration addCollaboration(Collaboration c) {
 		return CollaborationRepo.save(c);
 	}
 
