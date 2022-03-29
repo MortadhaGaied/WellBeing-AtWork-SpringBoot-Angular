@@ -30,15 +30,15 @@ public class CollaborationController {
 		collaborationService.updateCollaboration(c,idUser);
 	}
 
-	//http://localhost:8081/Wellbeignatwork/Collaboration/deleteCollaboration/id
-	@DeleteMapping("/Collaboration/deleteCollaboration/{id}")
+	//http://localhost:8081/Wellbeignatwork/Collaboration/deleteCollaboration/1
+	@DeleteMapping("/deleteCollaboration/{id}")
 	@ResponseBody
 	public void deleteCollaboration(@PathVariable Long id){
 		collaborationService.deleteCollaboration(id);
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/retrieveAllCollaborations
-	@GetMapping("/Collaboration/retrieveAllCollaborations")
+	@GetMapping("/retrieveAllCollaborations")
 	@ResponseBody
 	public List<Collaboration> retrieveAllCollaborations() {
 
@@ -46,8 +46,8 @@ public class CollaborationController {
 	}
 
 
-	//http://localhost:8081/Wellbeignatwork/Collaboration/retrieveCollaboration
-	@GetMapping("/Collaboration/retrieveCollaboration")
+	//http://localhost:8081/Wellbeignatwork/Collaboration/retrieveCollaboration/2
+	@GetMapping("/retrieveCollaboration/{id}")
 	@ResponseBody
 	public Collaboration retrieveCollaboration(@PathVariable Long id){
 		return collaborationService.retrieveCollaboration(id);
