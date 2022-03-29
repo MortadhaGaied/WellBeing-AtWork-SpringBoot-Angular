@@ -32,7 +32,7 @@ public class publicitycontroller {
 
 
 
-    //http://localhost:8081/Publicity/datePublicity/idPublicity/starDate/finDate
+    //http://localhost:8081/Wellbeignatwork/Publicity/datePublicity/idPublicity/starDate/finDate
     @GetMapping("/datePublicity/{idPublicity}/{starDateOf}/{finDateOf}")
     @ResponseBody
     public boolean dateOffer(@PathVariable long idPublicity, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date starDateOf, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date finDateOf){
@@ -76,7 +76,7 @@ public class publicitycontroller {
             return new Response(e.getMessage(), false);
         }
     }
-    //http://localhost:8081/Publicity/retrieve-by-title
+    //http://localhost:8081/Wellbeignatwork/Publicity/retrieve-by-title
     @GetMapping("/retrieve-by-title")
     public List<Publicity> retrieveByTitle(@RequestParam String title) {
         return publicityService.retrieveByTitle(title);
