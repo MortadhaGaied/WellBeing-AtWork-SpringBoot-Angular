@@ -1,5 +1,9 @@
 package com.wellbeignatwork.backend.service.Forum;
 
+import com.google.zxing.WriterException;
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.PdfWriter;
 import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Forum.*;
@@ -19,15 +23,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 
+import java.awt.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -376,6 +384,33 @@ public class PostServiceImpl implements PostService {
         String filteredContent = BadWordFilter.getCensoredText(string);
         System.out.println(filteredContent);
         return string;
+    }
+    public void downloadArticle(int idPost, HttpServletResponse response)throws DocumentException, IOException, WriterException {
+        Post post=postRepository.findById(idPost).orElse(null);
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.open();
+        Font font = FontFactory.getFont(FontFactory.COURIER);
+        font.setSize(60);
+        font.setColor(Color.RED);
+
+        Paragraph p = new Paragraph(post.getSubject());
+        p.setAlignment(Paragraph.ALIGN_CENTER);
+        p.setFont(font);
+
+
+        Font font1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(14);
+        font.setColor(Color.BLACK);
+
+        Paragraph p1=new Paragraph(post.getContent(),font1);
+        p1.setAlignment(Paragraph.ALIGN_LEFT);
+
+        document.add(p);
+        document.add(p1);
+
+        document.close();
     }
 
 
