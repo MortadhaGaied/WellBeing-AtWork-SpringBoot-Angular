@@ -22,6 +22,7 @@ public class QuizController {
     @Autowired
     private IServiceTest iServiceTest;
 
+    //http://localhost:8081/Wellbeignatwork/Quiz/ajouterTest
     @RequestMapping(value = {"/ajouterTest"}, method = RequestMethod.POST)
     @ResponseBody
     public void addTestn(@RequestBody Test test){
@@ -67,6 +68,7 @@ public class QuizController {
         iServiceTest.affecterEmployeeWithMaxTest(idEmployee, idTest);
     }
 
+   // http://localhost:8081/Wellbeignatwork/Quiz/addQuiz/1
     @PostMapping("/addQuiz/{idTest}")
     public void addQuiz(@RequestBody QuizTheme quiz, @PathVariable(name = "idTest") Integer idTest)
     {
@@ -109,7 +111,7 @@ public class QuizController {
         iServiceTest.likeTest(idTest);
     }
 
-    @PostMapping("/addDisLikes/{idF}")
+    @PostMapping("/addDisLikes/{idTest}")
     void dislikeFormation(@PathVariable(name = "idTest") Integer idTest)
     {
         iServiceTest.dislikeTest(idTest);

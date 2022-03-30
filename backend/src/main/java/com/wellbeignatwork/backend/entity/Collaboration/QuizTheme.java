@@ -25,7 +25,7 @@ public class QuizTheme {
 
     private Integer score;
 
-    @Temporal (TemporalType.DATE)
+
     private Date createAt;
 
     private String content ;

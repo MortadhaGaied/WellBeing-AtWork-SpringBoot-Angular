@@ -30,7 +30,12 @@ public class publicitycontroller {
     @Autowired
     IPublicityService publicityService;
 
-
+    //http://localhost:8081/Wellbeignatwork/addPublicity/idOffer
+    @PostMapping("/addPublicity/{idOffer}")
+    @ResponseBody
+    public Publicity addPublicity(@RequestBody Publicity p ,@PathVariable long idOffer){
+        return publicityService.addPublicity(p,idOffer);
+    }
 
     //http://localhost:8081/Wellbeignatwork/Publicity/datePublicity/idPublicity/starDate/finDate
     @GetMapping("/datePublicity/{idPublicity}/{starDateOf}/{finDateOf}")
@@ -40,7 +45,7 @@ public class publicitycontroller {
     }
 
 
-    //http://localhost:8081/Publicity/upload-image/1
+    //http://localhost:8081/Wellbeignatwork/Publicity/upload-image/1
     @PostMapping("/upload-image/{idPublicity}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response uploadImageToEvent(@RequestParam MultipartFile[] imgs, @PathVariable Long idPublicity) {

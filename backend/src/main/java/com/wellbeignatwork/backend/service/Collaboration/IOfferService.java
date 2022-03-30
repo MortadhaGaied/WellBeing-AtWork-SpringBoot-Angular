@@ -12,7 +12,7 @@ public interface IOfferService {
 
     void deleteOffer(Long id);
 
-    Offer updateOffer(Offer o);
+    Offer updateOffer(Offer o,Long idOffer);
 
     Offer retrieveOffer(Long id);
 
