@@ -30,7 +30,7 @@ public class publicitycontroller {
     @Autowired
     IPublicityService publicityService;
 
-    //http://localhost:8081/Wellbeignatwork/addPublicity/idOffer
+    //http://localhost:8081/Wellbeignatwork/Publicity/addPublicity/1
     @PostMapping("/addPublicity/{idOffer}")
     @ResponseBody
     public Publicity addPublicity(@RequestBody Publicity p ,@PathVariable long idOffer){
@@ -58,7 +58,7 @@ public class publicitycontroller {
             return new Response(e.getMessage(), false);
         }
     }
-    //http://localhost:8081/Publicity/upload-banner
+    //http://localhost:8081/Wellbeignatwork/Publicity/upload-banner/1
     @PutMapping("/upload-banner/{idPublicity}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response uploadBanner(@RequestParam MultipartFile img, @PathVariable Long idPublicity) {
@@ -70,7 +70,7 @@ public class publicitycontroller {
         }
     }
 
-    //http://localhost:8081/Publicity/delete-image
+    //http://localhost:8081/Wellbeignatwork/Publicity/delete-image/name
     @DeleteMapping("/delete-image/{name}")
     //@PreAuthorize("hasRole('ADMIN')")
     public Response deleteImage(@PathVariable String name) {
@@ -81,9 +81,9 @@ public class publicitycontroller {
             return new Response(e.getMessage(), false);
         }
     }
-    //http://localhost:8081/Wellbeignatwork/Publicity/retrieve-by-title
-    @GetMapping("/retrieve-by-title")
-    public List<Publicity> retrieveByTitle(@RequestParam String title) {
+    //http://localhost:8081/Wellbeignatwork/Publicity/retrieve-by-title/title
+    @GetMapping("/retrieve-by-title/{title}")
+    public List<Publicity> retrieveByTitle(@PathVariable String title) {
         return publicityService.retrieveByTitle(title);
     }
     //http://localhost:8081/Publicity/retrieve-by-date
@@ -92,9 +92,9 @@ public class publicitycontroller {
         return publicityService.retrieveBeforeOfferStartDate();
     }
 
-    //http://localhost:8081/Publicity/retrieve-by-localisation
-    @GetMapping("/retrieve-by-localisation")
-    public List<Publicity> retrieveByOfferLocalisation(@RequestParam String loc) {
+    //http://localhost:8081/Wellbeignatwork/Publicity/retrieve-by-localisation/localisation
+    @GetMapping("/retrieve-by-localisation/{localisation}")
+    public List<Publicity> retrieveByOfferLocalisation(@PathVariable String loc) {
         return publicityService.retrieveByOfferLocalisation(loc);
     }
 
