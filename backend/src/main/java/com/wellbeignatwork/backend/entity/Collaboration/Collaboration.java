@@ -3,6 +3,7 @@ package com.wellbeignatwork.backend.entity.Collaboration;
 import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +34,8 @@ public class Collaboration implements Serializable {
 
 	@OneToMany(mappedBy="collaboration", cascade=CascadeType.ALL)
 	private Set<Offer> offers;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	User users;
 

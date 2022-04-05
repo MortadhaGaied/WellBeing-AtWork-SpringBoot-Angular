@@ -34,7 +34,7 @@ public class OfferController {
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/Image/QRCode.png";
 
 
-    //http://localhost:8081/addOffer
+    //http://localhost:8081/Wellbeignatwork/Offer/addOffer/1
     @PostMapping("/addOffer/{idCollaboration}")
     @ResponseBody
     public void addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
@@ -61,41 +61,42 @@ public class OfferController {
         offerService.addOffer(o,idCollaboration);
     }
 
-    //http://localhost:8081/deleteOffer/id
+    //http://localhost:8081/Wellbeignatwork/Offer/deleteOffer/id
     @DeleteMapping("/deleteOffer/{id}")
     @ResponseBody
     public void deleteOffer(@PathVariable Long id){
         offerService.deleteOffer(id);
     }
 
-    //http://localhost:8081/Offer/updateOffer
-    @PutMapping("/Offer/updateOffer")
+    //http://localhost:8081/Wellbeignatwork/Offer/updateOffer/1
+    @PutMapping("/updateOffer/{idOffer}")
     @ResponseBody
-    public Offer updateOffer(@RequestBody Offer o){
-        return offerService.updateOffer(o);
+    public Offer updateOffer(@RequestBody Offer o , @PathVariable Long idOffer){
+        return offerService.updateOffer(o,idOffer);
     }
 
-    //http://localhost:8081/Offer/retrieveAllOffers
-    @GetMapping("/Offer/retrieveAllOffers")
+    //http://localhost:8081/Wellbeignatwork/Offer/retrieveAllOffers
+    @GetMapping("/retrieveAllOffers")
     @ResponseBody
     public List<Offer> retrieveAllOffers(){
         return offerService.retrieveAllOffers();
     }
 
-    //http://localhost:8081/Offer/retrieveAllOffers/id
-    @GetMapping("/Offer/retrieveOffer/{id}")
+    //http://localhost:8081/Wellbeignatwork/Offer/retrieveOffer/1
+    @GetMapping("/retrieveOffer/{id}")
     @ResponseBody
     public Offer retrieveOffer(@PathVariable Long id){
         return offerService.retrieveOffer(id);
     }
 
+    //http://localhost:8081/Wellbeignatwork/Offer/calculPromotion/id
     @PostMapping("/calculPromotion/{idOffer}")
     @ResponseBody
     public float calculPromotion (@PathVariable long idOffer){
        return offerService.calculProm(idOffer);
     }
 
-    //http://localhost:8081/Offer/exportOffer/pdf
+    //http://localhost:8081/Wellbeignatwork/Offer/exportOffer/pdf
     @GetMapping("/exportOffer/pdf")
     public void exportToPDF(HttpServletResponse response) throws IOException, com.lowagie.text.DocumentException {
         response.setContentType("application/pdf");
@@ -113,7 +114,7 @@ public class OfferController {
 
     }
 
-    //http://localhost:8081/Offer/weather?idOffer=1
+    //http://localhost:8081/Wellbeignatwork/Offer/weather?idOffer=1
     @GetMapping("/weather")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getOfferWeather(@RequestParam Long idOffer) {

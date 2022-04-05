@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@Table( name = "QuestionCourses")
 public class QuestionCollaboration {
 
 

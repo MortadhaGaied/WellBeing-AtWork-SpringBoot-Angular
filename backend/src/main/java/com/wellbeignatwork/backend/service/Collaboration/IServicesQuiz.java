@@ -44,6 +44,6 @@ public interface IServicesQuiz {
 
     User EmployeewithMaxScoreQuiz(Integer id);
 
-    void giftsToUserMaxScoreInCourses();
+    void giftsToUserMaxScoreInTest();
 
 }

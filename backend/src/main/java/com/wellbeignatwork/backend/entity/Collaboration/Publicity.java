@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.entity.Collaboration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -28,6 +29,7 @@ public class Publicity implements Serializable {
 	Date endDatePub;
 	String picture;
 
+	@JsonIgnore
 	@ManyToOne
 	Offer offers;
 

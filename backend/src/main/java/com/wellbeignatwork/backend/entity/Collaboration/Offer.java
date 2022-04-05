@@ -33,7 +33,6 @@ public class Offer implements Serializable {
 	String localisation;
 	float prix;
 
-	
 	@Enumerated(EnumType.STRING)
 	Happy happy;
 
