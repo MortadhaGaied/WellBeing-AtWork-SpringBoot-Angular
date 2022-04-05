@@ -3,6 +3,7 @@ package com.wellbeignatwork.backend.service.Forum;
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.Forum.Post;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,10 @@ public interface PostService {
     public Post assignUserToPost(Long idUser,int idPost);
     public List<Post> getTrendingPost();
 
-    public void downloadArticle(int idPost, HttpServletResponse response) throws IOException, DocumentException;
+    public void downloadArticle (@PathVariable int idPost ,
+
+                                 HttpServletResponse response
+    )throws DocumentException, IOException;
 
 
     }

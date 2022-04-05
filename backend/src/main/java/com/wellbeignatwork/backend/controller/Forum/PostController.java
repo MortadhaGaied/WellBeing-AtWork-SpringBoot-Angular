@@ -68,30 +68,13 @@ public class PostController {
     public List<Post> getTrendingPost(){
         return postService.getTrendingPost();
     }
-    @GetMapping("/downloadArticle/{idPost}")
-    @ResponseBody
-    public void downloadArticle (@PathVariable int idPost ,
 
-                                 HttpServletResponse response
-    ) throws IOException, DocumentException  {
-
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=article" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-        postService.downloadArticle(idPost,response);
-
-
-    }
     @GetMapping("/downloadArticle/{idPost}")
     @ResponseBody
     public void downloadArticle (@PathVariable int idPost ,
 
                                    HttpServletResponse response
-    )throws DocumentException, IOException, WriterException {
+    )throws DocumentException, IOException {
 
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
