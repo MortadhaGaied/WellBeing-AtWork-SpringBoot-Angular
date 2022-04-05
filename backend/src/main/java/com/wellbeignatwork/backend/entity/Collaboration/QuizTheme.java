@@ -13,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table( name = "QuizCourses")
 public class QuizTheme {
 
 
@@ -26,7 +25,7 @@ public class QuizTheme {
 
     private Integer score;
 
-    @Temporal (TemporalType.DATE)
+
     private Date createAt;
 
     private String content ;

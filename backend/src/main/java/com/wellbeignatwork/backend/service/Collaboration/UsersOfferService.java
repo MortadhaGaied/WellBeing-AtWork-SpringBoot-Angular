@@ -96,12 +96,7 @@ public class UsersOfferService implements IUsersOfferService {
         }
         LocalDateTime OfferEndDate = usersOffer.getOffer().getEndDateOf();
         LocalDateTime now = LocalDateTime.now();
-        if (!usersOffer.getIsAccepted()) {
-            throw new BadRequestException("Cannot give feedback for an Offer without participation");
-        }
-        if (!OfferEndDate.isBefore(now)) {
-            throw new BadRequestException("Cannot give feedback for an Offer before its finish");
-        }
+
         usersOffer.setFeedback(feedback.getContent());
         usersOffer.setRate(feedback.getRate());
         usersOfferRepo.save(usersOffer);

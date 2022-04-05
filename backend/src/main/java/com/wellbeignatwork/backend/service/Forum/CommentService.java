@@ -11,4 +11,5 @@ public interface CommentService {
     public Comment updatecomment(Comment comment);
     public void deletecomment(int id);
     public List<Integer> PostSatisfaction(int idPost);
+    public List<Comment> sortByDate(int idPost);
 }

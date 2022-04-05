@@ -330,7 +330,7 @@ public class ChatRoomService implements IChatService {
 
     @Override
     public void inviteUserToChatRoom(Long userId, Long roomId) {
-
+/*
 
         ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> {
             throw new ResourceNotFoundException("room with this id : " + roomId + " not found");
@@ -361,6 +361,8 @@ public class ChatRoomService implements IChatService {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
+ */
 
 
 

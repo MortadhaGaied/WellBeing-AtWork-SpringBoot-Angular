@@ -52,7 +52,7 @@ public class StripeService {
         return p;
     }
 
-    public Reservation createCharge(String email, String token, Long idUser, Long idReservation, Long idOffer, Reservation r) throws StripeException, MessagingException {
+    public Reservation createCharge(String email, String token, Long idUser, Long idReservation, Long idOffer) throws StripeException, MessagingException {
         UsersOffer user = usersOfferRepo.findByUserIdAndOfferIdOffer(idUser,idOffer);
         Reservation reservation = reservationRepository.findById(idReservation).get();
         String id;
@@ -71,8 +71,7 @@ public class StripeService {
         }
 
         // payment successfully
-       Reservation reserva = reservationService.reservation(idUser,idOffer,r);
-        return reserva ;
+           return reservation ;
     }
 
 }

@@ -20,6 +20,8 @@ public interface PostService {
     public List<Post> groupByPreference(Long idUser);
     public Post assignUserToPost(Long idUser,int idPost);
     public List<Post> getTrendingPost();
-    public void downloadArticle(int idPost, HttpServletResponse response)throws DocumentException, IOException, WriterException ;
+
+    public void downloadArticle(int idPost, HttpServletResponse response) throws IOException, DocumentException;
+
 
     }

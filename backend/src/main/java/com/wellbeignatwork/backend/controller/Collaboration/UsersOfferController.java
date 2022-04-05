@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/UsersOffer")
 public class UsersOfferController {
     @Autowired
     IUsersOfferService usersOfferService;
 
-    @PutMapping("/add-offer-fav")
+    //http://localhost:8081/Wellbeignatwork/UsersOffer/add-offer-fav/{userId}/{offerId}
+    @PutMapping("/add-offer-fav/{userId}/{offerId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Response addFav(@RequestParam Long offerId, Long userId) {
+    public Response addFav(@PathVariable Long offerId,@PathVariable Long userId) {
         try {
             /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
             Long userId = currentUser.getId();*/
@@ -33,25 +35,19 @@ public class UsersOfferController {
         }
     }
 
-    @GetMapping("/get-offers-fav")
+    //http://localhost:8081/Wellbeignatwork/UsersOffer/get-offers-fav/{userId}
+    @GetMapping("/get-offers-fav/{userId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<Offer> getFav(Long userId) {
+    public List<Offer> getFav(@PathVariable Long userId) {
         /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
         Long userId = currentUser.getId();*/
         return usersOfferService.getFavOffer(userId);
     }
 
-    @GetMapping("/get-invited-offers")
+    //http://localhost:8081/Wellbeignatwork/UsersOffer/feedback-offer/1/1
+    @PostMapping("/feedback-offer/{offerId}/{userId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<Offer> getInvited(Long userId) {
-        /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
-        Long userId = currentUser.getId();*/
-        return usersOfferService.getInvitedOffers(userId);
-    }
-
-    @PutMapping("/feedback-offer")
-    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Response feedbackOffer(@RequestParam Long offerId, @Valid @RequestBody FeedBackCollaboration feedback, Long userId) {
+    public Response feedbackOffer(@PathVariable Long offerId, @Valid @RequestBody FeedBackCollaboration feedback,@PathVariable Long userId) {
         try {
             /*UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
             Long userId = currentUser.getId();*/
@@ -62,9 +58,10 @@ public class UsersOfferController {
         }
     }
 
-    @GetMapping("/avg-rating")
+    //http://localhost:8081/Wellbeignatwork/UsersOffer/avg-rating/1
+    @GetMapping("/avg-rating/{offerId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public Object getAverageRatingOffer(@RequestParam Long offerId) {
+    public Object getAverageRatingOffer(@PathVariable Long offerId) {
         Map<String,Float> map=new HashMap<>();
         try {
             return map.put("average", usersOfferService.getAverageRateOffer(offerId));
@@ -73,9 +70,10 @@ public class UsersOfferController {
         }
     }
 
-    @GetMapping("/get-offer-feedbacks")
+    //http://localhost:8081/Wellbeignatwork/UsersOffer/get-offer-feedbacks/1
+    @GetMapping("/get-offer-feedbacks/{offerId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<OfferFeedbacks> getOfferFeedbacks(@RequestParam Long offerId) {
+    public List<OfferFeedbacks> getOfferFeedbacks(@PathVariable Long offerId) {
         return usersOfferService.getFeedbackOffer(offerId);
     }
 }

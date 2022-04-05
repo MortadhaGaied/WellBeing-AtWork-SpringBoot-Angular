@@ -1,9 +1,11 @@
 package com.wellbeignatwork.backend.service.Forum;
 
 import com.google.zxing.WriterException;
+
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfWriter;
+
 import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Forum.*;
@@ -15,12 +17,19 @@ import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 import com.wellbeignatwork.backend.exceptions.Forum.PostException;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.service.UserService.MailService;
 import com.wellbeignatwork.backend.util.BadWordFilter;
 import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+
+import com.lowagie.text.pdf.*;
 
 
 import java.awt.*;
@@ -45,10 +54,11 @@ public class PostServiceImpl implements PostService {
     private CommentRepository commentRepository;
     private ReactionRepository reactionRepository;
     private final FirebaseStorage firebaseStorage;
+    private MailService mailService;
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
-
+                           MailService mailService,
                            UserRepository userRepository,
                            CommentRepository commentRepository,
                            ReactionRepository reactionRepository,
@@ -59,6 +69,7 @@ public class PostServiceImpl implements PostService {
         this.commentRepository=commentRepository;
         this.reactionRepository=reactionRepository;
         this.firebaseStorage=firebaseStorage;
+        this.mailService=mailService;
     }
     public List<String> getAllSubjects(){
         List<String> resultat=new ArrayList<>();
@@ -222,6 +233,7 @@ public class PostServiceImpl implements PostService {
     }
     public HashMap<String, List> analyzepostInteractionForSignals(List<Double> data, Double threshold, Double influence) {
         int lag=2;
+
         SummaryStatistics stats = new SummaryStatistics();
         List<Integer> signals = new ArrayList<Integer>(Collections.nCopies(data.size(), 0));
         List<Double> filteredData = new ArrayList<Double>(data);
@@ -287,13 +299,14 @@ public class PostServiceImpl implements PostService {
 
 
             HashMap<String, List> resultsMap = analyzepostInteractionForSignals(data, threshold, influence);
+
             signalsList = resultsMap.get("signals");
             for(int i=0;i<allPosts.size();i++){
                 sortTrendPost.put(allPosts.get(i),signalsList.get(i));
             }
 
 
-
+        System.out.println("**************************************************************************************************************************");
         for (int i : signalsList) {
             System.out.print(df.format(i) + "\t");
         }
@@ -313,7 +326,7 @@ public class PostServiceImpl implements PostService {
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
-        System.out.println(reverseSortedMap);
+        //System.out.println(reverseSortedMap);
         List<Post> peakpost=new ArrayList<>();
         List<Post> avgpost=new ArrayList<>();
         List<Post> poorPost=new ArrayList<>();
@@ -385,7 +398,9 @@ public class PostServiceImpl implements PostService {
         System.out.println(filteredContent);
         return string;
     }
-    public void downloadArticle(int idPost, HttpServletResponse response)throws DocumentException, IOException, WriterException {
+
+    public void downloadArticle(int idPost, HttpServletResponse response) throws IOException, DocumentException {
+
         Post post=postRepository.findById(idPost).orElse(null);
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -412,6 +427,21 @@ public class PostServiceImpl implements PostService {
 
         document.close();
     }
+
+    @Scheduled(cron = "*/30 * * * * *")
+    public void greatingMostPopularPost(){
+        List<Post> posts=new ArrayList<>();
+        postRepository.findAll().forEach(posts::add);
+        List<Post> sort=sortPostByInteraction(posts);
+        if(sort.size()>=1){
+            User user=sort.get(0).getUser();
+
+            mailService.sendMail(user.getEmail(),"Congrat on hiting the most popular post",user.getDisplayName()+" your post has reached so many people keep the good work",false);
+
+        }
+
+    }
+
 
 
 }

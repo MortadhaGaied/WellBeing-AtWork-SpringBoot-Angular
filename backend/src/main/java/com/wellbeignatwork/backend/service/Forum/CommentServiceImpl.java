@@ -12,6 +12,8 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
+import lombok.var;
+import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ public class CommentServiceImpl implements CommentService{
     private StanfordCoreNLP pipeline;
     private PostRepository postRepository;
     private CommentRepository commentRepository;
+
     @PostConstruct
     public void init() {
         pipeline = new StanfordCoreNLP("MyPropFile.properties");
@@ -82,8 +85,17 @@ public class CommentServiceImpl implements CommentService{
             for(Comment c:p.getComments()){
                 result.add(findSentiment(c.getCommentContent()));
             }
+            double avg=result.stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
+            System.out.println("*****************AVG******************");
+            System.out.println(avg);
             return result;
         }
+
+
+
 
     }
     public int findSentiment(String commentContent) {
@@ -109,6 +121,10 @@ public class CommentServiceImpl implements CommentService{
         commentContent = commentContent.replaceAll("(@[A-Za-z0-9_]+)|([^0-9A-Za-z \\t])|(\\w+:\\/\\/\\S+)", " ");
         System.out.println(commentContent);
         return commentContent;
+    }
+    public List<Comment> sortByDate(int idPost){
+        Post post=postRepository.findById(idPost).orElse(null);
+        return commentRepository.sortbydate(post);
     }
 
 

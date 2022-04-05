@@ -23,7 +23,7 @@ public class CollaborationController {
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/UpdateCollaboration/1
-	@PutMapping("/UpdateCollaboration/{idUser}")
+	@PutMapping("/UpdateCollaboration/{id}")
 	@ResponseBody
 	public void UpdateCollaboration(@RequestBody Collaboration c, @PathVariable long idUser)
 	{
