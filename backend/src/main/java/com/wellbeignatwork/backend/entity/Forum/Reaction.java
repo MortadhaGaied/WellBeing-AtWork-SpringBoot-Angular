@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.entity.Forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Reaction implements Serializable {
     private ReactionType reactionType;
     private Long idUser;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private Post post;
 
 }

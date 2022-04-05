@@ -431,7 +431,8 @@ public class ActivityServiceImp implements IActivityService {
             for (Event e : events) {
                 for (User u : e.getUsers()) {
                     System.out.println("vous avez un evenement : " + u.getFirstName());
-                    /*
+                    mailService.sendMail(u.getEmail(),"event","you have an event",false);
+/*
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setFrom("wellbeingatworkevent@gmail.com");
                     message.setTo("nourhene.maaouia@esprit.tn");
@@ -439,8 +440,8 @@ public class ActivityServiceImp implements IActivityService {
                     message.setText("Test Body ");
 
                     javaMailSender.send(message);
+*/
 
-                     */
 
                 }
             }
@@ -572,7 +573,7 @@ public class ActivityServiceImp implements IActivityService {
 
     public void inviteUser(Long idUser, Long idEvent) {
         //send notification to the specific user ( user , event )
-
+/*
 
         //OnMessage (notification )  if notification.get subject event invitation => notitifaction.getTopic(userId,EventID
         // this.httpp.port (/accept invitaion))
@@ -620,6 +621,8 @@ public class ActivityServiceImp implements IActivityService {
 
 
 
+
+ */
     }
 
     @Override

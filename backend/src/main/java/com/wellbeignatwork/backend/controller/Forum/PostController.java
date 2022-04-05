@@ -1,6 +1,8 @@
 package com.wellbeignatwork.backend.controller.Forum;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.WriterException;
+import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.service.Forum.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 @Slf4j
 @RestController
@@ -58,7 +64,25 @@ public class PostController {
         return postService.assignUserToPost(idUser, idPost);
     }
     @GetMapping("/TrendingPost")
-    public void getTrendingPost(){
-        postService.getTrendingPost();
+    public List<Post> getTrendingPost(){
+        return postService.getTrendingPost();
+    }
+    @GetMapping("/downloadArticle/{idPost}")
+    @ResponseBody
+    public void downloadArticle (@PathVariable int idPost ,
+
+                                 HttpServletResponse response
+    ) throws IOException, DocumentException  {
+
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=article" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        postService.downloadArticle(idPost,response);
+
+
     }
 }

@@ -22,9 +22,11 @@ public class OpinionServiceImpl implements OpinionService{
 
 
     @Override
-    public void AddOpinion(Opinion opinion) {
+    public Opinion AddOpinion(Opinion opinion,Long idUser) {
+        User user=userRepository.findById(idUser).orElse(null);
+        opinion.setUser(user);
 
-        opinionRepository.save(opinion);
+        return opinionRepository.save(opinion);
     }
 
     @Override
@@ -51,6 +53,10 @@ public class OpinionServiceImpl implements OpinionService{
         opinion.setUser(user);
         opinionRepository.save(opinion);
 
+    }
+    public List<Opinion> getWhatsTheirOpinionOnMe(Long idUser){
+        User user= userRepository.findById(idUser).orElse(null);
+        return opinionRepository.findAllByUser(user);
     }
 
 }

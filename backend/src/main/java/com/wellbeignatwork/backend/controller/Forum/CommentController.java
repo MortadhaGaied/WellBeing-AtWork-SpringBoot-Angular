@@ -39,4 +39,9 @@ public class CommentController {
     public List<Integer> PostSatisfaction(@PathVariable int idPost){
         return commentService.PostSatisfaction(idPost);
     }
+    @GetMapping("/sortByDate/{idPost}")
+    public List<Comment> sortByDate(@PathVariable int idPost){
+        return commentService.sortByDate(idPost);
+    }
+
 }
