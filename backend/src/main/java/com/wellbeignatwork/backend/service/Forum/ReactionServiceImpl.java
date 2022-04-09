@@ -2,6 +2,7 @@ package com.wellbeignatwork.backend.service.Forum;
 
 import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.Forum.Reaction;
+import com.wellbeignatwork.backend.entity.Forum.ReactionType;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 import com.wellbeignatwork.backend.repository.Forum.ReactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,5 @@ public class ReactionServiceImpl implements ReactionService{
         Reaction reaction=reactionRepository.findById(idReaction).orElse(null);
         reactionRepository.delete(reaction);
     }
+
 }

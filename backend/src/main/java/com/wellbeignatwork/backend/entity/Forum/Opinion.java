@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.entity.Forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
@@ -17,5 +18,6 @@ public class Opinion {
     private Long idOpinion;
     private String content;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private User user;
 }
