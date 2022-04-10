@@ -17,6 +17,8 @@ import { CreatePostComponent } from './core/create-post/create-post.component';
 import { LinksComponent } from './core/links/links.component';
 import { RecentBlogComponent } from './core/recent-blog/recent-blog.component';
 import { CompleteProfileComponent } from './core/complete-profile/complete-profile.component';
+import { StreamComponent } from './live-stream/stream/stream.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,12 @@ import { CompleteProfileComponent } from './core/complete-profile/complete-profi
     CreatePostComponent,
     LinksComponent,
     RecentBlogComponent,
-    CompleteProfileComponent
+    CompleteProfileComponent,
+    StreamComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
