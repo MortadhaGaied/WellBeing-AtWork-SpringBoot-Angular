@@ -52,5 +52,10 @@ public class ReactionServiceImpl implements ReactionService{
         Reaction reaction=reactionRepository.findById(idReaction).orElse(null);
         reactionRepository.delete(reaction);
     }
+    @Override
+    public int getNbrReactionByPost(int idPost){
+        Post p=postRepository.findById(idPost).orElse(null);
+        return reactionRepository.NbrReactionByPost(p);
+    }
 
 }

@@ -31,6 +31,11 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./chatting/chatting.module").then((m) => m.ChattingModule),
       },
+      {
+        path: "forum",
+        loadChildren: () =>
+          import("./forum/forum.module").then((m) => m.ForumModule),
+      },
     ],
   },
   {

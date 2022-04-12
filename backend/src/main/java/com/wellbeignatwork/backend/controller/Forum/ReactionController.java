@@ -1,5 +1,6 @@
 package com.wellbeignatwork.backend.controller.Forum;
 
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.Forum.Reaction;
 import com.wellbeignatwork.backend.entity.Forum.ReactionType;
 import com.wellbeignatwork.backend.service.Forum.ReactionService;
@@ -21,6 +22,11 @@ public class ReactionController {
     @DeleteMapping("/deleteReaction/{idReaction}")
     public void deleteReaction(@PathVariable int idReaction){
         reactionService.deleteReaction(idReaction);
+    }
+    @GetMapping("getNbrReactionByPost/{idPost}")
+    public int getNbrReactionByPost(@PathVariable int idPost){
+
+        return reactionService.getNbrReactionByPost(idPost);
     }
 
 }

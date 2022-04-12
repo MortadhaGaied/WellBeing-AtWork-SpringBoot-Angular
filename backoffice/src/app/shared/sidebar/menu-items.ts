@@ -10,6 +10,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "/forum/blogs",
+    title: "Blogs",
+    icon: "bi bi-speedometer2",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/dashboard",
     title: "Dashboard",
     icon: "bi bi-speedometer2",

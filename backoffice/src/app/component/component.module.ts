@@ -30,6 +30,6 @@ import { TableComponent } from "./table/table.component";
     CardsComponent,
     TableComponent,
   ],
-  exports: [TableComponent],
+  exports: [TableComponent,CardsComponent],
 })
 export class ComponentsModule {}
