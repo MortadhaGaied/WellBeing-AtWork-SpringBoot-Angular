@@ -26,6 +26,11 @@ export const Approutes: Routes = [
             (m) => m.ComponentsModule
           ),
       },
+      {
+        path: "chat",
+        loadChildren: () =>
+          import("./chatting/chatting.module").then((m) => m.ChattingModule),
+      },
     ],
   },
   {
