@@ -1,20 +1,17 @@
-import { Component } from '@angular/core';
-import {Product,TopSelling, TableRows, Employee} from './table-data';
-
+import { Component } from "@angular/core";
+import { Product, TopSelling, TableRows, Employee } from "./table-data";
 
 @Component({
-    selector: 'app-table',
-    templateUrl: 'table.component.html'
+  selector: "app-table",
+  templateUrl: "table.component.html",
 })
 export class TableComponent {
-  topSelling:Product[];
+  topSelling: Product[];
+  trow: TableRows[];
 
-  trow:TableRows[];
+  constructor() {
+    this.topSelling = TopSelling;
 
-  constructor() { 
-
-    this.topSelling=TopSelling;
-
-    this.trow=Employee;
+    this.trow = Employee;
   }
 }
