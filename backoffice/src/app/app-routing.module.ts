@@ -1,61 +1,30 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+import { Routes, RouterModule } from '@angular/router';
 
-export const routes: Routes = [
+import { FullComponent } from './layouts/full/full.component';
+
+export const Approutes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
-  },
-  {
-    path: 'auth',
-    component: NbAuthComponent,
+    path: '',
+    component: FullComponent,
     children: [
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       {
-        path: '',
-        component: NbLoginComponent,
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: 'login',
-        component: NbLoginComponent,
+        path: 'about',
+        loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
       },
       {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
+        path: 'component',
+        loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
+      }
+    ]
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  {
+    path: '**',
+    redirectTo: '/starter'
+  }
 ];
-
-const config: ExtraOptions = {
-  useHash: false,
-};
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {
-}
