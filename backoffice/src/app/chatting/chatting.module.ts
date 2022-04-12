@@ -6,9 +6,16 @@ import { ChatRoomsComponent } from "./chat-rooms/chat-rooms.component";
 import { RouterModule } from "@angular/router";
 import { TableComponent } from "../component/table/table.component";
 import { ComponentsModule } from "../component/component.module";
+import { ChatroomsTableComponent } from "./chatrooms-table/chatrooms-table.component";
+import { DashboardModule } from "../dashboard/dashboard.module";
 
 @NgModule({
-  declarations: [ChatRoomsComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), ComponentsModule],
+  declarations: [ChatRoomsComponent, ChatroomsTableComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ComponentsModule,
+    DashboardModule,
+  ],
 })
 export class ChattingModule {}

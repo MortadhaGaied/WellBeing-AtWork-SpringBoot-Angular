@@ -10,7 +10,6 @@ import { TopSellingComponent } from "./dashboard-components/top-selling/top-sell
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
 
-
 const routes: Routes = [
   {
     path: "",
@@ -36,7 +35,8 @@ const routes: Routes = [
     FeedsComponent,
     TopSellingComponent,
     TopCardsComponent,
-    BlogCardsComponent
+    BlogCardsComponent,
   ],
+  exports: [TopCardsComponent],
 })
 export class DashboardModule {}
