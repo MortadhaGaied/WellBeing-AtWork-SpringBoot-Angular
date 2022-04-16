@@ -19,6 +19,7 @@
       "es2017",
       "dom"
     ],
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "baseUrl": "src"
   }
 }

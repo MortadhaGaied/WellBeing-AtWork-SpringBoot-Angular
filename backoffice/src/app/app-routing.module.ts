@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AddEventComponentComponent } from "./event/add-event-component/add-event-component.component";
+import { EventsComponent } from "./event/events/events.component";
 
 import { FullComponent } from "./layouts/full/full.component";
 
@@ -36,6 +38,12 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./forum/forum.module").then((m) => m.ForumModule),
       },
+      {
+        path: "event",
+        loadChildren: () =>
+          import("./event/event.module").then((m) => m.EventModule),
+      },
+     
     ],
   },
   {

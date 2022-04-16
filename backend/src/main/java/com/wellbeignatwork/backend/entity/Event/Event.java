@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 
 public class Event implements Serializable {
     @Id

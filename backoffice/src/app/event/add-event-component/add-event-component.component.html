@@ -1,0 +1,59 @@
+<div class="body">
+                <form class="form-horizontal">
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="event_name">Event Name</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input name="event_name" [(ngModel)]="event.eventName" type="text" id="event_name" class="form-control" placeholder="Enter the event name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="event_season">Event Season</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input name="event_season" [(ngModel)]="event.eventSeason" type="text" id="event_season" class="form-control" placeholder="Enter the season">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="frais">frais</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                 <div class= "form-line " >
+                   <input name= "frais " [(ngModel)]= "event.frais" type= "number " id= "frais " class= "form-control " placeholder= "Enter the fee" >
+                 </div >
+               </div >
+             </div >
+           </div >
+           <div class= "row clearfix " >
+             <div class= "col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label " >
+               <label for= "paticipant" >Participant </label >
+             </div >
+             <div class= "col-lg-10 col-md-10 col-sm-8 col-xs-7 " >
+               <div class= "form-group " >
+                 <div class= "form-line " >
+                   <input name= "paticipant " [(ngModel)]= "event.nbrMaxParticipant" type= "password " id= "paticipant " class= "form-control " placeholder= "Enter the max number of the participant " >
+                 </div >
+               </div >
+             </div >
+           </div >
+          
+           <div class= "row clearfix " >
+             <div class= "col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5 " >
+               <button (click)= "addEvent() " type= "button " class= "btn btn-primary m-t-15 waves-effect " >Add </button >
+             </div >
+           </div >
+          
+         </form >
+       </div >
