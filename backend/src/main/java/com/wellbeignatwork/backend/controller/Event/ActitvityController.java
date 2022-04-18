@@ -64,6 +64,12 @@ public class ActitvityController {
         return activityService.getAllEvents();
     }
 
+    @GetMapping("/getEventById/{id_event}")
+    @ResponseBody
+    public Event getEventById (@PathVariable("id_event") Long idEvent){
+        return activityService.getEventById(idEvent);
+    }
+
     @GetMapping("/assign-user-to-event/{id_user}/{id_event}")
     @ResponseBody
     public void assignUserToEvent (@PathVariable("id_user") Long idUser ,

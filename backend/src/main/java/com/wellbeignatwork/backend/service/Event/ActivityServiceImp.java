@@ -536,6 +536,11 @@ public class ActivityServiceImp implements IActivityService {
         return new ArrayList<Event>(reverseSortedMap.keySet());
     }
 
+    @Override
+    public Event getEventById(Long idEvent) {
+        return eventRepository.findById(idEvent).orElse(null);
+    }
+
     public boolean compareTags(Set<Tags> eventTags, Set<Tags> userTags) {
         return eventTags.containsAll(userTags);
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit , Inject} from '@angular/core';
+import { Component, OnInit , Inject, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from 'app/event/event.service';
 import { Event } from '../../Models/Forum/Event/Event';
@@ -10,10 +10,14 @@ import { Event } from '../../Models/Forum/Event/Event';
 })
 export class AddEventComponentComponent implements OnInit {
   event : Event = new Event();
-
   constructor(@Inject(EventService) private ev:EventService, private _router:Router ) { }
 
   ngOnInit(): void {
+    this.ev.$eventEmit.subscribe((data)=> {
+      console.log("aaaaaaa");
+      this.event=data;
+    })
+
   }
   addEvent (){
     this.ev.addEvent(this.event).subscribe(()=>this._router.navigateByUrl("/event/"));

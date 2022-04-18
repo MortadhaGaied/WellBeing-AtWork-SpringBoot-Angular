@@ -35,7 +35,7 @@ public interface IActivityService {
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
     public List<Event> filtreByDepartement(Departement departement);
-
+    public Event getEventById (Long idEvent);
 
      public void addSubscription(Subscription s);
      public void deleteSubscription(Subscription s);
