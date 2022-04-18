@@ -120,7 +120,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void deleteEvent(Event e) {
-        if(e.getUsers()==null){
+        if(e.getUsers().size()==0){
             eventRepository.delete(e);
         }
         else{
