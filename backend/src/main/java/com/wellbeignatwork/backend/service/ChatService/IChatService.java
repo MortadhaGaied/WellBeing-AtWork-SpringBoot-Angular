@@ -8,6 +8,7 @@ import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.messaging.MessagingException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IChatService {
 
@@ -28,5 +29,6 @@ public interface IChatService {
     public void bannUserFromChatRoom(Long userId,Long roomId);
     public void autoBannUsersFromChatRooms(int BadWordsFound, User user, ChatRoom room);
     public void unbannUserFromChatRoom(Long userId,Long roomId);
+    public Set<User> findUsersByChatroom(Long roomId);
 
 }

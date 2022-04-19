@@ -69,7 +69,11 @@ public class ChatRoomService implements IChatService {
     }
 
     public ChatRoom updateChatRoom(ChatRoom chatRoom) {
-        return chatRoomRepository.save(chatRoom);
+
+       return chatRoomRepository.findById(chatRoom.getId())
+               .map(chatRoomRepository::save)
+               .orElseThrow(()->new ResourceNotFoundException("room not found"));
+        
     }
 
     public List<ChatRoom> getAllRooms() {
@@ -492,6 +496,13 @@ public class ChatRoomService implements IChatService {
         mailService.sendMail(user.getEmail(), "user unbann", "your bann period has been passed now you can go back to tchat in room :  " + room.getRoomName() + "\n" +
                 "keep in mind the next time your bann period will get doubled ! ", false);
 
+    }
+
+    @Override
+    public Set<User> findUsersByChatroom(Long roomId) {
+        return chatRoomRepository.findById(roomId)
+                .map(ChatRoom::getUsers)
+                .orElseThrow(()->new ResourceNotFoundException("room with id : "+roomId+"does not exist"));
     }
 
 

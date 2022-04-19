@@ -5,6 +5,7 @@ import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.payload.MessageRequest;
 import com.wellbeignatwork.backend.payload.MessageResponse;
 import com.wellbeignatwork.backend.service.ChatService.ChatRoomService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin("*")
 @RestController
@@ -42,7 +44,12 @@ public class ChatController {
 
 
 
+    @GetMapping("/chatroom/getUsersByRoom/{roomId}")
+    @ResponseBody
+    public Set<User> getUsersByRoom(@PathVariable Long roomId){
+        return chatRoomService.findUsersByChatroom(roomId);
 
+    }
     @PostMapping("/chatroom/add-room")
     @ResponseBody
     public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom) {

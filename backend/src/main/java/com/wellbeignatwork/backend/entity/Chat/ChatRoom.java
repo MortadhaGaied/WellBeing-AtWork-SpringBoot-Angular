@@ -22,6 +22,10 @@ public class ChatRoom {
     //this key helps creating unique rooms for one to one chatting
     private String uniqueKey;
     private int MaxBadWords;
+    private int capacity;
+    private boolean isVisible;
+    @Enumerated(EnumType.STRING)
+    private RoomStatus status;
 
     private String averageResponseTime;
 
