@@ -15,6 +15,16 @@ export const ROUTES: RouteInfo[] = [
     icon: "bi bi-speedometer2",
     class: "",
     extralink: false,
+    submenu: [
+      
+    ],
+  },
+  {
+    path: "/forum/addBlog",
+    title: "Add Blogs",
+    icon: "bi bi-speedometer2",
+    class: "",
+    extralink: false,
     submenu: [],
   },
   {

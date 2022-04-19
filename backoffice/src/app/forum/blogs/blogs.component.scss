@@ -1,0 +1,13 @@
+.btn-wrapper{
+    position: relative;
+    margin:0px -50px 0px 0px;
+}
+.remove-btn{
+    position:absolute;
+    top:50%;
+    left:0;
+    transform: translateY(-50%);
+}
+.card:hover{
+    transform: scale(1.1) !important;
+}

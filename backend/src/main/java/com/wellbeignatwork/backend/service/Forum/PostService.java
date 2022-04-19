@@ -21,7 +21,7 @@ public interface PostService {
     public List<Post> groupByPreference(Long idUser);
     public Post assignUserToPost(Long idUser,int idPost);
     public List<Post> getTrendingPost();
-
+    public Post getPostById(int id);
     public void downloadArticle (@PathVariable int idPost ,
 
                                  HttpServletResponse response

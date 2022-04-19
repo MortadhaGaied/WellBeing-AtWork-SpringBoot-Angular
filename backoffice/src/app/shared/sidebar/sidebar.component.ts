@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.showMenu = element;
     }
+    
   }
 
   constructor(

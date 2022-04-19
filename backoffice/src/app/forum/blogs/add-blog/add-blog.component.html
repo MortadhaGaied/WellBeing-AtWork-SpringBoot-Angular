@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label for="subject">Subject</label>
+    <input type="text" class="form-control" id="subject" required [(ngModel)]="blog.subject" name="subject">
+</div>
+<div class="form-group">
+    <label for="content">Content</label>
+    <input type="text" class="form-control" id="content" required [(ngModel)]="blog.content" name="content">
+</div>
+<div class= "col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5 " >
+    <button (click)= "addBlog() " type= "button " class= "btn btn-primary m-t-15 waves-effect " >Add </button >
+  </div >

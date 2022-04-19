@@ -144,7 +144,10 @@ public class PostServiceImpl implements PostService {
             return assignUserToPost(idUser,post.getId());
         }
     }
-
+    @Override
+    public Post getPostById(int id){
+        return postRepository.findById(id).orElse(null);
+    }
     @Override
     public Collection<Post> getAll() {
         return (Collection<Post>) postRepository.findAll();

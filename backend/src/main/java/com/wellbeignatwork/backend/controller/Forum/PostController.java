@@ -46,6 +46,10 @@ public class PostController {
     public ResponseEntity<Collection<Post>> getAllPosts() {
         return new ResponseEntity<>(this.postService.getAll(), HttpStatus.OK);
     }
+    @GetMapping("/getPostById/{id}")
+    public Post getPostById(@PathVariable int id){
+        return postService.getPostById(id);
+    }
     @PutMapping("/update-post")
     public ResponseEntity<Post> updatePost(@RequestBody Post post) {
         return new ResponseEntity<>(this.postService.updatepost(post), HttpStatus.OK);
