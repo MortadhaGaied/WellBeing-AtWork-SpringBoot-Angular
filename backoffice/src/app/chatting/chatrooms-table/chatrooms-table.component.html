@@ -1,19 +1,136 @@
 <div class="row">
   <div class="col">
-    <div class="card shadow">
-      <div class="card-header border-0">
-        <h3 class="mb-0">Card tables</h3>
+    <div
+      class="container"
+      style="
+        margin-bottom: 5rem;
+        margin-top: 1.2rem;
+        background-color: white;
+        border-radius: 10px;
+        padding: 2.5rem;
+      "
+      [hidden]="visible"
+    >
+      <div class="container">
+        <form (ngSubmit)="onFormSubmitted()" #AuckFmineForm="ngForm">
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >Room Name</label
+            >
+            <div class="col-sm-10">
+              <input
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="room.roomName"
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="Room Name"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label"
+              >capacity</label
+            >
+            <div class="col-sm-10">
+              <input
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="room.capacity"
+                type="number"
+                class="form-control"
+                id="inputPassword3"
+                placeholder="Password"
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-2">available</div>
+            <div class="col-sm-10">
+              <div class="form-group">
+                <select
+                  [ngModelOptions]="{ standalone: true }"
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  [(ngModel)]="room.status"
+                >
+                  <option>UP</option>
+                  <option>DOWN</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-2">visible</div>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="room.isVisible"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="gridCheck1"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleFormControlFile1">Room Photo : </label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="exampleFormControlFile1"
+            />
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </div>
+        </form>
       </div>
+    </div>
+    <div class="card shadow">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+        class="card-header border-0"
+      >
+        <h3 class="mb-0">Card tables</h3>
+        <div (click)="toggleVisibility()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-plus-square"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
+            />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+        </div>
+      </div>
+
       <div class="table-responsive">
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
               <th scope="col">Room</th>
-              <th scope="col">privacy</th>
+              <th scope="col">visibility</th>
               <th scope="col">Status</th>
               <th scope="col">Users</th>
               <th scope="col">Capacity</th>
               <th scope="col">Response Time Rate</th>
+              <th scope="col">actions</th>
             </tr>
           </thead>
           <tbody>
@@ -24,16 +141,32 @@
                     <img
                       alt="Image placeholder"
                       src="assets/images/chatroom/chatRoom.jpg"
-                    /> </a
-                  >''
+                    />
+                  </a>
                   <div class="media-body">
                     <span class="mb-0 text-sm">{{ room.roomName }}</span>
                   </div>
                 </div>
               </th>
-              <td>{{ room.id }}</td>
               <td>
-                <span class="mb-1 me-2 badge bg-success">open</span>
+                <span class="mb-1 me-2 badge bg-success" *ngIf="room.isVisible"
+                  >public</span
+                >
+                <span class="mb-1 me-2 badge bg-danger" *ngIf="!room.isVisible"
+                  >private</span
+                >
+              </td>
+              <td>
+                <span
+                  class="mb-1 me-2 badge bg-success"
+                  *ngIf="room.status == 'UP'"
+                  >open</span
+                >
+                <span
+                  class="mb-1 me-2 badge bg-danger"
+                  *ngIf="room.status == 'DOWN'"
+                  >closed</span
+                >
               </td>
               <td>
                 <div class="avatar-group">
@@ -54,7 +187,7 @@
               </td>
               <td>
                 <div class="d-flex align-items-center">
-                  <span class="mr-2">{{ room.capacity }}</span>
+                  <span class="mr-2">{{ room.cap }}</span>
                   <div>
                     <div class="progress">
                       <div
@@ -63,13 +196,42 @@
                         aria-valuenow="percent"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                        [style.width]="room.capacity"
+                        [style.width]="room.cap"
                       ></div>
                     </div>
                   </div>
                 </div>
               </td>
               <td>{{ room.averageResponseTime }}</td>
+              <td>
+                <div style="display: flex; justify-content: space-evenly">
+                  <svg
+                    (click)="deleteRoom(room)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    fill="currentColor"
+                    class="bi bi-trash3"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    fill="currentColor"
+                    class="bi bi-pencil"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
+                    />
+                  </svg>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

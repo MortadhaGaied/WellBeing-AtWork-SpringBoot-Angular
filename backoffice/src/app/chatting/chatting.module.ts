@@ -8,10 +8,15 @@ import { TableComponent } from "../component/table/table.component";
 import { ComponentsModule } from "../component/component.module";
 import { ChatroomsTableComponent } from "./chatrooms-table/chatrooms-table.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
-
+import { MatSliderModule } from "@angular/material/slider";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { FormsModule } from "@angular/forms";
 @NgModule({
   declarations: [ChatRoomsComponent, ChatroomsTableComponent],
   imports: [
+    FormsModule,
+    MatSlideToggleModule,
+    MatSliderModule,
     CommonModule,
     RouterModule.forChild(routes),
     ComponentsModule,

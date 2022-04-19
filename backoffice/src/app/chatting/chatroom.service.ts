@@ -11,6 +11,9 @@ export class ChatroomService {
   getAllRooms() {
     return this.http.get<Chatroom[]>(this.URI + "/all-rooms");
   }
+  getUsersByRoom(roomId: number) {
+    return this.http.get<any[]>(this.URI + "/getUsersByRoom/" + roomId);
+  }
 
   createRoom(room: Chatroom) {
     return this.http.post(this.URI + "/add-room", room);
@@ -18,5 +21,8 @@ export class ChatroomService {
 
   deleteRoom(room: Chatroom) {
     return this.http.delete(this.URI + "/delete-room", { body: room });
+  }
+  updateRoom(room: Chatroom) {
+    return this.http.put(this.URI + "/update-room", room);
   }
 }
