@@ -76,6 +76,13 @@ public class QVTService implements IntQVTService {
         return  questionsRepo.findQuestionsBySurvey(survey);
     }
 
+    @Override
+    public Survey UpdateSurvey(Survey survey) {
+
+        return MysurveyRepo.save(survey);
+    }
+
+
 
 
 

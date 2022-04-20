@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/PointsAndGift")
+@CrossOrigin("*")
 public class PointsAndGiftControl {
+
     @Autowired
     IntPointsAndGiftService intPointsAndGiftService;
 

@@ -18,6 +18,7 @@ public interface IntQVTService {
      ByteArrayInputStream load();
      List<Question> SendSurvey();
 
+     Survey UpdateSurvey(Survey survey);
 
 
 
