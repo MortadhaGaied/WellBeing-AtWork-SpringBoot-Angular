@@ -70,10 +70,13 @@ public class ChatRoomService implements IChatService {
 
     public ChatRoom updateChatRoom(ChatRoom chatRoom) {
 
-       return chatRoomRepository.findById(chatRoom.getId())
-               .map(chatRoomRepository::save)
-               .orElseThrow(()->new ResourceNotFoundException("room not found"));
+       return chatRoomRepository.save(chatRoom);
         
+    }
+
+    @Override
+    public ChatRoom findRoomById(Long roomId) {
+        return chatRoomRepository.findById(roomId).orElseThrow(()->new ResourceNotFoundException("room with id "+roomId+" does not exist"));
     }
 
     public List<ChatRoom> getAllRooms() {

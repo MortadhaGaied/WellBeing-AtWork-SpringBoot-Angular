@@ -15,6 +15,7 @@ public interface IChatService {
     public ChatRoom createChatRoom(ChatRoom chatRoom);
     public void deleteChatRoom(ChatRoom chatRoom);
     public ChatRoom updateChatRoom(ChatRoom chatRoom);
+    public ChatRoom findRoomById(Long roomId);
     public List<ChatRoom> getAllRooms();
     public List<ChatRoom> getPublicRooms();
     public List<ChatRoom> getMostActiveChatRooms();

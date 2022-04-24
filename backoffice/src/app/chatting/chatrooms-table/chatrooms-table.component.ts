@@ -6,6 +6,7 @@ import {
   DocumentData,
   Firestore,
 } from "@angular/fire/firestore";
+import { Router } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { Chatroom } from "../chatroom";
 import { ChatroomService } from "../chatroom.service";
@@ -18,7 +19,7 @@ import { ChatroomService } from "../chatroom.service";
 export class ChatroomsTableComponent implements OnInit, OnDestroy {
   item$: Observable<any[]>;
   col: CollectionReference<DocumentData>;
-  constructor(private service: ChatroomService, private firestore: Firestore) {
+  constructor(private service: ChatroomService, private firestore: Firestore,private router:Router) {
     this.col = collection(firestore, "items");
     this.item$ = collectionData(this.col);
   }
@@ -28,34 +29,14 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
   subscription2: Subscription;
   subscription3: Subscription;
 
-  room: Chatroom = {
-    id: 0,
-    roomName: "",
-    //this key helps creating unique rooms for one to one chatting
-    uniqueKey: "",
-    MaxBadWords: 0,
-    capacity: 0,
-    averageResponseTime: "",
-    users: [],
-    messages: [],
-    isVisible: false,
-    status: "",
-    cap: "",
-  };
+
 
   ngOnInit(): void {
     this.getAllRooms();
   }
 
-  onFormSubmitted() {
-    console.log(this.room);
-    this.service.createRoom(this.room).subscribe(
-      (data) => {
-        this.getAllRooms();
-      },
-      (error) => {},
-      () => this.toggleVisibility()
-    );
+  OnAddRoomClicked():void{
+    this.router.navigateByUrl("/chat/add-room");
   }
 
   toggleVisibility() {
@@ -86,4 +67,17 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
       .deleteRoom(room)
       .subscribe((data) => this.getAllRooms());
   }
+
+  handleNavigateToEdit(room:Chatroom):void{
+    console.log(room);
+    this.router.navigateByUrl("/chat/"+room.id)
+  }
+  handleNavigateToChatRoomUsersList(room:Chatroom):void{
+    console.log("clicked")
+    if(room.users){
+      if(room.users?.length>0){
+        this.router.navigateByUrl(`/chat/${room.id}/user-list`)
+      }
+    }
+}
 }

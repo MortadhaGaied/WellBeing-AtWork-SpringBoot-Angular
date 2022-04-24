@@ -25,4 +25,8 @@ export class ChatroomService {
   updateRoom(room: Chatroom) {
     return this.http.put(this.URI + "/update-room", room);
   }
+
+  findRoomById(id:number){
+    return this.http.get<Chatroom>(this.URI+"/"+id)
+  }
 }

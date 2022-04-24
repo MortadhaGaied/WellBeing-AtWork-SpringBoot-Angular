@@ -56,6 +56,11 @@ public class ChatController {
         return chatRoomService.createChatRoom(chatRoom);
     }
 
+    @GetMapping("/chatroom/{roomId}")
+    @ResponseBody
+    public ChatRoom findRoomById(@PathVariable Long roomId){
+        return chatRoomService.findRoomById(roomId);
+    }
     @DeleteMapping("/chatroom/delete-room")
     @ResponseBody
     public void deleteChatRoom(@RequestBody ChatRoom chatRoom) {
