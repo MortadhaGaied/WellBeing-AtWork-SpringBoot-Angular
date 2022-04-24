@@ -13,7 +13,7 @@
       <div class="card">
         <img
           class="card-img-top img-responsive"
-          src="assets/images/bg/bg1.jpg"
+          [src]='b.file'
           alt="Card image cap"
         />
         <div class="card-body">
@@ -21,7 +21,7 @@
           <p class="card-text">
             {{b.content.substring(0,85)}}
           </p>
-          <p>{{getnbreactionByblog(b.id)}}</p>
+          
           <span class="mb-1 me-2 badge rounded-pill bg-dark" *ngFor="let t of b.tags">{{t}}</span>
           
           <div class="btn-wrapper text-center">

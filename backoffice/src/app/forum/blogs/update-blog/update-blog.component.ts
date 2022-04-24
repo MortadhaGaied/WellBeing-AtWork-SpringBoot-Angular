@@ -1,21 +1,19 @@
 import { Component, OnInit,Inject } from '@angular/core';
+import { BlogsServiceService } from '../blogs-service.service';
 import { Post } from '../../../Models/Forum/Post';
 import { FileUpload } from '../../../Models/file-upload.model';
 import { Router } from '@angular/router';
-import { BlogsServiceService } from '../blogs-service.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImageService } from '../../../image.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
   import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
-  selector: 'app-add-blog',
-  templateUrl: './add-blog.component.html',
-  styleUrls: ['./add-blog.component.scss']
+  selector: 'app-update-blog',
+  templateUrl: './update-blog.component.html',
+  styleUrls: ['./update-blog.component.scss']
 })
-
-export class AddBlogComponent implements OnInit {
-
+export class UpdateBlogComponent implements OnInit {
   blog:Post=new Post();
   url:string;
   selectedFiles?: FileList;
@@ -23,24 +21,26 @@ export class AddBlogComponent implements OnInit {
   percentage = 0;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  tags: string[] = ['SPORT', 'ANIMAL'];
-  constructor(@Inject(BlogsServiceService) private ev:BlogsServiceService, private _router:Router,private dialogRef:MatDialogRef<AddBlogComponent>,private uploadService: ImageService) { }
+  tags: string[] =[];
   
+  constructor(@Inject(BlogsServiceService) private ev:BlogsServiceService,private _router:Router,private dialogRef:MatDialogRef<UpdateBlogComponent>,private uploadService: ImageService) { }
+
   ngOnInit(): void {
-    
+    this.ev.$eventEmit.subscribe((data)=> {
+      this.blog=data;
+      console.log(this.blog);
+      this.tags=[...this.blog.tags];
+    })
     
   }
-  addBlog (){
-    
-    
+  updateBlog (){
     this.blog.file=this.currentFileUpload.url;
     console.log(this.currentFileUpload.key);
     this.blog.tags=this.tags;
     console.log(this.blog);
-    
-    this.ev.addBlog(this.blog).subscribe(()=>
+    this.ev.updateBlog(this.blog).subscribe(()=>
     {
-      console.log("ajouter");
+      console.log("modifier");
       this.dialogRef.close();
       this._router.navigateByUrl("/forum/blogs").then(()=>window.location.reload());
     })
@@ -65,10 +65,7 @@ export class AddBlogComponent implements OnInit {
         );
       }
     }
- 
   }
-  
-
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -88,7 +85,4 @@ export class AddBlogComponent implements OnInit {
       this.tags.splice(index, 1);
     }
   }
-  
-  
-
 }

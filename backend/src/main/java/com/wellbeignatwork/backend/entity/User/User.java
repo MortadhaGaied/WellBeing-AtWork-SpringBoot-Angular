@@ -102,7 +102,7 @@ public class User implements Serializable {
 	private Set<Event> events;
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Subscription> subscriptions;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user",cascade =CascadeType.ALL)
 	@JsonIgnore
 	private List<Post> posts;
 	@JsonIgnore

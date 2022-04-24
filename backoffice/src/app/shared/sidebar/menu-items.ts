@@ -20,14 +20,6 @@ export const ROUTES: RouteInfo[] = [
     ],
   },
   {
-    path: "/forum/addBlog",
-    title: "Add Blogs",
-    icon: "bi bi-speedometer2",
-    class: "",
-    extralink: false,
-    submenu: [],
-  },
-  {
     path: "/dashboard",
     title: "Dashboard",
     icon: "bi bi-speedometer2",

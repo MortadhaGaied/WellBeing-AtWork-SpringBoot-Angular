@@ -178,9 +178,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post assignUserToPost(Long id_user,int id_post){
+        List<Post> posts=new ArrayList<>();
         Post p=postRepository.findById(id_post).orElse(null);
         User u=userRepository.findById(id_user).orElse(null);
-        u.getPosts().add(p);
+        if(u.getPosts()==null){
+            posts.add(p);
+            u.setPosts(posts);
+        }
+        else{
+            u.getPosts().add(p);
+        }
+
         p.setUser(u);
 
         postRepository.save(p);

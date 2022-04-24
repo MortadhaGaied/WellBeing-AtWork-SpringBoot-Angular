@@ -4,6 +4,9 @@ import { Post } from '../../Models/Forum/Post';
 import { AddBlogComponent } from './add-blog/add-blog.component';
 import { BlogsServiceService } from './blogs-service.service';
 import { Router } from '@angular/router';
+import { ImageService } from '../../image.service';
+import { map } from 'rxjs/operators';
+import { UpdateBlogComponent } from './update-blog/update-blog.component';
 @Component({
   selector: 'app-blogs',
   templateUrl: './blogs.component.html',
@@ -15,9 +18,10 @@ export class BlogsComponent implements OnInit {
   updateId : number;
   blog:Post;
   @Output () eventEmmit= new EventEmitter(); 
-  
-  constructor(private _service:BlogsServiceService,private matDialog:MatDialog, private router:Router) { }
+  fileUploads?: any[];
+  constructor(private _service:BlogsServiceService,private matDialog:MatDialog, private router:Router,private uploadService: ImageService) { }
   ngOnInit(): void {
+    
     this._service.getAllPost().subscribe
     (res=>
       {
@@ -29,6 +33,7 @@ export class BlogsComponent implements OnInit {
     
   }
   deleteBlog(id:number){
+    
     this._service.deleteBlogById(id).subscribe(()=>this._service.getAllPost().subscribe(res=>{this.listPosts=res}));
   }
   getnbreactionByblog(id:number){
@@ -37,15 +42,13 @@ export class BlogsComponent implements OnInit {
   updateBlog(idBlog:number){
     
     this.blog=this._service.sendEventData(idBlog);
-    this.matDialog.open(AddBlogComponent,{
-      data:{
-          subject:"aa",
-          content:"bb"
-      }
-    });
+    this.matDialog.open(UpdateBlogComponent
+    );
   }
   onOpenDialogClick(){
     this.matDialog.open(AddBlogComponent);
+    
   }
+ 
 
 }

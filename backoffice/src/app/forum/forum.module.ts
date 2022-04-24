@@ -11,13 +11,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { UpdateBlogComponent } from './blogs/update-blog/update-blog.component';
 
 @NgModule({
   declarations: [
     BlogsComponent,
     AddBlogComponent,
     BlogDetailComponent,
-    
+    UpdateBlogComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +27,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDialogModule,
     FormsModule,
     MatChipsModule,
-    MatIconModule,MatFormFieldModule
+    MatIconModule,MatFormFieldModule,
+    
+    
   ]
 })
 export class ForumModule { }

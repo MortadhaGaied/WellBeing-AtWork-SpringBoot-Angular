@@ -16,6 +16,7 @@ export class BlogsServiceService {
     return this._http.get<Post[]>("http://localhost:8081/Wellbeignatwork/Post/all-post")
   }
   deleteBlogById(id:number){
+    console.log("delete"+id);
     return this._http.delete("http://localhost:8081/Wellbeignatwork/Post/delete-post/"+id);
   }
   getPostReactions(id:number){
@@ -25,7 +26,7 @@ export class BlogsServiceService {
     return this._http.put<Post>("http://localhost:8081/Wellbeignatwork/Post/update-post",blog);
   }
   addBlog(blog:Post){
-    return this._http.post<Post>("http://localhost:8081/Wellbeignatwork/Post/add-post/8",blog);
+    return this._http.post<Post>("http://localhost:8081/Wellbeignatwork/Post/add-post/1",blog);
 }
   getBlogById(idBlog: number): Observable<Post> {
     return this._http.get<Post>("http://localhost:8081/Wellbeignatwork/Post/getPostById/"+idBlog);

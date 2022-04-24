@@ -4,14 +4,15 @@
 
 export const environment = {
   production: false,
-  firebaseConfig : {
-    apiKey: "AIzaSyA1vRwVJ29Bh_HhQXiL-VPqFJlwD4nkl0U",
-    authDomain: "web-notifications-53dec.firebaseapp.com",
-    databaseURL: "https://web-notifications-53dec-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "web-notifications-53dec",
-    storageBucket: "web-notifications-53dec.appspot.com",
-    messagingSenderId: "536047723421",
-    appId: "1:536047723421:web:c73d667220b3955c038574"
+  firebase: {
+    apiKey: "AIzaSyDn5uHKp3bPRKdTk2jbrskk9Zy5kwkCUc8",
+    authDomain: "well-beign-atwork.firebaseapp.com",
+    projectId: "well-beign-atwork",
+    storageBucket: "well-beign-atwork.appspot.com",
+    messagingSenderId: "562717445805",
+    appId: "1:562717445805:web:d99fdecc8b0c6a829e0024",
+    measurementId: "G-9Q2F1Z5W4M",
+    databaseURL: 'https://well-beign-atwork-default-rtdb.firebaseio.com'
   }
 };
 
