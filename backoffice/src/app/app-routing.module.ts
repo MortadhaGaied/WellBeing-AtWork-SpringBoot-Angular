@@ -36,6 +36,11 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./forum/forum.module").then((m) => m.ForumModule),
       },
+      {
+        path: "collaboration",
+        loadChildren: () =>
+          import("./collaboration/collaboration.module").then((m) => m.CollaborationModule),
+      },
     ],
   },
   {
