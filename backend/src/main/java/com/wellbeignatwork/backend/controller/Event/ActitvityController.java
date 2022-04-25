@@ -40,10 +40,10 @@ public class ActitvityController {
         activityService.addEvent(e,file);
 
     }
-    @PostMapping("/AddE")
+    @PostMapping("/AddE/{idU}")
     @ResponseBody
-    public void addEvent (@RequestBody Event event){
-        activityService.addEvent(event);
+    public void addEvent (@RequestBody Event event , @PathVariable("idU") Long idUser){
+        activityService.addEvent(event,idUser);
     }
 
     @DeleteMapping("/removeE/{event-id}")

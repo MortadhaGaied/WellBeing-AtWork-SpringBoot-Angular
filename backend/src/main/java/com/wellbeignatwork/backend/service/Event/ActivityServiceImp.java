@@ -154,9 +154,17 @@ public class ActivityServiceImp implements IActivityService {
         if(event.getStartDate().isBefore(LocalDateTime.now()) ){
             throw new BadRequestException("event already started");
         }
-        if (event.getUsers().size() - 1 >= event.getNbrMaxParticipant()) {
-            throw new BadRequestException("event is full");
+        if (event.getUsers()!=null){
+            if ( event.getUsers().size() - 1 >= event.getNbrMaxParticipant()) {
+                throw new BadRequestException("event is full");
+            }
+            else {
+                user.getEvents().add(event);
+                event.setRevenue(event.getRevenue() + event.getFrais());
+                userRepo.save(user);
+            }
         }
+
         else {
             user.getEvents().add(event);
             event.setRevenue(event.getRevenue() + event.getFrais());
@@ -711,8 +719,9 @@ public class ActivityServiceImp implements IActivityService {
         userRepo.save(u);
     }
     @Override
-    public void addEvent(Event e){
+    public void addEvent(Event e,Long idUser){
         eventRepository.save(e);
+        assignUserToEvent(idUser,e.getIdEvent());
     }
 
     @Override

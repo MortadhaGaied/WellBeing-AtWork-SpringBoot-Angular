@@ -20,7 +20,7 @@ export class EventService {
   }
 
   addEvent(event:Event){
-     return this._http.post<Event>("http://localhost:8081/Wellbeignatwork/event/AddE",event);
+     return this._http.post<Event>("http://localhost:8081/Wellbeignatwork/event/AddE/3",event);
 }
 
   updateEvent(event:Event ){
@@ -39,6 +39,13 @@ getEventById(idEvent: number): Observable<Event> {
       this.$eventEmit.emit(this.event);
     });
   }
+
+ 
+
+    /*
+    assignUserToEvent (idEvent:number, idUser:number) {
+    return this._http.get("http://localhost:8081/Wellbeignatwork/event/assign-user-to-event/"+idEvent,+idUser);}
+    */
   
 }
 

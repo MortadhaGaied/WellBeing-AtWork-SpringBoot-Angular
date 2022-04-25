@@ -1,3 +1,6 @@
+<div style="padding: 3em;">
+  <button (click)="onOpenDialogClick()">Open Dialog</button>
+</div>
 <div class="row">
     <!-- column -->
     <div class="col-lg-3 col-md-6" *ngFor="let event of listEvent">
@@ -8,15 +11,14 @@
       <div class="card">
         <img
           class="card-img-top img-responsive"
-          src="assets/images/bg/bg1.jpg"
+          [src]='event.image'
           alt="Card image cap"
         />
         <div class="card-body">
-          <h4 class="card-title">Card title</h4>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
+          <h4 class="card-title">{{event.eventName}}</h4>
+          <p class="card-text">Frai :{{event.frais}}</p>
+          <p class="card-text">season :{{event.eventSeason}}</p>
+          <span class="mb-1 me-2 badge rounded-pill bg-dark" *ngFor="let t of event.eventTags">{{t}}</span>
         <button (click)="deleteEvent(event.idEvent)" class="btn bg-light-danger">Delete</button>    
         <button (click)="updateEvent(event.idEvent)" class="btn btn-primary">Update</button>    
 
