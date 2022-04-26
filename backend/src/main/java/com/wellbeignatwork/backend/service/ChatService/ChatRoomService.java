@@ -73,7 +73,7 @@ public class ChatRoomService implements IChatService {
        return chatRoomRepository.findById(chatRoom.getId())
                .map(chatRoomRepository::save)
                .orElseThrow(()->new ResourceNotFoundException("room not found"));
-        
+
     }
 
     public List<ChatRoom> getAllRooms() {
