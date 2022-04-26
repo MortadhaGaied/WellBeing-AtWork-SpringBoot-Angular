@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { NewCollabComponent } from "./collaboration/new-collab/new-collab.component";
+import { ShowCollabsComponent } from "./collaboration/show-collabs/show-collabs.component";
 
 import { FullComponent } from "./layouts/full/full.component";
 
@@ -36,6 +38,19 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./forum/forum.module").then((m) => m.ForumModule),
       },
+      {
+        path: "collaboration",
+        loadChildren: () =>
+          import("./collaboration/collaboration.module").then((m) => m.CollaborationModule),
+      },
+      {
+        path: 'show-collabs',
+        component: ShowCollabsComponent
+      },
+      {
+        path: 'add-collab',
+        component: NewCollabComponent
+      }
     ],
   },
   {
