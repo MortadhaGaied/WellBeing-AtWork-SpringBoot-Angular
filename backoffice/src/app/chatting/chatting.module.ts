@@ -11,8 +11,11 @@ import { DashboardModule } from "../dashboard/dashboard.module";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { FormsModule } from "@angular/forms";
+import { AddRoomComponent } from './add-room/add-room.component';
+import { EditComponent } from './edit/edit.component';
+import { RoomUserListComponent } from './room-user-list/room-user-list.component';
 @NgModule({
-  declarations: [ChatRoomsComponent, ChatroomsTableComponent],
+  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent],
   imports: [
     FormsModule,
     MatSlideToggleModule,

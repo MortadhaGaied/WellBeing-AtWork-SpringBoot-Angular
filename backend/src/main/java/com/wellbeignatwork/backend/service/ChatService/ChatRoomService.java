@@ -76,6 +76,11 @@ public class ChatRoomService implements IChatService {
 
     }
 
+    @Override
+    public ChatRoom findRoomById(Long roomId) {
+        return chatRoomRepository.findById(roomId).orElseThrow(()->new ResourceNotFoundException("room with id "+roomId+" does not exist"));
+    }
+
     public List<ChatRoom> getAllRooms() {
         return chatRoomRepository.findAll();
     }

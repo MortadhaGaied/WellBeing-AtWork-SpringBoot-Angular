@@ -24,6 +24,7 @@ export class ChatRoomsComponent implements OnInit {
     this.col2 = collection(firestore, "top-chatters");
     this.item$ = collectionData(this.col2);
   }
+
   topcards: topcard[] = [
     {
       bgcolor: "success",
@@ -44,5 +45,7 @@ export class ChatRoomsComponent implements OnInit {
       subtitle: "top chatter",
     },
   ];
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.item$.subscribe(data=>console.log(data));
+  }
 }
