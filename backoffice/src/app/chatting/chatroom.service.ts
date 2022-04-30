@@ -26,7 +26,11 @@ export class ChatroomService {
     return this.http.put(this.URI + "/update-room", room);
   }
 
-  findRoomById(id:number){
-    return this.http.get<Chatroom>(this.URI+"/"+id)
+  findRoomById(id: number) {
+    return this.http.get<Chatroom>(this.URI + "/" + id);
+  }
+
+  bannUserFromRoom(userId: number, roomId: number) {
+    return this.http.get(this.URI + `/bannUserFromRoom/${userId}/${roomId}`);
   }
 }

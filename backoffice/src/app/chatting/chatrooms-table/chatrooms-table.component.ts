@@ -19,23 +19,25 @@ import { ChatroomService } from "../chatroom.service";
 export class ChatroomsTableComponent implements OnInit, OnDestroy {
   item$: Observable<any[]>;
   col: CollectionReference<DocumentData>;
-  constructor(private service: ChatroomService, private firestore: Firestore,private router:Router) {
+  constructor(
+    private service: ChatroomService,
+    private firestore: Firestore,
+    private router: Router
+  ) {
     this.col = collection(firestore, "items");
     this.item$ = collectionData(this.col);
   }
-  rooms: Chatroom[];
+  rooms: Chatroom[] = [];
   visible: boolean = false;
   subscription: Subscription;
   subscription2: Subscription;
   subscription3: Subscription;
 
-
-
   ngOnInit(): void {
     this.getAllRooms();
   }
 
-  OnAddRoomClicked():void{
+  OnAddRoomClicked(): void {
     this.router.navigateByUrl("/chat/add-room");
   }
 
@@ -68,16 +70,23 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
       .subscribe((data) => this.getAllRooms());
   }
 
-  handleNavigateToEdit(room:Chatroom):void{
+  handleNavigateToEdit(room: Chatroom): void {
     console.log(room);
-    this.router.navigateByUrl("/chat/"+room.id)
+    this.router
+      .navigateByUrl("/chat/" + room.id)
+      .then(() => window.location.reload());
   }
-  handleNavigateToChatRoomUsersList(room:Chatroom):void{
-    console.log("clicked")
-    if(room.users){
-      if(room.users?.length>0){
-        this.router.navigateByUrl(`/chat/${room.id}/user-list`)
+  handleNavigateToChatRoomUsersList(room: Chatroom): void {
+    //console.log("clicked");
+    if (room.users) {
+      if (room.users?.length > 0) {
+        this.router
+          .navigateByUrl(`/chat/${room.id}/user-list`)
+          .then(() => window.location.reload());
       }
     }
-}
+  }
+  handleNavigateToDetails(room: Chatroom) {
+    this.router.navigateByUrl(`/chat/${room.id}/details`);
+  }
 }
