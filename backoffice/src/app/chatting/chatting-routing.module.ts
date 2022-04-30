@@ -8,10 +8,12 @@ import { RoomUserListComponent } from "./room-user-list/room-user-list.component
 export const routes: Routes = [
   {
     path: "",
-    children: [{ path: "chat-rooms", component: ChatRoomsComponent }
-    ,{path:"add-room",component:AddRoomComponent},
-    {path:":id",component:EditComponent},
-  {path:":id/user-list",component:RoomUserListComponent}],
+    children: [
+      { path: "chat-rooms", component: ChatRoomsComponent },
+      { path: "add-room", component: AddRoomComponent },
+      { path: ":id", component: EditComponent },
+      { path: ":id/user-list", component: RoomUserListComponent },
+    ],
   },
 ];
 
