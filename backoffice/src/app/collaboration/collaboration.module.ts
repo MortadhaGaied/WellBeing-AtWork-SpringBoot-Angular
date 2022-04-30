@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CollaborationRoutingModule } from './collaboration-routing.module';
 import { CollaborationsComponent } from './collaborations/collaborations.component';
+import { AddCollaborationComponent } from './add-collaboration/add-collaboration.component';
 
 
 @NgModule({
   declarations: [
-    CollaborationsComponent
+    CollaborationsComponent,
+    AddCollaborationComponent
   ],
   imports: [
     CommonModule,
