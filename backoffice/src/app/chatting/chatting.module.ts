@@ -14,8 +14,9 @@ import { FormsModule } from "@angular/forms";
 import { AddRoomComponent } from './add-room/add-room.component';
 import { EditComponent } from './edit/edit.component';
 import { RoomUserListComponent } from './room-user-list/room-user-list.component';
+import { RoomDetailsComponent } from './room-details/room-details.component';
 @NgModule({
-  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent],
+  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent, RoomDetailsComponent],
   imports: [
     FormsModule,
     MatSlideToggleModule,
