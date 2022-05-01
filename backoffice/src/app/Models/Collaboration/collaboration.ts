@@ -1,3 +1,4 @@
+import { Image } from './Image';
 export class Collaboration {
     idCollaboration:number;  
     name:string; 
@@ -6,5 +7,5 @@ export class Collaboration {
     email:string;
     date:Date;
     town:string;
-    picture:string;
+    picture:Image;
 }

@@ -2,7 +2,9 @@ package com.wellbeignatwork.backend.service.Collaboration;
 
 
 import com.wellbeignatwork.backend.entity.Collaboration.Collaboration;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ICollaborationService {
@@ -16,4 +18,5 @@ public interface ICollaborationService {
 
     Collaboration retrieveCollaboration(Long id);
 
+    void uploadImageToCollabotration(MultipartFile img, Long idCollaboration) throws IOException;
 }

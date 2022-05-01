@@ -1,7 +1,8 @@
+import { Post } from './../Models/Forum/Post';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Collaboration } from 'app/Models/Collaboration/collaboration';
+import { Collaboration } from '../Models/Collaboration/collaboration';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,17 @@ export class CollaborationService {
     return this.http.put("http://localhost:8081/Collaboration/Collaboration/updateCollaboration/",Collaboration)
   }
 
-  addCollaboration(idUser : number,Collaboration :Collaboration){
-    return this.http.post("http://localhost:8081/Collaboration/addCollaboration/"+idUser+Collaboration,Collaboration)
+  addCollaboration(Collaboration :Collaboration){
+    return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/addCollaboration/",Collaboration)
   }
 
   deleteCollaboration(idCollaboration: number){
     return this.http.delete("http://localhost:8081/Collaboration/Collaboration/deleteCollaboration/"+idCollaboration)
+  }
+  uploadImageToCollabotration(img :File , idCollaboration : number ){
+const formdata=new FormData();
+formdata.append('image',img);
+console.log(img)
+ return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/uploadImageToCollabotration/"+idCollaboration, formdata)
   }
 }

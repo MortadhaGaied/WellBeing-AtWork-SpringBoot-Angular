@@ -116,7 +116,7 @@ public class OfferController {
 
     //http://localhost:8081/Wellbeignatwork/Offer/weather?idOffer=1
     @GetMapping("/weather")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+   // @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getOfferWeather(@RequestParam Long idOffer) {
         return offerService.getOfferWeather(idOffer);
     }

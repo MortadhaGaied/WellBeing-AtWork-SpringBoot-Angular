@@ -98,5 +98,10 @@ public class publicitycontroller {
         return publicityService.retrieveByOfferLocalisation(loc);
     }
 
+    //http://localhost:8081/Wellbeignatwork/Publicity/retriveAllPub
+    @GetMapping("/retriveAllPub")
+    public List<Publicity> retrieveAllPublicitys(){
+        return publicityService.retrieveAllPublicitys();
+    }
 }
 
