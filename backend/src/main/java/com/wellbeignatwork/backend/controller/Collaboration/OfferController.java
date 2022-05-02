@@ -11,6 +11,7 @@ import com.wellbeignatwork.backend.util.OfferPDFExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -119,5 +120,11 @@ public class OfferController {
    // @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getOfferWeather(@RequestParam Long idOffer) {
         return offerService.getOfferWeather(idOffer);
+    }
+
+    //http://localhost:8081/Wellbeignatwork/Offer/uploadImageToOffer/1
+    @PostMapping("/uploadImageToOffer/{idOffer}")
+    void uploadImageToOffer(@RequestParam("image") MultipartFile img, @PathVariable Long idOffer) throws IOException {
+        offerService.uploadImageToOffer(img, idOffer);
     }
 }

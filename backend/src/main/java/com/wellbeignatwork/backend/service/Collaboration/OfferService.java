@@ -7,18 +7,18 @@ import com.wellbeignatwork.backend.entity.Collaboration.*;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.Collaboration.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.Collaboration.ResourceNotFoundException;
-import com.wellbeignatwork.backend.repository.Collaboration.ICollaboration;
-import com.wellbeignatwork.backend.repository.Collaboration.IPublicity;
-import com.wellbeignatwork.backend.repository.Collaboration.OfferRepository;
-import com.wellbeignatwork.backend.repository.Collaboration.UsersOfferRepo;
+import com.wellbeignatwork.backend.repository.Collaboration.*;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.UserService.MailService;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import com.wellbeignatwork.backend.util.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -43,6 +43,12 @@ public class OfferService implements IOfferService {
 	UsersOfferRepo usersOfferRepo;
 	@Autowired
 	MailService mailService;
+
+	@Autowired
+	ImageRepo imageRepo;
+
+	@Autowired
+	FirebaseStorage firebaseStorage;
 
 	@Override
 	public List<Offer> retrieveAllOffers() {
@@ -165,6 +171,20 @@ public class OfferService implements IOfferService {
 				//smsService.sendSMS(inviteContent);
 			}
 		}
+	}
+
+	@Override
+	public void uploadImageToOffer(MultipartFile img, Long idOffer) throws IOException {
+		Offer offer = OfferRepo.findById(idOffer).orElse(null);
+		if (offer == null) {
+			throw new ResourceNotFoundException("Offer is not exist");
+		}
+		String name = firebaseStorage.uploadFile(img);
+		Image image = new Image();
+		image.setName("https://firebasestorage.googleapis.com/v0/b/"+firebaseStorage.getBUCKETNAME()+"/o/"+name+"?alt=media");
+		imageRepo.save(image);
+		offer.setImagesOffer(image);
+		OfferRepo.save(offer);
 	}
 }
 

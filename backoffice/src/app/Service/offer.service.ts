@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Offer } from 'app/Models/Collaboration/offer';
+import { Offer } from '../Models/Collaboration/offer';
 import { Observable } from 'rxjs';
 
 
