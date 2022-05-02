@@ -19,9 +19,10 @@ export class EditComponent implements OnInit {
     averageResponseTime: "",
     users: [],
     messages: [],
-    isVisible: false,
+    visible: false,
     status: "",
     cap: "",
+    image:""
   };
   constructor(private service:ChatroomService,private router:Router,private route:ActivatedRoute) { }
 

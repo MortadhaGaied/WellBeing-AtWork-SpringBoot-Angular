@@ -20,28 +20,42 @@ export class AddRoomComponent implements OnInit {
     averageResponseTime: "",
     users: [],
     messages: [],
-    isVisible: false,
+    visible: false,
     status: "",
     cap: "",
+    image:""
   };
 
-
+  image:File;
+  isLoading:boolean=false;
   constructor(private service:ChatroomService,private router:Router) { }
 
   ngOnInit(): void {
   }
-
+  onImageSelected(event:any){
+    this.image=event.target.files[0];
+    console.log(this.image)
+  }
 
   onFormSubmitted() {
     console.log(this.room);
+    this.isLoading=true;
     this.service.createRoom(this.room).subscribe(
       (data) => {
         if(data){
-          this.router.navigateByUrl("/chat/chat-rooms")
+          const form = new FormData();
+          form.append('image',this.image,this.image.name)
+            //console.log(form.get('image'))
+          this.service.uploadImage(JSON.parse(JSON.stringify(data)).id,form).subscribe((data2)=>{
+            this.isLoading=false;
+            this.router.navigateByUrl("/chat/chat-rooms")})
+
         }
 
       },
-      (error) => {window.alert(error.message)}
+      (error) => {
+        this.isLoading=false;
+        window.alert(error.message)}
 
     );
   }

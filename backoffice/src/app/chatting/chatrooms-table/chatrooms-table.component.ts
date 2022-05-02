@@ -32,9 +32,17 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   subscription2: Subscription;
   subscription3: Subscription;
+  searchValue:string="";
+  key:String='id';
+  reversed:boolean=false;
+  currentPage:number=1;
 
   ngOnInit(): void {
     this.getAllRooms();
+  }
+  sort(key:string){
+      this.key=key
+      this.reversed=!this.reversed
   }
 
   OnAddRoomClicked(): void {
@@ -49,9 +57,11 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   getAllRooms() {
+    //retrieve all rooms
     this.subscription = this.service.getAllRooms().subscribe((rooms) => {
       console.log(rooms);
       rooms.forEach((room) => {
+        //for each room we retreive the list of its users
         this.service.getUsersByRoom(room.id).subscribe((users) => {
           room.users = users;
           room.cap =

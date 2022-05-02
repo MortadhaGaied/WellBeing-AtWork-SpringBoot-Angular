@@ -15,8 +15,11 @@ import { AddRoomComponent } from './add-room/add-room.component';
 import { EditComponent } from './edit/edit.component';
 import { RoomUserListComponent } from './room-user-list/room-user-list.component';
 import { RoomDetailsComponent } from './room-details/room-details.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import {Ng2OrderModule}from "ng2-order-pipe";
+import {NgxPaginationModule, PaginationControlsComponent}from "ngx-pagination"
 @NgModule({
-  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent, RoomDetailsComponent],
+  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent, RoomDetailsComponent, SearchFilterPipe],
   imports: [
     FormsModule,
     MatSlideToggleModule,
@@ -25,6 +28,8 @@ import { RoomDetailsComponent } from './room-details/room-details.component';
     RouterModule.forChild(routes),
     ComponentsModule,
     DashboardModule,
+    Ng2OrderModule,
+    NgxPaginationModule
   ],
 })
 export class ChattingModule {}

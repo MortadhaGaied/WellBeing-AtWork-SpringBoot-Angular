@@ -19,6 +19,7 @@ import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.NotificationService.PushNotificationService;
 import com.wellbeignatwork.backend.service.UserService.MailService;
 import com.wellbeignatwork.backend.util.BadWordFilter;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,10 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -43,6 +46,7 @@ public class ChatRoomService implements IChatService {
     private final MessageRepository messageRepository;
     private final PushNotificationService notificationService;
     private final MailService mailService;
+    private final FirebaseStorage firebaseStorage;
 
     @Autowired
     public ChatRoomService(ChatRoomRepository chatRoomRepository
@@ -50,13 +54,15 @@ public class ChatRoomService implements IChatService {
             , SimpMessagingTemplate messagingTemplate
             , MessageRepository messageRepository
             , PushNotificationService notificationService
-            , MailService mailService) {
+            , MailService mailService
+    ,   FirebaseStorage firebaseStorage) {
         this.chatRoomRepository = chatRoomRepository;
         this.userRepository = userRepository;
         this.messagingTemplate = messagingTemplate;
         this.messageRepository = messageRepository;
         this.notificationService = notificationService;
         this.mailService = mailService;
+        this.firebaseStorage = firebaseStorage;
     }
 
 
@@ -508,6 +514,20 @@ public class ChatRoomService implements IChatService {
         return chatRoomRepository.findById(roomId)
                 .map(ChatRoom::getUsers)
                 .orElseThrow(()->new ResourceNotFoundException("room with id : "+roomId+"does not exist"));
+    }
+
+    @Override
+    public void uploadImage(MultipartFile file, Long roomId) {
+        chatRoomRepository.findById(roomId).map(chatRoom -> {
+            try {
+                String roomImage = firebaseStorage.uploadFile(file);
+                chatRoom.setImage("https://firebasestorage.googleapis.com/v0/b/"+firebaseStorage.getBUCKETNAME()+"/o/"+roomImage+"?alt=media");
+                chatRoomRepository.save(chatRoom);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return chatRoom;
+        }).orElseThrow(()->new ResourceNotFoundException("room with id "+roomId+" not found"));
     }
 
 

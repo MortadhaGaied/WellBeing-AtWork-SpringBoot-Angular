@@ -33,4 +33,11 @@ export class ChatroomService {
   bannUserFromRoom(userId: number, roomId: number) {
     return this.http.get(this.URI + `/bannUserFromRoom/${userId}/${roomId}`);
   }
+  getAllMessages(){
+    return this.http.get<number>(this.URI+"/getAllMessages")
+  }
+  uploadImage(roomId:number,form:FormData){
+
+    return this.http.post(this.URI+`/uploadImage/${roomId}`,form)
+  }
 }

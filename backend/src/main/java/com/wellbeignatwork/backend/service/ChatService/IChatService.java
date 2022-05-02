@@ -6,6 +6,7 @@ import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.messaging.MessagingException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -31,5 +32,6 @@ public interface IChatService {
     public void autoBannUsersFromChatRooms(int BadWordsFound, User user, ChatRoom room);
     public void unbannUserFromChatRoom(Long userId,Long roomId);
     public Set<User> findUsersByChatroom(Long roomId);
+    public void uploadImage(MultipartFile file ,Long roomId);
 
 }

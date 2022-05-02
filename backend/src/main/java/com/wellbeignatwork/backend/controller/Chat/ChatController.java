@@ -1,15 +1,18 @@
 package com.wellbeignatwork.backend.controller.Chat;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.payload.MessageRequest;
 import com.wellbeignatwork.backend.payload.MessageResponse;
 import com.wellbeignatwork.backend.service.ChatService.ChatRoomService;
 import com.wellbeignatwork.backend.service.ChatService.MessageService;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,12 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.io.DataInput;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -31,14 +37,15 @@ public class ChatController {
     private final ChatRoomService chatRoomService;
 
     private final MessageService messageService;
-
+    private final FirebaseStorage firebaseStorage;
     @Autowired
     private ChatController(
+            FirebaseStorage firebaseStorage,
             ChatRoomService chatRoomService
             , MessageService messageService
     ) {
         this.chatRoomService = chatRoomService;
-
+        this.firebaseStorage=firebaseStorage;
         this.messageService = messageService;
     }
 
@@ -50,10 +57,23 @@ public class ChatController {
         return chatRoomService.findUsersByChatroom(roomId);
 
     }
-    @PostMapping("/chatroom/add-room")
+    @GetMapping("/chatroom/getAllMessages")
     @ResponseBody
-    public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom) {
+    public Integer getAllMessages(){
+        return messageService.getAllMessages();
+
+    }
+    @PostMapping(value = "/chatroom/add-room",consumes = {"application/json","image/*"})
+    @ResponseBody
+    public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom)  {
         return chatRoomService.createChatRoom(chatRoom);
+    }
+
+    @PostMapping(value = "/chatroom/uploadImage/{roomId}")
+    @ResponseBody
+    public void uploadImage(@RequestParam("image") MultipartFile file,@PathVariable Long roomId)  {
+
+        chatRoomService.uploadImage(file,roomId);
     }
 
     @GetMapping("/chatroom/{roomId}")

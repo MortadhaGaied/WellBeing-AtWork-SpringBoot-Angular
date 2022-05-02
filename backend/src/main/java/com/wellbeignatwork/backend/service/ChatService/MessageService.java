@@ -150,5 +150,10 @@ public class MessageService implements IMessageService {
         }
     }
 
+    @Override
+    public Integer getAllMessages() {
+        return messageRepository.findAll().size();
+    }
+
 
 }

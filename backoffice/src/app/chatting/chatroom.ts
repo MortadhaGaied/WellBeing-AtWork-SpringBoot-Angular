@@ -8,7 +8,8 @@ export interface Chatroom {
   averageResponseTime?: string;
   users?: any[];
   messages?: any[];
-  isVisible?: boolean;
+  visible?: boolean;
   status?: string;
   cap?: string;
+  image:string;
 }

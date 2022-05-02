@@ -13,4 +13,5 @@ public interface IMessageService {
     public List<Message> retrieveDiscussions(@NotBlank Long roomId);
     public void getTopChattersGlobally() throws FirebaseMessagingException;
     public void archiveMessages() throws ExecutionException, InterruptedException, FirebaseMessagingException;
+    Integer getAllMessages();
 }

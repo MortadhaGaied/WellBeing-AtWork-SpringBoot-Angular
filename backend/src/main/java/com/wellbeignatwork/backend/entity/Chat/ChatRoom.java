@@ -28,6 +28,7 @@ public class ChatRoom {
     private RoomStatus status;
 
     private String averageResponseTime;
+    private String image;
 
 
     @JsonIgnore
