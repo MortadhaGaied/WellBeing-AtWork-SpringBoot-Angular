@@ -28,10 +28,8 @@ export class CollaborationService {
   deleteCollaboration(idCollaboration: number){
     return this.http.delete("http://localhost:8081/Collaboration/Collaboration/deleteCollaboration/"+idCollaboration)
   }
-  uploadImageToCollabotration(img :File , idCollaboration : number ){
-const formdata=new FormData();
-formdata.append('image',img);
-console.log(img)
- return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/uploadImageToCollabotration/"+idCollaboration, formdata)
+  uploadImageToCollabotration(form:FormData , idCollaboration : number ){
+
+ return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/uploadImageToCollabotration/"+idCollaboration, form)
   }
 }

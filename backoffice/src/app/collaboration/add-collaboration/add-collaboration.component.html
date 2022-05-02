@@ -1,4 +1,4 @@
- 
+
     <div class="main-block">
       <div class="left-part">
         <i class="fas fa-graduation-cap"></i>
@@ -9,9 +9,9 @@
           <a class="btn-item" href="https://www.w3docs.com/quiz/#">Select Quiz</a>
         </div>
       </div>
-      <form action="" enctype="multipart/form-data" (ngSubmit)="addCollaboration()"#f="ngForm"> 
+      <form action="" enctype="multipart/form-data" (ngSubmit)="addCollaboration()"#f="ngForm">
         <div class="title">
-          <i class="fas fa-pencil-alt"></i> 
+          <i class="fas fa-pencil-alt"></i>
           <h2>Register here</h2>
         </div>
         <div class="info">
@@ -21,13 +21,13 @@
           <input [(ngModel)]="collaboration.description"type="password" name="name" placeholder="description" [ngModelOptions]="{standalone: true}">
           <input [(ngModel)]="collaboration.date"type="date" name="name" placeholder="dater" [ngModelOptions]="{standalone: true}">
           <input [(ngModel)]="collaboration.town"type="String" name="name" placeholder="Town" [ngModelOptions]="{standalone: true}">
-          <input [(ngModel)]="file"
+          <input (change)="onFileSelected($event)"
               type="file"
               class="form-control-file"
               id="exampleFormControlFile1"
-              [ngModelOptions]="{standalone: true}"/>
-            
-      
+              />
+
+
         </div>
         <div class="checkbox">
           <input type="checkbox" name="checkbox"><span>I agree to the <a href="https://www.w3docs.com/privacy-policy">Privacy Poalicy for W3Docs.</a></span>

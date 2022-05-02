@@ -80,7 +80,7 @@ public class CollaborationService implements ICollaborationService {
 		}
 		String name = firebaseStorage.uploadFile(img);
 		Image image = new Image();
-		image.setName(name);
+		image.setName("https://firebasestorage.googleapis.com/v0/b/"+firebaseStorage.getBUCKETNAME()+"/o/"+name+"?alt=media");
 		imageRepo.save(image);
 		collaboration.setImagesCollab(image);
 		CollaborationRepo.save(collaboration);

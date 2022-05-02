@@ -43,9 +43,16 @@ file:File;
 
   ngOnInit(): void {
   }
+  onFileSelected(event:any){
+    this.file=event.target.files[0];
+    console.log(this.file)
+  }
   addCollaboration(){
     console.log(this.file);
-    this.collaborationService.addCollaboration(this.collaboration).subscribe(collab => this.collaborationService.uploadImageToCollabotration(this.file,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => console.log(data),(error)=>console.log(error)))
-   
+    const formdata=new FormData();
+  formdata.append('image',this.file,this.file.name);
+
+    this.collaborationService.addCollaboration(this.collaboration).subscribe(collab => this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error)))
+
   }
 }
