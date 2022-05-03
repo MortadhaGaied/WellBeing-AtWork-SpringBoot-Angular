@@ -72,9 +72,8 @@
                   <div class="input-group input-group-sm mb-3">
                     <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.rate"[ngModelOptions]="{standalone: true}">
                   </div>
-                  <select>
-                    <option value={{Collab.name} *ngFor="let Collab of collaborations"></option>
-
+                  <select [ngModel] = "selectedcollaborationId" (ngModelChange)="onSelectCollaboration($event)" [ngModelOptions]="{standalone: true}">
+                                      <option [value]="Collab.idCollaboration" *ngFor="let Collab of collaborations">{{Collab.name}}</option>
                   </select>
                       <input (change)="onFileSelected($event)"
                       type="file"
@@ -84,7 +83,7 @@
                       
                       
          <div class="col-lg-4 row m-0 p-0">
-            <button type="button" class="btn btn-primary"  >{{button}}</button>
+          <button type="submit">Submit</button>
           </div>
           </form>
        

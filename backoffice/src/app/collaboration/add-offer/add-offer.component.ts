@@ -14,7 +14,7 @@ import { Offer } from '../../Models/Collaboration/offer';
 })
 export class AddOfferComponent implements OnInit {
   idCollaboration: any;
-  offer : Offer = {
+  offer: Offer = {
     idOffer: 0,
     title: '',
     descrption: '',
@@ -33,36 +33,42 @@ export class AddOfferComponent implements OnInit {
     Happy: '',
     collaboration: new Collaboration
   };
-  file:File;
-  o : Offer[];
-  
-  title:any;
+  file: File;
+  o: Offer[];
+
+  title: any;
   button: any;
-  idOffer:any;
-  formOffer : FormGroup;
+  idOffer: any;
+  formOffer: FormGroup;
 
-  constructor(private formBuilder : FormBuilder ,private ActivatedRoute : ActivatedRoute , router : Router, 
-    private OfferService : OfferService , private CollaborationService : CollaborationService) { }
-    collaborations : Collaboration [] = [];
-    
+  constructor(private formBuilder: FormBuilder, private ActivatedRoute: ActivatedRoute, router: Router,
+    private OfferService: OfferService, private CollaborationService: CollaborationService) { }
+  collaborations: Collaboration[] = [];
+  selectedcollaborationId: any;
   ngOnInit(): void {
-       this.CollaborationService.getAllColaboration().subscribe(collaborations =>{
-         this.collaborations=collaborations
-         console.log(collaborations)
-       })
+    this.CollaborationService.getAllColaboration().subscribe(collaborations => {
+      this.collaborations = collaborations
+      console.log(collaborations)
+    })
 
-    }
+  }
+  onSelectCollaboration(event: any) {
+    this.selectedcollaborationId = event;
+    //console.log(this.selectedcollaboration);
+    console.log(event)
+  }
 
-
-  onFileSelected(event:any){
-    this.file=event.target.files[0];
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
     console.log(this.file)
   }
-  addOffer(){
+  addOffer() {
     console.log(this.file);
-    const formdata=new FormData();
-  formdata.append('image',this.file,this.file.name);
+    const formdata = new FormData();
+    formdata.append('image', this.file, this.file.name);
 
-    this.OfferService.addOffer(this.idCollaboration,this.offer).subscribe(offer => this.OfferService.uploadImageToOffer(formdata,JSON.parse(JSON.stringify(offer)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error)))
+    this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(offer => {
+      console.log(offer)
+      this.OfferService.uploadImageToOffer(formdata, JSON.parse(JSON.stringify(offer)).idOffer).subscribe(data => window.alert("image uploaded successfully"), (error) => console.log(error))})
   }
 }
