@@ -11,7 +11,13 @@
       >
         <h3 class="mb-0">Card tables</h3>
         <div class="mb-3">
-          <input type="email" class="form-control" [(ngModel)]="searchValue" id="exampleFormControlInput1" placeholder="search">
+          <input
+            type="email"
+            class="form-control"
+            [(ngModel)]="searchValue"
+            id="exampleFormControlInput1"
+            placeholder="search"
+          />
         </div>
         <div class="btn btn-outline-success" (click)="OnAddRoomClicked()">
           <svg
@@ -36,29 +42,54 @@
         <table class="table align-items-center table-flush table-hover">
           <thead class="thead-light">
             <tr>
-              <th (click)="sort('id')" scope="col">ID&nbsp;<i class="bi bi-filter"></i></th>
-              <th (click)="sort('roomName')" scope="col">Room&nbsp;<i class="bi bi-filter"></i></th>
-              <th (click)="sort('visible')" scope="col">visibility&nbsp;<i class="bi bi-filter"></i></th>
-              <th (click)="sort('status')" scope="col">Status&nbsp;<i class="bi bi-filter"></i></th>
-              <th  scope="col">Users</th>
-              <th (click)="sort('cap')" scope="col">Capacity&nbsp;<i class="bi bi-filter"></i></th>
-              <th (click)="sort('averageResponseTime')" scope="col">Response Time Rate&nbsp;<i class="bi bi-filter"></i></th>
+              <th (click)="sort('id')" scope="col">
+                ID&nbsp;<i class="bi bi-filter"></i>
+              </th>
+              <th (click)="sort('roomName')" scope="col">
+                Room&nbsp;<i class="bi bi-filter"></i>
+              </th>
+              <th (click)="sort('visible')" scope="col">
+                visibility&nbsp;<i class="bi bi-filter"></i>
+              </th>
+              <th (click)="sort('status')" scope="col">
+                Status&nbsp;<i class="bi bi-filter"></i>
+              </th>
+              <th scope="col">Users</th>
+              <th (click)="sort('cap')" scope="col">
+                Capacity&nbsp;<i class="bi bi-filter"></i>
+              </th>
+              <th (click)="sort('averageResponseTime')" scope="col">
+                Response Time Rate&nbsp;<i class="bi bi-filter"></i>
+              </th>
               <th scope="col">actions</th>
             </tr>
           </thead>
           <tbody *ngIf="rooms">
-            <tr *ngFor="let room of rooms | searchFilter:searchValue |orderBy: key: reversed | paginate : {itemsPerPage:3,currentPage:currentPage}">
+            <tr
+              *ngFor="
+                let room of rooms
+                  | searchFilter: searchValue
+                  | orderBy: key:reversed
+                  | paginate: { itemsPerPage: 3, currentPage: currentPage }
+              "
+            >
               <th scope="row">
                 {{ room.id }}
               </th>
               <th scope="row">
                 <div class="media align-items-center">
-                  <a href="#" class="avatar rounded-circle mr-3">
-                    <img *ngIf="room.image"
+                  <a
+                    (click)="handleNavigateToDetails(room)"
+                    routerLinkActive="router-link-active"
+                    class="avatar rounded-circle mr-3"
+                  >
+                    <img
+                      *ngIf="room.image"
                       alt="Image placeholder"
-                      src={{room.image}}
+                      src="{{ room.image }}"
                     />
-                    <img *ngIf="!room.image"
+                    <img
+                      *ngIf="!room.image"
                       alt="Image placeholder"
                       src="assets/images/chatroom/chatRoom.jpg"
                     />
@@ -107,6 +138,11 @@
                       class="rounded-circle"
                     />
                   </a>
+                  <li *ngIf="room.users.length > 3" class="avatar avatar-sm">
+                    <span class="badge badge-primary">{{
+                      room.users.length - 3
+                    }}</span>
+                  </li>
                 </div>
               </td>
               <td>
@@ -186,20 +222,17 @@
                 </div>
               </td>
             </tr>
-          </tbody>
-          <tbody *ngIf="!rooms">
-            <tr>
-              <td>
-                no rooms found
-              </td>
+            <tr *ngIf="rooms.length < 1">
+              No Rooms Found
             </tr>
           </tbody>
         </table>
       </div>
-      <div style="align-self: center; margin-top:20px;">
-        <pagination-controls (pageChange)="currentPage=$event"></pagination-controls>
+      <div style="align-self: center; margin-top: 20px">
+        <pagination-controls
+          (pageChange)="currentPage = $event"
+        ></pagination-controls>
       </div>
-
     </div>
   </div>
 </div>
