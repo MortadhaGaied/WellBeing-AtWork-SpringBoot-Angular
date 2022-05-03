@@ -22,7 +22,7 @@ export class CollaborationService {
   }
 
   addCollaboration(Collaboration :Collaboration){
-    return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/addCollaboration/",Collaboration)
+    return this.http.post("http://localhost:8081/Wellbeignatwork/Collaboration/addCollaboration",Collaboration)
   }
 
   deleteCollaboration(idCollaboration: number){
