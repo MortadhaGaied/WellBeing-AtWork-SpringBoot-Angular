@@ -1,5 +1,5 @@
 import { Collaboration } from "./collaboration";
-
+import { Image } from './Image';
 export class Offer {
      idOffer:number;
 	 title:string;
@@ -12,7 +12,7 @@ export class Offer {
 	 location:string;
 	 prix:number;
 	 rate :string;
-     
+     picture:Image;
      Happy:string;
 	 collaboration :Collaboration;
 }

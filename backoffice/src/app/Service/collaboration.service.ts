@@ -12,7 +12,7 @@ export class CollaborationService {
   constructor(private http : HttpClient) { }
 
   getAllColaboration() :Observable<Collaboration[]>{
-    return this.http.get<Collaboration[]>("http://localhost:8081/Collaboration/Collaboration/retrieveAllCollaborations")
+    return this.http.get<Collaboration[]>("http://localhost:8081/Wellbeignatwork/Collaboration/retrieveAllCollaborations")
   }
   getCollaborationById( idCollaboration : number){
     return this.http.get("http://localhost:8081/Collaboration/Collaboration/retrieveCollaboration/"+idCollaboration)

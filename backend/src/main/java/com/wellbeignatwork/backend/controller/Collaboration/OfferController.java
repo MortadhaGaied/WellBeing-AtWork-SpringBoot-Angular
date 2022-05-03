@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RequestMapping("/Offer")
 public class OfferController {
 

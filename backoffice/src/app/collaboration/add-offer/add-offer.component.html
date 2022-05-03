@@ -1,114 +1,96 @@
-<html>
-  <body>
-    <div class="testbox">
-      <form action="/">
-        <div class="banner">
-          <h1>Entertainment Booking Form</h1>
-        </div>
-        <div class="item">
-          <p>Date of Event</p>
-          <input type="date" name="bdate" />
-          <i class="fas fa-calendar-alt"></i>
-        </div>
-        <div class="item">
-          <p>Time of Event</p>
-          <input type="time" name="name" />
-          <i class="fas fa-clock"></i>
-        </div>
-        <div class="item">
-          <p>Select Artist</p>
-          <select>
-            <option value=""></option>
-            <option value="1">*Please select*</option>
-            <option value="2">Artist 1</option>
-            <option value="3">Artist 2</option>
-            <option value="4">Artist 3</option>
-            <option value="5">Artist 4</option>
-          </select>
-        </div>
-        <div class="item">
-          <p>Description of Event</p>
-          <textarea rows="3" ></textarea>
-        </div>
-        <div class="item">
-          <p>Promoter's Name</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Venue Name</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Venue Address</p>
-          <input type="text" name="name" placeholder="Street address" />
-          <input type="text" name="name" placeholder="Street address line 2" />
-          <div class="city-item">
-            <input type="text" name="name" placeholder="City" />
-            <input type="text" name="name" placeholder="Region" />
-            <input type="text" name="name" placeholder="Postal / Zip code" />
-            <select>
-              <option value="">Country</option>
-              <option value="1">Russia</option>
-              <option value="2">Germany</option>
-              <option value="3">France</option>
-              <option value="4">Armenia</option>
-              <option value="5">USA</option>
-            </select>
+
+<div id="content-page" class="content-page">
+    <div class="container">
+       <div class="row">
+        <div class="col-lg-6 row m-0 p-0">
+      
+  
+          <div id="post-modal-data" class="card card-block card-stretch card-height">
+             <br>
+
+             <h1>{{title}}</h1>
+               <div>
+                <form action="" enctype="multipart/form-data" (ngSubmit)="addOffer()"#f="ngForm">
+                      <div>
+                      <p>Title</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.title" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+
+                    <div>
+                      <p>Descrption</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <textarea type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.descrption" [ngModelOptions]="{standalone: true}"></textarea>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p>starDateOf</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.starDateOf" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+
+                    <div>
+                      <p> endDateOf</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.endDateOf" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+
+                    
+                    <div>
+                      <p>nplaces</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.nplaces" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <p>promotion</p>
+                        <div class="input-group input-group-sm mb-3">
+                          <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.promotion" [ngModelOptions]="{standalone: true}">
+                        </div>
+                      </div>
+                      <div>
+                      <p>Percentage</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.percentage" [ngModelOptions]="{standalone: true}">
+                      </div>
+                      <p>location</p>
+                      <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.location" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <p>prix</p>
+                    <div class="input-group input-group-sm mb-3">
+                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.prix"[ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <p>rate</p>
+                  <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.rate"[ngModelOptions]="{standalone: true}">
+                  </div>
+                  <select>
+                    <option value={{Collab.name} *ngFor="let Collab of collaborations"></option>
+
+                  </select>
+                      <input (change)="onFileSelected($event)"
+                      type="file"
+                      class="form-control-file"
+                      id="exampleFormControlFile1"
+                      />    
+                      
+                      
+         <div class="col-lg-4 row m-0 p-0">
+            <button type="button" class="btn btn-primary"  >{{button}}</button>
           </div>
-        </div>
-        <div class="item">
-          <p>Venue Capacity</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Expected Attendance</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Type of Performance</p>
-          <select>
-            <option value=""></option>
-            <option value="1">*Please select*</option>
-            <option value="2">Solo Performance</option>
-            <option value="3">Full Band</option>
-          </select>
-        </div>
-        <div class="item">
-          <p>Set Time (in minutes)</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Contact Person</p>
-          <div class="name-item">
-            <input type="text" name="name" placeholder="First" />
-            <input type="text" name="name" placeholder="Last" />
-          </div>
-        </div>
-        <div class="item">
-          <p>Contact Email</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="item">
-          <p>Contact Number</p>
-          <input type="text" name="name"/>
-        </div>
-        <div class="question">
-          <p>Will this event be recorded?</p>
-          <div class="question-answer">
-            <div>
-              <input type="radio" value="none" id="radio_1" name="recorded" />
-              <label for="radio_1" class="radio"><span>Yes</span></label>
-            </div>
-            <div>
-              <input type="radio" value="none" id="radio_2" name="recorded" />
-              <label for="radio_2" class="radio"><span>No</span></label>
-            </div>
-          </div>
-        </div>
-        <div class="btn-block">
-          <button type="submit" href="/">SEND</button>
-        </div>
-      </form>
+          </form>
+       
+    
+             
     </div>
-  </body>
-</html>
+  </div> 
+</div></div>
+

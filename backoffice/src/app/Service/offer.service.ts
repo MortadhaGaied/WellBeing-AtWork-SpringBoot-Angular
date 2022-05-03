@@ -21,11 +21,14 @@ export class OfferService {
     return this.http.put("http://localhost:8081/Offer/updateOffer/",offer)
   }
 
-  addOffer(idOffer : number,offer :Offer){
-    return this.http.post("http://localhost:8081/Offer/addOffer/"+idOffer,offer)
+  addOffer(idCollaboration : number,offer :Offer){
+    return this.http.post("http://localhost:8081/Offer/addOffer/"+idCollaboration,offer)
   }
 
   deleteOffer(idOffer: number){
     return this.http.delete("http://localhost:8081/Offer/deleteOffer/"+idOffer)
   }
+  uploadImageToOffer(form:FormData , idOffer : number ){
+    return this.http.post("http://localhost:8081/Wellbeignatwork/Offer/uploadImageToOffer/"+idOffer, form)
+     }
 }
