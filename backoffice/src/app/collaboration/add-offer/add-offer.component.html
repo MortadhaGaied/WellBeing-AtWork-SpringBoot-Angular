@@ -1,6 +1,7 @@
 
 <div id="content-page" class="content-page">
     <div class="container">
+      <app-map></app-map>
        <div class="row">
         <div class="col-lg-6 row m-0 p-0">
       
@@ -72,8 +73,9 @@
                   <div class="input-group input-group-sm mb-3">
                     <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="offer.rate"[ngModelOptions]="{standalone: true}">
                   </div>
-                  <select [ngModel] = "selectedcollaborationId" (ngModelChange)="onSelectCollaboration($event)" [ngModelOptions]="{standalone: true}">
-                                      <option [value]="Collab.idCollaboration" *ngFor="let Collab of collaborations">{{Collab.name}}</option>
+                  <select>
+                    <option value={{Collab.name} *ngFor="let Collab of collaborations"></option>
+
                   </select>
                       <input (change)="onFileSelected($event)"
                       type="file"
