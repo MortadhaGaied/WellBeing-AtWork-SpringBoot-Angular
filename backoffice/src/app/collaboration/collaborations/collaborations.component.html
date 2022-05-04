@@ -1,5 +1,5 @@
 <div class="container">
-  <div  class="card" *ngFor="let item of c">
+  <div  class="card" *ngFor="let item of c  | paginate: { itemsPerPage: 10, currentPage: page }">
     <div class="card-header">
       <img *ngIf="item.imagesCollab"
        [src]=item.imagesCollab.name
@@ -26,3 +26,4 @@
   </div>
 
 </div>
+<pagination-controls (pageChange)="page = $event"></pagination-controls>

@@ -9,8 +9,9 @@ import { AddOfferComponent } from './add-offer/add-offer.component';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from './map/map.component';
 import { environment } from '../../environments/environment';
-import { UpdateOfferComponent } from './offer/update-offer/update-offer.component';
 import { UpdateCollaborationComponent } from './update-collaboration/update-collaboration.component';
+import { UpdateOfferComponent } from './update-offer/update-offer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { UpdateCollaborationComponent } from './update-collaboration/update-coll
   imports: [
     CommonModule,
     CollaborationRoutingModule,
+    NgxPaginationModule,
     FormsModule,
     NgxMapboxGLModule.withConfig({
       accessToken: environment.mapbox.accessToken,
