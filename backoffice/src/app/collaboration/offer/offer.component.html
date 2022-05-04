@@ -1,1 +1,28 @@
-<p>offer works!</p>
+<div class="container">
+    <div class="card" *ngFor="let item of o">
+      <div class="card-header">
+        <img *ngIf="item.imagesOffer"
+         [src]=item.imagesOffer.name
+        />
+      </div>
+      <div class="card-body">
+        <h4 class="centered-element">Nombre de place {{ item.nplaces }}</h4>
+        <span class="tag tag-teal">{{ item.title }}</span>
+        <h4>{{ item.descrption }}</h4>
+        <p>An exploration into the truck's polarising design</p>
+        <div class="user">
+          <img
+            src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo"
+            alt="user"
+          />
+          <div class="user-info">
+            <h5>{{ item.localisation }}</h5>
+            <small> <h5>Start Date </h5> {{ item.starDateOf | date:'M/d/yy, h:mm a' }}</small>
+            <br>
+            <small> <h5>End Date </h5>{{ item.endDateOf | date:'M/d/yy, h:mm a' }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

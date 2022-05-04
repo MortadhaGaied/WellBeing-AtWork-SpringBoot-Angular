@@ -11,7 +11,7 @@ export class Offer {
 	 percentage:Number;
 	 localisation:string;
 	 prix:number;
-     picture?:Image;
+     imagesOffer?:Image;
      happy:string;
 	 collaboration? :Collaboration;
 }

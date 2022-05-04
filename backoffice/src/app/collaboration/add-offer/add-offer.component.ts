@@ -26,7 +26,7 @@ export class AddOfferComponent implements OnInit {
     percentage: 0,
     localisation: '',
     prix: 0,
-    picture: {
+    imagesOffer: {
       id: 0,
       name: ''
     },
@@ -70,7 +70,7 @@ export class AddOfferComponent implements OnInit {
     console.log(this.file);
     console.log(this.offer);
     this.offer.collaboration = undefined;
-    this.offer.picture = undefined;
+    this.offer.imagesOffer = undefined;
     this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(o => {
       console.log(o)
       this.OfferService.uploadImageToOffer(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
