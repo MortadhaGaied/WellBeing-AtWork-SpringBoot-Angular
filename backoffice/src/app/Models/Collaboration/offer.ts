@@ -4,15 +4,14 @@ export class Offer {
      idOffer:number;
 	 title:string;
 	 descrption:string;
-	 starDateOf:Date;
-	 endDateOf:Date;
+	 starDateOf:string;
+	 endDateOf:string;
 	 nplaces:number;
 	 promotion:number;
-	 percentage:Number
-	 location:string;
+	 percentage:Number;
+	 localisation:string;
 	 prix:number;
-	 rate :string;
-     picture:Image;
-     Happy:string;
-	 collaboration :Collaboration;
+     picture?:Image;
+     happy:string;
+	 collaboration? :Collaboration;
 }

@@ -39,7 +39,7 @@ public class OfferController {
     //http://localhost:8081/Wellbeignatwork/Offer/addOffer/1
     @PostMapping("/addOffer/{idCollaboration}")
     @ResponseBody
-    public void addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
+    public Offer addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
         byte[] image = new byte[0];
         try {
 
@@ -60,7 +60,7 @@ public class OfferController {
         String qrcode = Base64.getEncoder().encodeToString(image);
         // log.info(qrcode);
 
-        offerService.addOffer(o,idCollaboration);
+        return offerService.addOffer(o,idCollaboration);
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/deleteOffer/id

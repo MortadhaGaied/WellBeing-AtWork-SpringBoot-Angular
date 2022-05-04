@@ -10,7 +10,7 @@ import java.util.List;
 public interface IOfferService {
     List<Offer> retrieveAllOffers();
 
-    void addOffer(Offer o,long idCollaboration);
+    Offer addOffer(Offer o,long idCollaboration);
 
     void deleteOffer(Long id);
 

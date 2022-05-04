@@ -28,7 +28,7 @@
               <div>
                 <p>starDateOf</p>
                 <div class="input-group input-group-sm mb-3">
-                  <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                  <input type="datetime-local" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                     [(ngModel)]="offer.starDateOf" [ngModelOptions]="{standalone: true}">
                 </div>
               </div>
@@ -36,7 +36,7 @@
               <div>
                 <p> endDateOf</p>
                 <div class="input-group input-group-sm mb-3">
-                  <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                  <input type="datetime-local" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                     [(ngModel)]="offer.endDateOf" [ngModelOptions]="{standalone: true}">
                 </div>
               </div>
@@ -70,29 +70,28 @@
                   <p>location</p>
                   <div class="input-group input-group-sm mb-3">
                     <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                      [(ngModel)]="offer.location" [ngModelOptions]="{standalone: true}">
+                      [(ngModel)]="offer.localisation" [ngModelOptions]="{standalone: true}">
                   </div>
                 </div>
 
                 <div>
                   <p>prix</p>
                   <div class="input-group input-group-sm mb-3">
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                    <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                       [(ngModel)]="offer.prix" [ngModelOptions]="{standalone: true}">
                   </div>
-                  </div>
-
-                  <div>
-                    <p>rate</p>
-                    <div class="input-group input-group-sm mb-3">
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                        [(ngModel)]="offer.rate" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    </div>
+                                  </div>
 
                     <select (change)="onSelectCollaboration($event)">
                       <option [value]="Collab.idCollaboration" *ngFor="let Collab of collaborations">{{Collab.name}}
                       </option> </select>
+
+                      <select name="happy" [(ngModel)]="offer.happy" >
+                            <option  value="HAPPY_HOUR">HAPPY_HOUR </option>
+                            <option value="HAPPY_DAYS">HAPPY_DAYS</option>
+                            <option value="BLACK_FRIDAY">BLACK_FRIDAY</option>
+                            <option value="PROMOTION">PROMOTION</option>
+                      </select>
 
                       <p>Image</p>
                       <input (change)="onFileSelected($event)"

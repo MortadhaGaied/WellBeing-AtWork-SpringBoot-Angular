@@ -19,19 +19,18 @@ export class AddOfferComponent implements OnInit {
     idOffer: 0,
     title: '',
     descrption: '',
-    starDateOf: new Date(),
-    endDateOf: new Date(),
+    starDateOf: '',
+    endDateOf: '',
     nplaces: 0,
     promotion: 0,
     percentage: 0,
-    location: '',
+    localisation: '',
     prix: 0,
-    rate: '',
     picture: {
       id: 0,
       name: ''
     },
-    Happy: '',
+    happy: '',
     collaboration: new Collaboration
   };
   file: File;
@@ -40,6 +39,7 @@ export class AddOfferComponent implements OnInit {
   title: any;
   button: any;
   idOffer: any;
+  formdata : FormData = new FormData();
   formOffer: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private ActivatedRoute: ActivatedRoute, router: Router,
@@ -61,14 +61,20 @@ export class AddOfferComponent implements OnInit {
 
   onFileSelected(event:any){
     this.file=event.target.files[0];
-    console.log(this.file)
+    //console.log(this.file)
+    this.formdata.append('image', this.file, this.file.name);
+    //console.log(this.formdata.get('image'))
   }
   addOffer() {
+    console.log(this.formdata.get('image'))
     console.log(this.file);
-    const formdata = new FormData();
-    formdata.append('image', this.file, this.file.name);
-    this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(offer => {
-      console.log(offer)
-      this.OfferService.uploadImageToOffer(formdata,JSON.parse(JSON.stringify(offer)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
-  }
+    console.log(this.offer);
+    this.offer.collaboration = undefined;
+    this.offer.picture = undefined;
+    this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(o => {
+      console.log(o)
+      this.OfferService.uploadImageToOffer(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
+   }
 }
+
+

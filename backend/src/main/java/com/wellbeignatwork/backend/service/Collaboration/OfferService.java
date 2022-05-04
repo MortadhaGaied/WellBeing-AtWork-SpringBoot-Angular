@@ -57,10 +57,10 @@ public class OfferService implements IOfferService {
 	}
 
 	@Override
-	public void addOffer(Offer o, long idCollaboration) {
+	public Offer addOffer(Offer o, long idCollaboration) {
 		Collaboration collaboration = CollaborationRepo.findById(idCollaboration).get();
 		o.setCollaboration(collaboration);
-		OfferRepo.save(o);
+		return OfferRepo.save(o);
 	}
 
 	@Override
