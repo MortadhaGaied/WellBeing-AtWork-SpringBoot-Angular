@@ -1,10 +1,11 @@
+import { Collaboration } from './../../Models/Collaboration/collaboration';
 import { Post } from './../../Models/Forum/Post';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Collaboration } from '../../Models/Collaboration/collaboration';
 import { CollaborationService } from '../../Service/collaboration.service';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import { UpdateCollaborationComponent } from '../update-collaboration/update-collaboration.component';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
   selector: 'app-collaborations',
   templateUrl: './collaborations.component.html',
@@ -12,7 +13,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 })
 export class CollaborationsComponent implements OnInit {
   c : Collaboration[];
-  constructor(private collaborationService: CollaborationService,private router : Router ) { }
+  Collaboration : Collaboration;
+  constructor(private collaborationService: CollaborationService,private router : Router) { }
 
   totalLentgh:any;
   page:number = 1;
@@ -43,12 +45,18 @@ export class CollaborationsComponent implements OnInit {
       }
 
       viewCollaboration(idCollaboration:number){
-        let collaboration;
-        for (let i=0;i<this.c.length;i++) {
-          if (this.c[i].idCollaboration == idCollaboration){
-            collaboration= this.c[i];
-          }
-          this.router.navigate([`viewCollaboration/${idCollaboration}`])
-        }
+        this.collaborationService.getCollaborationById(idCollaboration)
+        .subscribe(()=>this.collaborationService.getAllColaboration().subscribe(res=>{this.c=res}));
       }
+
+      deleteCollaboration(idCollaboration:number){
+        this.collaborationService.deleteCollaboration(idCollaboration)
+        .subscribe(()=>this.collaborationService.getAllColaboration().subscribe(res=>{this.c=res}));
+      }
+
+      updateCollaboration(idCollaboration:number){
+    
+        this.Collaboration=this.collaborationService.sendEventData(idCollaboration);
+        //this.matDialog.open(UpdateCollaborationComponent);
+        }
 }

@@ -9,6 +9,8 @@ import { AddOfferComponent } from './add-offer/add-offer.component';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from './map/map.component';
 import { environment } from '../../environments/environment';
+import { UpdateOfferComponent } from './offer/update-offer/update-offer.component';
+import { UpdateCollaborationComponent } from './update-collaboration/update-collaboration.component';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { environment } from '../../environments/environment';
     OfferComponent,
     AddOfferComponent,
     MapComponent,
+    UpdateOfferComponent,
+    UpdateCollaborationComponent,
   ],
   imports: [
     CommonModule,

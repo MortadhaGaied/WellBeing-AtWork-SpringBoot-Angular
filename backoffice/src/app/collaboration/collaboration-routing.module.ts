@@ -1,3 +1,4 @@
+import { UpdateOfferComponent } from './offer/update-offer/update-offer.component';
 import { OfferComponent } from './offer/offer.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
 import { AddCollaborationComponent } from './add-collaboration/add-collaboration.component';
@@ -10,7 +11,8 @@ const routes: Routes = [
   {
     path: "",
     children: [{ path: "collaborations", component: CollaborationsComponent },{ path: "Addcollaborations", component: AddCollaborationComponent },
-    { path: "Offers", component: OfferComponent },{ path: "Addoffers", component: AddOfferComponent },{ path: "offers", component: OfferComponent }],
+    { path: "Offers", component: OfferComponent },{ path: "Addoffers", component: AddOfferComponent },{ path: "offers", component: OfferComponent },
+    { path: "Update-offer", component: UpdateOfferComponent }],
   },
 ];
 

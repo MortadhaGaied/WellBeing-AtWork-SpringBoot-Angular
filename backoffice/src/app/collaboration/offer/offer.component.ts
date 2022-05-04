@@ -29,4 +29,9 @@ export class OfferComponent implements OnInit {
       this.router.navigate([`viewOffer/${idOffer}`])
     }
   }
+
+  deleteOffer(idOffer:number){
+    this.OfferService.deleteOffer(idOffer)
+    .subscribe(()=>this.OfferService.getAllOffer().subscribe(res=>{this.o=res}));
+  }
 }
