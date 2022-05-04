@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: "",
     children: [{ path: "collaborations", component: CollaborationsComponent },{ path: "Addcollaborations", component: AddCollaborationComponent },
-    { path: "Offers", component: OfferComponent },{ path: "Addoffers", component: AddOfferComponent }],
+    { path: "Offers", component: OfferComponent },{ path: "Addoffers", component: AddOfferComponent },{ path: "offers", component: OfferComponent }],
   },
 ];
 

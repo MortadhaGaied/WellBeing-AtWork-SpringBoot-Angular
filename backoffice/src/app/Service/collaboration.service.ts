@@ -15,10 +15,10 @@ export class CollaborationService {
     return this.http.get<Collaboration[]>("http://localhost:8081/Wellbeignatwork/Collaboration/retrieveAllCollaborations")
   }
   getCollaborationById( idCollaboration : number){
-    return this.http.get("http://localhost:8081/Collaboration/Collaboration/retrieveCollaboration/"+idCollaboration)
+    return this.http.get("http://localhost:8081/Wellbeignatwork/Collaboration/retrieveCollaboration/"+idCollaboration)
   }
   updateCollaboration(Collaboration: Collaboration){
-    return this.http.put("http://localhost:8081/Collaboration/Collaboration/updateCollaboration/",Collaboration)
+    return this.http.put("http://localhost:8081/Wellbeignatwork/Collaboration/updateCollaboration/",Collaboration)
   }
 
   addCollaboration(Collaboration :Collaboration){
@@ -26,7 +26,7 @@ export class CollaborationService {
   }
 
   deleteCollaboration(idCollaboration: number){
-    return this.http.delete("http://localhost:8081/Collaboration/Collaboration/deleteCollaboration/"+idCollaboration)
+    return this.http.delete("http://localhost:8081/Wellbeignatwork/Collaboration/deleteCollaboration/"+idCollaboration)
   }
   uploadImageToCollabotration(form:FormData , idCollaboration : number ){
 

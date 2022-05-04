@@ -12,13 +12,13 @@ export class OfferService {
   constructor(private http :HttpClient) { }
 
   getAllOffer():Observable<Offer[]>{
-    return this.http.get<Offer[]>("http://localhost:8081/Offer/retrieveAllOffers/")
+    return this.http.get<Offer[]>("http://localhost:8081/Wellbeignatwork/Offer/retrieveAllOffers/")
   }
   getOfferById( idOffer : number){
-    return this.http.get("http://localhost:8081/Offer/retrieveOffer/"+idOffer)
+    return this.http.get("http://localhost:8081/Wellbeignatwork/Offer/retrieveOffer/"+idOffer)
   }
   updateOffer(offer: Offer){
-    return this.http.put("http://localhost:8081/Offer/updateOffer/",offer)
+    return this.http.put("http://localhost:8081/Wellbeignatwork/Offer/updateOffer/",offer)
   }
 
   addOffer(idCollaboration : number,offer :Offer){
@@ -26,7 +26,7 @@ export class OfferService {
   }
 
   deleteOffer(idOffer: number){
-    return this.http.delete("http://localhost:8081/Offer/deleteOffer/"+idOffer)
+    return this.http.delete("http://localhost:8081/Wellbeignatwork/Offer/deleteOffer/"+idOffer)
   }
   uploadImageToOffer(form:FormData , idOffer : number ){
     return this.http.post("http://localhost:8081/Wellbeignatwork/Offer/uploadImageToOffer/"+idOffer, form)
