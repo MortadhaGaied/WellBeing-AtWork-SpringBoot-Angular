@@ -54,6 +54,5 @@ console.log(formdata.get('image'))
     this.collaborationService.addCollaboration(this.collaboration).subscribe(collab =>
        {console.log(collab)
          this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
-
   }
 }

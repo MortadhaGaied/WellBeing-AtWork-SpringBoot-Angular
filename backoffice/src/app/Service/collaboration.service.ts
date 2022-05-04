@@ -34,7 +34,6 @@ export class CollaborationService {
   }
 
   sendEventData(idCollaboration : number):any{
-      
     this.getCollaborationById(idCollaboration).pipe(take(1)).subscribe(x=>{
       console.log(x.name);
       this.Collaboration=x;
