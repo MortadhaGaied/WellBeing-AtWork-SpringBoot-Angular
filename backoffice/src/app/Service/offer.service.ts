@@ -21,7 +21,7 @@ export class OfferService {
     return this.http.get<Offer>("http://localhost:8081/Wellbeignatwork/Offer/retrieveOffer/"+idOffer)
   }
   updateOffer(offer: Offer){
-    return this.http.put("http://localhost:8081/Wellbeignatwork/Offer/updateOffer/",offer)
+    return this.http.put("http://localhost:8081/Wellbeignatwork/Offer/updateOffer",offer)
   }
 
   addOffer(idCollaboration : number,offer :Offer){

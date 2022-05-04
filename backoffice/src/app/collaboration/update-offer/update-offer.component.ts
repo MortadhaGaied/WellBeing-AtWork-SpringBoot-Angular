@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Offer } from '../../Models/Collaboration/offer';
 import { OfferService } from '../../Service/offer.service';
@@ -19,7 +20,7 @@ export class UpdateOfferComponent implements OnInit {
   formdata : FormData = new FormData();
   formOffer: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, router: Router,@Inject(OfferService)
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private dialog :MatDialog,router: Router,@Inject(OfferService)
     private OfferService: OfferService) { }
 
   ngOnInit(): void {
@@ -35,14 +36,34 @@ export class UpdateOfferComponent implements OnInit {
   updateOffer(){
     console.log(this.file);
     console.log(this.Offre)
-    this.Offre.imagesOffer=undefined;
-    const formdata=new FormData();
-  formdata.append('image',this.file,this.file.name);
-console.log(formdata.get('image'))
-this.OfferService.updateOffer(this.Offre).subscribe(o => {
-  console.log(o)
-  this.OfferService.uploadImageToOffer(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
-  
+
+
+
+    this.OfferService.updateOffer(this.Offre).subscribe(offre =>
+       {
+         if (this.file){
+           let formdata = new FormData();
+           formdata.append('image',this.file,this.file.name);
+           this.OfferService.uploadImageToOffer(formdata,this.Offre.idOffer).subscribe(
+             {
+               next : (data)=>console.log(data),
+               error: (error)=>console.log(error),
+               complete : ()=>{
+                 window.location.reload();
+                 this.dialog.closeAll();
+               }
+             }
+           )
+
+         }else {
+          window.location.reload();
+          this.dialog.closeAll();
+         }
+    })}
+
+  getCollabById(id : number){
+this.OfferService.getOfferById(id).subscribe(offre=>console.log(offre))
+
   }
 
 }

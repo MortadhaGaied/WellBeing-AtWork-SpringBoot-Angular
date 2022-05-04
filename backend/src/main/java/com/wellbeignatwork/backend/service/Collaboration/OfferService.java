@@ -69,9 +69,8 @@ public class OfferService implements IOfferService {
 	}
 
 	@Override
-	public Offer updateOffer(Offer o,Long idOffer) {
-		Offer offer = OfferRepo.findById(idOffer).orElse(null);
-		return OfferRepo.save(offer);
+	public Offer updateOffer(Offer o) {
+		return OfferRepo.save(o);
 	}
 
 	@Override

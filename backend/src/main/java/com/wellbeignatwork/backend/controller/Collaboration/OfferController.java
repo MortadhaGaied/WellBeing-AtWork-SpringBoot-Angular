@@ -71,10 +71,10 @@ public class OfferController {
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/updateOffer/1
-    @PutMapping("/updateOffer/{idOffer}")
+    @PutMapping("/updateOffer")
     @ResponseBody
-    public Offer updateOffer(@RequestBody Offer o , @PathVariable Long idOffer){
-        return offerService.updateOffer(o,idOffer);
+    public Offer updateOffer(@RequestBody Offer o){
+        return offerService.updateOffer(o);
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/retrieveAllOffers
