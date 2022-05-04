@@ -12,7 +12,7 @@
         <h3 class="mb-0">Card tables</h3>
         <div class="mb-3">
           <input
-            type="email"
+            type="text"
             class="form-control"
             [(ngModel)]="searchValue"
             id="exampleFormControlInput1"
@@ -70,7 +70,7 @@
                 let room of rooms
                   | searchFilter: searchValue
                   | orderBy: key:reversed
-                  | paginate: { itemsPerPage: 3, currentPage: currentPage }
+                  | paginate: { itemsPerPage: 4, currentPage: currentPage }
               "
             >
               <th scope="row">
@@ -138,11 +138,6 @@
                       class="rounded-circle"
                     />
                   </a>
-                  <li *ngIf="room.users.length > 3" class="avatar avatar-sm">
-                    <span class="badge badge-primary">{{
-                      room.users.length - 3
-                    }}</span>
-                  </li>
                 </div>
               </td>
               <td>

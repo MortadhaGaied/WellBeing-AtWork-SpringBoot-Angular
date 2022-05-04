@@ -5,6 +5,7 @@ import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,9 @@ public class ChatRoom {
 
     private String averageResponseTime;
     private String image;
+    private int ownerId;
+    @Temporal(TemporalType.DATE)
+    private Date creationDate;
 
 
     @JsonIgnore

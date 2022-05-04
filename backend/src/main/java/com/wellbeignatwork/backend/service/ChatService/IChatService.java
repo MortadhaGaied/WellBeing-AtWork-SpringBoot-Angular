@@ -34,4 +34,5 @@ public interface IChatService {
     public Set<User> findUsersByChatroom(Long roomId);
     public void uploadImage(MultipartFile file ,Long roomId);
 
+
 }

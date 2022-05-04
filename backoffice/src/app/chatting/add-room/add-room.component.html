@@ -1,105 +1,113 @@
 <div
-      class="container"
-      style="
-      display: flex;
-        margin-bottom: 5rem;
-        margin-top: 1.2rem;
-        background-color: white;
-        border-radius: 10px;
-        padding: 2.5rem;
-        justify-content: center;
-        align-items: center;
-      "
+  class="container"
+  style="
+    display: flex;
+    margin-bottom: 5rem;
+    margin-top: 1.2rem;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2.5rem;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <div class="container">
+    <form (ngSubmit)="onFormSubmitted()" #AuckFmineForm="ngForm">
+      <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label"
+          >Room Name</label
+        >
+        <div class="col-sm-10">
+          <input
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="room.roomName"
+            type="text"
+            class="form-control"
+            id="inputEmail3"
+            placeholder="Room Name"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label"
+          >capacity</label
+        >
+        <div class="col-sm-10">
+          <input
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="room.capacity"
+            type="number"
+            class="form-control"
+            id="inputPassword3"
+            placeholder="Password"
+          />
+        </div>
+      </div>
 
-    >
-      <div class="container">
-        <form (ngSubmit)="onFormSubmitted()" #AuckFmineForm="ngForm">
-          <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-2 col-form-label"
-              >Room Name</label
-            >
-            <div class="col-sm-10">
-              <input
-                [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="room.roomName"
-                type="text"
-                class="form-control"
-                id="inputEmail3"
-                placeholder="Room Name"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label"
-              >capacity</label
-            >
-            <div class="col-sm-10">
-              <input
-                [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="room.capacity"
-                type="number"
-                class="form-control"
-                id="inputPassword3"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <div class="col-sm-2">available</div>
-            <div class="col-sm-10">
-              <div class="form-group">
-                <select
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control"
-                  id="exampleFormControlSelect1"
-                  [(ngModel)]="room.status"
-                >
-                  <option>UP</option>
-                  <option>DOWN</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-2">visible</div>
-            <div class="col-sm-10">
-              <div class="form-check">
-                <input
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="room.visible"
-                  class="form-check-input"
-                  type="checkbox"
-                  id="gridCheck1"
-                />
-              </div>
-            </div>
-          </div>
-
+      <div class="form-group row">
+        <div class="col-sm-2">available</div>
+        <div class="col-sm-10">
           <div class="form-group">
-            <label for="exampleFormControlFile1">Room Photo : </label>
+            <select
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="exampleFormControlSelect1"
+              [(ngModel)]="room.status"
+            >
+              <option>UP</option>
+              <option>DOWN</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-2">visible</div>
+        <div class="col-sm-10">
+          <div class="form-check">
             <input
-
-              type="file"
-              class="form-control-file"
-              id="exampleFormControlFile1"
-              (change)="onImageSelected($event)"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="room.visible"
+              class="form-check-input"
+              type="checkbox"
+              id="gridCheck1"
             />
           </div>
-          <div style="display: flex; margin-top: 1.2rem;">
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-success">Add</button>
-              </div>
-            </div>
-            <div style="margin-left: 1.2rem;"  class="form-group row">
-              <div class="col-sm-10">
-                <button type="button" (click)="handleReturnBtn()" class="btn btn-dark">Back</button>
-              </div>
-            </div>
-          </div>
-          {{isLoading}}
-
-        </form>
+        </div>
       </div>
-    </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Room Photo : </label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="exampleFormControlFile1"
+          (change)="onImageSelected($event)"
+        />
+      </div>
+      <div style="display: flex; margin-top: 1.2rem">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">Add</button>
+          </div>
+        </div>
+        <div style="margin-left: 1.2rem" class="form-group row">
+          <div class="col-sm-10">
+            <button
+              type="button"
+              (click)="handleReturnBtn()"
+              class="btn btn-dark"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        style="margin: 0 auto; margin-top: 10%"
+        *ngIf="isLoading"
+        class="spinner-border center"
+        role="status"
+      ></div>
+    </form>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Chatroom } from "../chatroom";
 import { ChatroomService } from "../chatroom.service";
 
@@ -26,13 +26,31 @@ export class RoomDetailsComponent implements OnInit {
   getRoomById(): void {
     this.isLoading = true;
     //retrieve roomId from route
-    this.route.params.subscribe((params) => (this.roomId = params["id"]));
+    this.route.params.subscribe({
+      next: (params: Params) => (this.roomId = params["id"]),
+      error: (error) => window.alert(error.message),
+    });
 
     //retrieve room by id From the server
-    this.service.findRoomById(this.roomId).subscribe(
-      (room) => (this.currentRoom = room),
-      () => (this.isLoading = false),
-      () => (this.isLoading = false)
-    );
+    this.service.findRoomById(this.roomId).subscribe({
+      next: (room: Chatroom) => (this.currentRoom = room),
+      error: (error) => (this.isLoading = false),
+      complete: () => (this.isLoading = false),
+    });
+  }
+
+  checkChatRoomFull(): boolean {
+    let result = true;
+    if (this.currentRoom.users) {
+      if (this.currentRoom.users?.length < this.currentRoom.capacity)
+        result = false;
+    }
+    return result;
+  }
+
+  checkRoomISEmpty() {
+    let result = false;
+    if (this.currentRoom.users?.length == 0) result = true;
+    return result;
   }
 }

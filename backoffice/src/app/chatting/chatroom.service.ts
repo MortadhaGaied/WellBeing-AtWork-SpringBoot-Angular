@@ -33,11 +33,21 @@ export class ChatroomService {
   bannUserFromRoom(userId: number, roomId: number) {
     return this.http.get(this.URI + `/bannUserFromRoom/${userId}/${roomId}`);
   }
-  getAllMessages(){
-    return this.http.get<number>(this.URI+"/getAllMessages")
+  getAllMessages() {
+    return this.http.get<number>(this.URI + "/getAllMessages");
   }
-  uploadImage(roomId:number,form:FormData){
+  uploadImage(roomId: number, form: FormData) {
+    return this.http.post(this.URI + `/uploadImage/${roomId}`, form);
+  }
+  getAllUsers() {
+    return this.http.get<any>(
+      "http://localhost:8081/Wellbeignatwork/api/get-all-users"
+    );
+  }
 
-    return this.http.post(this.URI+`/uploadImage/${roomId}`,form)
+  addUserToChatRoom(chatroomId: number, userId: number) {
+    return this.http.get(
+      this.URI + "/addUserToRoom/" + chatroomId + "/" + userId
+    );
   }
 }

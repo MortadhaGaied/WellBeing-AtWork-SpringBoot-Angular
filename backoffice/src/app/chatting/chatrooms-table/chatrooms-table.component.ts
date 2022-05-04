@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
 import {
   collection,
   collectionData,
@@ -7,9 +7,16 @@ import {
   Firestore,
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import { from, Observable, Subscription } from "rxjs";
 import { Chatroom } from "../chatroom";
 import { ChatroomService } from "../chatroom.service";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { AddRoomComponent } from "../add-room/add-room.component";
+import { EditComponent } from "../edit/edit.component";
 
 @Component({
   selector: "app-chatrooms-table",
@@ -22,7 +29,8 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
   constructor(
     private service: ChatroomService,
     private firestore: Firestore,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.col = collection(firestore, "items");
     this.item$ = collectionData(this.col);
@@ -30,23 +38,23 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
   rooms: Chatroom[] = [];
   visible: boolean = false;
   subscription: Subscription;
-  subscription2: Subscription;
-  subscription3: Subscription;
-  searchValue:string="";
-  key:String='id';
-  reversed:boolean=false;
-  currentPage:number=1;
+  searchValue: string = "";
+  key: String = "id";
+  reversed: boolean = false;
+  currentPage: number = 1;
+  itemsPerPage: number = 3;
 
   ngOnInit(): void {
     this.getAllRooms();
   }
-  sort(key:string){
-      this.key=key
-      this.reversed=!this.reversed
+  sort(key: string) {
+    this.key = key;
+    this.reversed = !this.reversed;
   }
 
   OnAddRoomClicked(): void {
-    this.router.navigateByUrl("/chat/add-room");
+    this.dialog.open(AddRoomComponent);
+    //this.router.navigateByUrl("/chat/add-room");
   }
 
   toggleVisibility() {
@@ -75,16 +83,12 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
     this.service.updateRoom(room).subscribe((data) => this.getAllRooms());
   }
   deleteRoom(room: Chatroom) {
-    this.subscription3 = this.service
-      .deleteRoom(room)
-      .subscribe((data) => this.getAllRooms());
+    this.service.deleteRoom(room).subscribe((data) => this.getAllRooms());
   }
 
   handleNavigateToEdit(room: Chatroom): void {
     console.log(room);
-    this.router
-      .navigateByUrl("/chat/" + room.id)
-      .then(() => window.location.reload());
+    this.dialog.open(EditComponent, { data: room });
   }
   handleNavigateToChatRoomUsersList(room: Chatroom): void {
     //console.log("clicked");

@@ -67,6 +67,9 @@ public class ChatRoomService implements IChatService {
 
 
     public ChatRoom createChatRoom(ChatRoom chatRoom) {
+        UUID uniqueId = UUID.randomUUID();
+        chatRoom.setUniqueKey(uniqueId.toString());
+        chatRoom.setCreationDate(new Date());
         return chatRoomRepository.save(chatRoom);
     }
 

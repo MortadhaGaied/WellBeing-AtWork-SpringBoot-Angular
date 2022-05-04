@@ -19,43 +19,52 @@
             <span class="text-primary">Owner: </span>
           </div>
           <ul class="list-unstyled mb-4">
+            <li class="mb-3">uniqueKey: {{ currentRoom.uniqueKey }}</li>
+            <li class="mb-3">max bad words : {{ currentRoom.MaxBadWords }}</li>
+            <li class="mb-3">room capacity : {{ currentRoom.capacity }}</li>
             <li class="mb-3">
-              <a href="#!"
-                ><i class="far fa-envelope display-25 me-3 text-secondary"></i
-                >dakota@gmail.com</a
-              >
-            </li>
-            <li class="mb-3">
-              <a href="#!"
-                ><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i
-                >+012 (345) 6789</a
-              >
-            </li>
-            <li>
-              <a href="#!"
-                ><i
-                  class="fas fa-map-marker-alt display-25 me-3 text-secondary"
-                ></i
-                >205 Main Street, USA</a
-              >
+              average responding time : {{ currentRoom.averageResponseTime }}
             </li>
           </ul>
           <ul class="social-icon-style2 ps-0">
             <li>
-              <a href="#!" class="rounded-3"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
+              <span
+                *ngIf="currentRoom.visible"
+                class="mb-1 me-2 badge bg-success"
+                >public</span
+              >
+              <span
+                *ngIf="!currentRoom.visible"
+                class="mb-1 me-2 badge bg-danger"
+                >private</span
+              >
             </li>
             <li>
-              <a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a>
+              <span
+                *ngIf="currentRoom.status == 'UP'"
+                class="mb-1 me-2 badge bg-success"
+                >open</span
+              >
+              <span
+                *ngIf="currentRoom.status == 'DOWN'"
+                class="mb-1 me-2 badge bg-danger"
+                >closed</span
+              >
             </li>
             <li>
-              <a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a>
-            </li>
-            <li>
-              <a href="#!" class="rounded-3"
-                ><i class="fab fa-linkedin-in"></i
-              ></a>
+              <ng-container *ngIf="checkRoomISEmpty(); else places_available">
+                <span class="mb-1 me-2 badge bg-warning">empty</span>
+              </ng-container>
+              <ng-template #room_full>
+                <span class="mb-1 me-2 badge bg-danger">full</span>
+              </ng-template>
+              <ng-template #places_available>
+                <ng-container *ngIf="!checkChatRoomFull(); else room_full">
+                  <span class="mb-1 me-2 badge bg-warning"
+                    >places available</span
+                  >
+                </ng-container>
+              </ng-template>
             </li>
           </ul>
         </div>
@@ -64,6 +73,7 @@
     <div class="col-lg-8">
       <div class="ps-lg-1-6 ps-xl-5">
         <app-room-user-list></app-room-user-list>
+        <app-sales-ratio></app-sales-ratio>
       </div>
     </div>
   </div>

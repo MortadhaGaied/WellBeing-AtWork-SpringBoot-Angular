@@ -37,6 +37,6 @@ const routes: Routes = [
     TopCardsComponent,
     BlogCardsComponent,
   ],
-  exports: [TopCardsComponent],
+  exports: [TopCardsComponent, SalesRatioComponent],
 })
 export class DashboardModule {}

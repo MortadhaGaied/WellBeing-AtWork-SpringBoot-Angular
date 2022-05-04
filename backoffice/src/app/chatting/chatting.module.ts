@@ -11,15 +11,32 @@ import { DashboardModule } from "../dashboard/dashboard.module";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { FormsModule } from "@angular/forms";
-import { AddRoomComponent } from './add-room/add-room.component';
-import { EditComponent } from './edit/edit.component';
-import { RoomUserListComponent } from './room-user-list/room-user-list.component';
-import { RoomDetailsComponent } from './room-details/room-details.component';
-import { SearchFilterPipe } from './pipes/search-filter.pipe';
-import {Ng2OrderModule}from "ng2-order-pipe";
-import {NgxPaginationModule, PaginationControlsComponent}from "ngx-pagination"
+import { AddRoomComponent } from "./add-room/add-room.component";
+import { EditComponent } from "./edit/edit.component";
+import { RoomUserListComponent } from "./room-user-list/room-user-list.component";
+import { RoomDetailsComponent } from "./room-details/room-details.component";
+import { SearchFilterPipe } from "./pipes/search-filter.pipe";
+import { Ng2OrderModule } from "ng2-order-pipe";
+import {
+  NgxPaginationModule,
+  PaginationControlsComponent,
+} from "ngx-pagination";
+import { MatDialogModule } from "@angular/material/dialog";
+import { AddUserToRoomComponent } from "./add-user-to-room/add-user-to-room.component";
+import { UserSearchFilterPipe } from './pipes/user-search-filter.pipe';
+
 @NgModule({
-  declarations: [ChatRoomsComponent, ChatroomsTableComponent, AddRoomComponent, EditComponent, RoomUserListComponent, RoomDetailsComponent, SearchFilterPipe],
+  declarations: [
+    ChatRoomsComponent,
+    ChatroomsTableComponent,
+    AddRoomComponent,
+    EditComponent,
+    RoomUserListComponent,
+    RoomDetailsComponent,
+    SearchFilterPipe,
+    AddUserToRoomComponent,
+    UserSearchFilterPipe,
+  ],
   imports: [
     FormsModule,
     MatSlideToggleModule,
@@ -29,7 +46,10 @@ import {NgxPaginationModule, PaginationControlsComponent}from "ngx-pagination"
     ComponentsModule,
     DashboardModule,
     Ng2OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    DashboardModule,
+    MatDialogModule,
   ],
+  entryComponents: [AddRoomComponent, AddUserToRoomComponent],
 })
 export class ChattingModule {}
