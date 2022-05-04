@@ -14,7 +14,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class CollaborationsComponent implements OnInit {
   c : Collaboration[];
   Collaboration : Collaboration;
-  constructor(private collaborationService: CollaborationService,private router : Router) { }
+  constructor(private collaborationService: CollaborationService,private matDialog:MatDialog,private router : Router) { }
 
   totalLentgh:any;
   page:number = 1;
@@ -57,6 +57,6 @@ export class CollaborationsComponent implements OnInit {
       updateCollaboration(idCollaboration:number){
     
         this.Collaboration=this.collaborationService.sendEventData(idCollaboration);
-        //this.matDialog.open(UpdateCollaborationComponent);
+        this.matDialog.open(UpdateCollaborationComponent);
         }
 }

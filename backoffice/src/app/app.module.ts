@@ -1,3 +1,4 @@
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -45,7 +46,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     [BrowserModule, NgxPaginationModule],
     RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    MatDialogModule
   ],
   providers: [
     {
