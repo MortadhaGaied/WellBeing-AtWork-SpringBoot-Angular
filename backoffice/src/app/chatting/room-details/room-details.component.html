@@ -12,7 +12,16 @@
   <div class="row justify-content-center">
     <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
       <div class="card border-0 shadow">
-        <img src="{{ currentRoom.image }}" alt="..." />
+        <img
+          *ngIf="currentRoom.image"
+          src="{{ currentRoom.image }}"
+          alt="..."
+        />
+        <img
+          *ngIf="!currentRoom.image"
+          src="assets/images/chatroom/chatRoom.jpg"
+          alt="..."
+        />
         <div class="card-body p-1-9 p-xl-5">
           <div class="mb-4">
             <h3 class="h4 mb-0">Room Name : {{ currentRoom.roomName }}</h3>
@@ -52,19 +61,15 @@
               >
             </li>
             <li>
-              <ng-container *ngIf="checkRoomISEmpty(); else places_available">
-                <span class="mb-1 me-2 badge bg-warning">empty</span>
-              </ng-container>
-              <ng-template #room_full>
-                <span class="mb-1 me-2 badge bg-danger">full</span>
-              </ng-template>
-              <ng-template #places_available>
-                <ng-container *ngIf="!checkChatRoomFull(); else room_full">
-                  <span class="mb-1 me-2 badge bg-warning"
-                    >places available</span
-                  >
-                </ng-container>
-              </ng-template>
+              <span
+                *ngIf="checkChatRoomFull(); else pacesAvailable"
+                class="mb-1 me-2 badge bg-danger"
+                >full</span
+              ><ng-template #pacesAvailable
+                ><span class="mb-1 me-2 badge bg-info"
+                  >places available</span
+                ></ng-template
+              >
             </li>
           </ul>
         </div>

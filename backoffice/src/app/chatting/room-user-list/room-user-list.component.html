@@ -70,7 +70,7 @@
                 "
               >
                 <div
-                  *ngIf="!isDeletingLoading"
+                  *ngIf="deletedButtonLoadingState.get(user) == false"
                   (click)="onDeleteUserPressed(user)"
                   class="btn btn-outline-danger"
                 >
@@ -88,7 +88,7 @@
                   </svg>
                 </div>
                 <div
-                  *ngIf="isDeletingLoading"
+                  *ngIf="deletedButtonLoadingState.get(user) == true"
                   class="spinner-border text-danger"
                   role="status"
                 ></div>

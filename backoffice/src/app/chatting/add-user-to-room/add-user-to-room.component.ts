@@ -19,35 +19,56 @@ export class AddUserToRoomComponent implements OnInit {
 
   public users: any[] = [];
   isLoading: boolean = false;
+  userMap: Map<any, boolean> = new Map();
+
+  /**TODO:
+   * 1) get all users and show them in the dropList
+   * 2) set icons for each user based on if the user already a member of the chatroom or not
+   * 3) implement a method to add the user to the chatroom if the user isnt a member yet
+   */
 
   ngOnInit(): void {
-    this.fetchUsers();
-    console.log(this.data);
+    this.getAllUsers();
   }
 
-  checkUserInChatRoom(user: any): boolean {
-    let result = false;
-    if (this.users.includes(user)) result = true;
-
-    return result;
-  }
-
-  fetchUsers(): void {
+  public getAllUsers(): void {
     this.service.getAllUsers().subscribe({
-      next: (users) => (this.users = users),
-      error: (error) => {
-        this.isLoading = false;
-        window.alert(error.message);
-      },
-      complete: () => (this.isLoading = false),
+      next: (users: any[]) => (this.users = users),
     });
+  }
+
+  public checkIfUserIsMember(chatroom: Chatroom, user: any): boolean {
+    let result = false; // initial value
+    chatroom.users?.map((roomUser) => {
+      if (roomUser.id === user.id) {
+        result = true;
+      }
+    });
+    /*console.log(
+      "result from checking user existance in room " +
+        chatroom.roomName +
+        "is : " +
+        result
+    );*/
+    return result;
   }
 
   onAddUserToChatRoom(user: any) {
     this.service.addUserToChatRoom(this.data.id, user.id).subscribe({
-      next: () => console.log("user added to chatroom" + this.data.id),
+      next: () => {
+        console.log("user added to chatroom" + this.data.id);
+        /**
+         this method is to force the update on the parent component (in our case usersListComponent)
+         */
+        this.data.users?.push(user);
+      },
       error: (error) => window.alert(error.message),
     });
+  }
+
+  onDialogClosed(): void {
+    window.location.reload();
+    this.dialog.closeAll();
   }
 
   setHoverColor(event: MouseEvent) {
@@ -60,7 +81,6 @@ export class AddUserToRoomComponent implements OnInit {
       case "mouseleave":
         item.className = "list-group-item";
         break;
-
       default:
         item.className = "list-group-item";
         break;
