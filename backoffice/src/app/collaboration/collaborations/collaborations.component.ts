@@ -1,6 +1,6 @@
 import { Collaboration } from './../../Models/Collaboration/collaboration';
 import { Post } from './../../Models/Forum/Post';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollaborationService } from '../../Service/collaboration.service';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -14,6 +14,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class CollaborationsComponent implements OnInit {
   c : Collaboration[];
   Collaboration : Collaboration;
+  $eventEmit = new EventEmitter();
   constructor(private collaborationService: CollaborationService,private matDialog:MatDialog,private router : Router) { }
 
   totalLentgh:any;

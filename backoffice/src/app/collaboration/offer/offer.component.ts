@@ -1,7 +1,9 @@
+import { UpdateOfferComponent } from './../update-offer/update-offer.component';
 import { OfferService } from './../../Service/offer.service';
 import { Offer } from './../../Models/Collaboration/offer';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-offer',
@@ -10,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class OfferComponent implements OnInit {
   o : Offer[];
-  constructor(private OfferService: OfferService,private router : Router ) { }
+  Offer : Offer;
+  constructor(private OfferService: OfferService,private matDialog:MatDialog,private router : Router ) { }
 
   ngOnInit(): void {
     this.OfferService.getAllOffer().subscribe(
@@ -34,4 +37,9 @@ export class OfferComponent implements OnInit {
     this.OfferService.deleteOffer(idOffer)
     .subscribe(()=>this.OfferService.getAllOffer().subscribe(res=>{this.o=res}));
   }
+  updateOffer(idCollaboration:number){
+    
+    this.Offer=this.OfferService.sendEventData(idCollaboration);
+    this.matDialog.open(UpdateOfferComponent);
+    }
 }
