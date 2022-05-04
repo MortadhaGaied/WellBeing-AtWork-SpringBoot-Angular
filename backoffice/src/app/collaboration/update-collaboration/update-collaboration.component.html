@@ -11,26 +11,26 @@
           <div class="col-lg-6 row m-0 p-0">
           <div id="post-modal-data" class="card card-block card-stretch card-height">
             <p>name</p>
-            <input [(ngModel)]="collaboration.name" class="fname" type="text" name="name" placeholder=" name" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.name" class="fname" type="text" name="name" placeholder=" name" [ngModelOptions]="{standalone: true}">
            <br>
             <p>email</p>
-            <input [(ngModel)]="collaboration.email"type="text" name="name" placeholder="Email" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.email"type="text" name="name" placeholder="Email" [ngModelOptions]="{standalone: true}">
             <br>
             <p>phone</p>
-            <input [(ngModel)]="collaboration.phone" type="text" name="name" placeholder="Phone number" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.phone" type="text" name="name" placeholder="Phone number" [ngModelOptions]="{standalone: true}">
             <br>
             <p>description</p>
             <br>
-            <input [(ngModel)]="collaboration.description"type="String" name="name" placeholder="description" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.description"type="String" name="name" placeholder="description" [ngModelOptions]="{standalone: true}">
             <br>
             <p>date</p>
-            <input [(ngModel)]="collaboration.date"type="date" name="name" placeholder="dater" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.date"type="date" name="name" placeholder="dater" [ngModelOptions]="{standalone: true}">
             <br>
             <p>town</p>
-            <input [(ngModel)]="collaboration.town"type="String" name="name" placeholder="Town" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.town"type="String" name="name" placeholder="Town" [ngModelOptions]="{standalone: true}">
             <br>
             <p>rate</p>
-            <input [(ngModel)]="collaboration.rate"type="String" name="name" placeholder="rate" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="Collaboration.rate"type="String" name="name" placeholder="rate" [ngModelOptions]="{standalone: true}">
             <br>
             <p>Image</p>
             <input (change)="onFileSelected($event)"

@@ -17,8 +17,8 @@ export class CollaborationService {
   getCollaborationById( idCollaboration : number){
     return this.http.get<Collaboration>("http://localhost:8081/Wellbeignatwork/Collaboration/retrieveCollaboration/"+idCollaboration)
   }
-  updateCollaboration(idCollaboration: number){
-    return this.http.put("http://localhost:8081/Wellbeignatwork/Collaboration/UpdateCollaboration/",idCollaboration)
+  updateCollaboration(Collaboration: Collaboration){
+    return this.http.put("http://localhost:8081/Wellbeignatwork/Collaboration/UpdateCollaboration",Collaboration)
   }
 
   addCollaboration(Collaboration :Collaboration){

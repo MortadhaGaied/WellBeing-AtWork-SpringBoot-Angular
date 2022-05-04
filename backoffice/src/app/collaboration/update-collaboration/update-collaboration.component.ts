@@ -1,7 +1,7 @@
+import { Collaboration } from './../../Models/Collaboration/collaboration';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Collaboration } from '../../Models/Collaboration/collaboration';
 import { CollaborationService } from '../../Service/collaboration.service';
 
 @Component({
@@ -10,34 +10,22 @@ import { CollaborationService } from '../../Service/collaboration.service';
   styleUrls: ['./update-collaboration.component.scss']
 })
 export class UpdateCollaborationComponent implements OnInit {
-  
-  idUser: any;
-  collaboration: Collaboration = {
-    date: new Date(),
-    description: '',
-    email: '',
-    name: '',
-    idCollaboration: 0,
-    phone: 0,
-    rate: '',
-    imagesCollab: {
-      id: 0,
-      name: ''
-    },
-    town: '',
-  }
-file:File;
-  c: Collaboration[];
 
+file:File;
+Collaboration : Collaboration = new Collaboration;
   title: any;
   button: any;
   idCollaboration: any;
   formCollaboration: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, router: Router,
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, router: Router,@Inject(CollaborationService)
     private collaborationService: CollaborationService) { }
 
   ngOnInit(): void {
+    this.collaborationService.$eventEmit.subscribe((data)=> {
+      this.Collaboration=data;
+      console.log(this.Collaboration);
+    })
   }
   onFileSelected(event:any){
     this.file=event.target.files[0];
@@ -45,12 +33,12 @@ file:File;
   }
   updateCollaboration(){
     console.log(this.file);
-    console.log(this.collaboration)
-    this.collaboration.imagesCollab=undefined;
+    console.log(this.Collaboration)
+    this.Collaboration.imagesCollab=undefined;
     const formdata=new FormData();
   formdata.append('image',this.file,this.file.name);
 console.log(formdata.get('image'))
-    this.collaborationService.updateCollaboration(this.idCollaboration).subscribe(collab =>
+    this.collaborationService.updateCollaboration(this.Collaboration).subscribe(collab =>
        {console.log(collab)
          this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
 

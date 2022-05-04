@@ -26,11 +26,11 @@ public class CollaborationController {
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/UpdateCollaboration/1
-	@PutMapping("/UpdateCollaboration/{id}")
+	@PutMapping("/UpdateCollaboration")
 	@ResponseBody
-	public void UpdateCollaboration(@RequestBody Collaboration c, @PathVariable long idUser)
+	public void UpdateCollaboration(@RequestBody Collaboration c)
 	{
-		collaborationService.updateCollaboration(c,idUser);
+		collaborationService.updateCollaboration(c);
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/deleteCollaboration/1

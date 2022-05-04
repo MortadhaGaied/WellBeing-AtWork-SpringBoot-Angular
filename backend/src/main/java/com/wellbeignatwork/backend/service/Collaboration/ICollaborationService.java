@@ -10,7 +10,7 @@ import java.util.List;
 public interface ICollaborationService {
     List<Collaboration> retrieveAllCollaborations();
 
-    void updateCollaboration(Collaboration c,Long idUser);
+    void updateCollaboration(Collaboration c);
 
     void deleteCollaboration(Long id);
 
