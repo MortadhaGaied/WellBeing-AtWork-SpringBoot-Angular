@@ -1,12 +1,8 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Collaboration } from '../../Models/Collaboration/collaboration';
 import { CollaborationService } from '../../Service/collaboration.service';
-
-
-
-
 
 @Component({
   selector: 'app-add-collaboration',
@@ -24,7 +20,8 @@ export class AddCollaborationComponent implements OnInit {
     name: '',
     idCollaboration: 0,
     phone: 0,
-    picture: {
+    rate: '',
+    imagesCollab: {
       id: 0,
       name: ''
     },
@@ -49,10 +46,14 @@ file:File;
   }
   addCollaboration(){
     console.log(this.file);
+    console.log(this.collaboration)
+    this.collaboration.imagesCollab=undefined;
     const formdata=new FormData();
   formdata.append('image',this.file,this.file.name);
-
-    this.collaborationService.addCollaboration(this.collaboration).subscribe(collab => this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error)))
+console.log(formdata.get('image'))
+    this.collaborationService.addCollaboration(this.collaboration).subscribe(collab =>
+       {console.log(collab)
+         this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
 
   }
 }

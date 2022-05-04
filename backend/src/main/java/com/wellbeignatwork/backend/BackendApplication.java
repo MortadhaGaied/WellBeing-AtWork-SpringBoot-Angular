@@ -8,6 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.annotation.Resource;
 
 @EnableSwagger2
+
 @SpringBootApplication
 @EnableScheduling
 public class BackendApplication  {

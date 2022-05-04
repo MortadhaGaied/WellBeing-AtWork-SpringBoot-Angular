@@ -27,7 +27,7 @@ html, body {
   align-items: center;
   height: 100%;
   padding: 25px;
-  background: rgba(0, 0, 0, 0.5); 
+  background: B9B5B8; 
   }
   .left-part, form {
   padding: 25px;
@@ -39,7 +39,7 @@ html, body {
   font-size: 72px;
   }
   form {
-  background: rgba(0, 0, 0, 0.7); 
+  background: F1EDF0; 
   }
   .title {
   display: flex;
@@ -64,7 +64,7 @@ html, body {
   border: none;
   }
   option {
-  background: black; 
+  background: F1EDF0; 
   border: none;
   }
   .checkbox input {
@@ -99,9 +99,16 @@ html, body {
   background: #85d6de;
   }
   @media (min-width: 568px) {
-  html, body {
-  height: 100%;
-  }
+
+  body, div, form, input, select, textarea, p { 
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    color: #666;
+    line-height: 22px;
+    }
   .main-block {
   flex-direction: row;
   height: calc(100% - 50px);

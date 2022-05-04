@@ -7,5 +7,6 @@ export class Collaboration {
     email:string;
     date:Date;
     town:string;
-    picture:Image;
+    rate:string;
+    imagesCollab?:Image;
 }
