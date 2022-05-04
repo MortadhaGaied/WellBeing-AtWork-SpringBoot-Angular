@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card" *ngFor="let item of o">
+    <div class="card" *ngFor="let item of o  | paginate: { itemsPerPage: 10, currentPage: page }">
       <div class="card-header">
         <img *ngIf="item.imagesOffer"
          [src]=item.imagesOffer.name
@@ -26,4 +26,4 @@
         <button (click)="updateOffer(item.idOffer)" class="btn btn-primary">Update</button>  
       </div>
     </div>  </div>
-  
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>

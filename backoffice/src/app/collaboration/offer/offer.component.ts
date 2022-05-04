@@ -15,11 +15,14 @@ export class OfferComponent implements OnInit {
   Offer : Offer;
   constructor(private OfferService: OfferService,private matDialog:MatDialog,private router : Router ) { }
 
+  totalLentgh:any;
+  page:number = 1;
   ngOnInit(): void {
     this.OfferService.getAllOffer().subscribe(
       (data)=>{ 
         console.log(data);
         this.o=data
+        this.totalLentgh = data.length 
       });
   }
 
