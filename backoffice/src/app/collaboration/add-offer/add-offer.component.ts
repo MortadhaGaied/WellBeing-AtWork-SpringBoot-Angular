@@ -1,10 +1,11 @@
 import { CollaborationService } from './../../Service/collaboration.service';
 import { Collaboration } from './../../Models/Collaboration/collaboration';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../Service/offer.service';
 import { Offer } from '../../Models/Collaboration/offer';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 
 @Component({
@@ -53,22 +54,21 @@ export class AddOfferComponent implements OnInit {
 
   }
   onSelectCollaboration(event: any) {
-    this.selectedcollaborationId = event;
+    this.selectedcollaborationId = event.target.value;
     //console.log(this.selectedcollaboration);
-    console.log(event)
+    console.log(event.target.value)
   }
 
-  onFileSelected(event: any) {
-    this.file = event.target.files[0];
+  onFileSelected(event:any){
+    this.file=event.target.files[0];
     console.log(this.file)
   }
   addOffer() {
     console.log(this.file);
     const formdata = new FormData();
     formdata.append('image', this.file, this.file.name);
-
     this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(offer => {
       console.log(offer)
-      this.OfferService.uploadImageToOffer(formdata, JSON.parse(JSON.stringify(offer)).idOffer).subscribe(data => window.alert("image uploaded successfully"), (error) => console.log(error))})
+      this.OfferService.uploadImageToOffer(formdata,JSON.parse(JSON.stringify(offer)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
   }
 }

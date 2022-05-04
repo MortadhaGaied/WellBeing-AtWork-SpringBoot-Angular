@@ -22,7 +22,7 @@ export class OfferService {
   }
 
   addOffer(idCollaboration : number,offer :Offer){
-    return this.http.post("http://localhost:8081/Offer/addOffer/"+idCollaboration,offer)
+    return this.http.post("http://localhost:8081/Wellbeignatwork/Offer/addOffer/"+idCollaboration,offer)
   }
 
   deleteOffer(idOffer: number){
