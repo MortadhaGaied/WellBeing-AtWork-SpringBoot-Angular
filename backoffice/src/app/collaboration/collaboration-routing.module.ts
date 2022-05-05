@@ -1,3 +1,7 @@
+import { AddQuestionComponent } from './add-question/add-question.component';
+import { AddQuizComponent } from './add-quiz/add-quiz.component';
+import { ViewQuizzesComponent } from './view-quizzes/view-quizzes.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
 import { ViewCategoriesComponent } from './view-categories/view-categories.component';
 
 import { OfferComponent } from './offer/offer.component';
@@ -9,6 +13,8 @@ import { CollaborationsComponent } from './collaborations/collaborations.compone
 import { RouterModule, Routes } from '@angular/router';
 import { UpdateOfferComponent } from './update-offer/update-offer.component';
 import { EspaceQuizComponent } from './espace-quiz/espace-quiz.component';
+import { UpdateQuizComponent } from './update-quiz/update-quiz.component';
+import { ViewQuizQuestionsComponent } from './view-quiz-questions/view-quiz-questions.component';
 
 const routes: Routes = [
   {
@@ -16,7 +22,11 @@ const routes: Routes = [
     children: [{ path: "collaborations", component: CollaborationsComponent },{ path: "Addcollaborations", component: AddCollaborationComponent },
     { path: "Offers", component: OfferComponent },{ path: "Addoffers", component: AddOfferComponent },{ path: "offers", component: OfferComponent },
     { path: "Update-offer", component: UpdateOfferComponent },{ path: "EspaceQuiz", component: EspaceQuizComponent },
-    {path: 'categories',component: ViewCategoriesComponent},],
+    {path: 'categories',component: ViewCategoriesComponent},{path: 'add-category',component: AddCategoryComponent},
+    {path: 'quizzes',component: ViewQuizzesComponent},{path: 'add-quiz',component: AddQuizComponent},
+    {path: 'quiz/:qid',component: UpdateQuizComponent},{path: 'view-questions/:qid/:title',component: ViewQuizQuestionsComponent},
+    {path: 'add-question/:qid/:title',component: AddQuestionComponent},
+  ],
   },
 ];
 
