@@ -1,0 +1,9 @@
+<video
+  *ngIf="stream"
+  [srcObject]="stream"
+  autoplay
+  width="400"
+  height="600"
+></video>
+<button (click)="close()">stop streaming</button>
+<button (click)="shareScreen()">share screen</button>

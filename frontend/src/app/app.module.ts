@@ -19,7 +19,12 @@ import { RecentBlogComponent } from './core/recent-blog/recent-blog.component';
 import { CompleteProfileComponent } from './core/complete-profile/complete-profile.component';
 import { StreamComponent } from './live-stream/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { StreamScreenComponent } from './live-stream/stream-screen/stream-screen.component';
+import { StreamChatBoxComponent } from './live-stream/stream-chat-box/stream-chat-box.component';
+import { StreamConfigBoxComponent } from './live-stream/stream-config-box/stream-config-box.component';
+import { FormsModule } from '@angular/forms';
+import { MockLoginComponent } from './live-stream/mock-login/mock-login.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,13 +43,14 @@ import { AppRoutingModule } from './app-routing.module';
     LinksComponent,
     RecentBlogComponent,
     CompleteProfileComponent,
-    StreamComponent
+    StreamComponent,
+    StreamScreenComponent,
+    StreamChatBoxComponent,
+    StreamConfigBoxComponent,
+    MockLoginComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
