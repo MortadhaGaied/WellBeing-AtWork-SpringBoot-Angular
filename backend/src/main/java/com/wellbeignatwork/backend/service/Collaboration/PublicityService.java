@@ -67,8 +67,7 @@ public class PublicityService implements IPublicityService {
 
 	@Override
 	public Publicity retrievePublicity(Long id) {
-		Publicity publicity = PublicityRepo.findById(id).orElse(null);
-		return publicity;
+		return PublicityRepo.findById(id).orElse(null);
 	}
 
 
