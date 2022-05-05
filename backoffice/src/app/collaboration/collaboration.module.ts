@@ -37,6 +37,7 @@ import { UpdateQuizComponent } from './update-quiz/update-quiz.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AddQuizComponent } from './add-quiz/add-quiz.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AddQuizComponent } from './add-quiz/add-quiz.component';
     AddCategoryComponent,
     AddQuestionComponent,
     AddQuizComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
