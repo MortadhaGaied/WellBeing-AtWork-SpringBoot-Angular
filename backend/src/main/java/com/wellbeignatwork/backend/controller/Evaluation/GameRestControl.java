@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.controller.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Game;
 import com.wellbeignatwork.backend.entity.Evaluation.GamePlay;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.service.Evaluation.GameService;
 import com.wellbeignatwork.backend.exceptions.Evaluation.GameNotFound;
 import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidGameException;
@@ -29,7 +29,7 @@ public class GameRestControl {
 
 
     @PostMapping("/start")
-    public ResponseEntity<Game> start(@RequestBody User player) {
+    public ResponseEntity<Game> start(@RequestBody Userr player) {
         log.info("start game request: {}", player);
         return ResponseEntity.ok(gameService.createGame(player));
     }
@@ -41,7 +41,7 @@ public class GameRestControl {
     }
 
     @PostMapping("/connectInRandomMode/random")
-    public  ResponseEntity<Game> connectToRandomGame(@RequestBody User player) throws GameNotFound {
+    public  ResponseEntity<Game> connectToRandomGame(@RequestBody Userr player) throws GameNotFound {
         log.info("connect random {}", player);
         return ResponseEntity.ok(gameService.connectToRandomGame(player));
 

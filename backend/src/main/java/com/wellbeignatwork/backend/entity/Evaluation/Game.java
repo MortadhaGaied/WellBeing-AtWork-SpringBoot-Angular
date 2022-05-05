@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,8 +10,8 @@ import java.io.Serializable;
 public class Game implements Serializable {
 
     private String gameId;
-    private User player1;
-    private User player2;
+    private Userr player1;
+    private Userr player2;
     private GameStatus status;
     private int[][] board;
     private TicToe winner;

@@ -1,29 +1,25 @@
 package com.wellbeignatwork.backend.controller.Collaboration;
 
 
-import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 
 import com.stripe.exception.StripeException;
 import com.wellbeignatwork.backend.entity.Collaboration.Payment;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.Collaboration.IReservationService;
 import com.wellbeignatwork.backend.service.Collaboration.ISendEmailService;
-import com.wellbeignatwork.backend.service.Evaluation.QRCodeGenerator;
 import com.wellbeignatwork.backend.util.PDFGeneratorService;
 import com.wellbeignatwork.backend.util.StripeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 
 @RequestMapping("/Reservation")
@@ -66,7 +62,7 @@ public class ReservationController {
     @ResponseBody
     public void addResevation(@RequestBody Reservation r, @PathVariable long idUser, @PathVariable long idOffer, HttpServletResponse response) throws MessagingException, DocumentException, IOException, com.lowagie.text.DocumentException {
 
-        User u = userRepository.findById(idUser).orElse(null);
+        Userr u = userRepository.findById(idUser).orElse(null);
        /* byte[] image = new byte[0];
         try {
 

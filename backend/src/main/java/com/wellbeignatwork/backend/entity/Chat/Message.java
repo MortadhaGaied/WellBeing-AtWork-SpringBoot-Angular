@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.entity.Chat;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ public class Message {
     private Date sendAt = new Date();
 
     @ManyToOne
-    private User sender;
+    private Userr sender;
 
     @ManyToOne
     private ChatRoom chatroom;

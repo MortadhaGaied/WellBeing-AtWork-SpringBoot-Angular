@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.Forum;
 
 import com.wellbeignatwork.backend.entity.Forum.Opinion;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.Forum.OpinionRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class OpinionServiceImpl implements OpinionService{
     private OpinionRepository opinionRepository;
     private UserRepository userRepository;
     @Autowired
-    public OpinionServiceImpl(OpinionRepository opinionRepository,UserRepository userRepository){
+    public OpinionServiceImpl(OpinionRepository opinionRepository, UserRepository userRepository){
         this.opinionRepository=opinionRepository;
         this.userRepository=userRepository;
     }
@@ -23,7 +23,7 @@ public class OpinionServiceImpl implements OpinionService{
 
     @Override
     public Opinion AddOpinion(Opinion opinion,Long idUser) {
-        User user=userRepository.findById(idUser).orElse(null);
+        Userr user=userRepository.findById(idUser).orElse(null);
         opinion.setUser(user);
 
         return opinionRepository.save(opinion);
@@ -48,14 +48,14 @@ public class OpinionServiceImpl implements OpinionService{
 
     @Override
     public void assignOpinionToUser(Long idOpenion, Long idUser) {
-        User user=userRepository.findById(idUser).orElse(null);
+        Userr user=userRepository.findById(idUser).orElse(null);
         Opinion opinion=opinionRepository.findById(idOpenion).orElse(null);
         opinion.setUser(user);
         opinionRepository.save(opinion);
 
     }
     public List<Opinion> getWhatsTheirOpinionOnMe(Long idUser){
-        User user= userRepository.findById(idUser).orElse(null);
+        Userr user= userRepository.findById(idUser).orElse(null);
         return opinionRepository.findAllByUser(user);
     }
 

@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.Evaluation.AnswerRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.IntAdviceRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.QuestionRepo;
@@ -37,7 +37,7 @@ public class QVTService implements IntQVTService {
     @Autowired
     private QuestionRepo questionsRepo;
     @Override
-    public User addUser(User u) {
+    public Userr addUser(Userr u) {
 
         u.setBadge(Badge.None);
         return MyUserRepo.save(u);

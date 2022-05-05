@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.dto;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.util.GeneralUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -23,15 +23,15 @@ public class LocalUser extends org.springframework.security.core.userdetails.Use
     private final OidcIdToken idToken;
     private final OidcUserInfo userInfo;
     private Map<String, Object> attributes;
-    private User user;
+    private Userr user;
 
     public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final User user) {
+                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final Userr user) {
         this(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, user, null, null);
     }
 
     public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final User user, OidcIdToken idToken,
+                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final Userr user, OidcIdToken idToken,
                      OidcUserInfo userInfo) {
         super(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.user = user;
@@ -39,7 +39,7 @@ public class LocalUser extends org.springframework.security.core.userdetails.Use
         this.userInfo = userInfo;
     }
 
-    public static LocalUser create(User user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
+    public static LocalUser create(Userr user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
         LocalUser localUser = new LocalUser(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, GeneralUtils.buildSimpleGrantedAuthorities(user.getRoles()),
                 user, idToken, userInfo);
         localUser.setAttributes(attributes);
@@ -75,7 +75,7 @@ public class LocalUser extends org.springframework.security.core.userdetails.Use
         return this.idToken;
     }
 
-    public User getUser() {
+    public Userr getUser() {
         return user;
     }
 }

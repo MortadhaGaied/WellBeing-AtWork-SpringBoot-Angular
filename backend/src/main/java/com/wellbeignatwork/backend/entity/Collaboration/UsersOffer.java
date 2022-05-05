@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.entity.Collaboration;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -21,7 +21,7 @@ public class UsersOffer implements Serializable {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    User user;
+    Userr user;
 
     @ManyToOne
     @MapsId("offerId")

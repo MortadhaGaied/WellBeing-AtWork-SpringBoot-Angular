@@ -2,7 +2,6 @@ package com.wellbeignatwork.backend.service.Collaboration;
 
 
 import com.wellbeignatwork.backend.entity.Collaboration.Image;
-import com.wellbeignatwork.backend.entity.Collaboration.Publicity;
 import com.wellbeignatwork.backend.exceptions.Collaboration.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.Collaboration.ICollaboration;
 import com.wellbeignatwork.backend.repository.Collaboration.ImageRepo;
@@ -11,7 +10,6 @@ import com.wellbeignatwork.backend.repository.Collaboration.IPublicity;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 
 import com.wellbeignatwork.backend.entity.Collaboration.Collaboration;
-import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.util.FirebaseStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +37,7 @@ public class CollaborationService implements ICollaborationService {
 	IPublicity PublicityRepo;
 
 	@Autowired
-	UserRepository userRepo;
+    UserRepository userRepo;
 
 
 	@Override

@@ -4,8 +4,8 @@ package com.wellbeignatwork.backend.util;
 import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SocialProvider;
 import com.wellbeignatwork.backend.dto.UserInfo;
-import com.wellbeignatwork.backend.entity.User.Role;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Rolee;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  */
 public class GeneralUtils {
 
-    public static List<SimpleGrantedAuthority> buildSimpleGrantedAuthorities(final Set<Role> roles) {
+    public static List<SimpleGrantedAuthority> buildSimpleGrantedAuthorities(final Set<Rolee> roles) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
+        for (Rolee role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;
@@ -37,7 +37,7 @@ public class GeneralUtils {
 
     public static UserInfo buildUserInfo(LocalUser localUser) {
         List<String> roles = localUser.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-        User user = localUser.getUser();
+        Userr user = localUser.getUser();
         return new UserInfo(user.getId().toString(), user.getDisplayName(), user.getEmail(), roles);
     }
 }

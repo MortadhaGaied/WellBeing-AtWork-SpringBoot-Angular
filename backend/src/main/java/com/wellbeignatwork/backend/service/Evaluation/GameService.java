@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.storage.GameStorage;
 import com.wellbeignatwork.backend.exceptions.Evaluation.GameNotFound;
 import com.wellbeignatwork.backend.exceptions.Evaluation.InvalidGameException;
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class GameService  {
 
 
-    public Game createGame(User player) {
+    public Game createGame(Userr player) {
         Game game = new Game();
         game.setBoard(new int[3][3]);
         game.setGameId(UUID.randomUUID().toString());
@@ -28,7 +28,7 @@ public class GameService  {
         return game;
     }
 
-    public Game connectToGame(User player2,String gameId) throws InvalidParamException, InvalidGameException
+    public Game connectToGame(Userr player2, String gameId) throws InvalidParamException, InvalidGameException
     {
 
         if(! GameStorage.getInstance().getGames().containsKey(gameId))
@@ -51,7 +51,7 @@ public class GameService  {
     }
 
     //player vs randomPlayer
-    public Game connectToRandomGame(User player2) throws GameNotFound {
+    public Game connectToRandomGame(Userr player2) throws GameNotFound {
     Game game = GameStorage.getInstance().getGames().values().stream()
                 .filter(newGame -> newGame.getStatus().equals(GameStatus.NEW))
                 .findFirst()

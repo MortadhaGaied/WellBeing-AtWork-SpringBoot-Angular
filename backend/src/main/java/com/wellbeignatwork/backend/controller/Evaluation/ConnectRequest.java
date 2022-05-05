@@ -1,11 +1,11 @@
 package com.wellbeignatwork.backend.controller.Evaluation;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.Data;
 
 
 @Data
 public class ConnectRequest {
-    private User player;
+    private Userr player;
     private String gameId;
 }

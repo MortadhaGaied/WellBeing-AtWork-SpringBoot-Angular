@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.config.UserConfig;
 
-import com.wellbeignatwork.backend.entity.User.Role;
+import com.wellbeignatwork.backend.entity.User.Rolee;
 import com.wellbeignatwork.backend.repository.User.RoleRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +32,17 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             return;
         }
         // Create initial roles
-        Role userRole = createRoleIfNotFound(Role.ROLE_USER);
-        Role adminRole = createRoleIfNotFound(Role.ROLE_ADMIN);
-        Role modRole = createRoleIfNotFound(Role.ROLE_MODERATOR);
+        Rolee userRole = createRoleIfNotFound(Rolee.ROLE_USER);
+        Rolee adminRole = createRoleIfNotFound(Rolee.ROLE_ADMIN);
+        Rolee modRole = createRoleIfNotFound(Rolee.ROLE_MODERATOR);
         alreadySetup = true;
     }
 
     @Transactional
-    public Role createRoleIfNotFound(final String name) {
-        Role role = roleRepository.findByName(name);
+    public Rolee createRoleIfNotFound(final String name) {
+        Rolee role = roleRepository.findByName(name);
         if (role == null) {
-            role = roleRepository.save(new Role(name));
+            role = roleRepository.save(new Rolee(name));
         }
         return role;
     }

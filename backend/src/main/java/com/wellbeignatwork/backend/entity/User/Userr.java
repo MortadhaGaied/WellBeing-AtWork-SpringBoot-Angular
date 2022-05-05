@@ -29,7 +29,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User implements Serializable {
+public class Userr implements Serializable {
 
 
 	/**
@@ -37,7 +37,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 65981149772133526L;
 
-	public User(String displayName,String password){
+	public Userr(String displayName, String password){
 		this.displayName=displayName;
 		this.password=password;
 	}
@@ -78,8 +78,8 @@ public class User implements Serializable {
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	private Set<Role> roles;
+	@JoinTable(name = "user_rolee", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	private Set<Rolee> roles;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)

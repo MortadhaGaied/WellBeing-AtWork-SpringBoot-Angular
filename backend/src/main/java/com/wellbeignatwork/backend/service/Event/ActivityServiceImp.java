@@ -1,12 +1,8 @@
 package com.wellbeignatwork.backend.service.Event;
 
 
-import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
-import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -20,12 +16,11 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.wellbeignatwork.backend.entity.Forum.Post;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.User.Tags;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
@@ -40,7 +35,6 @@ import com.wellbeignatwork.backend.repository.Event.FeedBackRep;
 import com.wellbeignatwork.backend.repository.Event.SubscriptionRepository;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,7 +52,6 @@ import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
@@ -124,7 +117,7 @@ public class ActivityServiceImp implements IActivityService {
             eventRepository.delete(e);
         }
         else{
-            for(User u:e.getUsers()){
+            for(Userr u:e.getUsers()){
                 u.getEvents().remove(e);
                 userRepo.save(u);
             }
@@ -149,7 +142,7 @@ public class ActivityServiceImp implements IActivityService {
     @Override
     public void assignUserToEvent(Long idUser, Long idEvent) {
 
-        User user = userRepo.findById(idUser).orElse(null);
+        Userr user = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
         if(event.getStartDate().isBefore(LocalDateTime.now()) ){
             throw new BadRequestException("event already started");
@@ -189,7 +182,7 @@ public class ActivityServiceImp implements IActivityService {
     }
 
     private void writeTableData(PdfPTable table, Long idEvent, Long idUser) {
-        User user = userRepo.findById(idUser).orElse(null);
+        Userr user = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
         table.addCell(event.getEventName());
         table.addCell(event.getEventLocalisation());
@@ -203,7 +196,7 @@ public class ActivityServiceImp implements IActivityService {
                        int width, int height, String filePath)
             throws DocumentException, IOException, WriterException {
         Event e=eventRepository.findById(idEvent).orElse(null);
-        User u=userRepo.findById(idUser).orElse(null);
+        Userr u=userRepo.findById(idUser).orElse(null);
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -350,7 +343,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public List<Event> showEventsByUser(Long idUser) {
-        User u = userRepo.findById(idUser).orElse(null);
+        Userr u = userRepo.findById(idUser).orElse(null);
         List<Tags> tags = new ArrayList<>(u.getUserTags());
         Map<Event, Integer> preferenceEvent = new HashMap<>();
         for (Event event : eventRepository.findAll()) {
@@ -396,9 +389,9 @@ public class ActivityServiceImp implements IActivityService {
 
     public void cadeauEvent() {
 
-        List<User> users = new ArrayList<>();
+        List<Userr> users = new ArrayList<>();
         userRepo.findAll().forEach(users::add);
-        User max = users.stream().max(Comparator.comparing(User::getPointFidelite)).get();
+        Userr max = users.stream().max(Comparator.comparing(Userr::getPointFidelite)).get();
         List<Tags> userTags = new ArrayList<>(max.getUserTags());
         Event eventGift = randomEventByTags(userTags);
 
@@ -409,7 +402,7 @@ public class ActivityServiceImp implements IActivityService {
     @Override
     public void reductionEvent(Long idEvent, Long idUser, int familyNumber) {
         double x = 0;
-        User u = userRepo.findById(idUser).orElse(null);
+        Userr u = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
         if (event.getFrais() > 20) {
             x = (((event.getFrais() * 8) / 10) * (familyNumber + 1));
@@ -429,7 +422,7 @@ public class ActivityServiceImp implements IActivityService {
                 (LocalDateTime.now(), LocalDateTime.now().plus(1, ChronoUnit.DAYS));
         if (!events.isEmpty()) {
             for (Event e : events) {
-                for (User u : e.getUsers()) {
+                for (Userr u : e.getUsers()) {
                     System.out.println("vous avez un evenement : " + u.getFirstName());
                     mailService.sendMail(u.getEmail(),"event","you have an event",false);
 /*
@@ -489,7 +482,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void assignPointToUser(Long idUser, Long idEvent) {
-        User u = userRepo.findById(idUser).orElse(null);
+        Userr u = userRepo.findById(idUser).orElse(null);
         Event event = eventRepository.findById(idEvent).orElse(null);
         if (event.getEventTags().contains(Tags.SPORT)) {
             u.setPointFidelite(u.getPointFidelite() + 3);
@@ -506,7 +499,7 @@ public class ActivityServiceImp implements IActivityService {
         List<Integer> list = new ArrayList<Integer>(Collections.nCopies(size, 0));
         Map<Event,Integer> filterbydep=new HashMap<>();
         for (Event e : eventRepository.findAll()) {
-            for (User u : e.getUsers()) {
+            for (Userr u : e.getUsers()) {
                 if (u.getDepartement().equals(departement)) {
 
                     int a = list.get(i);
@@ -632,7 +625,7 @@ public class ActivityServiceImp implements IActivityService {
         request.setTitle("Event Invitation");
         // route to to execute the AssignUserToEvent method
 
-        User user = userRepo.findById(idUser)
+        Userr user = userRepo.findById(idUser)
                 .map(user1 ->{
                     request.setToken(user1.getFireBaseToken());
                     return user1;
@@ -701,7 +694,7 @@ public class ActivityServiceImp implements IActivityService {
    }*/
 
     @Override
-    public void addUser(User u) {
+    public void addUser(Userr u) {
         u.setCreatedDate(LocalDateTime.now());
         userRepo.save(u);
     }
@@ -732,7 +725,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void assignUserToSubscription(Long idUser, Long idSubscription) {
-        User user = userRepo.findById(idUser).orElse(null);
+        Userr user = userRepo.findById(idUser).orElse(null);
         Subscription subscription = subscriptionRepository.findById(idSubscription).orElse(null);
         subscription.setUser(user);
         subscriptionRepository.save(subscription);
@@ -741,7 +734,7 @@ public class ActivityServiceImp implements IActivityService {
     @Override
     public void addAndAssignFeedBack(FeedBack feedBack, Long idEvent, Long idUser) {
         Event event = eventRepository.findById(idEvent).orElse(null);
-        User user = userRepo.findById(idUser).orElse(null);
+        Userr user = userRepo.findById(idUser).orElse(null);
         if (!event.getUsers().contains(user)) {
 
             throw new BadRequestException("You can't decline an invitation where you are not invited");

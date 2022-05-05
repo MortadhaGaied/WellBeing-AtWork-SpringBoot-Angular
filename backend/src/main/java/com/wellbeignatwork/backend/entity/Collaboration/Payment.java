@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Collaboration;
 
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -29,5 +29,5 @@ public class Payment implements Serializable {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    private User user;
+    private Userr user;
 }

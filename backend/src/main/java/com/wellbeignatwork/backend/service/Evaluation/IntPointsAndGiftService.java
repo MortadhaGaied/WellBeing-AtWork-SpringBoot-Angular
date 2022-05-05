@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.Evaluation;
 
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface IntPointsAndGiftService {
      int UserGift(Long idUser);
      long random(List<String> pp);
      void UserBadge(Long idUser);
-     Iterable<User> PointRanking();
+     Iterable<Userr> PointRanking();
 
 
 

@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +32,7 @@ public class Sujet implements Serializable {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "id")
-    private User idUser;
+    private Userr idUser;
     @OneToMany(mappedBy = "idSujet")
     @JsonIgnore
     public Set<VoteIdea> votesSujet;

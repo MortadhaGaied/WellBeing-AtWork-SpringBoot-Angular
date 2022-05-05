@@ -4,13 +4,12 @@ import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public interface IActivityService {
     public void addEvent(Event e, MultipartFile file) throws IOException ;
@@ -18,7 +17,7 @@ public interface IActivityService {
     public void deleteEvent(Event e);
     public Event updateEvent(Event e);
     public List<Event> getAllEvents();
-    public void addUser(User u);
+    public void addUser(Userr u);
     public void assignUserToEvent (Long idUser, Long idEvent);
     public void export(HttpServletResponse response, Long idEvent, Long idUser, String text, int width, int height, String filePath) throws DocumentException, IOException, WriterException;
     public void getNbrOfParticipant();

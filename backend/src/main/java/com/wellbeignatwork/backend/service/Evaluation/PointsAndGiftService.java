@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.Evaluation.IntGiftUserRepo;
 import com.wellbeignatwork.backend.repository.Event.EventRepository;
@@ -37,7 +37,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
     @Override
     public int CollectPoints(Long idUser) {
-        User user = intUserRepo.findById(idUser).orElse(null);
+        Userr user = intUserRepo.findById(idUser).orElse(null);
         int scoreEvent = 0;
         int scoreComment = 0;
         int scoreLikes = 0;
@@ -106,7 +106,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
     @Override
     public int UserGift(Long idUser) {
-        User user = intUserRepo.findById(idUser).orElse(null);
+        Userr user = intUserRepo.findById(idUser).orElse(null);
         int a = 0;
         float montant = 0;
         if (user.getPointFidelite() <= 299) {
@@ -214,7 +214,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
 
     @Override
     public void UserBadge(Long idUser) {
-        User user = intUserRepo.findById(idUser).orElse(null);
+        Userr user = intUserRepo.findById(idUser).orElse(null);
         String badge;
         if (user.getPointFidelite() == 0) {
             user.setBadge(Badge.None);
@@ -228,7 +228,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
     }
 
     @Override
-    public Iterable<User> PointRanking() {
+    public Iterable<Userr> PointRanking() {
         return intUserRepo.findAll(Sort.by("pointFidelite").descending());
     }
 

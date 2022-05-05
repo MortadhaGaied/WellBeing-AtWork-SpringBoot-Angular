@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.service.Collaboration;
 
 import com.wellbeignatwork.backend.entity.Collaboration.*;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 
 import com.wellbeignatwork.backend.exceptions.Collaboration.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.Collaboration.ResourceNotFoundException;
@@ -30,7 +30,7 @@ public class UsersOfferService implements IUsersOfferService {
 
     @Override
     public void addOfferToFav(Long userId, Long offerId) {
-        User user = userRepo.findById(userId).orElse(null);
+        Userr user = userRepo.findById(userId).orElse(null);
         Offer offer = offerRepo.findById(offerId).orElse(null);
         if (offer == null) {
             throw new ResourceNotFoundException("Offer doesn't exist");

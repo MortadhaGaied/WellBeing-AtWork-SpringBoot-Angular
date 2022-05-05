@@ -8,7 +8,7 @@ import com.stripe.model.Customer;
 import com.wellbeignatwork.backend.entity.Collaboration.Payment;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
 import com.wellbeignatwork.backend.entity.Collaboration.UsersOffer;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.Collaboration.IReservationRepository;
 import com.wellbeignatwork.backend.repository.Collaboration.UsersOfferRepo;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
@@ -40,7 +40,7 @@ public class StripeService {
 
     public Payment payment(long idUser, long idReservation, Payment p) throws StripeException {
         Stripe.apiKey = stripeKey;
-        User user = userRepository.findById(idUser).get();
+        Userr user = userRepository.findById(idUser).get();
         Reservation reservation = reservationRepository.findById(idReservation).get();
         Map<String, Object> params = new HashMap<>();
         params.put("name", user.getDisplayName());

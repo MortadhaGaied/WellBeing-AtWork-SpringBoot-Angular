@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.service.UserService;
 
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +48,7 @@ import java.util.List;
         }
 
 
-        public void sendMailToGroupOfUsers(List<User> users, String subject, String content, Boolean html){
+        public void sendMailToGroupOfUsers(List<Userr> users, String subject, String content, Boolean html){
             users.forEach(user -> {
                 sendMail(user.getEmail(),subject,content,html);
             });

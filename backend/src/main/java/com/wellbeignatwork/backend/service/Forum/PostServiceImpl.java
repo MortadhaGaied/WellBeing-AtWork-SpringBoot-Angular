@@ -1,16 +1,12 @@
 package com.wellbeignatwork.backend.service.Forum;
 
-import com.google.zxing.WriterException;
-
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfWriter;
 
-import com.wellbeignatwork.backend.entity.Chat.Message;
-import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Forum.*;
 import com.wellbeignatwork.backend.entity.User.Tags;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import com.wellbeignatwork.backend.repository.Forum.CommentRepository;
 import com.wellbeignatwork.backend.repository.Forum.PostRepository;
 
@@ -25,11 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import com.lowagie.text.*;
-import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
-
-import com.lowagie.text.pdf.*;
 
 
 import java.awt.*;
@@ -84,7 +76,7 @@ public class PostServiceImpl implements PostService {
         int n;
         List<Post> list=new ArrayList<>();
 
-        User u=userRepository.findById(iduser).orElse(null);
+        Userr u=userRepository.findById(iduser).orElse(null);
         for(Post p:postRepository.findAll()){
             List<Tags> tags=new ArrayList<>(p.getTags());
             n=tags.size()-1;
@@ -176,7 +168,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post assignUserToPost(Long id_user,int id_post){
         Post p=postRepository.findById(id_post).orElse(null);
-        User u=userRepository.findById(id_user).orElse(null);
+        Userr u=userRepository.findById(id_user).orElse(null);
         u.getPosts().add(p);
         p.setUser(u);
 
@@ -186,7 +178,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> groupByPreference(Long idUser)
     {
-        User u=userRepository.findById(idUser).orElse(null);
+        Userr u=userRepository.findById(idUser).orElse(null);
         List<Tags> userTags=new ArrayList<>(u.getUserTags());
         Map<Post,Integer> prefMap=new HashMap<>();
 
@@ -434,7 +426,7 @@ public class PostServiceImpl implements PostService {
         postRepository.findAll().forEach(posts::add);
         List<Post> sort=sortPostByInteraction(posts);
         if(sort.size()>=1){
-            User user=sort.get(0).getUser();
+            Userr user=sort.get(0).getUser();
 
             mailService.sendMail(user.getEmail(),"Congrat on hiting the most popular post",user.getDisplayName()+" your post has reached so many people keep the good work",false);
 

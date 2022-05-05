@@ -2,9 +2,8 @@ package com.wellbeignatwork.backend.entity.Forum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.Tags;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,7 +34,7 @@ public class Post implements Serializable {
     String file;
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnore
-    private User user;
+    private Userr user;
     @OneToMany(mappedBy = "post_comment",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private List<Comment> comments;

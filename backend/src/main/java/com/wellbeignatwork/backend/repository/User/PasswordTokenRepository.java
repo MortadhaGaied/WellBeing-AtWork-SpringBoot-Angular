@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.repository.User;
 
 import com.wellbeignatwork.backend.entity.User.PasswordResetToken;
-import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.entity.User.Userr;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ public interface PasswordTokenRepository extends JpaRepository<PasswordResetToke
 
     PasswordResetToken findByToken(String token);
 
-    PasswordResetToken findByUser(User user);
+    PasswordResetToken findByUser(Userr user);
 
 
 }
