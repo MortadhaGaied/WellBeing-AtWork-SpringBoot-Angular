@@ -1,3 +1,4 @@
+import { ShowCollaborationComponent } from './../show-collaboration/show-collaboration.component';
 import { Collaboration } from './../../Models/Collaboration/collaboration';
 import { Post } from './../../Models/Forum/Post';
 import { Component, EventEmitter, OnInit } from '@angular/core';
@@ -45,10 +46,6 @@ export class CollaborationsComponent implements OnInit {
         }
       }
 
-      viewCollaboration(idCollaboration:number){
-        this.collaborationService.getCollaborationById(idCollaboration)
-        .subscribe(()=>this.collaborationService.getAllColaboration().subscribe(res=>{this.c=res}));
-      }
 
       deleteCollaboration(idCollaboration:number){
         this.collaborationService.deleteCollaboration(idCollaboration)
@@ -60,4 +57,9 @@ export class CollaborationsComponent implements OnInit {
         this.Collaboration=this.collaborationService.sendEventData(idCollaboration);
         this.matDialog.open(UpdateCollaborationComponent);
         }
+
+        showCollaboration(collaboration:Collaboration){
+  
+          this.matDialog.open(ShowCollaborationComponent ,{data :collaboration});
+          }
 }

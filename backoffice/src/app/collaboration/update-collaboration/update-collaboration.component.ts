@@ -36,9 +36,6 @@ Collaboration : Collaboration = new Collaboration;
   updateCollaboration(){
     console.log(this.file);
     console.log(this.Collaboration)
-
-
-
     this.collaborationService.updateCollaboration(this.Collaboration).subscribe(collab =>
        {
          if (this.file){

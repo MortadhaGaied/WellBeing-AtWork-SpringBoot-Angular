@@ -1,3 +1,4 @@
+import { ShowOffersComponent } from './../show-offers/show-offers.component';
 import { UpdateOfferComponent } from './../update-offer/update-offer.component';
 import { OfferService } from './../../Service/offer.service';
 import { Offer } from './../../Models/Collaboration/offer';
@@ -45,4 +46,8 @@ export class OfferComponent implements OnInit {
     this.Offer=this.OfferService.sendEventData(idCollaboration);
     this.matDialog.open(UpdateOfferComponent);
     }
+    showOffer(Offer:Offer){
+  
+      this.matDialog.open(ShowOffersComponent ,{data :Offer});
+      }
 }

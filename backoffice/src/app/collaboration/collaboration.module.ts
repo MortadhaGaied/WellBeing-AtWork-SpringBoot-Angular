@@ -12,6 +12,8 @@ import { environment } from '../../environments/environment';
 import { UpdateCollaborationComponent } from './update-collaboration/update-collaboration.component';
 import { UpdateOfferComponent } from './update-offer/update-offer.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ShowCollaborationComponent } from './show-collaboration/show-collaboration.component';
+import { ShowOffersComponent } from './show-offers/show-offers.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MapComponent,
     UpdateOfferComponent,
     UpdateCollaborationComponent,
+    ShowCollaborationComponent,
+    ShowOffersComponent,
   ],
   imports: [
     CommonModule,
