@@ -5,11 +5,23 @@
         style="
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: space-evenly;
         "
         class="card-header border-0"
       >
         <h3 class="mb-0">Card tables</h3>
+        <span style="font-weight: bold">filter By :</span>
+        <div style="width: 19%">
+          <select
+            style="margin: 0 0 30 20"
+            class="form-select"
+            (change)="handleSelectFilter($event)"
+          >
+            <option [value]="item" *ngFor="let item of fields">
+              {{ item }}
+            </option>
+          </select>
+        </div>
         <div class="mb-3">
           <input
             type="text"
@@ -70,7 +82,8 @@
                 let room of rooms
                   | searchFilter: searchValue
                   | orderBy: key:reversed
-                  | paginate: { itemsPerPage: 4, currentPage: currentPage }
+                  | paginate
+                    : { itemsPerPage: itemsPerPage, currentPage: currentPage }
               "
             >
               <th scope="row">
@@ -223,7 +236,28 @@
           </tbody>
         </table>
       </div>
-      <div style="align-self: center; margin-top: 20px">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: flex-start;
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+          float: bottom;
+          bottom: 12rem;
+        "
+      >
+        <span>items per page : </span>
+        <div class="margin:0 0 20 20">
+          <input
+            class="form-control"
+            [(ngModel)]="itemsPerPage"
+            type="number"
+            max="10"
+            min="0"
+          />
+        </div>
         <pagination-controls
           (pageChange)="currentPage = $event"
         ></pagination-controls>

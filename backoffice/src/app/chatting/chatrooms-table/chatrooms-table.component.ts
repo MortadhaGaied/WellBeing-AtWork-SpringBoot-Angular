@@ -43,6 +43,7 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
   reversed: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 3;
+  fields = ["", "id", "roomName", "visible", "status", "cap"];
 
   ngOnInit(): void {
     this.getAllRooms();
@@ -52,6 +53,9 @@ export class ChatroomsTableComponent implements OnInit, OnDestroy {
     this.reversed = !this.reversed;
   }
 
+  handleSelectFilter(event: any) {
+    this.sort(event.target.value);
+  }
   OnAddRoomClicked(): void {
     this.dialog.open(AddRoomComponent);
     //this.router.navigateByUrl("/chat/add-room");

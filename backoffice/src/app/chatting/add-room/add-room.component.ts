@@ -46,16 +46,22 @@ export class AddRoomComponent implements OnInit {
     this.service.createRoom(this.room).subscribe(
       (data) => {
         if (data) {
-          const form = new FormData();
-          form.append("image", this.image, this.image.name);
-          //console.log(form.get('image'))
-          this.service
-            .uploadImage(JSON.parse(JSON.stringify(data)).id, form)
-            .subscribe((data2) => {
-              this.isLoading = false;
-              window.location.reload();
-              this.dialog.closeAll();
-            });
+          if (this.image) {
+            const form = new FormData();
+            form.append("image", this.image, this.image.name);
+            //console.log(form.get('image'))
+            this.service
+              .uploadImage(JSON.parse(JSON.stringify(data)).id, form)
+              .subscribe((data2) => {
+                this.isLoading = false;
+                window.location.reload();
+                this.dialog.closeAll();
+              });
+          } else {
+            this.isLoading = false;
+            window.location.reload();
+            this.dialog.closeAll();
+          }
         }
       },
       (error) => {
