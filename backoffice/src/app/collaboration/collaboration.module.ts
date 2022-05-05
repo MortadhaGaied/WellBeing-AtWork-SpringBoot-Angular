@@ -14,7 +14,29 @@ import { UpdateOfferComponent } from './update-offer/update-offer.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ShowCollaborationComponent } from './show-collaboration/show-collaboration.component';
 import { ShowOffersComponent } from './show-offers/show-offers.component';
-
+import { EspaceQuizComponent } from './espace-quiz/espace-quiz.component';
+import { SlideBarQuizComponent } from './slide-bar-quiz/slide-bar-quiz.component';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+// import {MatSelectModule} from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+// import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+// import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { ViewCategoriesComponent } from './view-categories/view-categories.component';
+import { ViewQuizQuestionsComponent } from './view-quiz-questions/view-quiz-questions.component';
+import { ViewQuizzesComponent } from './view-quizzes/view-quizzes.component';
+import { UpdateQuizComponent } from './update-quiz/update-quiz.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddQuestionComponent } from './add-question/add-question.component';
+import { AddQuizComponent } from './add-quiz/add-quiz.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +49,15 @@ import { ShowOffersComponent } from './show-offers/show-offers.component';
     UpdateCollaborationComponent,
     ShowCollaborationComponent,
     ShowOffersComponent,
+    EspaceQuizComponent,
+    SlideBarQuizComponent,
+    ViewCategoriesComponent,
+    ViewQuizQuestionsComponent,
+    ViewQuizzesComponent,
+    UpdateQuizComponent,
+    AddCategoryComponent,
+    AddQuestionComponent,
+    AddQuizComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +67,14 @@ import { ShowOffersComponent } from './show-offers/show-offers.component';
     NgxMapboxGLModule.withConfig({
       accessToken: environment.mapbox.accessToken,
     }),
+    MatSnackBarModule,
+    MatCardModule,
+    MatToolbarModule,MatIconModule,MatListModule,MatSelectModule,
+    MatSlideToggleModule,
+    // CKEditorModule
+  MatProgressSpinnerModule,
+
+  NgxUiLoaderModule,
   ]
 })
 export class CollaborationModule { }

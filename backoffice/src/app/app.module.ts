@@ -20,6 +20,20 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+// import {MatSelectModule} from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+// import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+// import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -47,7 +61,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     [BrowserModule, NgxPaginationModule],
     RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
     PerfectScrollbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatToolbarModule,MatIconModule,MatListModule,MatSelectModule,
+    MatSlideToggleModule,
+    // CKEditorModule
+  MatProgressSpinnerModule,
+
+  NgxUiLoaderModule,
+  NgxUiLoaderHttpModule.forRoot({
+    showForeground: true,
+  }),
+    
   ],
   providers: [
     {
