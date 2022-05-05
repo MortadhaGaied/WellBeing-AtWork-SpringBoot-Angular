@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Chat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +28,7 @@ public class ChatRoom {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Userr> users;
+    private Set<User> users;
     @JsonIgnore
     @OneToMany(mappedBy = "chatroom", fetch = FetchType.EAGER)
     private List<Message> messages;

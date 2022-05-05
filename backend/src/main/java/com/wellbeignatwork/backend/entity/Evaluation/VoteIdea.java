@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class VoteIdea implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     @JsonIgnore
-    private Userr idUser;
+    private User idUser;
 
 
     @ManyToOne

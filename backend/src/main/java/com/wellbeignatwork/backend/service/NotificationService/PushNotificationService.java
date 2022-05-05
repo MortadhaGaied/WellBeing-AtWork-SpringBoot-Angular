@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.service.NotificationService;
 
 
 import com.google.firebase.messaging.*;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.Chat.MessageRepository;
@@ -45,7 +45,7 @@ public class PushNotificationService implements INotificationService {
 
     @Transactional
     public void saveFirebaseToken(Long userId, String token) {
-        Userr user= userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("user with id : "+userId+ " not found"));
+        User user= userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("user with id : "+userId+ " not found"));
         user.setFireBaseToken(token);
     }
 

@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class Subscription implements Serializable {
     @JsonIgnore
 
     @ManyToOne
-    private Userr user;
+    private User user;
 
 
 

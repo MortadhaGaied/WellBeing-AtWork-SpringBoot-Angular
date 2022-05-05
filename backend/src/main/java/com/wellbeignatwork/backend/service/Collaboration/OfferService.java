@@ -4,7 +4,7 @@ import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWea
 import com.sun.mail.iap.Response;
 
 import com.wellbeignatwork.backend.entity.Collaboration.*;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.Collaboration.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.Collaboration.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.Collaboration.*;
@@ -133,7 +133,7 @@ public class OfferService implements IOfferService {
 		throw new BadRequestException("You can't invite someone to an Offer already started or finished");
 	}
         for (Long userId : usersId) {
-			Userr user = userRepository.findById(userId).orElse(null);
+			User user = userRepository.findById(userId).orElse(null);
 			if (user == null) break;
 			boolean alreadyInvited = false;
 			UsersOffer uo = usersOfferRepo.findByUserIdAndOfferIdOffer(userId, offerId);

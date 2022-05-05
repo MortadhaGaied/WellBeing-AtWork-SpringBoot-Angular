@@ -6,7 +6,7 @@ import com.itextpdf.text.DocumentException;
 import com.stripe.exception.StripeException;
 import com.wellbeignatwork.backend.entity.Collaboration.Payment;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.Collaboration.IReservationService;
 import com.wellbeignatwork.backend.service.Collaboration.ISendEmailService;
@@ -62,7 +62,7 @@ public class ReservationController {
     @ResponseBody
     public void addResevation(@RequestBody Reservation r, @PathVariable long idUser, @PathVariable long idOffer, HttpServletResponse response) throws MessagingException, DocumentException, IOException, com.lowagie.text.DocumentException {
 
-        Userr u = userRepository.findById(idUser).orElse(null);
+        User u = userRepository.findById(idUser).orElse(null);
        /* byte[] image = new byte[0];
         try {
 

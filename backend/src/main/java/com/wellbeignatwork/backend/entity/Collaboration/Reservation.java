@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Collaboration;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
@@ -32,6 +32,6 @@ public class Reservation implements Serializable {
     Offer offersRes;
     @JsonIgnore
     @ManyToOne
-    Userr userRes;
+    User userRes;
 
 }

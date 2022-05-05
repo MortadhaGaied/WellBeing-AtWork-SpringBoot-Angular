@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.messaging.MessagingException;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public interface IChatService {
     public void inviteUserToChatRoom(Long userId,Long roomId);
     public void acceptInvitation(Long userID,Long roomId);
     public void bannUserFromChatRoom(Long userId,Long roomId);
-    public void autoBannUsersFromChatRooms(int BadWordsFound, Userr user, ChatRoom room);
+    public void autoBannUsersFromChatRooms(int BadWordsFound, User user, ChatRoom room);
     public void unbannUserFromChatRoom(Long userId,Long roomId);
 
 }

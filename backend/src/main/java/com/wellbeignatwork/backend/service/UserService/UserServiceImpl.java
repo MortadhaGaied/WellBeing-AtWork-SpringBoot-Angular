@@ -4,8 +4,8 @@ import com.wellbeignatwork.backend.dto.LocalUser;
 import com.wellbeignatwork.backend.dto.SignUpRequest;
 import com.wellbeignatwork.backend.dto.SocialProvider;
 import com.wellbeignatwork.backend.entity.User.ConfirmationToken;
-import com.wellbeignatwork.backend.entity.User.Rolee;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.Role;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.UserExceptions.OAuth2AuthenticationProcessingException;
 import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.repository.User.RoleRepository;
@@ -54,13 +54,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = "transactionManager")
-    public Userr registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException {
+    public User registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException {
         if (signUpRequest.getUserID() != null && userRepository.existsById(signUpRequest.getUserID())) {
             throw new UserAlreadyExistAuthenticationException("User with User id " + signUpRequest.getUserID() + " already exist");
         } else if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new UserAlreadyExistAuthenticationException("User with email id " + signUpRequest.getEmail() + " already exist");
         }
-        Userr user = buildUser(signUpRequest);
+        User user = buildUser(signUpRequest);
         Date now = Calendar.getInstance().getTime();
         user.setCreatedDate(LocalDateTime.now());
         user.setModifiedDate(LocalDateTime.now());
@@ -72,13 +72,13 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private Userr buildUser(final SignUpRequest formDTO) {
-        Userr user = new Userr();
+    private User buildUser(final SignUpRequest formDTO) {
+        User user = new User();
         user.setDisplayName(formDTO.getDisplayName());
         user.setEmail(formDTO.getEmail());
         user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
-        final HashSet<Rolee> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(Rolee.ROLE_USER));
+        final HashSet<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findByName(Role.ROLE_USER));
         user.setRoles(roles);
         user.setProvider(formDTO.getSocialProvider().getProviderType());
         user.setProviderUserId(formDTO.getProviderUserId());
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Userr findUserByEmail(final String email) {
+    public User findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
-        Userr user = findUserByEmail(oAuth2UserInfo.getEmail());
+        User user = findUserByEmail(oAuth2UserInfo.getEmail());
         if (user != null) {
             if (!user.getProvider().equals(registrationId) && !user.getProvider().equals(SocialProvider.LOCAL.getProviderType())) {
                 throw new OAuth2AuthenticationProcessingException(
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    private Userr updateExistingUser(Userr existingUser, OAuth2UserInfo oAuth2UserInfo) {
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
         existingUser.setDisplayName(oAuth2UserInfo.getName());
         return userRepository.save(existingUser);
     }
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Userr findUserById(Long id) {
+    public User findUserById(Long id) {
         return userRepository.findById(id).get();
 
 
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void uploadProfilePic(MultipartFile img, Long userId) throws IOException {
-        Userr user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         String picName = firebaseStorage.uploadFile(img);
         user.setPicture(picName);
         userRepository.save(user);
@@ -238,7 +238,7 @@ public class UserServiceImpl implements UserService {
                 "</div></div>";
     }
 
-    private void generateAndSendConfirmationMail(Userr user) {
+    private void generateAndSendConfirmationMail(User user) {
         String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(

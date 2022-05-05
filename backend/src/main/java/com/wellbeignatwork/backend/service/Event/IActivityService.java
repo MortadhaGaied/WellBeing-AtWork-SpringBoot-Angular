@@ -4,7 +4,7 @@ import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ public interface IActivityService {
     public void deleteEvent(Event e);
     public Event updateEvent(Event e);
     public List<Event> getAllEvents();
-    public void addUser(Userr u);
+    public void addUser(User u);
     public void assignUserToEvent (Long idUser, Long idEvent);
     public void export(HttpServletResponse response, Long idEvent, Long idUser, String text, int width, int height, String filePath) throws DocumentException, IOException, WriterException;
     public void getNbrOfParticipant();

@@ -1,7 +1,7 @@
 package com.wellbeignatwork.backend.entity.Forum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,5 +19,5 @@ public class Opinion {
     private String content;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
-    private Userr user;
+    private User user;
 }

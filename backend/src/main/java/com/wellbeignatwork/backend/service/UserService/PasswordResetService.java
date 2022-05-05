@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.service.UserService;
 
 
 import com.wellbeignatwork.backend.entity.User.PasswordResetToken;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.User.PasswordTokenRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class PasswordResetService {
     @Autowired
     MailService mailService;
 
-    public void createPasswordResetTokenForUser(Userr user, String token) {
+    public void createPasswordResetTokenForUser(User user, String token) {
         PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordTokenRepository.save(myToken);
     }
@@ -51,13 +51,13 @@ public class PasswordResetService {
     }
 
 
-    public void changeUserPassword(Userr user, String password) {
+    public void changeUserPassword(User user, String password) {
         user.setPassword(encoder.encode(password));
         userRepository.save(user);
     }
 
     public void forgetPassword(String userEmail) {
-        Userr user = userRepository.findByEmail(userEmail);
+        User user = userRepository.findByEmail(userEmail);
         if (user == null) {
             throw new UsernameNotFoundException("Email not found");
         }

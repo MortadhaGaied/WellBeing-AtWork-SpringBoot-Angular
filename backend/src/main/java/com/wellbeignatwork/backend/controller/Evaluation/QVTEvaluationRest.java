@@ -5,7 +5,7 @@ import com.wellbeignatwork.backend.entity.Evaluation.Question;
 import com.wellbeignatwork.backend.service.Evaluation.IntQVTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,7 +23,7 @@ public class QVTEvaluationRest {
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QrCode/QRCode.png";
 
     @PostMapping("/addUser")
-    public Userr adduser(@RequestBody Userr u)
+    public User adduser(@RequestBody User u)
     { return MyQVTService.addUser(u); }
 
   @GetMapping("/Survey")

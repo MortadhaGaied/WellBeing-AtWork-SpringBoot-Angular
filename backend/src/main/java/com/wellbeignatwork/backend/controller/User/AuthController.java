@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.controller.User;
 
 
 import com.wellbeignatwork.backend.dto.*;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.UserExceptions.UserAlreadyExistAuthenticationException;
 import com.wellbeignatwork.backend.repository.User.PasswordTokenRepository;
 import com.wellbeignatwork.backend.security.jwt.TokenProvider;
@@ -58,7 +58,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         try {
-            Userr user = userService.registerNewUser(signUpRequest);
+            User user = userService.registerNewUser(signUpRequest);
         } catch (UserAlreadyExistAuthenticationException e) {
             log.error("Exception Ocurred", e);
             return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
@@ -86,7 +86,7 @@ public class AuthController {
                     .body("Error Token is : " + result);
         }
 
-        Userr user = passwordTokenRepository.findByToken(token).getUser();
+        User user = passwordTokenRepository.findByToken(token).getUser();
         if (user.getEmail() != null) {
             passwordResetService.changeUserPassword(user, passwordDto.getNewPassword());
             passwordTokenRepository.delete(passwordTokenRepository.findByToken(token));

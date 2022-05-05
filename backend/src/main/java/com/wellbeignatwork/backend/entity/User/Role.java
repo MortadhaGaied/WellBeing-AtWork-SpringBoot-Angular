@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rolee implements Serializable {
+public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String USER = "USER";
 	public static final String ROLE_USER = "ROLE_USER";
@@ -32,9 +32,9 @@ public class Rolee implements Serializable {
 
 	// bi-directional many-to-many association to User
 	@ManyToMany(mappedBy = "roles")
-	private Set<Userr> users;
+	private Set<User> users;
 
-	public Rolee(String name) {
+	public Role(String name) {
 		this.name = name;
 	}
 
@@ -57,7 +57,7 @@ public class Rolee implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Rolee role = (Rolee) obj;
+		final Role role = (Role) obj;
 		if (!role.equals(role.name)) {
 			return false;
 		}

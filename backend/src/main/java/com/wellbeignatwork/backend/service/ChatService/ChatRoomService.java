@@ -5,7 +5,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.Chat.ChatRoomRepository;
@@ -156,7 +156,7 @@ public class ChatRoomService implements IChatService {
 
 
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
-        Userr user = userRepository
+        User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id :" + userId + "does not exist"));
 
@@ -172,7 +172,7 @@ public class ChatRoomService implements IChatService {
 
     @Transactional
     public void removeUserFromChatRoom(Long chatRoomId, Long userId) {
-        Userr user = userRepository
+        User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id :" + userId + "does not exist"));
         chatRoomRepository
@@ -184,12 +184,12 @@ public class ChatRoomService implements IChatService {
 
     public ChatRoom findRoomByUsersAndUniqueKey(Long user1Id, Long user2Id) {
 
-        Userr user1 = userRepository.findById(user1Id).orElseThrow(() -> new ResourceNotFoundException("user not found"));
-        Userr user2 = userRepository.findById(user2Id).orElseThrow(() -> new ResourceNotFoundException("user not found "));
+        User user1 = userRepository.findById(user1Id).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        User user2 = userRepository.findById(user2Id).orElseThrow(() -> new ResourceNotFoundException("user not found "));
         log.info("**************************" + user2.getDisplayName());
         log.info("**************************" + user1.getDisplayName());
         ChatRoom found = null;
-        Set<Userr> users = new HashSet<>();
+        Set<User> users = new HashSet<>();
         users.add(user1);
         users.add(user2);
         for (ChatRoom chatRoom : chatRoomRepository.findByRoomNameIsNull()) {
@@ -213,10 +213,10 @@ public class ChatRoomService implements IChatService {
         //ChatRoom roomExists = findRoomByUsersAndUniqueKey(recieverId,senderId);
         log.info("***********************" + chatRoom.getUniqueKey());
         //get the sender and the reciever first
-        Userr sender = userRepository
+        User sender = userRepository
                 .findById(senderId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id : " + senderId + "does not exist"));
-        Userr reciever = userRepository
+        User reciever = userRepository
                 .findById(recieverId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id : " + recieverId + "does not exist"));
 
@@ -243,7 +243,7 @@ public class ChatRoomService implements IChatService {
             log.info("entered else statement");
             ChatRoom room = new ChatRoom();
             room.setUniqueKey(String.format("%s_%s", reciever.getId(), sender.getId()));
-            Set<Userr> users = new HashSet<>();
+            Set<User> users = new HashSet<>();
             users.add(sender);
             users.add(reciever);
             room.setUsers(users);
@@ -271,7 +271,7 @@ public class ChatRoomService implements IChatService {
 
 
         //extract the sender and the chatroom of the messsage
-        Userr sender = userRepository
+        User sender = userRepository
                 .findById(senderId)
                 .orElseThrow(() -> new ResourceNotFoundException("user with id :" + senderId + "does not exist"));
         ChatRoom chatRoom = chatRoomRepository
@@ -369,7 +369,7 @@ public class ChatRoomService implements IChatService {
         request.setTitle("ChatRoom Invitation");
         // route to to execute the AssignUserToRoom method
 
-        Userr user = userRepository.findById(userID)
+        User user = userRepository.findById(userID)
                 .map(user1 ->{
                     log.info("user token here *****************"+user1.getFireBaseToken());
                     request.setToken(user1.getFireBaseToken());
@@ -410,7 +410,7 @@ public class ChatRoomService implements IChatService {
     @Override
     public void bannUserFromChatRoom(Long userId, Long roomId) {
         //findTheUser
-        Userr user = userRepository
+        User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found"));
         //find TheRoom
@@ -435,7 +435,7 @@ public class ChatRoomService implements IChatService {
 
     @Transactional
     @Override
-    public void autoBannUsersFromChatRooms(int badWordsFound, Userr user, ChatRoom room) {
+    public void autoBannUsersFromChatRooms(int badWordsFound, User user, ChatRoom room) {
         if (badWordsFound >= room.getMaxBadWords()) {
             room.getUsers().remove(user);
             int currentBannDuration = user.getBanDuration();
@@ -460,7 +460,7 @@ public class ChatRoomService implements IChatService {
     @Override
     public void unbannUserFromChatRoom(Long userId, Long roomId) {
         //findTheUser
-        Userr user = userRepository
+        User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found"));
         //find TheRoom

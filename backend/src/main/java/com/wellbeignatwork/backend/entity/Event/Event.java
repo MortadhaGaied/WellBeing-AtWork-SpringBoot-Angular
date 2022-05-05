@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.entity.Event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.Tags;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,7 +40,7 @@ public class Event implements Serializable {
     private Set<Tags> eventTags;
     @ManyToMany(fetch = FetchType.LAZY ,mappedBy ="events")
     @JsonIgnore
-    private Set<Userr> users;
+    private Set<User> users;
     @JsonIgnore
 
     @OneToMany (mappedBy = "event",cascade = CascadeType.ALL)

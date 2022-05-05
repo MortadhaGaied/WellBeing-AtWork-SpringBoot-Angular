@@ -7,7 +7,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wellbeignatwork.backend.entity.Chat.Message;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.repository.Chat.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.Chat.MessageRepository;
@@ -73,7 +73,7 @@ public class MessageService implements IMessageService {
     public void getTopChattersGlobally() throws FirebaseMessagingException {
         Map<String,Integer> data=new HashMap<>();
         StringBuilder res= new StringBuilder();
-        Map<Userr, Integer> chattesMap = new HashMap<>();
+        Map<User, Integer> chattesMap = new HashMap<>();
         List<Message> messages = messageRepository.findAll();
         if (!messages.isEmpty()) {
             messages
@@ -88,7 +88,7 @@ public class MessageService implements IMessageService {
             }
 
             //sort the map by value (using java8 lambda functions)
-            Map<Userr, Integer> result = chattesMap.entrySet()
+            Map<User, Integer> result = chattesMap.entrySet()
                     .stream()
                     .sorted(Map.Entry.comparingByValue())
                     .collect(Collectors.toMap(
@@ -96,7 +96,7 @@ public class MessageService implements IMessageService {
                             Map.Entry::getValue,
                             (oldValue, newValue) -> oldValue, LinkedHashMap::new));
             //result is heree  ..
-            for (Userr user : result.keySet()) {
+            for (User user : result.keySet()) {
                 log.info("user : + " + user.getDisplayName() + "has : " + result.get(user) + " messages");
                 res.append("user : + ").append(user.getDisplayName()).append(" has : ").append(result.get(user)).append(" messages in our application \n");
                 data.put(user.getDisplayName(),result.get(user));

@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Sujet;
 import com.wellbeignatwork.backend.entity.Evaluation.VoteIdea;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntVoteIdeaRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.SujetRepo;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
@@ -36,7 +36,7 @@ public class VoteService implements IntVoteService {
         v.setNbYes(1);
         v.setNbNo(0);
         Sujet sujet = MySUjetRepo.findById(sujetId).orElse(null);
-        Userr user = MyUserRepo.findById(userId).orElse(null);
+        User user = MyUserRepo.findById(userId).orElse(null);
         v.setIdUser(user);
         v.setIdSujet(sujet);
         MyVoteIdeaRepo.save(v);
@@ -50,7 +50,7 @@ public class VoteService implements IntVoteService {
         v.setNbYes(0);
         v.setNbNo(1);
         Sujet sujet = MySUjetRepo.findById(sujetId).orElse(null);
-        Userr user = MyUserRepo.findById(userId).orElse(null);
+        User user = MyUserRepo.findById(userId).orElse(null);
         v.setIdUser(user);
         v.setIdSujet(sujet);
         MyVoteIdeaRepo.save(v);

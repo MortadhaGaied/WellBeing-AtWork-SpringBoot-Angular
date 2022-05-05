@@ -2,7 +2,7 @@ package com.wellbeignatwork.backend.entity.Forum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.Tags;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +34,7 @@ public class Post implements Serializable {
     String file;
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnore
-    private Userr user;
+    private User user;
     @OneToMany(mappedBy = "post_comment",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private List<Comment> comments;

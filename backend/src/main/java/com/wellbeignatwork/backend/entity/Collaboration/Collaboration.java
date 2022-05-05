@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.entity.Collaboration;
 
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -40,6 +40,6 @@ public class Collaboration implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne
-    Userr users;
+    User users;
 
 }

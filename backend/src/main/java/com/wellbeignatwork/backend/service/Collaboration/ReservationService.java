@@ -5,7 +5,7 @@ import com.wellbeignatwork.backend.repository.Collaboration.*;
 
 import com.wellbeignatwork.backend.entity.Collaboration.Offer;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -45,7 +45,7 @@ public class ReservationService implements IReservationService {
 	@Transactional
 	public Reservation reservation(long idUser, long idOffer, Reservation r) throws MessagingException {
 
-		Userr u = userRepo.findById(idUser).orElse(null);
+		User u = userRepo.findById(idUser).orElse(null);
 		Offer o = OfferRepo.findById(idOffer).orElse(null);
 		if(o.getNplaces()<r.getNmPalce()) throw  new RuntimeException("Nombre de place insufosant");
 		if(o.getStarDateOf().isAfter(r.getStartDateRes()))throw  new RuntimeException("Vous avez passer la date star") ;

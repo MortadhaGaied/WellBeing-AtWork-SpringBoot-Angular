@@ -3,7 +3,7 @@ package com.wellbeignatwork.backend.controller.Event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
@@ -170,7 +170,7 @@ public class ActitvityController {
 
     @PostMapping("/AddU")
     @ResponseBody
-    public void addUser (@RequestBody Userr u){
+    public void addUser (@RequestBody User u){
         activityService.addUser(u);
     }
     @PostMapping("/AddS")

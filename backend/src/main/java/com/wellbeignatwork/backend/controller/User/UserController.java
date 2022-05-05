@@ -3,7 +3,7 @@ package com.wellbeignatwork.backend.controller.User;
 import com.wellbeignatwork.backend.config.UserConfig.CurrentUser;
 import com.wellbeignatwork.backend.dto.ApiResponse;
 import com.wellbeignatwork.backend.dto.LocalUser;
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.UserService.UserService;
 import com.wellbeignatwork.backend.util.GeneralUtils;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class UserControllerr {
+public class UserController {
 
     @Autowired
     UserService userService;
@@ -63,7 +63,7 @@ public class UserControllerr {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Userr findUserById(@PathVariable Long id) {
+    public User findUserById(@PathVariable Long id) {
         return userService.findUserById(id);
     }
 
@@ -73,13 +73,13 @@ public class UserControllerr {
     @PostMapping("/login/{userName}/{password}")
     @ResponseBody
     public ResponseEntity<?> login(@PathVariable String userName, @PathVariable String password) {
-        Userr found = userRepository.findUserByDisplayNameAndPassword(userName, password);
+        User found = userRepository.findUserByDisplayNameAndPassword(userName, password);
         return ResponseEntity.ok(new TestResponse(found.getId(), found.getDisplayName()));
     }
 
     @GetMapping("/get-all-users")
     @ResponseBody
-    public List<Userr> getAllUSers() {
+    public List<User> getAllUSers() {
         return userRepository.findAll();
     }
 

@@ -1,6 +1,6 @@
 package com.wellbeignatwork.backend.repository.User;
 
-import com.wellbeignatwork.backend.entity.User.Userr;
+import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,20 +10,20 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<Userr, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Userr findByEmail(String email);
+    User findByEmail(String email);
 
     boolean existsByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Userr a " +
+    @Query("UPDATE User a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
 
-    List<Userr> findUsersByMessagesIsNull();
-    Userr findUserByDisplayNameAndPassword(String displayName, String password);
-    List<Userr> findAll(Sort pointFidelite);
+    List<User> findUsersByMessagesIsNull();
+    User findUserByDisplayNameAndPassword(String displayName, String password);
+    List<User> findAll(Sort pointFidelite);
 
 }

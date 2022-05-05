@@ -29,7 +29,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Userr implements Serializable {
+public class User implements Serializable {
 
 
 	/**
@@ -37,7 +37,7 @@ public class Userr implements Serializable {
 	 */
 	private static final long serialVersionUID = 65981149772133526L;
 
-	public Userr(String displayName, String password){
+	public User(String displayName, String password){
 		this.displayName=displayName;
 		this.password=password;
 	}
@@ -79,7 +79,7 @@ public class Userr implements Serializable {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_rolee", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	private Set<Rolee> roles;
+	private Set<Role> roles;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
