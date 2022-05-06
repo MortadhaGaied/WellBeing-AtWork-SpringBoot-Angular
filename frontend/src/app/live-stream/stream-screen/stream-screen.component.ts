@@ -12,25 +12,38 @@ export class StreamScreenComponent implements OnInit {
   ngOnInit(): void {
     this.init();
   }
+
+  muted: boolean = false;
   data: any;
-  stream: MediaStream;
+  stream: MediaStream | undefined;
   peer: RTCPeerConnection;
+
+  toggleMuted() {
+    this.muted = !this.muted;
+  }
+
+  async startStream() {
+    await this.init();
+  }
+
   async init() {
+    console.log('stream starting ...');
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
     });
+    if (stream) {
+      console.log('stream is here boyz ');
+    }
 
     this.stream = stream;
-    console.log(stream);
+    console.log('steram here ' + stream);
     this.peer = this.createPeer();
     stream.getTracks().forEach((track) => this.peer.addTrack(track, stream));
   }
 
   close() {
-    this.stream.getTracks().forEach((track) => {
-      track.stop();
-    });
+    this.stream = undefined;
   }
 
   createPeer() {

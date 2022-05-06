@@ -183,6 +183,11 @@ jQuery(document).ready(function ($) {
     $(".createroom-popup").removeClass("active");
   });
 
+  //niceScroll in chatbox
+  $(function () {
+    $(".chat").niceScroll();
+  });
+
   // follow widget
   $(".sug-like").on("click", function () {
     $(this).toggleClass("active");
@@ -670,29 +675,6 @@ jQuery(document).ready(function ($) {
     });
 
     // chat rooms
-    $(".chat-rooms").owlCarousel({
-      items: 4,
-      loop: false,
-      margin: 15,
-      autoplay: false,
-      autoplayTimeout: 4500,
-      smartSpeed: 1000,
-      autoplayHoverPause: true,
-      nav: true,
-      dots: false,
-      responsiveClass: true,
-      responsive: {
-        0: {
-          items: 1,
-        },
-        600: {
-          items: 3,
-        },
-        1000: {
-          items: 4,
-        },
-      },
-    });
 
     // videos caro
     $(".videos-caro").owlCarousel({

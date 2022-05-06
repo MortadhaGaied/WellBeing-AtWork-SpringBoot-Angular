@@ -25,6 +25,20 @@ import { StreamConfigBoxComponent } from './live-stream/stream-config-box/stream
 import { FormsModule } from '@angular/forms';
 import { MockLoginComponent } from './live-stream/mock-login/mock-login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { StreamViwerScreenComponent } from './live-stream/stream-viwer-screen/stream-viwer-screen.component';
+import { ChatroomsComponent } from './chatroom/chatrooms/chatrooms.component';
+import { ChatroomComponent } from './chatroom/chatroom/chatroom.component';
+import { AddRoomComponent } from './chatroom/add-room/add-room.component';
+import { ChatBoxComponent } from './chatroom/chat-box/chat-box.component';
+import { RoomSearchFilterPipe } from './live-stream/pipes/room-search-filter.pipe';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { environment } from '../environments/environment';
+import { initializeApp } from 'firebase/app';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RoomUserListComponent } from './chatroom/room-user-list/room-user-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UserSeachFilterPipe } from './chatroom/pipes/user-seach-filter.pipe';
+initializeApp(environment.firebase);
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,8 +62,24 @@ import { HttpClientModule } from '@angular/common/http';
     StreamChatBoxComponent,
     StreamConfigBoxComponent,
     MockLoginComponent,
+    StreamViwerScreenComponent,
+    ChatroomsComponent,
+    ChatroomComponent,
+    AddRoomComponent,
+    ChatBoxComponent,
+    RoomSearchFilterPipe,
+    RoomUserListComponent,
+    UserSeachFilterPipe,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    MatDialogModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    CarouselModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
