@@ -63,12 +63,20 @@ export class ChatroomServiceService {
       'http://localhost:8081/Wellbeignatwork/api/get-all-users'
     );
   }
-  inviteUserToRoom(userId: number, roomId: number) {
+  inviteUserToRoom(userId: number, roomId: number, senderId: number) {
     return this.http.get(
       'http://localhost:8081/Wellbeignatwork/chatroom/inviteUserToRoom/' +
         roomId +
         '/' +
-        userId
+        userId +
+        '/' +
+        senderId
     );
+  }
+
+  acceptUserInvitation(redirectionLink: string, senderId: number) {
+    return this.http
+      .get(redirectionLink + '/' + senderId)
+      .pipe(catchError(this.handleError));
   }
 }

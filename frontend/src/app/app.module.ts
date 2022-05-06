@@ -38,6 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoomUserListComponent } from './chatroom/room-user-list/room-user-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UserSeachFilterPipe } from './chatroom/pipes/user-seach-filter.pipe';
+import { NotificationsPopupComponent } from './notification/notifications-popup/notifications-popup.component';
 initializeApp(environment.firebase);
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ initializeApp(environment.firebase);
     RoomSearchFilterPipe,
     RoomUserListComponent,
     UserSeachFilterPipe,
+    NotificationsPopupComponent,
   ],
   imports: [
     MatDialogModule,

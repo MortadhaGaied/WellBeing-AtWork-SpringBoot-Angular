@@ -171,15 +171,15 @@ public class ChatController {
 
  //http://localhost:8081/Wellbeignatwork/chatroom/inviteUserToRoom/{roomId}/{userId}
 
-    @GetMapping("/chatroom/inviteUserToRoom/{roomId}/{userId}")
-    public void inviteUserToRoom(@PathVariable Long roomId,@PathVariable Long userId){
-        chatRoomService.inviteUserToChatRoom(userId,roomId);
+    @GetMapping("/chatroom/inviteUserToRoom/{roomId}/{userId}/{senderID}")
+    public void inviteUserToRoom(@PathVariable Long roomId,@PathVariable Long userId,@PathVariable Long senderID){
+        chatRoomService.inviteUserToChatRoom(userId,roomId,senderID);
     }
 
     //http://localhost:8081/Wellbeignatwork/chatroom/acceptInvitation/1/2
-    @GetMapping("/chatroom/acceptInvitation/{roomId}/{userId}")
-    public void acceptInvitation(@PathVariable Long roomId,@PathVariable Long userId){
-        chatRoomService.acceptInvitation(userId,roomId);
+    @GetMapping("/chatroom/acceptInvitation/{roomId}/{userId}/{invitationSenderID}")
+    public void acceptInvitation(@PathVariable Long roomId,@PathVariable Long userId,@PathVariable Long invitationSenderID){
+        chatRoomService.acceptInvitation(userId,roomId,invitationSenderID);
     }
     //http://localhost:8081/Wellbeignatwork/chatroom/bannUserFromRoom/{userId}/{roomId}"
     @GetMapping("/chatroom/bannUserFromRoom/{userId}/{roomId}")

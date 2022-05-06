@@ -2,12 +2,15 @@ package com.wellbeignatwork.backend.service.ChatService;
 
 
 import antlr.debug.MessageAdapter;
+import bsh.util.JConsole;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.sun.istack.NotNull;
 import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
+import com.wellbeignatwork.backend.entity.Chat.Notification;
+import com.wellbeignatwork.backend.entity.Chat.NotificationType;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
@@ -17,11 +20,13 @@ import com.wellbeignatwork.backend.repository.Chat.ChatRoomRepository;
 import com.wellbeignatwork.backend.repository.Chat.MessageRepository;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.NotificationService.PushNotificationService;
+import com.wellbeignatwork.backend.service.NotificationService.WsNotificationService;
 import com.wellbeignatwork.backend.service.UserService.MailService;
 import com.wellbeignatwork.backend.util.BadWordFilter;
 import com.wellbeignatwork.backend.util.FirebaseStorage;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -47,9 +52,11 @@ public class ChatRoomService implements IChatService {
     private final PushNotificationService notificationService;
     private final MailService mailService;
     private final FirebaseStorage firebaseStorage;
+    private final WsNotificationService WSnotificationService;
 
     @Autowired
-    public ChatRoomService(ChatRoomRepository chatRoomRepository
+    public ChatRoomService(WsNotificationService WSnotificationService,
+            ChatRoomRepository chatRoomRepository
             , UserRepository userRepository
             , SimpMessagingTemplate messagingTemplate
             , MessageRepository messageRepository
@@ -63,6 +70,7 @@ public class ChatRoomService implements IChatService {
         this.notificationService = notificationService;
         this.mailService = mailService;
         this.firebaseStorage = firebaseStorage;
+        this.WSnotificationService = WSnotificationService;
     }
 
 
@@ -291,6 +299,12 @@ public class ChatRoomService implements IChatService {
         }
     }
 
+    public Set<User> helperFunction(ChatRoom room,User sender){
+        Set<User> filteredUsers = new HashSet<>(room.getUsers());
+        filteredUsers.remove(sender);
+        filteredUsers.forEach(user -> log.info(user.getDisplayName()));
+        return filteredUsers;
+    }
 
     public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException, FirebaseMessagingException {
 
@@ -331,6 +345,14 @@ public class ChatRoomService implements IChatService {
             }
 
         });
+        for (User user:helperFunction(chatRoom,sender)){
+            Notification notification = new Notification();
+            notification.setType(NotificationType.MESSAGE);
+            notification.setBody("new Message from room : "+chatRoom.getRoomName());
+            notification.setSentAt(DateTime.now());
+            //notification.setData(String.format("{'roomID':%s}",chatRoom.getId()));
+            WSnotificationService.dispatch(notification,user.getId());
+        }
         notificationService.subScribeUsersToTopic(subscriptionTokens, String.format("room_%s", roomId));
         //notify all room users that a new message have been sent
         notificationService.sendToTopic(new PushNotificationRequest(chatRoom.getRoomName(), "received a message from " + sender.getDisplayName(), String.format("room_%s", roomId)));
@@ -347,7 +369,7 @@ public class ChatRoomService implements IChatService {
     }
 
     @Override
-    public void inviteUserToChatRoom(Long userId, Long roomId) {
+    public void inviteUserToChatRoom(Long userId, Long roomId,Long senderId) {
 
 
         ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("room with this id : " + roomId + " not found")
@@ -363,31 +385,48 @@ public class ChatRoomService implements IChatService {
         String redirectionLink = "http://localhost:8081/Wellbeignatwork/chatroom/acceptInvitation/" + roomId + "/" + userId;
         Map<String, String> data = new HashMap<>();
         data.put("redirectionLink", redirectionLink);
+        data.put("senderID",senderId.toString());
+        log.info(data.get("senderID"));
         //prep request
         PushNotificationRequest request = new PushNotificationRequest();
         request.setTitle("ChatRoom Invitation");
         request.setMessage("you have been invited to Chatroom  : " + room.getRoomName());
         request.setToken(user.getFireBaseToken());
         request.setData(data);
-
+        Notification notification = new Notification();
+        notification.setTitle("chatRoom invitation");
+        notification.setType(NotificationType.INVITATION);
+        notification.setBody("you have been invited to chatroom"+room.getRoomName());
+        notification.setSentAt(DateTime.now());
+        notification.setData(data);
+        WSnotificationService.dispatch(notification,userId);
         //mail sent
         mailService.sendMail(user.getEmail(), "Chat Room Invitation", "you have been invited to ChatRoom : " + room.getRoomName() + "\n" + "click this link to accept the invitation" + "\n" + redirectionLink, false);
         //notification sent
 
-        try {
+      /*  try {
             notificationService.sendMessageToTokenWithExtraData(request);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
+*/
 
     }
 
     @Override
-    public void acceptInvitation(Long userID, Long roomId) {
+    public void acceptInvitation(Long userID, Long roomId,Long invitationSenderId) {
         PushNotificationRequest request = new PushNotificationRequest();
         request.setTitle("ChatRoom Invitation");
         // route to to execute the AssignUserToRoom method
+
+        User invitationSender = userRepository.findById(invitationSenderId)
+                .map(user1 -> {
+                    log.info("user token here *****************" + user1.getFireBaseToken());
+
+                    return user1;
+                })
+                .orElseThrow(() -> new com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException("user with id : " + userID + " doesnt exist"));
+
 
         User user = userRepository.findById(userID)
                 .map(user1 -> {
@@ -416,8 +455,13 @@ public class ChatRoomService implements IChatService {
                 addUserToChatRoom(roomId, userID);
                 //acceptence notification
                 //prepare the request
-                request.setMessage(" you have been succesfully joined our chatRoom : " + room.getRoomName());
-                notificationService.sendPushNotificationToToken(request);
+                //request.setMessage(" you have been succesfully joined our chatRoom : " + room.getRoomName());
+                //notificationService.sendPushNotificationToToken(request);
+                Notification notification = new Notification();
+                notification.setTitle("invitation accepted");
+                notification.setBody("user : "+user.getDisplayName()+" has accepted the room invitation");
+                notification.setSentAt(DateTime.now());
+                WSnotificationService.dispatch(notification,invitationSenderId);
             }
 
 

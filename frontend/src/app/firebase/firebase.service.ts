@@ -46,12 +46,12 @@ export class FirebaseService {
       console.log('Message received. ', payload);
       this.message = payload;
       console.log(payload);
-      Swal.fire({
+      /*Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: payload.notification?.body,
         footer: '<p href="">try again later</p>',
-      });
+      });*/
     });
   }
 

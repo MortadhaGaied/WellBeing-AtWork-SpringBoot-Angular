@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { RxStomp } from '@stomp/rx-stomp';
+import { map } from 'rxjs';
+import * as SockJS from 'sockjs-client';
 import { FirebaseService } from './firebase/firebase.service';
+import { NotificationService } from './notification/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +12,15 @@ import { FirebaseService } from './firebase/firebase.service';
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
-  constructor(private firebaseService: FirebaseService) {}
+
+  constructor(
+    private firebaseService: FirebaseService,
+    private notificationService: NotificationService
+  ) {}
   ngOnInit(): void {
     this.firebaseService.requestPermission();
     this.firebaseService.listen();
+    this.notificationService.connectClicked();
+    this.notificationService.startClicked();
   }
 }

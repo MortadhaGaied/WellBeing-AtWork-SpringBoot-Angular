@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Room } from '../models/room';
 import { ChatroomServiceService } from '../services/chatroom-service.service';
@@ -13,9 +14,20 @@ export class RoomUserListComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Room,
     private service: ChatroomServiceService,
-    private dialog: MatDialog
-  ) {}
-
+    private dialog: MatDialog,
+    private router: Router
+  ) {
+    if (localStorage.getItem('user')) {
+      const localstorageData = JSON.parse(
+        JSON.stringify(localStorage.getItem('user'))
+      );
+      this.currentUser = JSON.parse(localstorageData);
+      console.log(this.currentUser.id);
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+  }
+  currentUser: any;
   public searchValue: string = '';
 
   public users: any[] = [];
@@ -55,26 +67,33 @@ export class RoomUserListComponent implements OnInit {
   }
 
   onAddUserToChatRoom(user: any, roomId: number) {
-    this.service.inviteUserToRoom(user.id, roomId).subscribe({
-      next: () => {
-        console.log('user invited to chatroom');
-        console.log('userId' + user.id + 'room id : ' + roomId);
-        //console.log('user added to chatroom' + this.data.id);
-        /**
+    this.service
+      .inviteUserToRoom(user.id, roomId, this.currentUser.id)
+      .subscribe({
+        next: () => {
+          console.log('user invited to chatroom');
+          console.log('userId' + user.id + 'room id : ' + roomId);
+          Swal.fire({
+            icon: 'success',
+            title: 'user invited successfully',
+            text: user.displayName + ' has been notified',
+          });
+          //console.log('user added to chatroom' + this.data.id);
+          /**
          this method is to force the update on the parent component (in our case usersListComponent)
          */
-        //this.data.users?.push(user);
-      },
-      error: (error) => {
-        //console.log(error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: error.error.message,
-        });
-      },
-    });
+          //this.data.users?.push(user);
+        },
+        error: (error) => {
+          //console.log(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: error.error.message,
+          });
+        },
+      });
   }
 
   onDialogClosed(): void {
