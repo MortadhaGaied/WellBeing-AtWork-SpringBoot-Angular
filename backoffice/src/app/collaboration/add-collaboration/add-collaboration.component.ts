@@ -59,5 +59,6 @@ console.log(formdata.get('image'))
          ,(error) => {
           Swal.fire('Error', 'Error in adding Collaboration', 'error');
         })
+        
   }
 }

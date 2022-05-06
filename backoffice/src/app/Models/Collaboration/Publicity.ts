@@ -1,9 +1,11 @@
+import { Offer } from './offer';
 import { Image } from './Image';
 export class Publicity {
-    idCollaboration:idPublicity;  
+    idPublicity: Number;  
     title:string; 
     description:string;
     starDatePub:Date;
     endDatePub:Date;
-    images:Image;
+    images?:Image;
+    offer? : Offer;
 }

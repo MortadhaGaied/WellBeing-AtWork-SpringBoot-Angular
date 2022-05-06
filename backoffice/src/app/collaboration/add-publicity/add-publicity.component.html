@@ -1,28 +1,40 @@
-<form>
+<form (ngSubmit)="addPublicity()" #f="ngForm">
   
     <div class="segment">
-      <h1>Sign up</h1>
+      <h1>Add Publicity</h1>
     </div>
-    
     <label>
-      <input type="text" placeholder="Email Address"/>
+      <input type="text" placeholder="Title"
+      [(ngModel)]="publicity.title" [ngModelOptions]="{standalone: true}"/>
     </label>
     <label>
-      <input type="password" placeholder="Password"/>
+      <input type="text" placeholder="description"
+      [(ngModel)]="publicity.description" [ngModelOptions]="{standalone: true}"/>
     </label>
-    <button class="red" type="button"><i class="icon ion-md-lock"></i> Log in</button>
-    
-    <div class="segment">
-      <button class="unit" type="button"><i class="icon ion-md-arrow-back"></i></button>
-      <button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button>
-      <button class="unit" type="button"><i class="icon ion-md-settings"></i></button>
-    </div>
+    <label>
+      <input type="date" placeholder="starDatePub"
+      [(ngModel)]="publicity.starDatePub" [ngModelOptions]="{standalone: true}"/>
+    </label>
+    <label>
+      <input type="date" placeholder="endDatePub"
+      [(ngModel)]="publicity.endDatePub" [ngModelOptions]="{standalone: true}"/>
+    </label>
+    <label>
+      <select (change)="onSelectOffer($event)">
+        <option [value]="off.idOffer" *ngFor="let off of offers">{{off.title}}
+        </option> </select>
+    </label>
     
     <div class="input-group">
       <label>
-        <input type="text" placeholder="Email Address"/>
+        <p>Image</p>
+        <input (change)="onFileSelected($event)"
+            type="file"
+            class="form-control-file"
+            id="exampleFormControlFile1"
+            />
       </label>
-      <button class="unit" type="button"><i class="icon ion-md-search"></i></button>
     </div>
+    <button class="red" type="submit"><i class="icon ion-md-lock"></i> Submit</button>
     
   </form>

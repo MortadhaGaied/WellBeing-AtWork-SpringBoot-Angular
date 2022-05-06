@@ -18,7 +18,8 @@ export class CollaborationsComponent implements OnInit {
   Collaboration : Collaboration;
   $eventEmit = new EventEmitter();
   constructor(private collaborationService: CollaborationService,private matDialog:MatDialog,private router : Router) { }
-
+  searchValue: string = "";
+  fields = ["", "name", "description", "email", "date"];
   totalLentgh:any;
   page:number = 1;
   ngOnInit(): void {

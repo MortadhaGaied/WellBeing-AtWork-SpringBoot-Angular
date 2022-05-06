@@ -3,8 +3,18 @@
 </div>
 <div>
 <div class="container">
+  <div>
+    <input
+type="text"
+class="form-control"
+[(ngModel)]="searchValue"
+id="exampleFormControlInput1"
+placeholder="search"
+/>
+</div>
   <div  class="card" *ngFor="let item of c  | paginate: { itemsPerPage: 10, currentPage: page }">
     <div class="card-header">
+
       <img *ngIf="item.imagesCollab"
        [src]=item.imagesCollab.name
       />
