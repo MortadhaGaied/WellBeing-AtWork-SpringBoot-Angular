@@ -43,7 +43,7 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./event/event.module").then((m) => m.EventModule),
       },
-     
+   
     ],
   },
   {

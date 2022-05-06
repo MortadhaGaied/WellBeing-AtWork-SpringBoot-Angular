@@ -4,6 +4,7 @@ package com.wellbeignatwork.backend.controller.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 
 import com.lowagie.text.DocumentException;
@@ -94,6 +95,13 @@ public class ActitvityController {
          activityService.getNbrOfParticipant();
 
     }
+    @GetMapping("/nbrByEvent/{id-event}")
+    @ResponseBody
+    public  int nbrParticipantByEvent(@PathVariable ("id-event") Long idEvent) {
+   return activityService.nbrParticipantByEvent(idEvent);
+
+    }
+
     @GetMapping("/distance/{a}/{b}")
     @ResponseBody
     public double calculDistance (@PathVariable("a") String a ,
@@ -245,5 +253,9 @@ public class ActitvityController {
     public List<Integer> PostSatisfaction(@PathVariable Long idEvent){
         return activityService.EventSatisfaction(idEvent);
     }
-
+    @GetMapping("/EventTag/{tag}")
+    @ResponseBody
+    public List<Event> getEventTags(@PathVariable ("tag") Tags tag){
+        return activityService.getEventTags(tag);
+    }
 }

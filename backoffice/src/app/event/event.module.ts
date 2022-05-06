@@ -4,15 +4,26 @@ import { EventRoutingModule,routes } from './event-routing.module';
 import { EventsComponent } from './events/events.component';
 import { RouterModule } from '@angular/router';
 import { AddEventComponentComponent } from './add-event-component/add-event-component.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule, } from '@angular/forms';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
+
+import { HttpClientModule , HttpClientJsonpModule} from '@angular/common/http';
+import { MbscModule } from '@mobiscroll/angular';
+
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { UpdateEventComponent } from './update-event/update-event.component'; 
+
+
+
 @NgModule({
   declarations: [
     EventsComponent,
-    AddEventComponentComponent
+    AddEventComponentComponent,
+    UpdateEventComponent,
+    
 
   ],
   imports: [
@@ -22,7 +33,13 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatChipsModule,
     MatIconModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    FullCalendarModule,
+    HttpClientModule  ,
+    MbscModule,
+    ReactiveFormsModule,
+    HttpClientJsonpModule
+
 
   ]
 })

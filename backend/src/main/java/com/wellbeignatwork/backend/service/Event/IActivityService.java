@@ -4,6 +4,7 @@ import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,5 +50,12 @@ public interface IActivityService {
     Float getAverageRateEvent(Long idEvent);
     public void findMostPopularTag();
     public List<Integer> EventSatisfaction(Long idEvent);
+
+    public int nbrParticipantByEvent(Long idEvent);
+
+    public List<Event> getEventTags(Tags tag);
+
+
+
 
 }

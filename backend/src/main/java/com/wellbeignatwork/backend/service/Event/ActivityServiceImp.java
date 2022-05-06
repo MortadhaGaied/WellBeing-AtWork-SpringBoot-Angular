@@ -374,9 +374,17 @@ public class ActivityServiceImp implements IActivityService {
 
         List<Event> result = new ArrayList<>(preferenceEvent.keySet());
 
+        Iterator<Event> iterator = result.iterator();
+        while (iterator.hasNext()){
+            if (iterator.next().getEndDate().isBefore(LocalDateTime.now())){
+                iterator.remove();
+            }
+        }
         for (int i = 0, j = result.size() - 1; i < j; i++) {
             result.add(i, result.remove(j));
         }
+
+
         return result;
 
 
@@ -569,15 +577,10 @@ public class ActivityServiceImp implements IActivityService {
         List<Event> events = new ArrayList<>();
         eventRepository.findAll().forEach(events::add);
         List<Integer> nbParticipantByEvent = new ArrayList<>(Collections.nCopies(events.size(), 0));
-
-
         for (int i = 0; i < events.size(); i++) {
 
-
             nbParticipantByEvent.set(i, events.get(i).getUsers().size());
-
         }
-
 
         System.out.println(nbParticipantByEvent);
     }
@@ -826,6 +829,16 @@ public class ActivityServiceImp implements IActivityService {
 
     }
 
+    @Override
+    public int nbrParticipantByEvent(Long idEvent) {
+        Event e =eventRepository.findById(idEvent).orElse(null);
+        if (e.getUsers()!=null){
+            return e.getUsers().size();
+
+        }
+        return 0;
+    }
+
     public int findSentiment(String content) {
         int mainSentiment = 0;
         String cleancontent = cleancontent(content);
@@ -851,6 +864,14 @@ public class ActivityServiceImp implements IActivityService {
         System.out.println(commentContent);
         return commentContent;
     }
-
+    public List<Event> getEventTags(Tags tag){
+        List<Event> result = new ArrayList<>();
+        for (Event e: eventRepository.findAll()){
+            if (e.getEventTags().contains(tag)){
+                result.add(e);
+            }
+        }
+        return result;
+    }
 
 }

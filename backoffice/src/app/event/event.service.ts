@@ -32,7 +32,7 @@ getEventById(idEvent: number): Observable<Event> {
  }
 
   sendEventData(idEvent : number){
-    console.log("event service");
+    console.log("event service: "+idEvent);
     this.getEventById(idEvent).pipe(take(1)).subscribe(x=>{
       console.log(x.eventName);
       this.event=x;
