@@ -5,6 +5,7 @@ import { OfferService } from '../../Service/offer.service';
 import { Offer } from '../../Models/Collaboration/offer';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 
@@ -66,6 +67,7 @@ export class AddOfferComponent implements OnInit {
     //console.log(this.formdata.get('image'))
   }
   addOffer() {
+    Swal.fire('Success ', 'Offer Added', 'success');
     console.log(this.formdata.get('image'))
     console.log(this.file);
     console.log(this.offer);
@@ -73,8 +75,13 @@ export class AddOfferComponent implements OnInit {
     this.offer.imagesOffer = undefined;
     this.OfferService.addOffer(this.selectedcollaborationId, this.offer).subscribe(o => {
       console.log(o)
-      this.OfferService.uploadImageToOffer(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
-   }
+      this.OfferService.uploadImageToOffer(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))}
+      ,(error) => {
+        Swal.fire('Error', 'Error in adding Offer', 'error');
+      })
+  
+    }
+   
 }
 
 

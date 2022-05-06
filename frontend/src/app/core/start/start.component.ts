@@ -17,7 +17,6 @@ export class StartComponent implements OnInit {
   marksGot = 0;
   correctAnswers = 0;
   attempted = 0;
-
   isSubmit = false;
 
   timer: any;
