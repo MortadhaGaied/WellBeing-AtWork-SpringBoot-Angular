@@ -112,6 +112,14 @@
                         
                       </div> 
   </form>
+  <div [hidden]="captcha">
+    <p>Hello potential human...</p>
+    <re-captcha (resolved)="resolved($event)" siteKey="6LfynsofAAAAAG-IgurZebh2apqMg8SNNf3F6nyf"></re-captcha>
+</div>
+<div [hidden]="!captcha">
+    <p>{{ "homrani.mahdi1998@gmail.com" }}</p>
+</div>
+
       <app-map></app-map>
 </div></div></div></div></div></div>
 

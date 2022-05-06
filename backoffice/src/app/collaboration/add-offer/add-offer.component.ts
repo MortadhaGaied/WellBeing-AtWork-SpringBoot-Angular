@@ -57,7 +57,11 @@ export class AddOfferComponent implements OnInit {
       this.collaborations = collaborations
       console.log(collaborations)
     })
+  }
 
+  resolved(captchaResponse:string){
+    this.captcha =captchaResponse;
+    console.log('resolved captcha witch response : ' + this.captcha);
   }
   onSelectCollaboration(event: any) {
     this.selectedcollaborationId = event.target.value;
