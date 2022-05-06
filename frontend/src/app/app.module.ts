@@ -34,6 +34,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { InstructionsComponent } from './core/instructions/instructions.component';
+import { LoadQuizComponent } from './core/load-quiz/load-quiz.component';
+import { StartComponent } from './core/start/start.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     StreamComponent,
     QuizComponent,
     SidebarComponent,
+    InstructionsComponent,
+    LoadQuizComponent,
+    StartComponent,
   ],
   imports: [
     BrowserModule,
