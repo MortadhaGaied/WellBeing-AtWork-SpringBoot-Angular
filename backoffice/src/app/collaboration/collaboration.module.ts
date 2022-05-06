@@ -43,6 +43,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SideBarCollabComponent } from './side-bar-collab/side-bar-collab.component';
 import { SideBarOfferComponent } from './side-bar-offer/side-bar-offer.component';
+import { PublicityComponent } from './publicity/publicity.component';
+import { AddPublicityComponent } from './add-publicity/add-publicity.component';
+import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 
 @NgModule({
   declarations: [
@@ -67,6 +70,8 @@ import { SideBarOfferComponent } from './side-bar-offer/side-bar-offer.component
     ProfileComponent,
     SideBarCollabComponent,
     SideBarOfferComponent,
+    PublicityComponent,
+    AddPublicityComponent,
   ],
   imports: [
     CommonModule,
@@ -93,6 +98,7 @@ import { SideBarOfferComponent } from './side-bar-offer/side-bar-offer.component
   // CKEditorModule
   MatProgressSpinnerModule,
   NgxUiLoaderModule,
+  RecaptchaModule,
   ]
 })
 export class CollaborationModule { }

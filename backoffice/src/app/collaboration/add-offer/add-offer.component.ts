@@ -42,9 +42,14 @@ export class AddOfferComponent implements OnInit {
   idOffer: any;
   formdata : FormData = new FormData();
   formOffer: FormGroup;
-
+  captcha : string;
+  email : string;
   constructor(private formBuilder: FormBuilder, private ActivatedRoute: ActivatedRoute, router: Router,
-    private OfferService: OfferService, private CollaborationService: CollaborationService) { }
+    private OfferService: OfferService, private CollaborationService: CollaborationService) {
+      this.captcha = '';
+      this.email = 'homrani.mahdi1998@gmail.com'
+     }
+
   collaborations: Collaboration[] = [];
   selectedcollaborationId: any;
   ngOnInit(): void {
