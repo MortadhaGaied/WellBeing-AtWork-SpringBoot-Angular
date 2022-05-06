@@ -73,29 +73,29 @@ public class AuthController {
 
     @PostMapping("/forget-password")
     public ResponseEntity<?> resetPassword(@RequestParam("email") String email) {
-        passwordResetService.forgetPassword(email);
-        return ResponseEntity.ok("reset password sent successfully");
+        try {
+            passwordResetService.forgetPassword(email);
+            return ResponseEntity.ok().body(new ApiResponse(true, "You will receive an email contains password reset instructions."));
+        } catch(Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, "This email doesn't exist"), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> savePassword(@Valid @RequestBody PasswordReset passwordDto, @RequestParam String token) {
         String result = passwordResetService.validatePasswordResetToken(token);
         if (result != null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error Token is : " + result);
+            return new ResponseEntity<>(new ApiResponse(false, "Error token is : " + result), HttpStatus.BAD_REQUEST);
         }
 
         User user = passwordTokenRepository.findByToken(token).getUser();
         if (user.getEmail() != null) {
             passwordResetService.changeUserPassword(user, passwordDto.getNewPassword());
             passwordTokenRepository.delete(passwordTokenRepository.findByToken(token));
-            return ResponseEntity.ok("Password changed successfully!");
+            return ResponseEntity.ok().body(new ApiResponse(true, "Password changed successfully."));
 
         } else {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error Token is : " + result);
+            return new ResponseEntity<>(new ApiResponse(false, "Error token is : " + result), HttpStatus.BAD_REQUEST);
         }
     }
 }

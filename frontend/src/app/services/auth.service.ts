@@ -5,7 +5,9 @@ import { AppConstants } from './app.constants';
 import { UserType } from './user';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
 };
 
 @Injectable({
@@ -35,6 +37,21 @@ export class AuthService {
         matchingPassword: user.matchingPassword,
         socialProvider: 'LOCAL',
       },
+      httpOptions
+    );
+  }
+
+  forget(email: any): Observable<any> {
+    return this.http.post(
+      `${AppConstants.AUTH_API}forget-password?email=${email}`,
+      httpOptions
+    );
+  }
+
+  change(password: string, token: string | null): Observable<any> {
+    return this.http.post(
+      `${AppConstants.AUTH_API}reset-password?token=${token}`,
+      { newPassword: password },
       httpOptions
     );
   }
