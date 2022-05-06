@@ -55,7 +55,7 @@ public class ChatRoomService implements IChatService {
             , MessageRepository messageRepository
             , PushNotificationService notificationService
             , MailService mailService
-    ,   FirebaseStorage firebaseStorage) {
+            , FirebaseStorage firebaseStorage) {
         this.chatRoomRepository = chatRoomRepository;
         this.userRepository = userRepository;
         this.messagingTemplate = messagingTemplate;
@@ -79,15 +79,15 @@ public class ChatRoomService implements IChatService {
 
     public ChatRoom updateChatRoom(ChatRoom chatRoom) {
 
-       return chatRoomRepository.findById(chatRoom.getId())
-               .map(chatRoomRepository::save)
-               .orElseThrow(()->new ResourceNotFoundException("room not found"));
+        return chatRoomRepository.findById(chatRoom.getId())
+                .map(chatRoomRepository::save)
+                .orElseThrow(() -> new ResourceNotFoundException("room not found"));
 
     }
 
     @Override
     public ChatRoom findRoomById(Long roomId) {
-        return chatRoomRepository.findById(roomId).orElseThrow(()->new ResourceNotFoundException("room with id "+roomId+" does not exist"));
+        return chatRoomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("room with id " + roomId + " does not exist"));
     }
 
     public List<ChatRoom> getAllRooms() {
@@ -178,7 +178,6 @@ public class ChatRoomService implements IChatService {
 
 
     }
-
 
 
     public void addUserToChatRoom(@NotNull Long chatRoomId, @NotNull Long userId) {
@@ -312,12 +311,12 @@ public class ChatRoomService implements IChatService {
             userRepository.save(sender);
         }
 
-
+/*
         if (chatRoom.getMaxBadWords() <= badWordsCount) {
             autoBannUsersFromChatRooms(badWordsCount, sender, chatRoom);
             //badWordsPerUser.get(sender).clear();
             return;
-        }
+        }*/
 
         //send the message to the message broker to be handled and sent the client
         message.setChatroom(chatRoom);
@@ -338,9 +337,10 @@ public class ChatRoomService implements IChatService {
 
     }
 
-    public void publicChat(Message message) throws FirebaseMessagingException {
+    public void publicChat(Message message, Long senderId) throws FirebaseMessagingException {
 
-
+        User sender = userRepository.findById(senderId).get();
+        message.setSender(sender);
         messagingTemplate.convertAndSend("/topic2/message", message);
         //notify all room users that a new message have been sent
         notificationService.sendPushNotificationToALlUsers(message.getContent(), "public room");
@@ -348,19 +348,19 @@ public class ChatRoomService implements IChatService {
 
     @Override
     public void inviteUserToChatRoom(Long userId, Long roomId) {
-/*
 
-        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> {
-            throw new ResourceNotFoundException("room with this id : " + roomId + " not found");
-        });
+
+        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("room with this id : " + roomId + " not found")
+
+        );
         User user = userRepository.findById(userId).orElse(null);
-        log.info("************user tokenn plssssssssss **********"+user.getDisplayName());
+        log.info("************user tokenn plssssssssss **********" + user.getDisplayName());
         if (room.getUsers().contains(user)) {
             throw new BadRequestException("You can't invite someone who already in the ChatRoom");
         }
         //prep data
 
-        String redirectionLink = "http://localhost:8081/Wellbeignatwork/chatroom/acceptInvitation/"+roomId+"/"+userId;
+        String redirectionLink = "http://localhost:8081/Wellbeignatwork/chatroom/acceptInvitation/" + roomId + "/" + userId;
         Map<String, String> data = new HashMap<>();
         data.put("redirectionLink", redirectionLink);
         //prep request
@@ -380,12 +380,6 @@ public class ChatRoomService implements IChatService {
             e.printStackTrace();
         }
 
- */
-
-
-
-
-
 
     }
 
@@ -396,12 +390,12 @@ public class ChatRoomService implements IChatService {
         // route to to execute the AssignUserToRoom method
 
         User user = userRepository.findById(userID)
-                .map(user1 ->{
-                    log.info("user token here *****************"+user1.getFireBaseToken());
+                .map(user1 -> {
+                    log.info("user token here *****************" + user1.getFireBaseToken());
                     request.setToken(user1.getFireBaseToken());
                     return user1;
                 })
-                .orElseThrow(()->new com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException("user with id : "+userID+" doesnt exist"));
+                .orElseThrow(() -> new com.wellbeignatwork.backend.exceptions.Evaluation.ResourceNotFoundException("user with id : " + userID + " doesnt exist"));
 
 
         chatRoomRepository.findById(roomId).map((room -> {
@@ -417,10 +411,9 @@ public class ChatRoomService implements IChatService {
                         ,user.getFireBaseToken()
                         ,null
                 )*/
-            }
-            else {
+            } else {
                 // all things good
-                addUserToChatRoom(roomId,userID);
+                addUserToChatRoom(roomId, userID);
                 //acceptence notification
                 //prepare the request
                 request.setMessage(" you have been succesfully joined our chatRoom : " + room.getRoomName());
@@ -477,12 +470,13 @@ public class ChatRoomService implements IChatService {
             notification.setToken(user.getFireBaseToken());
             notificationService.sendPushNotificationToToken(notification);
             //send Mail
-            mailService.sendMail(user.getEmail(), "you have been banned ! ", "sending bad words in the chat got you  you have been banned from the room : " + room.getRoomName(), false);
+            //mailService.sendMail(user.getEmail(), "you have been banned ! ", "sending bad words in the chat got you  you have been banned from the room : " + room.getRoomName(), false);
             //send email
         }
 
     }
-@Transactional
+
+    @Transactional
     @Override
     public void unbannUserFromChatRoom(Long userId, Long roomId) {
         //findTheUser
@@ -516,7 +510,7 @@ public class ChatRoomService implements IChatService {
     public Set<User> findUsersByChatroom(Long roomId) {
         return chatRoomRepository.findById(roomId)
                 .map(ChatRoom::getUsers)
-                .orElseThrow(()->new ResourceNotFoundException("room with id : "+roomId+"does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("room with id : " + roomId + "does not exist"));
     }
 
     @Override
@@ -524,13 +518,13 @@ public class ChatRoomService implements IChatService {
         chatRoomRepository.findById(roomId).map(chatRoom -> {
             try {
                 String roomImage = firebaseStorage.uploadFile(file);
-                chatRoom.setImage("https://firebasestorage.googleapis.com/v0/b/"+firebaseStorage.getBUCKETNAME()+"/o/"+roomImage+"?alt=media");
+                chatRoom.setImage("https://firebasestorage.googleapis.com/v0/b/" + firebaseStorage.getBUCKETNAME() + "/o/" + roomImage + "?alt=media");
                 chatRoomRepository.save(chatRoom);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return chatRoom;
-        }).orElseThrow(()->new ResourceNotFoundException("room with id "+roomId+" not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("room with id " + roomId + " not found"));
     }
 
 

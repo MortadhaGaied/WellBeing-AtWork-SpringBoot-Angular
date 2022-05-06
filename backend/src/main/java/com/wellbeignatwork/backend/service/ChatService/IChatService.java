@@ -25,7 +25,7 @@ public interface IChatService {
     public void removeUserFromChatRoom(Long chatRoomId, Long userId);
     public void oneToOneChat(Message message, Long senderId, Long recieverId,String roomUniqueKey) throws FirebaseMessagingException;
     public void roomBasedChat(Message message, Long roomId, Long senderId) throws MessagingException, FirebaseMessagingException;
-    public void publicChat(Message message) throws FirebaseMessagingException;
+    public void publicChat(Message message,Long senderId) throws FirebaseMessagingException;
     public void inviteUserToChatRoom(Long userId,Long roomId);
     public void acceptInvitation(Long userID,Long roomId);
     public void bannUserFromChatRoom(Long userId,Long roomId);

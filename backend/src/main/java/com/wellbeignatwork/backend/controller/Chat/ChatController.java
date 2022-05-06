@@ -143,9 +143,9 @@ public class ChatController {
 
     }
 
-    @MessageMapping("/chat/public")
-    public void publicCHat(@Payload Message message) throws FirebaseMessagingException {
-        chatRoomService.publicChat(messageService.filterBadWords(message));
+    @MessageMapping("/chat/public/{senderId}")
+    public void publicCHat(@Payload Message message,@Valid @DestinationVariable Long senderId) throws FirebaseMessagingException {
+        chatRoomService.publicChat(messageService.filterBadWords(message),senderId);
     }
 
     //http://localhost:8081/Wellbeignatwork/chatroom/save-discussion"
