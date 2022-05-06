@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
@@ -22,7 +20,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { QuizComponent } from './core/quiz/quiz.component';
+import { SidebarComponent } from './core/sidebar/sidebar.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
   declarations: [
@@ -42,13 +53,30 @@ import { HttpClientModule } from '@angular/common/http';
     LinksComponent,
     RecentBlogComponent,
     CompleteProfileComponent,
-    StreamComponent
+    StreamComponent,
+    QuizComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatToolbarModule,MatIconModule,MatListModule,MatSelectModule,
+    MatSlideToggleModule,
+    // CKEditorModule
+  MatProgressSpinnerModule,
+
+  NgxUiLoaderModule,
+  NgxUiLoaderHttpModule.forRoot({
+    showForeground: true,
+  }),
   ],
   providers: [],
   bootstrap: [AppComponent]
