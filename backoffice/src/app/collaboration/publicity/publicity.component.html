@@ -1,8 +1,8 @@
-<h1>Tickets cards</h1>
+<h1>Publicity</h1>
 <div class="container">
-<div class="card" *ngFor="let item of p  | paginate: { itemsPerPage: 10, currentPage: page }">
+
 <ul>
-  <li class="booking-card">
+  <li class="booking-card" *ngFor="let item of p  | paginate: { itemsPerPage: 10, currentPage: page }">
     <img class="booking-card" *ngIf="item.imagesPublicity" [src]=item.imagesPublicity.name />
     <div class="book-container">
       <div class="content">
@@ -34,4 +34,4 @@
  
 </ul>
 </div>
-</div >
+
