@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Collaboration } from '../../Models/Collaboration/collaboration';
 import { CollaborationService } from '../../Service/collaboration.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-collaboration',
@@ -45,6 +46,7 @@ file:File;
     console.log(this.file)
   }
   addCollaboration(){
+    Swal.fire('Success ', 'Collaboration Added', 'success');
     console.log(this.file);
     console.log(this.collaboration)
     this.collaboration.imagesCollab=undefined;
@@ -53,6 +55,9 @@ file:File;
 console.log(formdata.get('image'))
     this.collaborationService.addCollaboration(this.collaboration).subscribe(collab =>
        {console.log(collab)
-         this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))})
+         this.collaborationService.uploadImageToCollabotration(formdata,JSON.parse(JSON.stringify(collab)).idCollaboration).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))}
+         ,(error) => {
+          Swal.fire('Error', 'Error in adding Collaboration', 'error');
+        })
   }
 }
