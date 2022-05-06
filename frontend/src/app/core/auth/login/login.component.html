@@ -1,0 +1,84 @@
+<!-- page loader -->
+<div class="theme-layout">
+  <div class="authtication bluesh high-opacity">
+    <div
+      class="bg-image"
+      style="background-image: url(assets/images/resources/login-bg3.jpg)"
+    ></div>
+
+    <div class="welcome-box">
+      <figure>
+        <img src="assets/images/resources/login-1.png" alt="" />
+      </figure>
+      <h4>Ask questions with seniors Researchers</h4>
+      <p>
+        Ask questions and get the experienced answer by researchers and others
+        fellows.
+      </p>
+    </div>
+  </div>
+  <div class="auth-login">
+    <div class="logo">
+      <img src="assets/images/logo.png" alt="" /><span>Socimo</span>
+    </div>
+    <div class="mockup left-bottom">
+      <img src="assets/images/mockup.png" alt="" />
+    </div>
+    <div class="verticle-center">
+      <div class="login-form">
+        <h4><i class="icofont-key-hole"></i> Login</h4>
+        <form class="c-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <input type="email" placeholder="Email @" formControlName="email" />
+          <input
+            type="password"
+            placeholder="xxxxxxxxxx"
+            formControlName="password"
+          />
+          <div class="checkbox">
+            <input type="checkbox" id="checkbox" checked />
+            <label for="checkbox"><span>Remember Me</span></label>
+          </div>
+          <re-captcha
+            formControlName="recaptchaReactive"
+            siteKey="6LfDwskfAAAAAB2zqHoxaUuvHzGHgtrSe2heGd-T"
+          ></re-captcha>
+
+          <div class="actions">
+            <a routerLink="/forget-password" style="color: #3498db"
+              >Forget Password ?</a
+            >
+            <button
+              class="main-btn"
+              type="submit"
+              [disabled]="loginForm.invalid"
+            >
+              <i class="icofont-key"></i> Login
+            </button>
+          </div>
+        </form>
+
+        <div class="social-login">
+          <h5>Or Login Using :</h5>
+
+          <a href="{{ googleURL }}">
+            <img src="assets/images/google.png" alt="google" class="btn-img" />
+          </a>
+          <a href="{{ linkedinURL }}">
+            <img
+              src="assets/images/linkedin.png"
+              alt="linkedin"
+              class="btn-img"
+            />
+          </a>
+        </div>
+        <div class="text-center mt-4">
+          <span class="mr-2">Don't Have Account ?</span>
+          <a routerLink="/register" style="color: #3498db">Register Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="mockup right">
+      <img src="assets/images/star-shape.png" alt="" />
+    </div>
+  </div>
+</div>

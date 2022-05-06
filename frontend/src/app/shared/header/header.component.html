@@ -67,7 +67,7 @@
           <a href="profile-page2.html" title="">
             <img alt="" src="assets/images/resources/user.jpg" />
             <div class="name">
-              <h4>Danial Cardos</h4>
+              <h4>{{ currentUser?.displayName }}</h4>
             </div>
           </a>
         </div>
@@ -245,7 +245,7 @@
             >
           </li>
           <li class="logout">
-            <a href="sign-in.html" title=""
+            <a style="cursor: pointer" (click)="onLogout()" title=""
               ><i class="icofont-power"></i> Logout</a
             >
           </li>

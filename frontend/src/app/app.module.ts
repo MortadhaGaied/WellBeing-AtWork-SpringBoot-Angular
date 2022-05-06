@@ -19,6 +19,16 @@ import { RecentBlogComponent } from './core/recent-blog/recent-blog.component';
 import { CompleteProfileComponent } from './core/complete-profile/complete-profile.component';
 import { StreamComponent } from './live-stream/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
+import { authInterceptorProviders } from './services/auth.interceptor';
+import { ChangePasswordComponent } from './core/auth/change-password/change-password.component';
+import { LoginComponent } from './core/auth/login/login.component';
+import { RegisterComponent } from './core/auth/register/register.component';
+import { ForgetPasswordComponent } from './core/auth/forget-password/forget-password.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -38,13 +48,24 @@ import { AppRoutingModule } from './app-routing.module';
     LinksComponent,
     RecentBlogComponent,
     CompleteProfileComponent,
-    StreamComponent
+    StreamComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForgetPasswordComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [authInterceptorProviders],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

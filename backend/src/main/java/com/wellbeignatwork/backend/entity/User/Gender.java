@@ -1,2 +1,5 @@
-package com.wellbeignatwork.backend.entity.User;public interface Gender {
+package com.wellbeignatwork.backend.entity.User;
+
+public enum Gender {
+    male, female;
 }
