@@ -6,6 +6,6 @@ export class Publicity {
     description:string;
     starDatePub:Date;
     endDatePub:Date;
-    images?:Image;
+    imagesPublicity?:Image;
     offer? : Offer;
 }

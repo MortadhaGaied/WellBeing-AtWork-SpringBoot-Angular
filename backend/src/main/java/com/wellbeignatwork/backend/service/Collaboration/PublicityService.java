@@ -10,16 +10,12 @@ import com.wellbeignatwork.backend.exceptions.Collaboration.ResourceNotFoundExce
 import com.wellbeignatwork.backend.entity.Collaboration.Image;
 import com.wellbeignatwork.backend.entity.Collaboration.Offer;
 import com.wellbeignatwork.backend.entity.Collaboration.Publicity;
-import com.wellbeignatwork.backend.repository.Collaboration.OfferRepository;
 import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -86,20 +82,24 @@ public class PublicityService implements IPublicityService {
 	}
 
 	@Override
-	public void saveImage(MultipartFile imageFile,Publicity publicity) throws IOException {
-		Path currentPath = Paths.get(".");
-		Path absolutePath = currentPath.toAbsolutePath();
-		publicity.setPicture(absolutePath + "/src/main/resources/image/");
-		byte[] bytes  = imageFile.getBytes();
-		Path path =Paths.get(publicity.getPicture() + imageFile.getOriginalFilename() );
-		Files.write(path,bytes);
+	public void uploadImageToPulicity(MultipartFile img, Long idPub) throws IOException {
+		Publicity publicity = PublicityRepo.findById(idPub).orElse(null);
+		if (publicity == null) {
+			throw new ResourceNotFoundException("Offer is not exist");
+		}
+		String name = firebaseStorage.uploadFile(img);
+		Image image = new Image();
+		image.setName("https://firebasestorage.googleapis.com/v0/b/"+firebaseStorage.getBUCKETNAME()+"/o/"+name+"?alt=media");
+		imageRepo.save(image);
+		publicity.setImagesPublicity(image);
+		PublicityRepo.save(publicity);
 	}
 
 	@Override
 	public void uploadImageToPub(MultipartFile img, Long idPublicity) throws IOException {
 		Publicity pub = PublicityRepo.findById(idPublicity).orElse(null);
 		if (pub == null) {
-			throw new ResourceNotFoundException("Event is not exist");
+			throw new ResourceNotFoundException("publicity is not exist");
 		}
 		String name = firebaseStorage.uploadFile(img);
 		Image image = new Image();
@@ -109,10 +109,10 @@ public class PublicityService implements IPublicityService {
 	}
 
 	@Override
-	public void uploadPubBanner(MultipartFile img, Long eventId) throws IOException {
-		Publicity pub = PublicityRepo.findById(eventId).orElse(null);
+	public void uploadPubBanner(MultipartFile img, Long idPublicity) throws IOException {
+		Publicity pub = PublicityRepo.findById(idPublicity).orElse(null);
 		if (pub == null) {
-			throw new ResourceNotFoundException("Event is not exist");
+			throw new ResourceNotFoundException("Publicity is not exist");
 		}
 		String name = firebaseStorage.uploadFile(img);
 		pub.setBanner(name);

@@ -21,7 +21,7 @@ export class AddPublicityComponent implements OnInit {
     description: '',
     title: '',
     idPublicity: 0,
-    images: {
+    imagesPublicity: {
       id: 0,
       name: ''
     },
@@ -67,10 +67,10 @@ file:File;
     console.log(this.file);
     console.log(this.publicity);
     this.publicity.offer = undefined;
-    this.publicity.images = undefined;
+    this.publicity.imagesPublicity = undefined;
     this.PublicityService.addPublicity(this.selectedOfferId, this.publicity).subscribe(o => {
       console.log(o)
-      this.PublicityService.uploadImageToPublicity(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))}
+      this.PublicityService.uploadImageToPub(this.formdata,JSON.parse(JSON.stringify(o)).idOffer).subscribe(data => window.alert("image uploaded successfully"),(error)=>console.log(error))}
       ,(error) => {
         Swal.fire('Error', 'Error in adding Publicity', 'error');
       })

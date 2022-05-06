@@ -25,5 +25,8 @@ export class PublicityService {
 
     return this.http.post("http://localhost:8081/Wellbeignatwork/Publicity/upload-image/"+idPublicity, form)
      }
+     uploadImageToPub(form:FormData , idPublicity : number ){
+      return this.http.post("http://localhost:8081/Wellbeignatwork/Publicity/uploadImageToPub/"+idPublicity, form)
+       }
      
 }

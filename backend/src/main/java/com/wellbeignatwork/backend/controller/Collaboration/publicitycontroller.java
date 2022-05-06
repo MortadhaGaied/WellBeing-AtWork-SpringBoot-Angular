@@ -111,5 +111,10 @@ public class publicitycontroller {
     public List<Publicity> retrieveAllPublicitys(){
         return publicityService.retrieveAllPublicitys();
     }
+    //http://localhost:8081/Wellbeignatwork/Publicity/uploadImageToPub/1
+    @PostMapping("/uploadImageToPub/{idPub}")
+    void uploadImageToOffer(@RequestParam("image") MultipartFile img, @PathVariable Long idPub) throws IOException {
+        publicityService.uploadImageToPub(img, idPub);
+    }
 }
 

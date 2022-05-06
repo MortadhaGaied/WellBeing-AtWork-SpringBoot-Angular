@@ -57,11 +57,12 @@ ul{
   
   .booking-card{
     position: relative;
-    width: 300px;
+    width: 350px;
+    height: auto;
     display: flex;
-    flex: 0 0 300px;
+    flex: 0 0 390px;
     flex-direction: column;
-    
+
     margin: 20px;
     margin-bottom: 30px;
     @include radius(10px);
@@ -74,7 +75,7 @@ ul{
     text-align: center;
     color: $blue;
     
-    transition: .3s;
+    transition: .1s;
     
     &::before{
       content: '';

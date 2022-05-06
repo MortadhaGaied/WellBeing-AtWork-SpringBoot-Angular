@@ -27,14 +27,13 @@ public class Publicity implements Serializable {
 	String description;
 	Date starDatePub;
 	Date endDatePub;
-	String picture;
 
 	@JsonIgnore
 	@ManyToOne
 	Offer offers;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "publicity")
-	Set<Image> images;
+	@OneToOne(cascade = CascadeType.REMOVE)
+	Image imagesPublicity;
 
 	@Nullable
 	String banner;
