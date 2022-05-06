@@ -1,3 +1,7 @@
+<div style="position: relative;">
+<app-side-bar-collab></app-side-bar-collab>
+</div>
+<div>
 <div class="container">
   <div  class="card" *ngFor="let item of c  | paginate: { itemsPerPage: 10, currentPage: page }">
     <div class="card-header">
@@ -28,3 +32,4 @@
 
 </div>
 <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

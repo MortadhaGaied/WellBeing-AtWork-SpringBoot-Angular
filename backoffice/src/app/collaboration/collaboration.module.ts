@@ -41,6 +41,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SideBarCollabComponent } from './side-bar-collab/side-bar-collab.component';
+import { SideBarOfferComponent } from './side-bar-offer/side-bar-offer.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AddQuestionComponent,
     AddQuizComponent,
     ProfileComponent,
+    SideBarCollabComponent,
+    SideBarOfferComponent,
   ],
   imports: [
     CommonModule,

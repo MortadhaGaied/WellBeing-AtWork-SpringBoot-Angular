@@ -16,6 +16,7 @@ import { EspaceQuizComponent } from './espace-quiz/espace-quiz.component';
 import { UpdateQuizComponent } from './update-quiz/update-quiz.component';
 import { ViewQuizQuestionsComponent } from './view-quiz-questions/view-quiz-questions.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SideBarCollabComponent } from './side-bar-collab/side-bar-collab.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
     {path: 'categories',component: ViewCategoriesComponent},{path: 'add-category',component: AddCategoryComponent},
     {path: 'quizzes',component: ViewQuizzesComponent},{path: 'add-quiz',component: AddQuizComponent},
     {path: 'quiz/:qid',component: UpdateQuizComponent},{path: 'view-questions/:qid/:title',component: ViewQuizQuestionsComponent},
-    {path: 'add-question/:qid/:title',component: AddQuestionComponent},{path: 'profile',component: ProfileComponent}
+    {path: 'add-question/:qid/:title',component: AddQuestionComponent},{path: 'profile',component: ProfileComponent},
+    {path: 'MenuCollab',component: SideBarCollabComponent}
   ],
   },
 ];
