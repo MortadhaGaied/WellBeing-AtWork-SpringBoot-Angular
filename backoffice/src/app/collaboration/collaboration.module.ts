@@ -38,6 +38,9 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AddQuizComponent } from './add-quiz/add-quiz.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,16 @@ import { ProfileComponent } from './profile/profile.component';
     MatSlideToggleModule,
     // CKEditorModule
   MatProgressSpinnerModule,
-
+  MatFormFieldModule,MatInputModule,
+  MatButtonModule,
+  FormsModule,
+  HttpClientModule,
+  MatSnackBarModule,
+  MatCardModule,
+  MatToolbarModule,MatIconModule,MatListModule,MatSelectModule,
+  MatSlideToggleModule,
+  // CKEditorModule
+  MatProgressSpinnerModule,
   NgxUiLoaderModule,
   ]
 })
