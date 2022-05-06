@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,FormControl, Validators  } from '@angular/forms';
 import { Collaboration } from '../../Models/Collaboration/collaboration';
 import { CollaborationService } from '../../Service/collaboration.service';
 import Swal from 'sweetalert2';
@@ -37,9 +37,13 @@ file:File;
   formCollaboration: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, router: Router,
-    private collaborationService: CollaborationService) { }
+    private collaborationService: CollaborationService) { 
+          this.initForm();
+    }
 
+    
   ngOnInit(): void {
+
   }
   onFileSelected(event:any){
     this.file=event.target.files[0];
@@ -61,4 +65,18 @@ console.log(formdata.get('image'))
         })
         
   }
+
+  initForm() {
+    this.formCollaboration = new FormGroup(
+      {
+        name: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+        phone: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required]),
+        town: new FormControl('', [Validators.required]),
+        rate: new FormControl('', [Validators.required]),
+      },
+    );
+  }
+
 }

@@ -37,7 +37,10 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { InstructionsComponent } from './core/instructions/instructions.component';
 import { LoadQuizComponent } from './core/load-quiz/load-quiz.component';
 import { StartComponent } from './core/start/start.component';
-
+import { PublicityComponent } from './core/publicity/publicity.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +65,7 @@ import { StartComponent } from './core/start/start.component';
     InstructionsComponent,
     LoadQuizComponent,
     StartComponent,
+    PublicityComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,11 +82,13 @@ import { StartComponent } from './core/start/start.component';
     MatSlideToggleModule,
     // CKEditorModule
   MatProgressSpinnerModule,
-
+  NgxPaginationModule,
+  MatDialogModule,
   NgxUiLoaderModule,
   NgxUiLoaderHttpModule.forRoot({
     showForeground: true,
   }),
+  BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

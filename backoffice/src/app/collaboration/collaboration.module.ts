@@ -6,7 +6,7 @@ import { CollaborationsComponent } from './collaborations/collaborations.compone
 import { AddCollaborationComponent } from './add-collaboration/add-collaboration.component';
 import { OfferComponent } from './offer/offer.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { MapComponent } from './map/map.component';
 import { environment } from '../../environments/environment';
 import { UpdateCollaborationComponent } from './update-collaboration/update-collaboration.component';
@@ -94,6 +94,7 @@ import { AddReservationComponent } from './add-reservation/add-reservation.compo
   MatFormFieldModule,MatInputModule,
   MatButtonModule,
   FormsModule,
+  FormGroup,
   HttpClientModule,
   MatSnackBarModule,
   MatCardModule,

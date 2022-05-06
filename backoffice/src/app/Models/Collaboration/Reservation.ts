@@ -7,6 +7,6 @@ export class Reservation {
     endDateRes:Date;
     nmPalce:Number;
     priceTotal:Number;
-    userRes?:User;
+    userRes :User;
     offersRes? : Offer;
 }

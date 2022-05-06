@@ -9,7 +9,7 @@
     <div class="main-block">
       <div class="center-part">
       </div>
-      <form action="" enctype="multipart/form-data" (ngSubmit)="addCollaboration()"#f="ngForm">
+      <form action="" enctype="multipart/form-data" (ngSubmit)="addCollaboration()" #f="ngForm">
         <div class="title">
           <i class="fas fa-pencil-alt"></i>
           <h2>Register here</h2>
@@ -37,7 +37,7 @@
           <input [(ngModel)]="collaboration.town"type="String" name="name" placeholder="Town" [ngModelOptions]="{standalone: true}">
           <br>
           <p>rate</p>
-          <input [(ngModel)]="collaboration.rate"type="String" name="name" placeholder="rate" [ngModelOptions]="{standalone: true}">
+          <input [(ngModel)]="collaboration.rate"type="number" name="name" placeholder="rate" [ngModelOptions]="{standalone: true}">
           <br>
           <p>Image</p>
           <input (change)="onFileSelected($event)"
