@@ -12,9 +12,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 import { HttpClientModule , HttpClientJsonpModule} from '@angular/common/http';
 import { MbscModule } from '@mobiscroll/angular';
-
+import { ChartsModule } from 'ng2-charts';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { UpdateEventComponent } from './update-event/update-event.component'; 
+import { UpdateEventComponent } from './update-event/update-event.component';
+import { ChartComponent } from './chart/chart.component'; 
 
 
 
@@ -23,6 +24,7 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     EventsComponent,
     AddEventComponentComponent,
     UpdateEventComponent,
+    ChartComponent,
     
 
   ],
@@ -38,7 +40,8 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     HttpClientModule  ,
     MbscModule,
     ReactiveFormsModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    ChartsModule
 
 
   ]

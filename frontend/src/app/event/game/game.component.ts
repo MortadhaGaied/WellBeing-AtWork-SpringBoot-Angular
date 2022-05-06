@@ -3,6 +3,8 @@ import { delay, Observable } from 'rxjs';
 import { GameState, GameStates, GameStore } from './game.store';
 import Tile from './tile';
 import * as confetti from 'canvas-confetti';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -38,7 +40,7 @@ export class GameComponent implements OnInit {
         break;
     }
   }
-  constructor(private store: GameStore) {}
+  constructor(private store: GameStore,private dialogRef:MatDialogRef<GameComponent>,private _router:Router) {}
 
   onWin() {
     this.showConfetti();
@@ -116,5 +118,10 @@ export class GameComponent implements OnInit {
   @HostListener('swipedown', ['$event']) moveBottom() {
     this.store.moveBottom();
     this.store.generateRandomNumber();
+  }
+  close(){
+    this.dialogRef.close();
+    this._router.navigateByUrl("/event-list").then(()=>window.location.reload());
+
   }
 }

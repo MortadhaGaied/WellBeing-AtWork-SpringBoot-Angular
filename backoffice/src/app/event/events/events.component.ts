@@ -77,6 +77,9 @@ export class EventsComponent implements OnInit {
       );
     }
   }
+  cadeau(){
+    this._service.getCadeau().subscribe(e=>console.log(e));
+  }
 
    
   }

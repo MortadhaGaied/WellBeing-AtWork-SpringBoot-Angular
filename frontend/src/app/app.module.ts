@@ -32,7 +32,7 @@ import { environment } from '../environments/environment';
 import { GameComponent } from './event/game/game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as Hammer from 'hammerjs';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -45,6 +45,7 @@ import {
 } from '@angular/platform-browser';
 import { WeatherComponent } from './event/weather/weather.component';
 import { CalendarComponent } from './event/calendar/calendar.component';
+import { FeedbackComponent } from './event/feedback/feedback.component';
 
 class HammerConfig extends HammerGestureConfig {
   override overrides = <any>{
@@ -76,6 +77,7 @@ class HammerConfig extends HammerGestureConfig {
     GameComponent,
     WeatherComponent,
     CalendarComponent,
+    FeedbackComponent,
  
 
   ],
@@ -91,6 +93,7 @@ class HammerConfig extends HammerGestureConfig {
     NgxPrintModule,
     FullCalendarModule,
     HammerModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

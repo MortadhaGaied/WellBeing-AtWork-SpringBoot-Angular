@@ -1,4 +1,9 @@
-
+<h1 mat-dialog-title> GAME</h1>
+<div>
+  <button class="btn btn-primary" style="position: absolute;
+  top: 70px;
+  right: 580px;
+ " (click)="close()">X</button></div>
 <canvas class="w-full h-full absolute z-10"></canvas>
 <ng-container *ngIf="gameState$ | async as gameState">
   <ng-container [ngSwitch]="gameState">
@@ -91,7 +96,3 @@
   </div>
 </div>
 <div *ngIf="infoOpen" (click)="toggleInfo()" class="fixed top-0 left-0 bg-slate-800 bg-opacity-50 z-30 h-full w-full"></div>
-
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>

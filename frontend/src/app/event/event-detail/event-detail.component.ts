@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '../../Models/event/Event';
 import { EventService } from '../event-list/event.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog'
+import { WeatherComponent } from '../weather/weather.component';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
  
 
@@ -13,20 +16,21 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class EventDetailComponent implements OnInit {
   title ="google-maps"
-  starRating = 0; 
-  rating3:number;
-  public form: FormGroup;
+ 
+
   nbrMax:number;
   poursentage :number;
   nbr :number;
   event : Event = new Event();
   idEvent : number;
   idUser :any;
+  
   constructor(private route:ActivatedRoute,private _service:EventService,
-    private router:Router,private fb: FormBuilder) { this.rating3 = 0;
-      this.form = this.fb.group({
-        rating: ['', Validators.required],
-      })}
+    private router:Router, private matDialog:MatDialog) { 
+      
+      
+
+    }
     
   ngOnInit(): void {
     this.idEvent=this.route.snapshot.params['id'];
@@ -34,6 +38,7 @@ export class EventDetailComponent implements OnInit {
     this.event=e;
     this.nbrMax=e.nbrMaxParticipant;
     console.log(this.event);
+    
   });
   this._service.getNbrParticipantByEvent(this.idEvent).subscribe((e)=>{
     this.nbr=e;
@@ -67,6 +72,18 @@ export class EventDetailComponent implements OnInit {
     this.router.navigateByUrl("/event-list")
 
   }
-
+  getWeather(){
+    console.log("DETAAAAAAAAIL:"+this.idEvent);
+    this.matDialog.open(WeatherComponent,{
+      restoreFocus:false,
+      data:{'idev':this.idEvent}
+    });
+  }
+  openFeedback(){
+    this.matDialog.open(FeedbackComponent,{
+      restoreFocus:false,
+      data:{'idev':this.idEvent}
+    });
+  }
 
 }

@@ -43,7 +43,7 @@ export class UpdateEventComponent implements OnInit {
     {
       console.log("modifier");
       this.dialogRef.close();
-      this._router.navigateByUrl("/event/events").then(()=>window.location.reload());
+      this._router.navigateByUrl("/event/calendar").then(()=>window.location.reload());
     })
   }
   selectFile(event: any): void {
@@ -85,5 +85,14 @@ export class UpdateEventComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
+  }
+  deleteEvent(idEvent:number){
+    this.ev.deleteEventById(idEvent)
+    .subscribe(()=>this.ev.getAllEvent().subscribe(
+      ()=>{
+        this.dialogRef.close();
+        this._router.navigateByUrl("/event/calendar").then(()=>window.location.reload());
+      }
+      ));
   }
 }

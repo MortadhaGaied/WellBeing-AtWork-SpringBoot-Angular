@@ -1,0 +1,9 @@
+<p>feedback works!</p>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+    FeedBack: <input formControlName="feedback"  placeholder="Enter feedback">
+    <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+    <button type="submit">Submit</button>
+    
+</form>
+<div>Rating: {{form.value.rating}}</div>
+<button (click)="close()" class="btn btn-primary">close</button>

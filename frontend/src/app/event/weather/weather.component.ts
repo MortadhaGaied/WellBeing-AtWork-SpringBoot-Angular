@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Weather } from '../../Models/event/Weather';
 import { EventService } from '../event-list/event.service';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../Models/event/Event';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-weather',
@@ -18,15 +20,16 @@ export class WeatherComponent implements OnInit {
   weather : Weather=new Weather();
   idEvent : number;
   event : Event =new Event();
-  constructor(private service :EventService,private route:ActivatedRoute) { }
+  constructor(private service :EventService,private route:ActivatedRoute,private dialogRef:MatDialogRef<WeatherComponent>,@Inject(MAT_DIALOG_DATA) public data:any) { }
 
   ngOnInit(): void {
     this.idEvent=this.route.snapshot.params['id'];
-    this.service.getEventById(this.idEvent).subscribe((e)=>{
+console.log("****************************\n"+this.data.idev);
+    this.service.getEventById(this.data.idev).subscribe((e)=>{
       this.event=e;
-      console.log(this.event);
+      console.log("EVEENT:"+this.event);
     });
-    this.service.getWeather(this.idEvent).subscribe(w=>{
+    this.service.getWeather(this.data.idev).subscribe(w=>{
       this.weather=w;
       console.log(this.weather);
       this.date=w.forecastTime;
@@ -60,7 +63,11 @@ export class WeatherComponent implements OnInit {
     this.WeatherData.temp_feels_like = (this.WeatherData.main.feels_like - 273.15).toFixed(0);
   }
   isDay(d:Date):boolean{
-    return (moment(d).hours()<18 && moment(d).hours()>5);
+    return (moment(d).hours()<20 && moment(d).hours()>5);
   }
+  close(){
+    this.dialogRef.close();
+   
 
+  }
 }

@@ -26,9 +26,9 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: "/event/addEvent",
-    title: "Add Event",
-    icon: "bi bi-speedometer2",
+    path: "/event/calendar",
+    title: "Calendar",
+    icon: "bi bi-calendar-month",
     class: "",
     extralink: false,
     submenu: [],

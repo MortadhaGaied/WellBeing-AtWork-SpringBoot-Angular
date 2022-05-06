@@ -7,6 +7,7 @@ import { EventDetailComponent } from './event/event-detail/event-detail.componen
 import { GameComponent } from './event/game/game.component';
 import { WeatherComponent } from './event/weather/weather.component';
 import { CalendarComponent } from './event/calendar/calendar.component';
+import { FeedbackComponent } from './event/feedback/feedback.component';
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'live-stream', component: StreamComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'game',component:GameComponent},
   {path: 'weather/:id',component:WeatherComponent},
   {path: 'calendar',component:CalendarComponent},
+  {path: 'feedback',component:FeedbackComponent},
 
 
 

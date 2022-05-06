@@ -40,10 +40,7 @@ export class SalesRatioComponent implements OnInit {
   constructor() {
     this.salesChartOptions = {
       series: [
-        {
-          name: "2020",
-          data: [20, 40, 50, 30, 40, 50, 30, 30, 40],
-        },
+        
         {
           name: "2022",
           data: [10, 20, 40, 60, 20, 40, 50, 60, 20],

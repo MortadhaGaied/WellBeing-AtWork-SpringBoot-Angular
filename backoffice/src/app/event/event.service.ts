@@ -39,6 +39,14 @@ getEventById(idEvent: number): Observable<Event> {
       this.$eventEmit.emit(this.event);
     });
   }
+  getEventRevenu(idEvent:number): Observable<number>{
+    return this._http.get<number>("http://localhost:8081/Wellbeignatwork/event/rev/"+idEvent);
+
+  }
+  getCadeau(): Observable<any>{
+    return this._http.get<any>("http://localhost:8081/Wellbeignatwork/event/gift");
+
+  }
 
  
 

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from './event.service';
 import { Event } from '../../Models/event/Event';
 import { Router } from '@angular/router';
-
+import { MatDialog } from '@angular/material/dialog'
+import { GameComponent } from '../game/game.component';
 
 @Component({
   selector: 'app-event-list',
@@ -13,7 +14,8 @@ export class EventListComponent implements OnInit {
   popularEvent : Event =new Event();
   search:string;
   constructor(private _service:EventService ,   
-    private router: Router) { }
+    private router: Router,
+    private matDialog:MatDialog) { }
   listEvent : Event[];
   updateId : number;
   
@@ -46,4 +48,9 @@ export class EventListComponent implements OnInit {
     this._service.getEventTags(tag).subscribe(res=>{console.log(res);
       this.listEvent=res});
   }
+  
+  goto2048(){
+    this.matDialog.open(GameComponent,{restoreFocus:false});
+  }
+  
 }

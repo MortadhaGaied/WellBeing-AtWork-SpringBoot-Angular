@@ -763,7 +763,7 @@ public class ActivityServiceImp implements IActivityService {
 
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }
-        if (event.getEndDate().isAfter(LocalDateTime.now())) {
+        if (event.getEndDate().isBefore(LocalDateTime.now())) {
 
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }

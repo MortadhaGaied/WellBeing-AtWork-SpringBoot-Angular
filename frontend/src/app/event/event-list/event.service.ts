@@ -4,6 +4,7 @@ import { InteropObservable, Observable } from 'rxjs';
 import { Event } from '../../Models/event/Event';
 import { take } from 'rxjs/operators';
 import { Weather } from '../../Models/event/Weather';
+import { Feedback } from '../../Models/event/Feedback';
 @Injectable({
   providedIn: 'root'
 })
@@ -70,5 +71,8 @@ getEventTags(tag:string): Observable<Event[]> {
   params=params.set('eventId', idEvent);
   return this._http.get<Weather>("http://localhost:8081/Wellbeignatwork/event/weather/",{params: params});
  }
+ addFeedback(feedback:Feedback,idEvent:number,idUser:number){
+  return this._http.post<Feedback>("http://localhost:8081/Wellbeignatwork/event/AddF/"+idEvent+"/"+idUser,feedback);
+}
 
 }
