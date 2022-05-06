@@ -2,7 +2,7 @@
 <div class="container">
 
 <ul>
-  <li class="booking-card" *ngFor="let item of p  | paginate: { itemsPerPage: 10, currentPage: page }">
+  <li class="booking-card"  *ngFor="let item of p  | paginate: { itemsPerPage: 10, currentPage: page }">
     <img class="booking-card" *ngIf="item.imagesPublicity" [src]=item.imagesPublicity.name />
     <div class="book-container">
       <div class="content">

@@ -46,6 +46,8 @@ import { SideBarOfferComponent } from './side-bar-offer/side-bar-offer.component
 import { PublicityComponent } from './publicity/publicity.component';
 import { AddPublicityComponent } from './add-publicity/add-publicity.component';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+import { ReservationComponent } from './reservation/reservation.component';
+import { AddReservationComponent } from './add-reservation/add-reservation.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
     SideBarOfferComponent,
     PublicityComponent,
     AddPublicityComponent,
+    ReservationComponent,
+    AddReservationComponent,
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,5 @@
+import { AddReservationComponent } from './add-reservation/add-reservation.component';
+import { ReservationComponent } from './reservation/reservation.component';
 import { AddPublicityComponent } from './add-publicity/add-publicity.component';
 import { PublicityComponent } from './publicity/publicity.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
@@ -29,7 +31,8 @@ const routes: Routes = [
     {path: 'quiz/:qid',component: UpdateQuizComponent},{path: 'view-questions/:qid/:title',component: ViewQuizQuestionsComponent},
     {path: 'add-question/:qid/:title',component: AddQuestionComponent},{path: 'profile',component: ProfileComponent},
     {path: 'MenuCollab',component: SideBarCollabComponent},{path: 'Publicity',component: PublicityComponent},
-    {path: 'AddPublicity',component: AddPublicityComponent}
+    {path: 'AddPublicity',component: AddPublicityComponent},{path: 'Reservation',component: ReservationComponent},
+    {path: 'AddReservation',component: AddReservationComponent},
   ],
   },
 ];
