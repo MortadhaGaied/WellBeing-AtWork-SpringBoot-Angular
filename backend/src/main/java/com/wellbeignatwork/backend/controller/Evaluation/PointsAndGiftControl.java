@@ -32,6 +32,9 @@ public class PointsAndGiftControl {
     {
         return intPointsAndGiftService.UserGift(idUser);
     }
+
+
+
     @GetMapping("/PointRanking")
     public Iterable<User> PointRanking()
     {

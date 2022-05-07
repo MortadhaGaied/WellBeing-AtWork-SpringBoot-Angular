@@ -36,9 +36,14 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./forum/forum.module").then((m) => m.ForumModule),
       },
+      {
+        path: "evaluation",
+        loadChildren: () =>
+          import("./evaluation/evaluation.module").then((m) => m.EvaluationModule),
+      },
+
     ],
-  },
-  {
+  },  {
     path: "**",
     redirectTo: "/starter",
   },

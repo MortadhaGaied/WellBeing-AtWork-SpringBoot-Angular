@@ -7,6 +7,7 @@ import com.wellbeignatwork.backend.entity.Collaboration.Profession;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
 import com.wellbeignatwork.backend.entity.Collaboration.Test;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
+import com.wellbeignatwork.backend.entity.Evaluation.Survey;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Event.Subscription;
@@ -128,7 +129,9 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "userRes")
 	Set<Reservation> reservations;
 
-
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Survey> survey;
 
 
 

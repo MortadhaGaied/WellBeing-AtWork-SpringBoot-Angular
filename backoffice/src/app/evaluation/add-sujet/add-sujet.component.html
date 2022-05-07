@@ -1,0 +1,101 @@
+<!--
+<div class="accordion-body">
+  <form class="form-horizontal">
+    <div class="row clearfix">
+      <div class="col-form-label">
+        <label for="nomSujet">Name</label>
+      </div>
+      <div class="col-lg-10" >
+        <div class="form-group">
+          <div class="form-line">
+            <input name="nomSujet" id="nomSujet" type="text" [(ngModel)]="sujet.nomSujet" class="form-control" placeholder="Put the Subject Sujet">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-form-label">
+        <label for="date">Date</label>
+      </div>
+      <div class="col-lg-10" >
+        <div class="form-group">
+          <div class="form-line">
+            <input name="description" id="date" type="text" [ngModel]="sujet.dateAjout | date:'medium'" (ngModelChange)=" sujet.dateAjout = $event" class="form-control" >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-form-label">
+        <label for="description">Description</label>
+      </div>
+      <div class="col-lg-10" >
+        <div class="form-group">
+          <div class="form-line">
+            <input name="description" id="description" type="text" [(ngModel)]="sujet.description" class="form-control" placeholder="Enter The Description">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="col-form-label">
+        <label for="image">Image</label>
+      </div>
+      <div class="col-lg-10" >
+        <div class="form-group">
+          <div class="form-line">
+
+          <input name="description" id="image" type="text" [(ngModel)]="sujet.imageUrl" class="form-control" placeholder="Image Url..">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <button (click)="addSujet()" type="button" class="btn btn-primary">Add</button>
+      <button (click)="Cancel()" type="button" class="btn btn-danger">Cancel</button>
+    </div>
+  </form>
+</div>
+-->
+<div class="header">
+  <h1>Add Something For Vote</h1>
+</div>
+
+<div class="add-task">
+  <div class="content">
+    <form [formGroup]="sujetForm" (submit)="addSujet()">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="nomSujet">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description"   placeholder="description"
+               formControlName="description" >
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label> date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateAjout" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <button
+        [disabled]="sujetForm.invalid"
+        type="submit"
+        mat-raised-button
+        color="primary">
+        Submit
+      </button>
+      <button type="submit"
+              mat-raised-button (click)="Cancel()"
+               color="danger">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>

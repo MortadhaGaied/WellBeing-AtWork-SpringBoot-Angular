@@ -1,0 +1,16 @@
+<p>gifts works!</p>
+
+<app-header>   </app-header>
+<app-side-bar></app-side-bar>
+<input class="form-control" type="text" name="idUser" [(ngModel)]="idUser"  placeholder="Search.." >
+
+
+<button  (click)="UserGift(idUser)">
+   <mat-icon>card_giftcard
+</mat-icon>
+  </button>
+<div mat-button color="accent" class="alert alert-primary" role="alert">
+  {{gifts}}
+</div>
+
+<app-footer></app-footer>

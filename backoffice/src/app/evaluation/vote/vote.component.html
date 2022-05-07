@@ -1,0 +1,84 @@
+
+
+<!--Search For Subject Name-->
+<nav class="py-0"
+>
+<input class="form-control" type="text" name="nomSujet" [(ngModel)]="nomSujet" (ngModelChange)="Search()" placeholder="Search.." >
+</nav>
+
+<!--Ajout Sujet-->
+<div>
+  <h2>Add Something For Vote <button mat-button color="accent" routerLink="/evaluation/addSujet">
+    <mat-icon> add_moderator </mat-icon>
+  </button></h2>
+
+
+</div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Subject Available List</h2>
+  </div>
+  <div class="panel-body">
+    <table  id="example" class="table table-striped table-bordered table-sm row-border hover" cellspacing="0" width="100%">
+
+      <thead>
+        <tr>
+          <th (click)="Sort('nomSujet')" >Name&nbsp;<mat-icon>moving </mat-icon></th>
+          <th (click)="Sort('dateAjout')" >Date&nbsp;<mat-icon>moving </mat-icon></th>
+          <th (click)="Sort('description')" >Description&nbsp;<mat-icon>moving </mat-icon></th>
+          <th>Show-Details Vote</th>
+          <th>Update</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sujet of sujets | orderBy: key:reverse| paginate: { itemsPerPage: 10, currentPage: p }">
+          <td>{{sujet.nomSujet}}</td>
+          <td>{{sujet.dateAjout}}</td>
+          <td>{{sujet.description}}</td>
+               <td>
+                <button mat-button color="accent" routerLink="/evaluation/detail-vote/{{sujet.id}}">
+                  <mat-icon> query_stats </mat-icon>
+                </button>
+              </td>
+              <td>
+                <button mat-button color="warn"  (click)="onOpenDialog(sujet)"><mat-icon>update</mat-icon></button>
+              </td>
+        </tr>
+      </tbody>
+
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

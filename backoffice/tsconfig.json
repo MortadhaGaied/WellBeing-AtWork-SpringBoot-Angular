@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "downlevelIteration": true,
     "module": "es2020",
+    "noImplicitAny": false,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -20,5 +21,6 @@
       "dom"
     ],
     "strictPropertyInitialization": false
+
   }
 }

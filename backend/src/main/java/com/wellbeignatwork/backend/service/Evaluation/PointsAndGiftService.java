@@ -47,7 +47,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
         }
 
 
-        scoreComment = intCommentRepo.NbrCommentByUser(user.getId()) * 10;
+           scoreComment = intCommentRepo.NbrCommentByUser(user.getId()) * 10;
 
 
 
@@ -108,6 +108,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
     public int UserGift(Long idUser) {
         User user = intUserRepo.findById(idUser).orElse(null);
         int a = 0;
+        String msg="";
         float montant = 0;
         if (user.getPointFidelite() <= 299) {
             List<String> x = intGiftUserRepo.Gift300();
@@ -116,19 +117,19 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
             System.out.println("randoml = " + " " + random1);
             if (random1 == 0) {
                 System.out.println("Sorry You Are Not In The Game ");
-
+                msg="Sorry You Are Not In The Game";
             } else {
                 UserGift cd1 = intGiftUserRepo.findById((int) random1).orElse(null);
                 cd1.setIdUser(user);
                 if (cd1.getMontant() > user.getPointFidelite()) {
                     System.out.println("this gift cost= " + cd1.getMontant() + ",And You Have Only" + " " + user.getPointFidelite() + "Points");
                     System.out.println("Sorry Try Again");
-
+                    msg="this gift cost= " + cd1.getMontant() + ",And You Have Only"+ user.getPointFidelite() + "Points";
 
                 } else {
                     user.setPointFidelite((int) (user.getPointFidelite() - cd1.getMontant()));
                     System.out.println("congratulations!");
-
+                    msg="congratulations!";
                 }
                 UserBadge(idUser);
                 intUserRepo.save(user);
@@ -143,16 +144,19 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
             long random1 = random(intGiftUserRepo.Gift500());
             if (random1 == 0) {
                 System.out.println("Sorry You Are Not In The Game ");
-
+                msg="Sorry You Are Not In The Game";
             } else {
                 UserGift cd2 = intGiftUserRepo.findById((int) random1).orElse(null);
                 cd2.setIdUser(user);
                 if (cd2.getMontant() > user.getPointFidelite()) {
                     System.out.println("this gift cost= " + cd2.getMontant() + ",And You Have Only" + " " + user.getPointFidelite() + "Points");
                     System.out.println("Sorry Try Again");
+                    msg="this gift cost= " + cd2.getMontant() + ",And You Have Only"+ user.getPointFidelite() + "Points";
+
                 } else {
                     user.setPointFidelite((int) (user.getPointFidelite() - cd2.getMontant()));
                     System.out.println("congratulations!");
+                    msg="congratulations!";
                     UserBadge(idUser);
                     intUserRepo.save(user);
                     intGiftUserRepo.save(cd2);
@@ -165,6 +169,7 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
             long random3 = random(intGiftUserRepo.Gift1000());
             if (random3 == 0) {
                 System.out.println("Sorry You Are Not In The Game ");
+                msg="Sorry You Are Not In The Game";
             } else {
                 UserGift cd3 = intGiftUserRepo.findById((int) random3).orElse(null);
 
@@ -173,9 +178,12 @@ public class PointsAndGiftService implements IntPointsAndGiftService {
                 if (cd3.getMontant() > user.getPointFidelite()) {
                     System.out.println("this gift cost= " + cd3.getMontant() + ",And You Have Only" + " " + user.getPointFidelite() + "Points");
                     System.out.println("Sorry Try Again");
+                    msg="this gift cost= " + cd3.getMontant() + ",And You Have Only"+ user.getPointFidelite() + "Points";
+
                 } else {
                     user.setPointFidelite((int) (user.getPointFidelite() - cd3.getMontant()));
                     System.out.println("congratulations!");
+                    msg="congratulations!";
                     UserBadge(idUser);
                     intUserRepo.save(user);
                     intGiftUserRepo.save(cd3);

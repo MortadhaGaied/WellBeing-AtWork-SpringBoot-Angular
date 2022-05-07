@@ -2,12 +2,14 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 
 import com.wellbeignatwork.backend.entity.Evaluation.*;
+import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Evaluation.AnswerRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.IntAdviceRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.QuestionRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.SurveyRepo;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.service.UserService.MailService;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -25,6 +27,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class QVTService implements IntQVTService {
+
+    MailService mailService;
+
 
     @Autowired
     private UserRepository MyUserRepo;
@@ -73,8 +78,25 @@ public class QVTService implements IntQVTService {
         questionsRepo.saveAll(questions);
         MysurveyRepo.save(survey);
 
+
+        //Mail
+
+
+        for (Survey s : surveys) {
+            for (User u : s.getUsers()) {
+                mailService.sendMail(u.getEmail(),"Survey","lien de localhost4200/Survey",false);
+
+            }
+        }
+
+
+
         return  questionsRepo.findQuestionsBySurvey(survey);
     }
+
+
+
+
 
     @Override
     public Survey UpdateSurvey(Survey survey) {
@@ -190,10 +212,6 @@ public class QVTService implements IntQVTService {
     }
 
 
-
-
-
-
     @Override
     public String nbreSentiment(){
         String Res="";
@@ -201,9 +219,12 @@ public class QVTService implements IntQVTService {
         return Res="Total Sentiment Positive = "+MyAnswerRepo.nbreByStatus(Sentiment.Positive)+" "
                 +"Total Sentiment Negative = "+MyAnswerRepo.nbreByStatus(Sentiment.Negative)+" "+
                 "Total Sentiment Neutral = "+MyAnswerRepo.nbreByStatus(Sentiment.Neutral)+" "+
-                "Total Sentiment Neutral = "+MyAnswerRepo.nbreByStatus(Sentiment.Neutral)+" "+
                 "Total Sentiment Very negative = "+MyAnswerRepo.nbreByStatus(Sentiment.Very_negative);
     }
+
+
+
+
     public ByteArrayInputStream load() {
         List<Answer> answers = (List<Answer>) MyAnswerRepo.findAll();
 

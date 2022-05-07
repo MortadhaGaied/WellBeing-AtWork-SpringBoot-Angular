@@ -1,0 +1,23 @@
+<div id="section">
+  <h1 id="heading">QVT Survey </h1>
+  <div *ngFor="let surveys of survey">
+    <div >
+     <div>
+       <div >
+        <h1>{{surveys.title}}</h1>
+         <div>{{surveys.description}}</div>
+       </div>
+       <div >
+        {{surveys.questions}}
+       </div>
+     </div>
+      </div>
+    </div>
+</div>
+<div class="Print">
+  <button  mat-fab color="accent" aria-label="Print" [printStyle]="{h1:{'color':'red'}}"
+  printTitle="SurveyPdf" printSectionId="section" ngxPrint> <mat-icon>bookmark</mat-icon></button>
+</div>
+
+
+

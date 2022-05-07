@@ -1,0 +1,41 @@
+<div class="header">
+  <h1>Subject</h1>
+</div>
+
+
+
+
+
+
+<div class="add-task">
+  <div class="content">
+    <form [formGroup]="sujetForm" (submit)="updateSujet()">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="nomSujet">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description"   placeholder="description"
+               formControlName="description" >
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label> date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateAjout" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <button
+        [disabled]="sujetForm.invalid"
+        type="submit"
+        mat-raised-button
+        color="primary">
+        Update
+      </button>
+    </form>
+  </div>
+</div>
+

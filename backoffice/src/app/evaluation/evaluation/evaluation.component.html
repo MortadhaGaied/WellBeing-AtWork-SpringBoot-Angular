@@ -1,0 +1,109 @@
+
+<!--
+here we gonna use cards :
+card 1 : QVT => statistique user Answer chart + button create survey
+card 2 : Votes And Results => chart (id Sujet + count No and count yes) + table users Voters
+card 3 : Points and Gifts => Table : userBadge + gifts + nbr of points
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Row -->
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-3 col-md-6" style=" margin-right: 60px">
+    <!-- Card -->
+    <!-- ---------------------
+                      start Card title
+                  ---------------- -->
+    <div class="card" style="padding-left: 20px;width:270px " >
+      <img
+        class="card-img-top img-responsive"
+        src="assets/images/hi.png"
+        alt="Card image cap"
+        style="width: 200px;height: 150px;"
+      />
+      <div class="card-body">
+        <h4 class="card-title">Quality Of Working Life</h4>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+
+      <button class="btn btn-primary" (click)="Go()" >GO</button>
+      </div>
+    </div>
+    <!-- ---------------------
+                      end Card title
+                  ---------------- -->
+    <!-- Card -->
+  </div>
+  <!-- column -->
+
+<!-- column -->
+<div class="col-lg-3 col-md-6"  style=" margin-right: 60px" >
+  <!-- Card -->
+  <!-- ---------------------
+                    start Card title
+                ---------------- -->
+  <div class="card" style="padding-left: 30px;">
+    <img
+      class="card-img-top img-responsive"
+      src="assets/images/Votes.jpg"
+      alt="Card image cap"
+      style="width: 200px;height: 150px;"
+    />
+    <div class="card-body">
+      <h4 class="card-title">Vote And Results</h4>
+      <p class="card-text">
+        Some quick example text to build on the card title and make up the
+        bulk of the card's content.
+      </p>
+      <button class="btn btn-primary" (click)="GoVote()" >Show Vote Statistics</button>
+    </div>
+  </div>
+
+  <!-- ---------------------
+                    end Card title
+                ---------------- -->
+  <!-- Card -->
+</div>
+  <!-- column -->
+  <div class="col-lg-3 col-md-6" style=" margin-right: 60px" >
+    <!-- Card -->
+    <!-- ---------------------
+                      start Card title
+                  ---------------- -->
+    <div class="card" style="padding-right: 30px;">
+      <img
+        class="card-img-top img-responsive"
+        src="assets/images/Gifts.jpg"
+        alt="Card image cap"
+        style="width: 200px;height: 150px;"
+      />
+      <div class="card-body">
+        <h4 class="card-title">Points And Gifts</h4>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+        <button class="btn btn-primary" (click)="GoGifts()" >Show Points And Gifts</button>
+      </div>
+    </div>
+    <!-- ---------------------
+                      end Card title
+                  ---------------- -->
+    <!-- Card -->
+  </div>
+</div>
+
