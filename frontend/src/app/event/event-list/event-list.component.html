@@ -18,25 +18,20 @@
 							<div class="col-lg-3">
 								<aside class="sidebar static right">
 									<div class="widget">
-										<h4 class="widget-title">Popular Event</h4>
+										<h4 class="widget-title" style="color: #BA55D3;">Popular Event</h4>
+										<p></p>
 										<div class="popular-book">
 											<figure><img [src]='popularEvent.image' alt=""></figure>
 											<div class="book-about">
-												<h6><a href="#" title="">{{popularEvent.eventName}}</a></h6>
+												<h6><a href="#" title="" >{{popularEvent.eventName}}</a></h6>
 												<span>{{popularEvent.eventLocalisation}}</span>
-												<button  (click)=" goto(popularEvent.idEvent)" href="#" title=""><i class="icofont-book-mark"></i></button>
+												<button  (click)=" goto(popularEvent.idEvent)" href="#" title=""><br/><i class="icofont-book-mark"></i></button>
 											</div>
 										</div>
 										
 									</div>
-									<div class="widget">
-										<h4 class="widget-title">Ask Research Question?</h4>
-										<div class="ask-question">
-											<i class="icofont-question-circle"></i>
-											<h6>Ask questions in Q&A to get help from experts in your field.</h6>
-											<a class="ask-qst" href="#" title="">Ask a question</a>
-										</div>
-									</div>
+									
+									
 									<div class="widget">
 										<h4 class="widget-title">Explor Events <a class="see-all" href="#" title="">See All</a></h4>
 										<div class="rec-events bg-purple">
@@ -113,9 +108,6 @@
 
 									<li class="nav-item"><a (click)='sortedByFrais()' class="" href="#pictures" data-toggle="tab">Sorted By Fees</a></li>
 									<li class="nav-item"><a class="" (click)="goto2048()" data-toggle="tab">Game</a></li>
-									<li class="nav-item"><a class="" href="#videos" data-toggle="tab">This Week</a></li>
-									<li class="nav-item"><a class="" href="#videos" data-toggle="tab">This weekend</a></li>
-									<li class="nav-item"><a class="" href="#videos" data-toggle="tab">Next Week</a></li>
 								</ul>
 
 								<div class="main-wraper">
@@ -194,10 +186,10 @@
 												<figure><a  title=""><img [src]='event.image' alt=""></a></figure>
 												<div class="event-meta">
 													<span>Happening Now</span>
-													<h6><a href="event-detail.html" title="">{{event.eventName}}</a></h6>
-													<p>frais :{{event.frais}}</p>
-                                                    <p>Localisation :{{event.eventLocalisation}}</p>
-													<p>Season :{{event.eventSeason}}</p>
+													<h6><b href="event-detail.html" title="" style="color: #DC143C;">{{event.eventName}}</b></h6>
+													<p style="color:#0000CD">frais :{{event.frais}}</p>
+                                                    <p style="color:#0000CD">Localisation :{{event.eventLocalisation}}</p>
+													<p style="color:#0000CD">Season :{{event.eventSeason}}</p>
 
 													<a (click)=" goto(event.idEvent)" class="classic-btn"  title="">Interested</a>
 													<div class="more">

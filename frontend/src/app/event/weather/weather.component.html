@@ -1,3 +1,7 @@
+
+
+
+
 <div id="divWeatherMain"> 
     <div *ngIf="isDay(weather.forecastTime)" class="weatherWidgetRow">
         <i class="fas fa-3x fa-sun sun"></i>  
@@ -14,4 +18,4 @@
     <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">{{event.eventLocalisation}}</div>
     <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weather.humidity.value}}%</div>
 </div>
-<button class="btn btn-primary" (click)="close()">close</button>
+<button class="bi bi-x-lg"(click)="close()"></button>

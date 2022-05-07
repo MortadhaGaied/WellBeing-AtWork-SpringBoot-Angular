@@ -42,7 +42,7 @@ export class EventDetailComponent implements OnInit {
   });
   this._service.getNbrParticipantByEvent(this.idEvent).subscribe((e)=>{
     this.nbr=e;
-    this.poursentage=e/this.nbrMax;
+    this.poursentage=e*100/this.nbrMax;
     console.log(this.poursentage);
     console.log(this.nbr);
   });

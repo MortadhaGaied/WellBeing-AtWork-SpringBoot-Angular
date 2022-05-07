@@ -13,23 +13,24 @@
 						<div id="page-contents" class="row merged20">
 							<div class="col-lg-9">
 								<div class="main-wraper">
-									<h4 class="main-title">{{event.eventName}}</h4>
+									<h4 class="main-title" style="color: #FF6347;">{{event.eventName}}</h4>
 									<figure class="event-detail-img"><img [src]='event.image' alt=""></figure>
 									<div class="event-schedule">
-										<h6>schedule</h6>
+										<h6 style="color: #000080;">schedule</h6>
 										<span>Next date of your event</span>
 										<h5><i class="">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></i> {{event.startDate}} <b>3:45PM</b> GMT+5:30</h5>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></i> {{event.startDate}} <b>3:45PM</b> GMT+5:30</h5>
 										<a (click)="getWeather()" title="">Weather</a>
-										<a class="invite-co" href="#" title=""><i class="icofont-user-alt-1"></i> Invite Co-pesenters & Moderators</a>
 									</div>
 									<div class="event-desc">
-										<h6>Event Description</h6>
-										<p>
-                                            this event in {{event.eventSeason}} costs {{event.frais}}dt , the maximum number is {{event.nbrMaxParticipant}}
+										<h6 style="color: #000080;">Event Description</h6>
+										<p style="color: #4B0082;">
+                                          It's a pleasur to see some information about this event i'm sure that you will enjoy and pass a great time :) :) <br/>
+										this event in {{event.eventSeason}} it costs {{event.frais}}dt , the maximum number of participantsis {{event.nbrMaxParticipant}}  <br/>
+										if you will participate you will never regate !
 										</p>
-										
-										<h6>Event Tags</h6>
+										<br/>
+										<h6 style="color: #000080;">Event Tags</h6>
                                         <div class="tags">
                                             <span><i class="">
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></i> Event Categories:</span>
@@ -40,10 +41,20 @@
                                     </div>								
                                     	</div>
 									<div class="event-loc">
-										<h6>Event Location</h6>
+										<h6 style="color: #000080;">Event Location</h6>
 										<span><i class="icofont-map-pins"></i> {{event.eventLocalisation}}</span>
 										<div class="g-mapfull" style="height: 400px; width: 100%;">
+										<div class="g-mapfull" style="height: 400px; width: 100%;">
 											<div id="map-canvas"></div>
+										</div>
+										<div class="row">
+											<div class="col-lg-6 col-md-6 col-sm-6">
+												<figure><img alt="" src="images/resources/event-small.jpg"></figure>
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-6">
+												<figure><img alt="" src="images/resources/event-small2.jpg"></figure>
+											</div>
+										</div>
 										</div>
 										
 										<a (click)="join()"  title="" class="main-btn">Join Now <i class="icofont-arrow-right"></i></a>
@@ -57,38 +68,30 @@
 										<span>take a quick look how's your event going</span>
 										<div class="statics-event">
 											<ol>
+
+												<li><span>{{event.nbrMaxParticipant}}</span><i> Max Nbr</i></li>
 												<li><span>{{nbr}}</span><i>Participants</i></li>
-												<li><span>536</span><i>Registred</i></li>
-												<li><span>478</span><i>Attendance</i></li>
+												
 											</ol>
 											<div data-progress="tip" class="progress__outer"   attr.data-value="{{poursentage}}">
-											<div class="progress__inner">{{poursentage}}%</div></div>
+											<div class="progress__inner">{{poursentage.toFixed()}}%</div></div>
 											<h6>Give attendance boost!</h6>
 											<a href="#" title="">send Email invitation <i class="icofont-double-right"></i></a>
 										</div>
 									</div>
 									<div class="widget">
-										<h4 class="widget-title">Ask Research Question?</h4>
+										<h4 class="widget-title">Please Send Your FeedBack :)</h4>
 										<div class="ask-question">
 											<i class="icofont-question-circle"></i>
-											<h6>Ask questions in Q&A to get help from experts in your field.</h6>
-											<a (click)="openFeedback()"  title="">Ask a question</a>
+											<h6>Your opinion is important for us</h6>
+											<a (click)="openFeedback()"  title="">FeedBack</a>
 										
 											
 										</div>
 									</div>
 									<div class="widget">
-										<h4 class="widget-title">Explor Events <a class="see-all" href="#" title="">See All</a></h4>
-										<div class="rec-events bg-purple">
-											<i class="icofont-gift"></i>
-											<h6><a title="" href="">BZ University good night event in columbia</a></h6>
-											<img alt="" src="images/clock.png">
-										</div>
-										<div class="rec-events bg-blue">
-											<i class="icofont-microphone"></i>
-											<h6><a title="" href="">The 3rd International Conference 2020</a></h6>
-											<img alt="" src="images/clock.png">
-										</div>
+										
+										
 										
 									<div class="full" id="map">
  
@@ -437,6 +440,7 @@
 	</div><!-- view cart button -->
 	
 	
-	
+	<script src="js/map-init.js"></script>
+	<script src="https://maps.google.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 	
 
