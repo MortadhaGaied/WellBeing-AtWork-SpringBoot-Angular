@@ -48,6 +48,7 @@ import { AddPublicityComponent } from './add-publicity/add-publicity.component';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { ReservationComponent } from './reservation/reservation.component';
 import { AddReservationComponent } from './add-reservation/add-reservation.component';
+import { PdfOffersComponent } from './pdf-offers/pdf-offers.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { AddReservationComponent } from './add-reservation/add-reservation.compo
     AddPublicityComponent,
     ReservationComponent,
     AddReservationComponent,
+    PdfOffersComponent,
   ],
   imports: [
     CommonModule,

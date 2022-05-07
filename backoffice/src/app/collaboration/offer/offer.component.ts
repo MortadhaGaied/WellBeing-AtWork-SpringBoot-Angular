@@ -1,11 +1,13 @@
+import { PdfOffersComponent } from './../pdf-offers/pdf-offers.component';
 import { ShowOffersComponent } from './../show-offers/show-offers.component';
 import { UpdateOfferComponent } from './../update-offer/update-offer.component';
 import { OfferService } from './../../Service/offer.service';
 import { Offer } from './../../Models/Collaboration/offer';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { jsPDF } from "jspdf";
 
 @Component({
   selector: 'app-offer',
@@ -16,7 +18,7 @@ export class OfferComponent implements OnInit {
   o : Offer[];
   Offer : Offer;
   constructor(private OfferService: OfferService,private matDialog:MatDialog,private router : Router ) { }
-
+  @ViewChild('content', { static: false }) el: ElementRef;
   totalLentgh:any;
   page:number = 1;
   ngOnInit(): void {
@@ -85,4 +87,11 @@ export class OfferComponent implements OnInit {
   
       this.matDialog.open(ShowOffersComponent ,{data :Offer});
       }
+
+      openPDF(idCollaboration:number){
+        this.Offer=this.OfferService.sendEventData(idCollaboration);
+        this.matDialog.open(PdfOffersComponent);
+      };
+      
+
 }
