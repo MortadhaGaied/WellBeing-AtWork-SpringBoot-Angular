@@ -29,6 +29,8 @@ export class AddCollaborationComponent implements OnInit {
     town: '',
   }
 file:File;
+captcha : string;
+email : string;
   c: Collaboration[];
 
   title: any;
@@ -39,6 +41,8 @@ file:File;
   constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, router: Router,
     private collaborationService: CollaborationService) { 
           this.initForm();
+          this.captcha = '';
+          this.email = 'homrani.mahdi1998@gmail.com'
     }
 
     
@@ -48,6 +52,10 @@ file:File;
   onFileSelected(event:any){
     this.file=event.target.files[0];
     console.log(this.file)
+  }
+  resolved(captchaResponse:string){
+    this.captcha =captchaResponse;
+    console.log('resolved captcha witch response : ' + this.captcha);
   }
   addCollaboration(){
     Swal.fire('Success ', 'Collaboration Added', 'success');
