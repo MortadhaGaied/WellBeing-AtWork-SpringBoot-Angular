@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NewCollabComponent } from "./collaboration/new-collab/new-collab.component";
 import { ShowCollabsComponent } from "./collaboration/show-collabs/show-collabs.component";
+import { AuthenticationGuard } from "./guards/authentication.guard";
 
 import { FullComponent } from "./layouts/full/full.component";
 
@@ -9,6 +10,7 @@ export const Approutes: Routes = [
   {
     path: "",
     component: FullComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {
@@ -41,17 +43,28 @@ export const Approutes: Routes = [
       {
         path: "collaboration",
         loadChildren: () =>
-          import("./collaboration/collaboration.module").then((m) => m.CollaborationModule),
+          import("./collaboration/collaboration.module").then(
+            (m) => m.CollaborationModule
+          ),
       },
       {
-        path: 'show-collabs',
-        component: ShowCollabsComponent
+        path: "show-collabs",
+        component: ShowCollabsComponent,
       },
       {
-        path: 'add-collab',
-        component: NewCollabComponent
-      }
+        path: "add-collab",
+        component: NewCollabComponent,
+      },
+      {
+        path: "users",
+        loadChildren: () =>
+          import("./user/user.module").then((m) => m.UserModule),
+      },
     ],
+  },
+  {
+    path: "auth",
+    loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
   },
   {
     path: "**",

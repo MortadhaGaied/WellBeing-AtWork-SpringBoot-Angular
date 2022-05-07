@@ -34,7 +34,8 @@
               "src/assets/scss/style.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {

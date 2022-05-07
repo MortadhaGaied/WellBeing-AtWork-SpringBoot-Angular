@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +24,8 @@ public interface UserService {
     User findUserByEmail(String email);
 
     User findUserById(Long id);
+
+    List<User> getAllUsers();
 
     LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
 
