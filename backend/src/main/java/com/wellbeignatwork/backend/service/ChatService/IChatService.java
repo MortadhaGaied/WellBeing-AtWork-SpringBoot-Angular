@@ -33,6 +33,7 @@ public interface IChatService {
     public void unbannUserFromChatRoom(Long userId,Long roomId);
     public Set<User> findUsersByChatroom(Long roomId);
     public void uploadImage(MultipartFile file ,Long roomId);
+    public boolean checkUserBannedFromRoom(Long userID,Long roomID);
 
 
 }

@@ -12,4 +12,7 @@ export interface Room {
   status?: string;
   cap?: string;
   image: string;
+  ownerId: number;
+  creationDate: Date;
+  bannList: number[];
 }

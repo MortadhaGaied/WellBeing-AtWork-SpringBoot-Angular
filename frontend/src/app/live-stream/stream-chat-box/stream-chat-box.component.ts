@@ -26,6 +26,7 @@ export class StreamChatBoxComponent implements OnInit {
       JSON.stringify(localStorage.getItem('user'))
     );
     this.senderId = JSON.parse(localstorageData).id;
+    console.log(this.senderId);
   }
 
   handleClassNameChange(message: any): string {

@@ -21,7 +21,7 @@ import java.util.Set;
 @Service
 public class WsNotificationService {
     private final SimpMessagingTemplate template;
-    private Set<String> listeners = new HashSet<>();
+
 
     @Autowired
     public WsNotificationService(SimpMessagingTemplate template) {
@@ -29,37 +29,29 @@ public class WsNotificationService {
     }
 
 
-    public void add(String sessionId) {
-        listeners.add(sessionId);
-    }
 
-    public void remove(String sessionId) {
-        listeners.remove(sessionId);
-    }
 
     public void dispatch(Notification notification,Long userId) {
-        for (String listener : listeners) {
-            log.info("Sending notification to " + listener);
+        template.convertAndSend(
 
-            SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-            headerAccessor.setSessionId(listener);
+                "/topic2/item/"+userId,
+                notification
+        );
 
-            headerAccessor.setLeaveMutable(true);
-
-            int value = (int) Math.round(Math.random() * 100d);
-            log.info("Sending notification to " + listener);
-            template.convertAndSendToUser(
-                    listener,
-                    "/topic2/item/"+userId,
-                    notification,
-                    headerAccessor.getMessageHeaders());
-        }
     }
+    /*
+  @Scheduled(fixedRate = 3000)
+    public void dispatch2() {
+        Notification notification = new Notification();
+        notification.setBody("azeazeaze");
+        notification.setTitle("azeazeazeaze");
+        template.convertAndSend(
 
-    @EventListener
-    public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
-        String sessionId = event.getSessionId();
-        log.info("Disconnecting " + sessionId + "!");
-        remove(sessionId);
-    }
+                "/topic2/item/"+"2",
+                notification
+        );
+
+    }*/
+
+
 }

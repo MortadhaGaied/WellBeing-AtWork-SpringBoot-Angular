@@ -14,53 +14,72 @@
         ><i class="icofont-edit"></i
       ></a>
       <ul class="new-messages">
-        <li>
-          <figure>
-            <img src="assets/images/resources/user1.jpg" alt="" />
-          </figure>
-          <div class="mesg-info">
-            <span>Ibrahim Ahmed</span>
-            <a href="#" title="">Helo dear i wanna talk to you</a>
+        <li *ngFor="let notification of notificationService.notifications">
+          <div *ngIf="notification.type === 'MESSAGE'">
+            <figure>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                version="1.1"
+                id="Layer_1"
+                heigth="50"
+                width="50"
+                viewBox="0 0 64 64"
+                enable-background="new 0 0 64 64"
+                xml:space="preserve"
+              >
+                <g>
+                  <g>
+                    <g>
+                      <path
+                        fill="#EAEAEA"
+                        d="M32,0c17.7,0,32,14.3,32,32S49.7,64,32,64S0,49.7,0,32S14.3,0,32,0z"
+                      />
+                    </g>
+                  </g>
+                  <g>
+                    <g>
+                      <path
+                        fill="#3E80C1"
+                        d="M38.5,23.1c8.8,0,16,5.4,16,12c0,2.9-1.4,5.6-3.7,7.7c0.3,1,0.8,2.3,1.8,3.5c0.6,0.7,0,1.7-0.9,1.6     c-3-0.3-5.4-1.1-7.1-1.8c-1.9,0.6-4,0.9-6.2,0.9c-8.8,0-16-5.4-16-12C22.5,28.5,29.7,23.1,38.5,23.1z"
+                      />
+                    </g>
+                  </g>
+                  <g>
+                    <g>
+                      <path
+                        fill="#60A1EF"
+                        d="M25.5,16c-8.8,0-16,5.4-16,12c0,2.9,1.4,5.6,3.7,7.7c-0.3,1-0.8,2.3-1.8,3.5c-0.6,0.7,0,1.7,0.9,1.6     c3-0.3,5.4-1.1,7.1-1.8c1.9,0.6,4,0.9,6.2,0.9c8.8,0,16-5.4,16-12C41.5,21.4,34.3,16,25.5,16z"
+                      />
+                    </g>
+                  </g>
+                  <g>
+                    <g>
+                      <circle fill="#FFFFFF" cx="18.5" cy="28" r="2" />
+                    </g>
+                  </g>
+                  <g>
+                    <g>
+                      <circle fill="#FFFFFF" cx="25.5" cy="28" r="2" />
+                    </g>
+                  </g>
+                  <g>
+                    <g>
+                      <circle fill="#FFFFFF" cx="32.5" cy="28" r="2" />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </figure>
+            <div class="mesg-info">
+              <span>Alis wells</span>
+              <a href="#" title="">recommend your post</a>
+            </div>
           </div>
-        </li>
-        <li>
-          <figure>
-            <img src="assets/images/resources/user2.jpg" alt="" />
-          </figure>
-          <div class="mesg-info">
-            <span>Fatima J.</span>
-            <a href="#" title="">Helo dear i wanna talk to you</a>
-          </div>
-        </li>
-        <li>
-          <figure>
-            <img src="assets/images/resources/user3.jpg" alt="" />
-          </figure>
-          <div class="mesg-info">
-            <span>Fawad Ahmed</span>
-            <a href="#" title="">Helo dear i wanna talk to you</a>
-          </div>
-        </li>
-        <li>
-          <figure>
-            <img src="assets/images/resources/user4.jpg" alt="" />
-          </figure>
-          <div class="mesg-info">
-            <span>Saim Turan</span>
-            <a href="#" title="">Helo dear i wanna talk to you</a>
-          </div>
-        </li>
-        <li>
-          <figure>
-            <img src="assets/images/resources/user5.jpg" alt="" />
-          </figure>
-          <div class="mesg-info">
-            <span>Alis wells</span>
-            <a href="#" title="">Helo dear i wanna talk to you</a>
-          </div>
+
+          <hr />
         </li>
       </ul>
-      <a href="#" title="" class="main-btn" data-ripple="">view all</a>
     </div>
     <div class="tab-pane fade" id="notifications">
       <h4><i class="icofont-bell-alt"></i> notifications</h4>
@@ -88,11 +107,28 @@
         <li *ngFor="let notification of notificationService.notifications">
           <div *ngIf="notification.type === 'INVITATION'">
             <figure>
-              <img src="assets/images/resources/user5.jpg" alt="" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 64 64"
+                fill="none"
+              >
+                <path
+                  d="M8.13004 48.89H56.79L60.86 43.36L56.86 37.93L54.29 36.57V19.36L44.21 6.79L34.49 4L24.14 4.93L13.71 12.79L9.07004 23.93L9.29004 37.57L5.07004 39.5L3.79004 44.71L4.86004 47.29L8.13004 48.89Z"
+                  fill="#78B9EB"
+                  id="id_103"
+                />
+                <path
+                  d="M60.91 40.57C60.4777 39.4611 59.7743 38.4783 58.8642 37.7114C57.954 36.9445 56.8662 36.418 55.7 36.18V26.18C55.7 19.8944 53.2031 13.8662 48.7585 9.42155C44.3138 4.97694 38.2857 2.47998 32 2.47998C25.7144 2.47998 19.6862 4.97694 15.2416 9.42155C10.797 13.8662 8.30003 19.8944 8.30003 26.18V36.18C6.51546 36.534 4.92741 37.5417 3.84706 39.0056C2.7667 40.4695 2.27191 42.284 2.45963 44.0936C2.64736 45.9033 3.50406 47.5776 4.86189 48.7886C6.21971 49.9995 7.98078 50.6598 9.80003 50.64H19.74C20.1037 53.6357 21.5516 56.3946 23.8103 58.3957C26.0691 60.3968 28.9823 61.5017 32 61.5017C35.0177 61.5017 37.931 60.3968 40.1897 58.3957C42.4485 56.3946 43.8964 53.6357 44.26 50.64H54.2C55.1543 50.6433 56.0998 50.4577 56.982 50.0938C57.8642 49.73 58.6656 49.1951 59.34 48.52C60.3754 47.5093 61.0797 46.2083 61.36 44.7889C61.6403 43.3694 61.4834 41.8984 60.91 40.57V40.57ZM32 58.5C29.7797 58.4958 27.633 57.7034 25.9426 56.2638C24.2522 54.8243 23.1278 52.8313 22.77 50.64H41.23C40.8722 52.8313 39.7479 54.8243 38.0575 56.2638C36.367 57.7034 34.2203 58.4958 32 58.5ZM57.24 46.38C56.4455 47.1795 55.3671 47.6324 54.24 47.64H9.85003C8.7096 47.64 7.61588 47.1869 6.80947 46.3805C6.00306 45.5741 5.55003 44.4804 5.55003 43.34C5.55003 42.1996 6.00306 41.1058 6.80947 40.2994C7.61588 39.493 8.7096 39.04 9.85003 39.04C10.2391 39.027 10.6079 38.8633 10.8785 38.5833C11.1491 38.3034 11.3002 37.9293 11.3 37.54V26.2C11.3 20.71 13.4809 15.4449 17.3629 11.5629C21.2449 7.68087 26.51 5.49998 32 5.49998C37.49 5.49998 42.7551 7.68087 46.6371 11.5629C50.5191 15.4449 52.7 20.71 52.7 26.2V37.54C52.6996 37.7394 52.7393 37.9368 52.8166 38.1206C52.8938 38.3044 53.0072 38.4708 53.15 38.61C53.4375 38.8865 53.8211 39.0406 54.22 39.04C55.0692 39.0255 55.9021 39.2744 56.604 39.7525C57.306 40.2306 57.8426 40.9144 58.14 41.71C58.4824 42.4876 58.5797 43.3511 58.4189 44.1855C58.2581 45.0198 57.8469 45.7853 57.24 46.38V46.38Z"
+                  fill="#006DF0"
+                  id="id_104"
+                />
+              </svg>
             </figure>
             <div class="mesg-info">
               <span>Alis wells</span>
-              <a href="#" title="">recommend your post</a>
+              <a href="#" title="">{{ notification.title }}</a>
               <div class="container">
                 <div
                   (click)="
@@ -169,7 +205,12 @@
               </div>
             </div>
           </div>
-          <div *ngIf="notification.type !== 'INVITATION'">
+          <div
+            *ngIf="
+              notification.type !== 'INVITATION' &&
+              notification.type !== 'MESSAGE'
+            "
+          >
             <figure>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -46,8 +46,19 @@ export class RoomUserListComponent implements OnInit {
 
   public getAllUsers(): void {
     this.service.getAllUsers().subscribe({
-      next: (users: any[]) => (this.users = users),
+      next: (users: any[]) => {
+        users.splice(users.indexOf(this.currentUser.id));
+        this.users = users;
+      },
     });
+  }
+
+  checkIfUsreBannedFromRoom(chatroom: Room, user: any): boolean {
+    let result = false;
+    if (chatroom.bannList.includes(user.id)) {
+      result = true;
+    }
+    return result;
   }
 
   public checkIfUserIsMember(chatroom: Room, user: any): boolean {
@@ -115,5 +126,35 @@ export class RoomUserListComponent implements OnInit {
         item.className = 'list-group-item';
         break;
     }
+  }
+
+  deleteUserFromRoom(user: any, roomId: number) {
+    this.service.deleteUserFromRoom(user.id, roomId).subscribe({
+      next: (data) => {
+        console.log('deleted successfully ');
+        this.users.splice(this.users.indexOf(user));
+      },
+    });
+  }
+
+  bannUserFromCHatROom(userID: number, roomId: number) {
+    this.service.bannUserFromChatRoom(userID, roomId).subscribe({
+      next: (data) =>
+        Swal.fire({
+          icon: 'success',
+          title: 'user banned successfully',
+          text: 'user got notified for his bann',
+        }),
+    });
+  }
+  unbannUserFromChatROom(userID: number, roomId: number) {
+    this.service.unbannUserFromChatRoom(userID, roomId).subscribe({
+      next: (data) =>
+        Swal.fire({
+          icon: 'success',
+          title: 'user unbanned successfully',
+          text: 'user got notified for his bann',
+        }),
+    });
   }
 }

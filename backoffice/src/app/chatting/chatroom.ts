@@ -11,5 +11,6 @@ export interface Chatroom {
   visible?: boolean;
   status?: string;
   cap?: string;
-  image:string;
+  image: string;
+  ownerId: number;
 }

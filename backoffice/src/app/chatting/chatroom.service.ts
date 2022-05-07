@@ -45,9 +45,42 @@ export class ChatroomService {
     );
   }
 
+  bannUserFromChatRoom(userId: number, roomId: number) {
+    /**
+     * TODO: implement userBann
+     */
+    return this.http.get(
+      "http://localhost:8081/Wellbeignatwork/chatroom/bannUserFromRoom/" +
+        userId +
+        "/" +
+        roomId
+    );
+  }
+
+  unbannUserFromChatRoom(userID: number, roomID: number) {
+    return this.http.get(
+      "http://localhost:8081/Wellbeignatwork/chatroom/unbannUserFromRoom/" +
+        userID +
+        "/" +
+        roomID
+    );
+    /**
+     * TODO: implement user unbann
+     */
+  }
+
   addUserToChatRoom(chatroomId: number, userId: number) {
     return this.http.get(
       this.URI + "/addUserToRoom/" + chatroomId + "/" + userId
+    );
+  }
+
+  checkUserBannedFromRoom(roomId: number, senderId: number) {
+    return this.http.get(
+      "http://localhost:8081/Wellbeignatwork/chatroom/checkUserBannedFromRoom/" +
+        roomId +
+        "/" +
+        senderId
     );
   }
 }

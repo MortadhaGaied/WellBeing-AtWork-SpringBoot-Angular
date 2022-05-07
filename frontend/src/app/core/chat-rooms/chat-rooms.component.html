@@ -28,11 +28,18 @@
       >
         <li>
           <div class="room-avatar">
-            <img src="assets/images/resources/user2.jpg" alt="" />
+            <img *ngIf="room.image" src="{{ room.image }}" alt="" />
+            <img
+              *ngIf="!room.image"
+              src="assets/images/chatroom/chatRoom.jpg"
+              alt=""
+            />
             <span class="status online"></span>
           </div>
-          <span>Sara's Room</span>
-          <a class="join" href="#" title="Join Room">Join</a>
+          <span>{{ room.roomName }}</span>
+          <a routerLink="/room-based" class="join" href="#" title="Join Room"
+            >Join</a
+          >
           <a class="say-hi send-mesg" href="#" title="Send Message"
             ><i class="icofont-facebook-messenger"></i
           ></a>

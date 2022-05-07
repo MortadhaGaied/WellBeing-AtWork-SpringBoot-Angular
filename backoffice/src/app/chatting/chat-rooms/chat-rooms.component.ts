@@ -21,6 +21,7 @@ export class ChatRoomsComponent implements OnInit {
   col2: CollectionReference<DocumentData>;
   totalMessagesCount: number = 0;
   totalRoomsCount: number = 0;
+  data: any = [{ auckfmine: 0 }];
   constructor(private service: ChatroomService, private firestore: Firestore) {
     //this.col = collection(firestore, "items");
     this.col2 = collection(firestore, "top-chatters");
@@ -28,8 +29,10 @@ export class ChatRoomsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.item$.subscribe(data=>console.log(data));
-    //this.getMessagesCount();
+    this.item$.subscribe((data) => {
+      this.topcards[2].title = "id : " + data[0].auckfmine;
+    });
+    this.getMessagesCount();
 
     this.getRoomCount();
     console.log("rooms count : " + this.totalRoomsCount);
@@ -66,7 +69,7 @@ export class ChatRoomsComponent implements OnInit {
     {
       bgcolor: "warning",
       icon: "bi bi-graph-up-arrow",
-      title: "", //this.item$.subscribe() + "",
+      title: this.data[0].toString().split("{") + "",
       subtitle: "top chatter",
     },
   ];

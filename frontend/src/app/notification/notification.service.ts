@@ -41,7 +41,7 @@ export class NotificationService {
   private watchForNotifications() {
     if (this.client) {
       this.client
-        .watch('/user/topic2/item/' + this.user.id)
+        .watch('/topic2/item/' + this.user.id)
         .pipe(
           map((response) => {
             const json = JSON.parse(response.body);

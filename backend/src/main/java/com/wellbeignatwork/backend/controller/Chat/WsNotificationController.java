@@ -20,7 +20,7 @@ public class WsNotificationController {
 
     @MessageMapping("/start/{userID}")
     public void start(@DestinationVariable("userID") Long userID, StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.add(stompHeaderAccessor.getSessionId());
+
         Notification notification = new Notification();
         notification.setBody("test to user "+userID);
         notification.setType(NotificationType.MESSAGE);
@@ -28,8 +28,5 @@ public class WsNotificationController {
         //dispatcher.dispatch(notification,userID);
     }
 
-    @MessageMapping("/stop")
-    public void stop(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.remove(stompHeaderAccessor.getSessionId());
-    }
+
 }

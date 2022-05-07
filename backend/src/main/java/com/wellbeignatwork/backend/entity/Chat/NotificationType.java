@@ -1,5 +1,5 @@
 package com.wellbeignatwork.backend.entity.Chat;
 
 public enum NotificationType {
-    MESSAGE,INVITATION,
+    MESSAGE,INVITATION,ALERT
 }

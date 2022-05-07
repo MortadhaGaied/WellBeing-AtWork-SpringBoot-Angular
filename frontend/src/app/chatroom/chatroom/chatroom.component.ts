@@ -21,7 +21,7 @@ export class ChatroomComponent implements OnInit {
     );
     this.user = JSON.parse(localstorageData);
   }
-
+  initialRoom: Room;
   title = 'chat';
   stompClient: CompatClient;
   message: string;

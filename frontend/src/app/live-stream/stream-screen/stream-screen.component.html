@@ -1,12 +1,27 @@
-<video
-  muted="muted"
-  *ngIf="stream"
-  [srcObject]="stream"
-  autoplay
-  width="400"
-  height="600"
-></video>
-<button (click)="startStream()">start streaming</button>
-<button (click)="close()">stop streaming</button>
-<button (click)="shareScreen()">share screen</button>
-<button (click)="toggleMuted()">toggle muted</button>
+<div style="text-align: center">
+  <video
+    muted="muted"
+    *ngIf="stream"
+    [srcObject]="stream"
+    autoplay
+    width="90%"
+    height="600"
+  ></video>
+</div>
+
+<div class="stream-controls">
+  <ul>
+    <li (click)="startStream()">
+      <i class="icofont-users-alt-3"></i> start streaming
+    </li>
+    <li (click)="toggleMuted()"><i class="icofont-record"></i> Mute</li>
+    <li (click)="close()"><i class="icofont-video"></i> Stop video</li>
+
+    <li (click)="togglechatvisibility()">
+      <i class="icofont-comment"></i> Chat
+    </li>
+    <li (click)="shareScreen()">
+      <i class="icofont-slidshare"></i> Share Screen
+    </li>
+  </ul>
+</div>

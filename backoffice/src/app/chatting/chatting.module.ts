@@ -23,8 +23,10 @@ import {
 } from "ngx-pagination";
 import { MatDialogModule } from "@angular/material/dialog";
 import { AddUserToRoomComponent } from "./add-user-to-room/add-user-to-room.component";
-import { UserSearchFilterPipe } from './pipes/user-search-filter.pipe';
-
+import { UserSearchFilterPipe } from "./pipes/user-search-filter.pipe";
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { ChartsModule } from "ng2-charts";
+import { StatsComponent } from './stats/stats.component';
 @NgModule({
   declarations: [
     ChatRoomsComponent,
@@ -36,6 +38,7 @@ import { UserSearchFilterPipe } from './pipes/user-search-filter.pipe';
     SearchFilterPipe,
     AddUserToRoomComponent,
     UserSearchFilterPipe,
+    StatsComponent,
   ],
   imports: [
     FormsModule,
@@ -49,6 +52,8 @@ import { UserSearchFilterPipe } from './pipes/user-search-filter.pipe';
     NgxPaginationModule,
     DashboardModule,
     MatDialogModule,
+    SweetAlert2Module,
+    ChartsModule,
   ],
   entryComponents: [AddRoomComponent, AddUserToRoomComponent],
 })

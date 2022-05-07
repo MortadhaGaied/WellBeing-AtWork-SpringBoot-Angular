@@ -1,4 +1,4 @@
-<div class="livestream-chat">
+<div id="chatbox" class="livestream-chat">
   <div class="livechat-head">
     <h5><i class="icofont-live-support"></i> Live Chat</h5>
     <div class="more">
@@ -45,7 +45,11 @@
         [ngClass]="handleClassNameChange(message)"
       >
         <figure>
-          <img src="assets/images/resources/userlist-2.jpg" alt="" />
+          <img
+            style="border-radius: 50%"
+            src="assets/images/resources/userlist-2.jpg"
+            alt=""
+          />
         </figure>
         <p>{{ message.content }}</p>
       </li>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import Swal from "sweetalert2";
 import { AddUserToRoomComponent } from "../add-user-to-room/add-user-to-room.component";
 import { Chatroom } from "../chatroom";
 import { ChatroomService } from "../chatroom.service";
@@ -22,7 +23,11 @@ export class RoomUserListComponent implements OnInit {
   roomId: number;
   users: any[];
   deletedButtonLoadingState: Map<any, boolean> = new Map();
-
+  bannButtonLoadingState: Map<any, boolean> = new Map();
+  unbannButtonLoadingState: Map<any, boolean> = new Map();
+  disabled: boolean = false;
+  banned: boolean = false;
+  bannList: any[];
   /**
    * TODO: to get eacht loading button state we must create a hashMap
    *        and populate each Button with its loading state
@@ -43,9 +48,11 @@ export class RoomUserListComponent implements OnInit {
   }
 
   retrieveRoomById(id: number): void {
-    this.service.findRoomById(id).subscribe((room) => {
+    this.service.findRoomById(id).subscribe((room: any) => {
       console.log(room);
       this.room = room;
+      this.bannList = room.bannList;
+      console.log(this.bannList);
       this.retrieveUsersByChatroom(room);
     });
   }
@@ -64,9 +71,11 @@ export class RoomUserListComponent implements OnInit {
   }
 
   populateLoadingData(): void {
-    this.users.forEach((user) =>
-      this.deletedButtonLoadingState.set(user, false)
-    );
+    this.users.forEach((user) => {
+      this.deletedButtonLoadingState.set(user, false);
+      this.bannButtonLoadingState.set(user, false);
+      this.unbannButtonLoadingState.set(user, false);
+    });
   }
 
   onDeleteUserPressed(user: any) {
@@ -76,7 +85,13 @@ export class RoomUserListComponent implements OnInit {
     this.service.bannUserFromRoom(user.id, this.room.id).subscribe({
       next: () => this.retrieveUsersByChatroom(this.room),
       error: (error) => {
-        window.alert(error.message);
+        Swal.fire({
+          icon: "error",
+          title: "failure",
+          text: "Something went wrong!",
+          footer: '<a href="">try again ?</a>',
+        });
+        //window.alert(error.message);
         this.deletedButtonLoadingState.set(user, false);
       },
       complete: () => this.deletedButtonLoadingState.set(user, false),
@@ -91,5 +106,73 @@ export class RoomUserListComponent implements OnInit {
       data: this.room,
     });
     console.log(this.room);
+  }
+
+  bannUserFromChatRoom(user: any, roomID: number) {
+    this.bannButtonLoadingState.set(user, true);
+    this.service.bannUserFromChatRoom(user.id, roomID).subscribe({
+      next: () => {
+        this.retrieveUsersByChatroom(this.room);
+        this.disabled = !this.disabled;
+        Swal.fire("success", "user banned succesfully", "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: "error",
+          title: "failure",
+          text: "Something went wrong!",
+          footer: '<a href="">try again ?</a>',
+        });
+
+        this.bannButtonLoadingState.set(user, false);
+      },
+      complete: () => this.bannButtonLoadingState.set(user, false),
+    });
+  }
+
+  checkUserBannedFromRoom(user: any, roomID: number) {
+    this.service.checkUserBannedFromRoom(roomID, user.id).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.banned = result;
+        //Swal.fire("success", "user banned succesfully", "success");
+      },
+      error: (error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "failure",
+          text: "Something went wrong!",
+          footer: '<a href="">try again ?</a>',
+        });
+
+        this.bannButtonLoadingState.set(user, false);
+      },
+    });
+  }
+
+  unbannUserFromChatRoom(user: any, roomID: number) {
+    this.unbannButtonLoadingState.set(user, true);
+    this.service.unbannUserFromChatRoom(user.id, roomID).subscribe({
+      next: () => {
+        this.retrieveUsersByChatroom(this.room);
+        this.disabled = !this.disabled;
+        Swal.fire("success", "user unbanned succesfully", "success");
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: "error",
+          title: "failure",
+          text: "Something went wrong!",
+          footer: '<a href="">try again ?</a>',
+        });
+
+        this.unbannButtonLoadingState.set(user, false);
+      },
+      complete: () => this.unbannButtonLoadingState.set(user, false),
+    });
   }
 }

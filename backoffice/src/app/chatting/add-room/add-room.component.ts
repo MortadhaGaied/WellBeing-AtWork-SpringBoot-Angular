@@ -24,17 +24,23 @@ export class AddRoomComponent implements OnInit {
     status: "",
     cap: "",
     image: "",
+    ownerId: 0,
   };
 
   image: File;
   isLoading: boolean = false;
+  users: any[] = [];
   constructor(
     private service: ChatroomService,
     private router: Router,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.service.getAllUsers().subscribe((users) => {
+      this.users = users;
+    });
+  }
   onImageSelected(event: any) {
     this.image = event.target.files[0];
     console.log(this.image);

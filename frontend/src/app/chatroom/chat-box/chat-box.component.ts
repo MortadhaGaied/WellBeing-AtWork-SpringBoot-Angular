@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { Message } from '../models/message';
@@ -14,8 +21,9 @@ import { WebsocketsService } from '../services/websockets.service';
   templateUrl: './chat-box.component.html',
   styleUrls: ['./chat-box.component.css'],
 })
-export class ChatBoxComponent implements OnInit {
+export class ChatBoxComponent implements OnInit, OnChanges {
   user: any;
+
   @Input() chatroom: Room;
   @Input() FullMessages: any[] = [];
   @Input() data: Map<Room, Message[]>;
@@ -31,10 +39,24 @@ export class ChatBoxComponent implements OnInit {
     );
     this.user = JSON.parse(localstorageData);
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getUsersByCHatROom();
+    console.log(this.chatroom);
+    this.retrieveDiscussionPerRoom();
+  }
 
   ngOnInit(): void {
+    console.log('this chatroom is ');
+    //this.getUsersByCHatROom();
+  }
+
+  getUsersByCHatROom() {
     this.service.getUsersByRoom(this.chatroom.id).subscribe({
-      next: (users) => (this.chatroom.users = users),
+      next: (users) => {
+        console.log('get usersBy room invoked');
+        this.chatroom.users = users;
+        console.log(this.chatroom);
+      },
       error: (error) =>
         Swal.fire({
           icon: 'error',
@@ -75,7 +97,29 @@ export class ChatBoxComponent implements OnInit {
     return result;
   }
   openAddUserToRoomDialog() {
-    this.dialog.open(RoomUserListComponent, { data: this.chatroom });
+    //this.getUsersByCHatROom();
+    this.dialog.open(RoomUserListComponent, {
+      data: this.chatroom,
+      height: '700px',
+      width: '600px',
+    });
   }
   // saveDiscussion();
+
+  checkUserBanned() {
+    let result = false;
+    if (this.chatroom.bannList.includes(this.user.id)) {
+      result = true;
+    }
+    return result;
+  }
+
+  retrieveDiscussionPerRoom() {
+    this.service.retrieveDiscussionPerRoom(this.chatroom.id).subscribe({
+      next: (messages) => {
+        this.data.set(this.chatroom, [...messages]);
+        console.log(messages);
+      },
+    });
+  }
 }

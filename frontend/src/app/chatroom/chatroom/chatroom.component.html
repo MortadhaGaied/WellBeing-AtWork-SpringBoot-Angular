@@ -1,4 +1,8 @@
 <app-header></app-header>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 <main class="content">
   <div class="container p-0">
     <h1 class="h3 mb-3">Messages</h1>
@@ -24,7 +28,9 @@
             class="list-group-item list-group-item-action border-0"
             *ngFor="let channel of chatRooms | roomSearchFilter: searchFilter"
           >
-            <div class="badge bg-success float-right">5</div>
+            <div *ngIf="channel.messages" class="badge bg-success float-right">
+              {{ channel.messages.length }}
+            </div>
             <div class="d-flex align-items-start">
               <img
                 *ngIf="channel.image"
@@ -45,7 +51,49 @@
               <div class="flex-grow-1 ml-3">
                 {{ channel.roomName }}
                 <div class="small">
-                  <span class="fas fa-circle chat-online"></span> Online
+                  <span
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      version="1.1"
+                      id="Layer_1"
+                      heigth="8"
+                      width="8"
+                      viewBox="0 0 345 345"
+                      enable-background="new 0 0 345 345"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <circle
+                          fill="#1D912F"
+                          cx="172.5"
+                          cy="172.5"
+                          r="172.5"
+                        />
+                        <circle
+                          fill="#29CB41"
+                          cx="172.5"
+                          cy="172.5"
+                          r="157.5"
+                        />
+                      </g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g></svg
+                  ></span>
+                  Online
                 </div>
               </div>
             </div>
@@ -53,6 +101,7 @@
 
           <hr class="d-block d-lg-none mt-1 mb-0" />
         </div>
+
         <div class="col-12 col-lg-7 col-xl-9">
           <app-chat-box
             [chatroom]="clickedRoom"

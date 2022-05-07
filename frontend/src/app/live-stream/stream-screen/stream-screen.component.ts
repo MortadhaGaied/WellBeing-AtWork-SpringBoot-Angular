@@ -17,6 +17,13 @@ export class StreamScreenComponent implements OnInit {
   data: any;
   stream: MediaStream | undefined;
   peer: RTCPeerConnection;
+  visible: boolean = true;
+  togglechatvisibility() {
+    document
+      .getElementById('chatbox')
+      ?.setAttribute('hidden', this.visible.toString());
+    this.visible = !this.visible;
+  }
 
   toggleMuted() {
     this.muted = !this.muted;

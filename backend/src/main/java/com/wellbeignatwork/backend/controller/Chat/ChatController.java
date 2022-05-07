@@ -132,7 +132,11 @@ public class ChatController {
 
     }
 
-
+@GetMapping("/chatroom/checkUserBannedFromRoom/{roomId}/{senderId}")
+@ResponseBody
+public boolean checkUserBannedFromRoom(@PathVariable Long roomId,@PathVariable Long senderId){
+        return this.chatRoomService.checkUserBannedFromRoom(senderId,roomId);
+}
 
     @MessageMapping("/chat/oneToOne/{senderId}/{recieverId}/{roomUniqueKey}")
     public void oneToOneChat(@Payload Message message, @Valid @DestinationVariable Long senderId

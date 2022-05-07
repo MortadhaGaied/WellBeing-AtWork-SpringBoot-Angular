@@ -32,6 +32,7 @@ export class EditComponent implements OnInit {
     status: "",
     cap: "",
     image: "",
+    ownerId: 0,
   };
   roomId: number;
   file: File;
@@ -39,8 +40,11 @@ export class EditComponent implements OnInit {
   imageBase64Data: string | ArrayBuffer | null = "";
   //perform loading action while fetching data from the server
   isLoading: boolean = false;
-
+  users: any[] = [];
   ngOnInit(): void {
+    this.service.getAllUsers().subscribe((users) => {
+      this.users = users;
+    });
     //pass the room data from the parent component to the child using material dialog
     this.room = this.data;
   }

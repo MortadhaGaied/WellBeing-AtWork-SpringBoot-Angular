@@ -92,8 +92,37 @@
                   class="spinner-border text-danger"
                   role="status"
                 ></div>
-                <div class="btn btn-outline-danger">
-                  <i class="fas fa-ban" style="width: 25; height: 25"></i>
+                <div
+                  *ngIf="!bannList.includes(user.id)"
+                  (click)="bannUserFromChatRoom(user, room.id)"
+                  class="btn btn-outline-danger"
+                >
+                  <i
+                    *ngIf="bannButtonLoadingState.get(user) == false"
+                    class="fas fa-ban"
+                    style="width: 25; height: 25"
+                  ></i>
+                  <div
+                    *ngIf="bannButtonLoadingState.get(user) == true"
+                    class="spinner-border text-danger"
+                    role="status"
+                  ></div>
+                </div>
+                <div
+                  *ngIf="bannList.includes(user.id)"
+                  (click)="unbannUserFromChatRoom(user, room.id)"
+                  class="btn btn-outline-success"
+                >
+                  <i
+                    *ngIf="unbannButtonLoadingState.get(user) == false"
+                    class="fas fa-ban"
+                    style="width: 25; height: 25"
+                  ></i>
+                  <div
+                    *ngIf="unbannButtonLoadingState.get(user) == true"
+                    class="spinner-border text-success"
+                    role="status"
+                  ></div>
                 </div>
               </div>
             </td>

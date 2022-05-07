@@ -25,14 +25,15 @@
         <div class="card-body p-1-9 p-xl-5">
           <div class="mb-4">
             <h3 class="h4 mb-0">Room Name : {{ currentRoom.roomName }}</h3>
-            <span class="text-primary">Owner: </span>
+            <span class="text-primary">Owner: {{ currentRoom.ownerId }} </span>
           </div>
           <ul class="list-unstyled mb-4">
             <li class="mb-3">uniqueKey: {{ currentRoom.uniqueKey }}</li>
             <li class="mb-3">max bad words : {{ currentRoom.MaxBadWords }}</li>
             <li class="mb-3">room capacity : {{ currentRoom.capacity }}</li>
             <li class="mb-3">
-              average responding time : {{ currentRoom.averageResponseTime }}
+              average responding time :
+              {{ currentRoom.averageResponseTime }} seconds
             </li>
           </ul>
           <ul class="social-icon-style2 ps-0">
@@ -78,7 +79,7 @@
     <div class="col-lg-8">
       <div class="ps-lg-1-6 ps-xl-5">
         <app-room-user-list></app-room-user-list>
-        <app-sales-ratio></app-sales-ratio>
+        <app-stats></app-stats>
       </div>
     </div>
   </div>

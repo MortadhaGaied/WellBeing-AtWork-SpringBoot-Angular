@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Message } from '@stomp/stompjs';
+
 import { catchError, retry, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Message } from '../models/message';
 import { Room } from '../models/room';
 
 @Injectable({
@@ -54,8 +55,9 @@ export class ChatroomServiceService {
   }
 
   getUsersByRoom(roomId: number) {
+    console.log('getting users by chatroom');
     return this.http.get<any[]>(
-      'http://localhost:8081/Wellbeignatwork/getUsersByRoom/' + roomId
+      'http://localhost:8081/Wellbeignatwork/chatroom/getUsersByRoom/' + roomId
     );
   }
   getAllUsers() {
@@ -78,5 +80,45 @@ export class ChatroomServiceService {
     return this.http
       .get(redirectionLink + '/' + senderId)
       .pipe(catchError(this.handleError));
+  }
+
+  deleteUserFromRoom(userId: number, roomId: number) {
+    return this.http.get(
+      'http://localhost:8081/Wellbeignatwork/chatroom/removeUserFromRoom/' +
+        roomId +
+        '/' +
+        userId
+    );
+  }
+
+  bannUserFromChatRoom(userId: number, roomId: number) {
+    /**
+     * TODO: implement userBann
+     */
+    return this.http.get(
+      'http://localhost:8081/Wellbeignatwork/chatroom/bannUserFromRoom/' +
+        userId +
+        '/' +
+        roomId
+    );
+  }
+
+  retrieveDiscussionPerRoom(roomId: number) {
+    return this.http.get<Message[]>(
+      'http://localhost:8081/Wellbeignatwork/chatroom/retrieve-discussion/' +
+        roomId
+    );
+  }
+
+  unbannUserFromChatRoom(userID: number, roomID: number) {
+    return this.http.get(
+      'http://localhost:8081/Wellbeignatwork/chatroom/unbannUserFromRoom/' +
+        userID +
+        '/' +
+        roomID
+    );
+    /**
+     * TODO: implement user unbann
+     */
   }
 }

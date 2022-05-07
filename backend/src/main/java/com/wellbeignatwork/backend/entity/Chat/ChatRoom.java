@@ -3,6 +3,8 @@ package com.wellbeignatwork.backend.entity.Chat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wellbeignatwork.backend.entity.User.User;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,7 +24,7 @@ public class ChatRoom {
     private String roomName;
     //this key helps creating unique rooms for one to one chatting
     private String uniqueKey;
-    private int MaxBadWords;
+    private int MaxBadWords=10;
     private int capacity;
     private boolean isVisible;
     @Enumerated(EnumType.STRING)
@@ -33,6 +35,9 @@ public class ChatRoom {
     private int ownerId;
     @Temporal(TemporalType.DATE)
     private Date creationDate;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ElementCollection
+    private List<Long> bannList;
 
 
     @JsonIgnore

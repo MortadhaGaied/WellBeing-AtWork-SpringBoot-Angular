@@ -86,10 +86,8 @@ public class ChatRoomService implements IChatService {
     }
 
     public ChatRoom updateChatRoom(ChatRoom chatRoom) {
+        return chatRoomRepository.save(chatRoom);
 
-        return chatRoomRepository.findById(chatRoom.getId())
-                .map(chatRoomRepository::save)
-                .orElseThrow(() -> new ResourceNotFoundException("room not found"));
 
     }
 
@@ -179,8 +177,8 @@ public class ChatRoomService implements IChatService {
                     data.put(chatRoom.getRoomName(), Long.toString((long) score));
                 }
 
-               /* Firestore dbFirestore = FirestoreClient.getFirestore();
-                dbFirestore.collection("Room-Response-Time").document("room-responseRate").set(data)*/
+                Firestore dbFirestore = FirestoreClient.getFirestore();
+                dbFirestore.collection("Room-Response-Time").document("room-responseRate").set(data);
             }
         });
 
@@ -317,6 +315,39 @@ public class ChatRoomService implements IChatService {
                 .findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("chatRoom with id :" + roomId + "does not exist"));
 
+        //check if sender is banned or is a member in this chatroom
+        if(chatRoom.getBannList().contains(sender.getId())){
+            log.info("bann list called");
+            Notification notification = new Notification();
+            notification.setTitle("banned");
+            notification.setType(NotificationType.ALERT);
+            notification.setBody("you cant send messages you are banned  : "+chatRoom.getRoomName());
+            notification.setSentAt(DateTime.now());
+            //notification.setData(String.format("{'roomID':%s}",chatRoom.getId()));
+            WSnotificationService.dispatch(notification,sender.getId());
+            return;
+        }
+        /*
+        if(chatRoom.getUsers().isEmpty()){
+            return;
+        }*/
+        //check if sender does not exist in the room
+        if(!chatRoom.getUsers().contains(sender)){
+            log.info("you must join the room ");
+            Notification notification = new Notification();
+            notification.setTitle(chatRoom.getRoomName());
+            notification.setType(NotificationType.ALERT);
+            notification.setBody("you must join the room to be able to chat  : ");
+            notification.setSentAt(DateTime.now());
+            WSnotificationService.dispatch(notification,sender.getId());
+            return;
+        }
+
+       // log.info();
+        /*if(!chatRoom.getUsers().contains(sender)){
+            throw new MessagingException("user not found in room userList");
+        }*/
+
         int badWordsCount = sender.getBadWordsCount();
         log.info("bad words for user " + sender.getDisplayName() + "are " + sender.getBadWordsCount());
         if (message.getContent().contains("**")) {
@@ -335,6 +366,7 @@ public class ChatRoomService implements IChatService {
         //send the message to the message broker to be handled and sent the client
         message.setChatroom(chatRoom);
         message.setSender(sender);
+        messageRepository.save(message);
         messagingTemplate.convertAndSend("/topic2/room/" + roomId, message);
 
         //subscribe all users in the chatRoom to the specific notification topic
@@ -345,7 +377,8 @@ public class ChatRoomService implements IChatService {
             }
 
         });
-        for (User user:helperFunction(chatRoom,sender)){
+        for (User user:chatRoom.getUsers()){
+            log.info("sending notification");
             Notification notification = new Notification();
             notification.setType(NotificationType.MESSAGE);
             notification.setBody("new Message from room : "+chatRoom.getRoomName());
@@ -481,10 +514,18 @@ public class ChatRoomService implements IChatService {
                 .findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("room not found"));
         //break the association user-room
-        room.getUsers().remove(user);
+        //room.getUsers().remove(user);
+
+        //add the user to the bannList
+        room.getBannList().add(user.getId());
         chatRoomRepository.save(room);
 
-
+        Notification wsnotification = new Notification();
+        wsnotification.setType(NotificationType.ALERT);
+        wsnotification.setTitle("banned");
+        wsnotification.setBody("you got banned from  "+room.getRoomName());
+        wsnotification.setSentAt(DateTime.now());
+        WSnotificationService.dispatch(wsnotification,userId);
         //sendNotification
         //prepare the request
         PushNotificationRequest notification = new PushNotificationRequest();
@@ -534,8 +575,14 @@ public class ChatRoomService implements IChatService {
         //re-create the association user-room
         user.setBadWordsCount(0);
         user.setBannStartDate(null);
-        room.getUsers().add(user);
+        room.getBannList().remove(userId);
+        Notification notification1 = new Notification();
+        notification1.setType(NotificationType.ALERT);
+        notification1.setBody("your bann period has been passed now you can go back to tchat in room :  " + room.getRoomName());
+        notification1.setTitle("Ban Ended");
+        notification1.setSentAt(DateTime.now());
         chatRoomRepository.save(room);
+        WSnotificationService.dispatch(notification1,userId);
 
         //sendNotification
         //prepare the request
@@ -569,6 +616,17 @@ public class ChatRoomService implements IChatService {
             }
             return chatRoom;
         }).orElseThrow(() -> new ResourceNotFoundException("room with id " + roomId + " not found"));
+    }
+
+    @Override
+    public boolean checkUserBannedFromRoom(Long userID, Long roomID) {
+        boolean result = false;
+        User user = userRepository.findById(userID).orElseThrow(()->new ResourceNotFoundException("user not found"));
+        ChatRoom room = chatRoomRepository.findById(roomID).orElseThrow(()->new ResourceNotFoundException("room not found"));
+        if (room.getBannList().contains(userID)){
+            result=true;
+        }
+        return false;
     }
 
 

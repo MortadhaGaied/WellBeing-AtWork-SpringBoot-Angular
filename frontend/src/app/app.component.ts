@@ -15,12 +15,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    private notificationService: NotificationService
+    public notificationService: NotificationService
   ) {}
   ngOnInit(): void {
     this.firebaseService.requestPermission();
     this.firebaseService.listen();
     this.notificationService.connectClicked();
-    this.notificationService.startClicked();
+    //this.notificationService.startClicked();
   }
 }
