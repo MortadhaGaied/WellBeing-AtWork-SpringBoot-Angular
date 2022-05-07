@@ -41,6 +41,7 @@ import { PublicityComponent } from './core/publicity/publicity.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
+import { QRCodeModule } from 'angularx-qrcode';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +75,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     MatFormFieldModule,MatInputModule,
     MatButtonModule,
+    QRCodeModule,
     FormsModule,
     HttpClientModule,
     MatSnackBarModule,

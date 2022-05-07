@@ -8,6 +8,9 @@
       <div class="content">
         <button class="btn">Réserver</button>
       </div>
+    <div>
+      <qrcode [qrdata]=item.title  [width]="50" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
     </div>
     <div class="informations-container">
       <h2 class="title">{{ item.title }}</h2>
