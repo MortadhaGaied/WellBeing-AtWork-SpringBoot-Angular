@@ -43,6 +43,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { QRCodeModule } from 'angularx-qrcode';
 import { WeatherApiComponent } from './core/weather-api/weather-api.component';
+import { ChatbotComponent } from './core/chatbot/chatbot.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { WeatherApiComponent } from './core/weather-api/weather-api.component';
     StartComponent,
     PublicityComponent,
     WeatherApiComponent,
+    ChatbotComponent,
   ],
   imports: [
     BrowserModule,

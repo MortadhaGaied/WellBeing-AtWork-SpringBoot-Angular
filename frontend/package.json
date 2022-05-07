@@ -24,6 +24,7 @@
     "@sweetalert2/themes": "^5.0.10",
     "angularx-qrcode": "^13.0.14",
     "bootstrap": "^5.1.3",
+    "chart.js": "^3.7.1",
     "ngx-pagination": "^5.1.1",
     "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.4.0",
