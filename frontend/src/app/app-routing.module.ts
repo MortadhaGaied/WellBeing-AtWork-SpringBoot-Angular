@@ -1,3 +1,4 @@
+import { WeatherApiComponent } from './core/weather-api/weather-api.component';
 import { InstructionsComponent } from './core/instructions/instructions.component';
 import { LoadQuizComponent } from './core/load-quiz/load-quiz.component';
 import { QuizComponent } from './core/quiz/quiz.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'quiz/:catId',component: LoadQuizComponent},
   {path: 'quiz/instructions/:qid',component: InstructionsComponent},
   {path: 'quiz/start/:qid',component: StartComponent},
+  {path: 'weather',component: WeatherApiComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' },
 
 ];

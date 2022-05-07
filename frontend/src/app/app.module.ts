@@ -42,6 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { QRCodeModule } from 'angularx-qrcode';
+import { WeatherApiComponent } from './core/weather-api/weather-api.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     LoadQuizComponent,
     StartComponent,
     PublicityComponent,
+    WeatherApiComponent,
   ],
   imports: [
     BrowserModule,
