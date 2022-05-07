@@ -108,9 +108,9 @@ public class MessageService implements IMessageService {
             pushNotificationService.sendPushNotificationToALlUsers("weekly top chatters",res.toString());
             //send data to firebase
 
-           /* Firestore dbFirestore = FirestoreClient.getFirestore();
+            Firestore dbFirestore = FirestoreClient.getFirestore();
              dbFirestore.collection("top-chatters").document("top-chatters").set(data);
-            */
+
         }
 
 
@@ -148,6 +148,11 @@ public class MessageService implements IMessageService {
             pushNotificationService.sendPushNotificationToALlUsers("all Messages are Cleaned from database and moved to our archives","weekly db cleaning");
             log.info("all Messages are Cleaned from database and moved to firebase cloud DB");
         }
+    }
+
+    @Override
+    public Integer getAllMessages() {
+        return messageRepository.findAll().size();
     }
 
 

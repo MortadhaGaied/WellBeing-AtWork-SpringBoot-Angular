@@ -73,7 +73,11 @@
         </div>
       </li>
       <li class="go-live">
-        <a routerLink="/live-stream" title="Go Live" data-toggle="tooltip">
+        <a
+          (click)="onNavigateToStreamClicked()"
+          title="Go Live"
+          data-toggle="tooltip"
+        >
           <i>
             <svg
               fill="#f00"
@@ -109,7 +113,7 @@
         </a>
       </li>
       <li>
-        <a class="mesg-notif" href="#" title="Messages" data-toggle="tooltip">
+        <a class="mesg-notif" title="Messages" data-toggle="tooltip">
           <i>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -252,5 +256,9 @@
         </ul>
       </li>
     </ul>
+  </div>
+  <div class="side-slide">
+    <span class="popup-closed"><i class="icofont-close"></i></span>
+    <app-notifications-popup></app-notifications-popup>
   </div>
 </header>

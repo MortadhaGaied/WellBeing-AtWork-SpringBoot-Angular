@@ -4,7 +4,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/chat/chat-rooms",
     title: "chatRooms",
-    icon: "bi bi-speedometer2",
+    icon: "bi bi-chat",
     class: "",
     extralink: false,
     submenu: [],

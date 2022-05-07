@@ -1,35 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
-  CommonModule, LocationStrategy,
-  PathLocationStrategy
-} from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
+  CommonModule,
+  LocationStrategy,
+  PathLocationStrategy,
+} from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { Routes, RouterModule } from "@angular/router";
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { FullComponent } from './layouts/full/full.component';
+import { FullComponent } from "./layouts/full/full.component";
 
+import { NavigationComponent } from "./shared/header/navigation.component";
+import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 
-import { NavigationComponent } from './shared/header/navigation.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { Approutes } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { SpinnerComponent } from "./shared/spinner.component";
 
-import { Approutes } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SpinnerComponent } from './shared/spinner.component';
-
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { provideFirebaseApp, getApp, initializeApp } from "@angular/fire/app";
+import { getFirestore, provideFirestore } from "@angular/fire/firestore";
+import { environment } from "../environments/environment";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 1,
   wheelPropagation: true,
-  minScrollbarLength: 20
+  minScrollbarLength: 20,
 };
 
 @NgModule({
@@ -48,19 +51,24 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
-    PerfectScrollbarModule
+    RouterModule.forRoot(Approutes, {
+      useHash: false,
+      relativeLinkResolution: "legacy",
+    }),
+    PerfectScrollbarModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [
     {
       provide: LocationStrategy,
-      useClass: PathLocationStrategy
+      useClass: PathLocationStrategy,
     },
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

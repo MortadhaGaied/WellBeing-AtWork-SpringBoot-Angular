@@ -1,0 +1,70 @@
+<div id="chatbox" class="livestream-chat">
+  <div class="livechat-head">
+    <h5><i class="icofont-live-support"></i> Live Chat</h5>
+    <div class="more">
+      <div class="more-post-optns">
+        <i class="">
+          <svg
+            class="feather feather-more-horizontal"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            viewBox="0 0 24 24"
+            height="24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle r="1" cy="12" cx="12" />
+            <circle r="1" cy="12" cx="19" />
+            <circle r="1" cy="12" cx="5" /></svg
+        ></i>
+        <ul>
+          <li>
+            <i class="icofont-user-alt-3"></i> Participants
+            <span>How many user are live with you</span>
+          </li>
+          <li>
+            <i class="icofont-external-link"></i> Popout chat
+            <span>Open chat in new tab</span>
+          </li>
+          <li>
+            <i class="icofont-ban"></i> Hide Chat
+            <span>Hide chat from Your side</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="chat-content">
+    <div class="date">Wednesday 25, March</div>
+    <ul class="chatting-area max-height">
+      <li
+        *ngFor="let message of messages"
+        [ngClass]="handleClassNameChange(message)"
+      >
+        <figure>
+          <img
+            style="border-radius: 50%"
+            src="assets/images/resources/userlist-2.jpg"
+            alt=""
+          />
+        </figure>
+        <p>{{ message.content }}</p>
+      </li>
+    </ul>
+  </div>
+  <form
+    class="text-bottom"
+    (ngSubmit)="sendMessage(message)"
+    #heroForm="ngForm"
+  >
+    <input
+      style="position: fixed; bottom: 20px"
+      placeholder="wirte someting"
+      [(ngModel)]="message"
+      [ngModelOptions]="{ standalone: true }"
+    />
+  </form>
+</div>

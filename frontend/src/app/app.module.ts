@@ -19,7 +19,27 @@ import { RecentBlogComponent } from './core/recent-blog/recent-blog.component';
 import { CompleteProfileComponent } from './core/complete-profile/complete-profile.component';
 import { StreamComponent } from './live-stream/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { StreamScreenComponent } from './live-stream/stream-screen/stream-screen.component';
+import { StreamChatBoxComponent } from './live-stream/stream-chat-box/stream-chat-box.component';
+import { StreamConfigBoxComponent } from './live-stream/stream-config-box/stream-config-box.component';
+import { FormsModule } from '@angular/forms';
+import { MockLoginComponent } from './live-stream/mock-login/mock-login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { StreamViwerScreenComponent } from './live-stream/stream-viwer-screen/stream-viwer-screen.component';
+import { ChatroomsComponent } from './chatroom/chatrooms/chatrooms.component';
+import { ChatroomComponent } from './chatroom/chatroom/chatroom.component';
+import { AddRoomComponent } from './chatroom/add-room/add-room.component';
+import { ChatBoxComponent } from './chatroom/chat-box/chat-box.component';
+import { RoomSearchFilterPipe } from './live-stream/pipes/room-search-filter.pipe';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { environment } from '../environments/environment';
+import { initializeApp } from 'firebase/app';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RoomUserListComponent } from './chatroom/room-user-list/room-user-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UserSeachFilterPipe } from './chatroom/pipes/user-seach-filter.pipe';
+import { NotificationsPopupComponent } from './notification/notifications-popup/notifications-popup.component';
+initializeApp(environment.firebase);
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,13 +58,31 @@ import { AppRoutingModule } from './app-routing.module';
     LinksComponent,
     RecentBlogComponent,
     CompleteProfileComponent,
-    StreamComponent
+    StreamComponent,
+    StreamScreenComponent,
+    StreamChatBoxComponent,
+    StreamConfigBoxComponent,
+    MockLoginComponent,
+    StreamViwerScreenComponent,
+    ChatroomsComponent,
+    ChatroomComponent,
+    AddRoomComponent,
+    ChatBoxComponent,
+    RoomSearchFilterPipe,
+    RoomUserListComponent,
+    UserSeachFilterPipe,
+    NotificationsPopupComponent,
   ],
   imports: [
+    MatDialogModule,
+    BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    CarouselModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

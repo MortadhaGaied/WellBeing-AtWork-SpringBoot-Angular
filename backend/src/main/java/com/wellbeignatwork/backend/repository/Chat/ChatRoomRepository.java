@@ -13,5 +13,6 @@ import java.util.List;
 public interface ChatRoomRepository extends JpaRepository<ChatRoom,Long> {
     ChatRoom findByUniqueKey(String uniqueKey);
     List<ChatRoom> findByRoomNameIsNull();
+    ChatRoom findChatRoomById(Long id);
 
 }

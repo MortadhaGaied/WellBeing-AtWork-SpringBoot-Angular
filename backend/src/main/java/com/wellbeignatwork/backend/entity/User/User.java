@@ -125,7 +125,7 @@ public class User implements Serializable {
 	private Set<Test> TestEmployee;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
-	@OneToMany(mappedBy = "userRes")
+	@OneToMany(mappedBy = "userRes",fetch =FetchType.EAGER,cascade = CascadeType.ALL)
 	Set<Reservation> reservations;
 
 
