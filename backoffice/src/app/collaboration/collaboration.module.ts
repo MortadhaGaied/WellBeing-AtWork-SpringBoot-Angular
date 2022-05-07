@@ -49,6 +49,7 @@ import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { ReservationComponent } from './reservation/reservation.component';
 import { AddReservationComponent } from './add-reservation/add-reservation.component';
 import { PdfOffersComponent } from './pdf-offers/pdf-offers.component';
+import { CollabSearchFilterPipe } from './pipes/collab-search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { PdfOffersComponent } from './pdf-offers/pdf-offers.component';
     ReservationComponent,
     AddReservationComponent,
     PdfOffersComponent,
+    CollabSearchFilterPipe,
   ],
   imports: [
     CommonModule,

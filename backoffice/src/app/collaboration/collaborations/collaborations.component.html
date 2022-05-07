@@ -12,7 +12,7 @@ id="exampleFormControlInput1"
 placeholder="search"
 />
 </div>
-  <div  class="card" *ngFor="let item of c  | paginate: { itemsPerPage: 10, currentPage: page }">
+  <div  class="card" *ngFor="let item of c |collabSearchFilter:searchValue | paginate: { itemsPerPage: 10, currentPage: page }">
     <div class="card-header">
 
       <img *ngIf="item.imagesCollab"
