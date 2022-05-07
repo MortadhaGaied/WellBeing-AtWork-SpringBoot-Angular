@@ -332,7 +332,7 @@ public class ChatRoomService implements IChatService {
             return;
         }*/
         //check if sender does not exist in the room
-        if(!chatRoom.getUsers().contains(sender)){
+       /* if(!chatRoom.getUsers().contains(sender)){
             log.info("you must join the room ");
             Notification notification = new Notification();
             notification.setTitle(chatRoom.getRoomName());
@@ -341,7 +341,7 @@ public class ChatRoomService implements IChatService {
             notification.setSentAt(DateTime.now());
             WSnotificationService.dispatch(notification,sender.getId());
             return;
-        }
+        }*/
 
        // log.info();
         /*if(!chatRoom.getUsers().contains(sender)){

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import Swal from "sweetalert2";
 import { Chatroom } from "../chatroom";
 import { ChatroomService } from "../chatroom.service";
 
@@ -72,7 +73,12 @@ export class AddRoomComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        window.alert(error.message);
+        Swal.fire({
+          icon: "error",
+          title: "failure",
+          text: "pls verify you input",
+          footer: '<a href="">try again ?</a>',
+        });
       }
     );
   }

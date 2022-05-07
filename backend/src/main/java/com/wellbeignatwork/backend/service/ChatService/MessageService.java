@@ -110,7 +110,7 @@ public class MessageService implements IMessageService {
 
             Firestore dbFirestore = FirestoreClient.getFirestore();
              dbFirestore.collection("top-chatters").document("top-chatters").set(data);
-            
+
         }
 
 
