@@ -26,6 +26,6 @@ export class StatsComponent implements OnInit {
   barChartLegend = true;
   barChartPlugins: any[] = [];
   barChartData: ChartDataSets[] = [
-    { data: [10, 12, 0, 0], label: "Messages Per User" },
+    { data: [15, 13, 0, 0], label: "Messages Per User" },
   ];
 }
