@@ -23,15 +23,11 @@ import { EventListComponent } from './event/event-list/event-list.component';
 import { EventDetailComponent } from './event/event-detail/event-detail.component';
 import { NgxMaterialRatingModule } from 'ngx-material-rating';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { GameComponent } from './event/game/game.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as Hammer from 'hammerjs';
-import {MatDialogModule} from '@angular/material/dialog';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -115,7 +111,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDialogModule,
     MatChipsModule,
     MatIconModule,MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
     NgxMaterialRatingModule,
     PdfViewerModule,
     FormsModule,

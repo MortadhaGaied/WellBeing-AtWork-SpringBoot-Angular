@@ -21,7 +21,7 @@ export class EventListComponent implements OnInit {
   updateId : number;
   
   ngOnInit(): void {
-    this._service.getEventByUser(3).subscribe(res=>{console.log(res);
+    this._service.getEventByUser(1).subscribe(res=>{console.log(res);
       this.listEvent=res});
       this._service.getPopularEvent().subscribe((e)=>{
       
