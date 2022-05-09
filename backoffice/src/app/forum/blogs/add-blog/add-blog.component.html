@@ -1,0 +1,45 @@
+<div class="form-group">
+    <label for="subject">Subject</label>
+    <input type="text" class="form-control" id="subject" [(ngModel)]="blog.subject" name="subject">
+</div>
+<div class="form-group">
+    <label for="content">Content</label>
+    <input type="text" class="form-control" id="content" [(ngModel)]="blog.content" name="content">
+</div>
+<div>
+    <label for="file">File</label>
+    <input type="file" class="form-control" id="file" name="file" (change)="selectFile($event)" >
+</div>
+<br>
+<mat-form-field class="example-chip-list" appearance="fill">
+    <mat-label>Tags</mat-label>
+    <mat-chip-list #chipList aria-label="Tag selection">
+      <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+        {{tag}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input placeholder="New tag..."
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             [matChipInputAddOnBlur]="addOnBlur"
+             (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+  <br>
+<div class= "col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5 " >
+    <button (click)= "addBlog() " type= "button " class= "btn btn-primary m-t-15 waves-effect " >Add </button >
+</div >
+<div *ngIf="currentFileUpload" class="progress mt-2">
+    <div
+      class="progress-bar progress-bar-info"
+      role="progressbar"
+      attr.aria-valuenow="{{ percentage }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [ngStyle]="{ width: percentage + '%' }"
+    >
+      {{ percentage }}%
+    </div>
+</div>

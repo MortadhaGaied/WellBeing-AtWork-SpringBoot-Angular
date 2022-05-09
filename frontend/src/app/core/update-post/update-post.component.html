@@ -1,0 +1,56 @@
+
+<div class="main-wraper">
+    
+</div><!-- create new post -->
+<div >
+   
+            <div class="post-new">
+                <div class="post-newmeta">
+                    
+                    
+                        <div class="fallback">
+                            <input name="file" type="file" id="file" (change)="selectFile($event)"/>
+                        </div>
+                        <div *ngIf="currentFileUpload" class="progress mt-2">
+                            <div
+                              class="progress-bar progress-bar-info"
+                              role="progressbar"
+                              attr.aria-valuenow="{{ percentage }}"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                              [ngStyle]="{ width: percentage + '%' }"
+                            >
+                              {{ percentage }}%
+                            </div>
+                        </div>
+                </div>	
+                <form method="post" class="c-form">
+                    <input id="subject" [(ngModel)]="post.subject" name="subject"  placeholder="Subject?">
+
+                    <textarea id="content" [(ngModel)]="post.content" name="content"  placeholder="What's On Your Mind?"></textarea>
+                    <div class="select-box">
+                        <div class="select-box__current" tabindex="0">
+                            <div class="select-box__value"><input class="select-box__input" type="radio" id="0" value="1" name="Ben" checked="checked" />
+                                <p class="select-box__input-text"><i class="icofont-globe-alt"></i> Public</p>
+                            </div>
+                            <div class="select-box__value"><input class="select-box__input" type="radio" id="1" value="2" name="Ben" checked="checked" />
+                                <p class="select-box__input-text"><i class="icofont-lock"></i> Private</p>
+                            </div>
+                            <div class="select-box__value"><input class="select-box__input" type="radio" id="2" value="3" name="Ben" checked="checked" />
+                                <p class="select-box__input-text"><i class="icofont-user"></i> My department</p>
+                            </div>
+                            
+                            <img class="select-box__icon" src="assets/images/arrow-down.svg" alt="Arrow Icon" aria-hidden="true" />
+                        </div>
+                        <ul class="select-box__list">
+                            <li><label class="select-box__option" for="0"><i class="icofont-globe-alt"></i> Public</label></li>
+                            <li><label class="select-box__option" for="1"><i class="icofont-lock"></i> Private</label></li>
+                            <li><label class="select-box__option" for="2"><i class="icofont-user"></i> My department</label></li>
+                        </ul>
+                    </div>
+                    
+                    <button type="submit" class="main-btn" (click)= "updatePost()">Publish</button>
+                </form>
+            </div>
+       
+</div><!-- New post popup -->

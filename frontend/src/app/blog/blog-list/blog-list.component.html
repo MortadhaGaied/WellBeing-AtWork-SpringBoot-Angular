@@ -1,0 +1,113 @@
+
+
+<div class="theme-layout">
+
+	<app-header></app-header>
+    <app-side-bar></app-side-bar>
+	
+	
+	<section>
+		<div class="gap">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div id="page-contents" class="row merged20">
+							<div class="col-lg-9">
+								<div class="main-wraper">
+									<div class="main-title">Blog Posts</div>
+									<div class="blog-posts" *ngFor="let b of listBlog">
+										<figure><img [src]='b.file' alt=""></figure>
+										<div class="blog-post-meta">
+											
+											
+											<h4>{{b.subject}}</h4>
+											<p>
+                                                {{b.content.substring(0,85)}}
+                                            </p>
+											<span><i class="icofont-clock-time"></i> {{b.createdAt|date}}</span>
+											<a class="button primary circle" [routerLink]="['/blog-detail',b.id]">read more</a>
+										</div>
+									</div>
+									
+									<div class="load mt-5 mb-4">
+										<ul class="pagination">
+											<li><a href="#" title=""><i class="icofont-arrow-left"></i></a></li>
+											<li><a class="active" href="#" title="">1</a></li>
+											<li><a href="#" title="">2</a></li>
+											<li><a href="#" title="">3</a></li>
+											<li><a href="#" title="">4</a></li>
+											<li><a href="#" title="">5</a></li>
+											<li>....</li>
+											<li><a href="#" title="">10</a></li>
+											<li><a href="#" title=""><i class="icofont-arrow-right"></i></a></li>
+										</ul>
+									</div>
+								</div>	
+							</div>
+							<div class="col-lg-3">
+								<aside class="sidebar static right">
+									<div class="widget">
+										<h4 class="widget-title">Popular Books</h4>
+										<div class="popular-book">
+											<figure><img src="images/resources/book10.jpg" alt=""></figure>
+											<div class="book-about">
+												<h6><a href="#" title="">Vu.js 2 Basics</a></h6>
+												<span>Richard Ali</span>
+												<a href="#" title=""><i class="icofont-book-mark"></i></a>
+											</div>
+										</div>
+										<div class="popular-book">
+											<figure><img src="images/resources/book9.jpg" alt=""></figure>
+											<div class="book-about">
+												<h6><a href="#" title="">Css3 for Bigners</a></h6>
+												<span>Richard Ali</span>
+												<a href="#" title=""><i class="icofont-book-mark"></i></a>
+											</div>
+										</div>
+										<div class="popular-book">
+											<figure><img src="images/resources/book5.jpg" alt=""></figure>
+											<div class="book-about">
+												<h6><a href="#" title="">Technology Wants 2020</a></h6>
+												<span>Richard Ali</span>
+												<a href="#" title=""><i class="icofont-book-mark"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="widget">
+										<h4 class="widget-title">Ask Research Question?</h4>
+										<div class="ask-question">
+											<i class="icofont-question-circle"></i>
+											<h6>Ask questions in Q&A to get help from experts in your field.</h6>
+											<a class="ask-qst" href="#" title="">Ask a question</a>
+										</div>
+									</div>
+									<div class="widget">
+										<h4 class="widget-title">Explor Events <a class="see-all" href="#" title="">See All</a></h4>
+										<div class="rec-events bg-purple">
+											<i class="icofont-gift"></i>
+											<h6><a title="" href="">BZ University good night event in columbia</a></h6>
+											<img alt="" src="images/clock.png">
+										</div>
+										<div class="rec-events bg-blue">
+											<i class="icofont-microphone"></i>
+											<h6><a title="" href="">The 3rd International Conference 2020</a></h6>
+											<img alt="" src="images/clock.png">
+										</div>
+									</div>
+									
+								</aside>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<app-footer></app-footer>
+	
+</div>
+	
+
+	
+

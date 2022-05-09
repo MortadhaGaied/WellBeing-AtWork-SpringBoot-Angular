@@ -7,6 +7,8 @@ import com.wellbeignatwork.backend.service.Forum.ReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/React")
 public class ReactionController {
@@ -27,6 +29,10 @@ public class ReactionController {
     public int getNbrReactionByPost(@PathVariable int idPost){
 
         return reactionService.getNbrReactionByPost(idPost);
+    }
+    @GetMapping("getNbrReactionByReactionTypeAndPost/{idPost}")
+    public Map<ReactionType,Integer> getNbrReactionByReactionTypeAndPost(int idPost){
+        return reactionService.getNbrReactionByReactionTypeAndPost(idPost);
     }
 
 }

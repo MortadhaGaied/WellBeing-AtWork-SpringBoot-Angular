@@ -24,9 +24,11 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String subject;
+    @Lob
     private String content;
     private LocalDateTime createdAt=LocalDateTime.now();
     private LocalDateTime modifiedAt;
+    private boolean reported;
     @ElementCollection(targetClass = Tags.class)
     @CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "tags")
@@ -34,12 +36,12 @@ public class Post implements Serializable {
     private Set<Tags> tags = new HashSet<>();
     String file;
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
-    @JsonIgnore
+
     private User user;
     @OneToMany(mappedBy = "post_comment",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+
     private List<Comment> comments;
-    @OneToMany(mappedBy = "post",cascade ={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+    @OneToMany(mappedBy = "post",cascade =CascadeType.ALL)
+
     private List<Reaction> reactions;
 }

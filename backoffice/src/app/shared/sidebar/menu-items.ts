@@ -2,6 +2,14 @@ import { RouteInfo } from "./sidebar.metadata";
 
 export const ROUTES: RouteInfo[] = [
   {
+    path: "/dashboard",
+    title: "Dashboard",
+    icon: "bi bi-speedometer2",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/chat/chat-rooms",
     title: "chatRooms",
     icon: "bi bi-speedometer2",
@@ -12,10 +20,12 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/forum/blogs",
     title: "Blogs",
-    icon: "bi bi-speedometer2",
+    icon: "bi bi-file-post",
     class: "",
     extralink: false,
-    submenu: [],
+    submenu: [
+      
+    ],
   },
   {
     path: "/event/events",
@@ -34,13 +44,26 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: "/dashboard",
-    title: "Dashboard",
-    icon: "bi bi-speedometer2",
+    path: "/forum/posts",
+    title: "Posts",
+    icon: "bi bi-flag-fill",
     class: "",
     extralink: false,
-    submenu: [],
+    submenu: [
+      
+    ],
   },
+  {
+    path: "/forum/poststat",
+    title: "Stat",
+    icon: "bi bi-graph-up",
+    class: "",
+    extralink: false,
+    submenu: [
+      
+    ],
+  },
+  
   {
     path: "/component/alert",
     title: "Alert",

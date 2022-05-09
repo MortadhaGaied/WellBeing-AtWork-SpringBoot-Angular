@@ -127,9 +127,12 @@ public class PostServiceImpl implements PostService {
 
         Post isSubjectExist=null;
         for(Post p: postRepository.findAll()){
-            if(similarity(p.getSubject(),post.getSubject())>0.6){
-                isSubjectExist=p;
+            if(p.getSubject().length()!=0){
+                if(similarity(p.getSubject(),post.getSubject())>0.6){
+                    isSubjectExist=p;
+                }
             }
+
         }
         if(isSubjectExist!=null){
 
@@ -144,10 +147,43 @@ public class PostServiceImpl implements PostService {
             return assignUserToPost(idUser,post.getId());
         }
     }
+    public Post createPost(Post post,Long idUser){
+        post.setSubject("POST");
+        post.setContent(BadWordFilter.getCensoredText(post.getContent()));
+        post.setCreatedAt(LocalDateTime.now());
+        postRepository.save(post);
+        return assignUserToPost(idUser,post.getId());
 
+    }
+
+    @Override
+    public Post getPostById(int id){
+        return postRepository.findById(id).orElse(null);
+    }
     @Override
     public Collection<Post> getAll() {
         return (Collection<Post>) postRepository.findAll();
+    }
+    public List<Post> getAllPostWithoutImage(){
+        List<Post> resultat =new ArrayList<>();
+        for(Post p:postRepository.findAll()){
+
+            if(p.getFile()==null){
+                System.out.println("\n************************************************************************************************************************************************************************************************************************************");
+
+                resultat.add(p);
+            }
+        }
+        return resultat;
+    }
+    public List<Post> getAllPostWithImage(){
+        List<Post> resultat =new ArrayList<>();
+        for(Post p:postRepository.findAll()){
+            if(p.getFile()!=null){
+                resultat.add(p);
+            }
+        }
+        return resultat;
     }
 
     @Override
@@ -169,15 +205,26 @@ public class PostServiceImpl implements PostService {
     //@PreAuthorize("hasRole('USER')")
     @Override
     public void deletepost(int id) {
-       postRepository.delete(postRepository.findById(id).orElse(null));
+        Post p=postRepository.findById(id).orElse(null);
+        p.setUser(null);
+        postRepository.save(p);
+        postRepository.delete(p);
     }
 
 
     @Override
     public Post assignUserToPost(Long id_user,int id_post){
+        List<Post> posts=new ArrayList<>();
         Post p=postRepository.findById(id_post).orElse(null);
         User u=userRepository.findById(id_user).orElse(null);
-        u.getPosts().add(p);
+        if(u.getPosts()==null){
+            posts.add(p);
+            u.setPosts(posts);
+        }
+        else{
+            u.getPosts().add(p);
+        }
+
         p.setUser(u);
 
         postRepository.save(p);
@@ -440,6 +487,40 @@ public class PostServiceImpl implements PostService {
 
         }
 
+    }
+    public List<Post> getPostByTag(Tags t){
+        List<Post> result=new ArrayList<>();
+        for(Post p :postRepository.findAll()){
+            if(p.getTags()!=null){
+                if(p.getTags().contains(t)){
+                    result.add(p);
+                }
+            }
+        }
+        return result;
+    }
+    public void reportPost(int idPost){
+        Post p=postRepository.findById(idPost).orElse(null);
+        if(!p.isReported()){
+            p.setReported(true);
+            postRepository.save(p);
+        }
+    }
+    public void unreportPost(int idPost){
+        Post p=postRepository.findById(idPost).orElse(null);
+        if(p.isReported()){
+            p.setReported(false);
+            postRepository.save(p);
+        }
+    }
+
+    public List<Double> postInteraction(){
+        List<Double> result=new ArrayList<>();
+        for(Post p:postRepository.findAll()){
+            result.add((double)commentRepository.NbrCommentByPost(p)+(double) reactionRepository.NbrReactionByPost(p));
+
+        }
+        return result;
     }
 
 
