@@ -8309,6 +8309,27 @@ aside.sidebar .widget .activity-meta > i{
     vertical-align: middle;
 	margin-right: 3px;
 }
+.stat-tools > button, .stat-tools > .box button {
+    background: #eae9ee;
+    border-radius: 4px;
+    color: #82828e;
+    display: inline-block;
+    font-size: 13px;
+    padding: 5px 20px;
+    vertical-align: middle;
+    transition: all 0.2s linear 0s;
+}
+.buttonLikeLink{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
 .stat-tools > a.share-to > i {
     color: #7e7f9e;
     font-size: 16px;
@@ -8344,6 +8365,10 @@ aside.sidebar .widget .activity-meta > i{
 }
 .Like__link {
   cursor: pointer;
+}
+.reactionbox{
+    border:20px;
+    border-color: #000;
 }
 .box {
     display: inline-block;
@@ -8678,7 +8703,6 @@ a.main-btn:hover, .main-btn:hover, a.main-btn2:hover, .main-btn2:hover {
     z-index: 99;
 }
 .new-comment {
-    display: none;
     margin-top: 15px;
     position: relative;
     width: 100%;

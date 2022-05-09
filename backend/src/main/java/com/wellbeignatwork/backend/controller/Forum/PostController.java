@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.service.Event.ActivityServiceImp;
 import com.wellbeignatwork.backend.service.Forum.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +43,22 @@ public class PostController {
 
         return new ResponseEntity<>(this.postService.addPost(post,idUser), HttpStatus.OK);
     }
+    @PostMapping("/createpost/{idUser}")
+    public ResponseEntity<Post> createPost(@RequestBody Post post,@PathVariable Long idUser) {
+
+        return new ResponseEntity<>(this.postService.createPost(post,idUser), HttpStatus.OK);
+    }
     @GetMapping("/all-post")
     public ResponseEntity<Collection<Post>> getAllPosts() {
         return new ResponseEntity<>(this.postService.getAll(), HttpStatus.OK);
+    }
+    @GetMapping("/all-postWithImage")
+    public ResponseEntity<List<Post>> getAllPostWithImage() {
+        return new ResponseEntity<>(this.postService.getAllPostWithImage(), HttpStatus.OK);
+    }
+    @GetMapping("/all-postWithoutImage")
+    public ResponseEntity<List<Post>> getAllPostWithoutImage() {
+        return new ResponseEntity<>(this.postService.getAllPostWithoutImage(), HttpStatus.OK);
     }
     @GetMapping("/getPostById/{id}")
     public Post getPostById(@PathVariable int id){
@@ -55,9 +69,9 @@ public class PostController {
         return new ResponseEntity<>(this.postService.updatepost(post), HttpStatus.OK);
     }
     @DeleteMapping("/delete-post/{id}")
-    public ResponseEntity deletePostById(@PathVariable int id) {
-        this.postService.deletepost(id);
-        return new ResponseEntity(HttpStatus.OK);
+    public void deletePostById(@PathVariable int id) {
+
+        postService.deletepost(id);
     }
 
     @GetMapping("/groupByPreference/{idUser}")
@@ -91,4 +105,21 @@ public class PostController {
 
 
     }
+    @GetMapping("/getPostByTag/{t}")
+    public List<Post> getPostByTag(@PathVariable Tags t){
+        return postService.getPostByTag(t);
+    }
+    @GetMapping("/reportPost/{idPost}")
+    public void reportPost(@PathVariable int idPost){
+        postService.reportPost(idPost);
+    }
+    @GetMapping("/unreportPost/{idPost}")
+    public void unreportPost(@PathVariable int idPost){
+        postService.unreportPost(idPost);
+    }
+    @GetMapping("/postInteraction")
+    public List<Double> postInteraction(){
+        return postService.postInteraction();
+    }
+
 }

@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <div (mouseleave)="toggleShow(false)" class="emojis" *ngIf="showEmojis">
+  
+      <span  *ngFor="let emoji of emojiList; index as i;">
+        <img  [src]="emojiPath(emoji)" width='75px' (click)="react(i)">
+      </span>
+  
+    </div>
+  
+    
+    <div class="stat-tools">
+        <div class="box">
+            <div class="Like"><a class="Like__link" (click)="react(0)"  (mouseenter)="toggleShow(true)"  [class.liked]="userReaction != null"><i class="icofont-like"></i> Like</a>
+            </div>
+        </div>
+       
+        <div class="emoji-state">
+            <div class="popover_wrapper" *ngFor="let emoji of emojiList; index as i;" >
+                <div *ngIf="reactionCount[i]!=0">
+                    <a class="popover_title" href="#" title=""><img alt=""[src]="emojiPath(emoji)"></a>
+                    <div class="popover_content">
+                        <span><img [src]="emojiPath(emoji)"> {{emoji}}</span>
+                        <ul class="namelist">
+                            
+                            <li><span>{{ reactionCount[i] }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button title="" (click)="toggleShowComment()" class="comment-to"><i class="icofont-comment"></i> Comment</button>
+        <div class="new-comment" *ngIf="isShown">
+            <form method="post">
+                <input type="text" placeholder="write comment" [(ngModel)]="comment.commentContent" name="commentContent">
+                <button type="submit" (click)= "addCommentToPost(post.id)"><i class="icofont-paper-plane"></i></button>
+            </form>
+            <div class="comments-area" *ngFor="let c of post.comments.reverse() | slice:startPage:paginationLimit">
+                <ul>
+                    <li>
+                        <figure><img alt="" src="assets/images/resources/user1.jpg"></figure>
+                        <div class="commenter">
+                            <h5><a title="" href="#">Mortadha Gaied</a></h5>
+                            <span>
+                                 {{c.createDate| dateAsAgo  }}</span>
+                            <p>
+                                {{c.commentContent}}
+                            </p>
+                            </div>
+                        
+                    </li>
+                    
+                </ul>
+            </div>
+            <button class="buttonLikeLink" *ngIf ="paginationLimit < post.comments.length" (click)="showMoreItems()">
+                Show More
+            </button>
+            <button class="buttonLikeLink" *ngIf ="paginationLimit > 5" (click)="showLessItems()">
+                Show Less
+            </button>
+        </div>
+    </div>
+    
+  
+    
+  </div>

@@ -1,3 +1,4 @@
+import { User } from "../User";
 
 export class Post{
     content: string;
@@ -7,4 +8,6 @@ export class Post{
     modifiedAt: Date;
     subject: string;
     tags: string[];
+    user:User;
+    reported:boolean;
 }

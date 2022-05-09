@@ -2,10 +2,12 @@
 <div style="padding: 3em;">
   <button (click)="onOpenDialogClick()">Open Dialog</button>
 </div>
+
+<input type="text" #myInput [(ngModel)]="search" (input)="Search()" class="form-control" placeholder="Search …">
 <div class="row">
     <!-- column -->
 
-    <div class="col-lg-3 col-md-6" *ngFor="let b of listPosts">
+    <div class="col-lg-3 col-md-6" *ngFor="let b of listPosts |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
       <!-- Card -->
       <!-- ---------------------
                         start Card title
@@ -14,6 +16,7 @@
         <img
           class="card-img-top img-responsive"
           [src]='b.file'
+          style="width: 235px; height: 200px;"
           alt="Card image cap"
         />
         <div class="card-body">
@@ -22,7 +25,7 @@
             {{b.content.substring(0,85)}}
           </p>
           
-          <span class="mb-1 me-2 badge rounded-pill bg-dark" *ngFor="let t of b.tags">{{t}}</span>
+          <span class="mb-1 me-2 badge rounded-pill bg-dark" *ngFor="let t of b.tags" (click)="getBlogByTag(t)">{{t}}</span>
           
           <div class="btn-wrapper text-center">
             <button (click)="deleteBlog(b.id)" class="btn btn-danger remove-btn">Delete</button>
@@ -36,6 +39,9 @@
                     ---------------- -->
       <!-- Card -->
     </div>
-   
+   <mat-paginator #paginator [length]="length"
+   [pageSize]="pageSize"
+   [pageSizeOptions]="[5,10,25,100]"
+   (page)="pageEvent=$event"></mat-paginator>
     
   </div>

@@ -4,6 +4,7 @@ import { Injectable,EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../../Models/Forum/Post';
 import { take } from 'rxjs/operators';
+import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +32,10 @@ export class BlogsServiceService {
   getBlogById(idBlog: number): Observable<Post> {
     return this._http.get<Post>("http://localhost:8081/Wellbeignatwork/Post/getPostById/"+idBlog);
    }
-  
+  downloadpdf(id:number):Observable<Blob>{
+    
+    return this._http.get("http://localhost:8081/Wellbeignatwork/Post/downloadArticle/"+id,{responseType:'blob'});
+  }
     sendEventData(idBlog : number):any{
       
       this.getBlogById(idBlog).pipe(take(1)).subscribe(x=>{
@@ -41,5 +45,17 @@ export class BlogsServiceService {
         return x;
       });
       
+    }
+    getBlogByTag(tag: string): Observable<Post[]> {
+      return this._http.get<Post[]>("http://localhost:8081/Wellbeignatwork/Post/getPostByTag/"+tag);
+     }
+     unreportPost(idPost:number){
+      return this._http.get("http://localhost:8081/Wellbeignatwork/Post/unreportPost/"+idPost);
+    }
+    getPostsInteraction():Observable<number[]>{
+      return this._http.get<number[]>("http://localhost:8081/Wellbeignatwork/Post/postInteraction");
+    }
+    getpostsatisfaction(id:number):Observable<number>{
+      return this._http.get<number>("http://localhost:8081/Wellbeignatwork/Comment/PostSatisfaction/"+id);
     }
 }

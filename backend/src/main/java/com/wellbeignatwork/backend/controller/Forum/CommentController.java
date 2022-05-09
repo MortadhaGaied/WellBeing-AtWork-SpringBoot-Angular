@@ -36,7 +36,7 @@ public class CommentController {
         return new ResponseEntity(HttpStatus.OK);
     }
     @GetMapping("/PostSatisfaction/{idPost}")
-    public List<Integer> PostSatisfaction(@PathVariable int idPost){
+    public double PostSatisfaction(@PathVariable int idPost){
         return commentService.PostSatisfaction(idPost);
     }
     @GetMapping("/sortByDate/{idPost}")

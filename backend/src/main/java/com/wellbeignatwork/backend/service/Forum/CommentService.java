@@ -10,6 +10,6 @@ public interface CommentService {
     public Collection<Comment> getAll();
     public Comment updatecomment(Comment comment);
     public void deletecomment(int id);
-    public List<Integer> PostSatisfaction(int idPost);
+    public double PostSatisfaction(int idPost);
     public List<Comment> sortByDate(int idPost);
 }

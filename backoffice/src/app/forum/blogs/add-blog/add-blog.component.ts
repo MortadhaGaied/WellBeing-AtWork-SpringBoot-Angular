@@ -72,7 +72,7 @@ export class AddBlogComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
+    // Add our tag
     if (value) {
       this.tags.push(value);
     }

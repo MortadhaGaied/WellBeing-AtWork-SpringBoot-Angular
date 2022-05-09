@@ -75,11 +75,11 @@ public class CommentServiceImpl implements CommentService{
     public void deletecomment(int id) {
         commentRepository.delete(commentRepository.findById(id).orElse(null));
     }
-    public List<Integer> PostSatisfaction(int idPost){
+    public double PostSatisfaction(int idPost){
         Post p =postRepository.findById(idPost).orElse(null);
         List<Integer> result=new ArrayList<>();
         if(p.getComments()==null){
-            return null;
+            return 0;
         }
         else{
             for(Comment c:p.getComments()){
@@ -91,7 +91,7 @@ public class CommentServiceImpl implements CommentService{
                     .orElse(0.0);
             System.out.println("*****************AVG******************");
             System.out.println(avg);
-            return result;
+            return avg;
         }
 
 

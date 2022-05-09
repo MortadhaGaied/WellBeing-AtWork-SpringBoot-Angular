@@ -12,13 +12,18 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { UpdateBlogComponent } from './blogs/update-blog/update-blog.component';
-
+import { BlogsStatsComponent } from './blogs/blogs-stats/blogs-stats.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { ReportedPostComponent } from './reported-post/reported-post.component';
+import {ChartsModule} from 'ng2-charts'
 @NgModule({
   declarations: [
     BlogsComponent,
     AddBlogComponent,
     BlogDetailComponent,
-    UpdateBlogComponent
+    UpdateBlogComponent,
+    BlogsStatsComponent,
+    ReportedPostComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +33,8 @@ import { UpdateBlogComponent } from './blogs/update-blog/update-blog.component';
     FormsModule,
     MatChipsModule,
     MatIconModule,MatFormFieldModule,
+    MatPaginatorModule,
+    ChartsModule
     
     
   ]

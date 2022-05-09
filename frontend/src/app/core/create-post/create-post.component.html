@@ -1,9 +1,11 @@
+
 <div class="main-wraper">
     <span class="new-title">Create New Post</span>
     <div class="new-post">
         <form method="post">
             <i class="icofont-pen-alt-1"></i>
             <input type="text" placeholder="Create New Post">
+            
         </form>
         <ul class="upload-media">
             <li>
@@ -38,47 +40,47 @@
             <div class="post-new">
                 <div class="post-newmeta">
                     
-                    <form method="post" class="dropzone" action="/upload-target">
+                    
                         <div class="fallback">
-                            <input name="file" type="file" multiple />
+                            <input name="file" type="file" id="file" (change)="selectFile($event)"/>
                         </div>
-                    </form>
+                        <div *ngIf="currentFileUpload" class="progress mt-2">
+                            <div
+                              class="progress-bar progress-bar-info"
+                              role="progressbar"
+                              attr.aria-valuenow="{{ percentage }}"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                              [ngStyle]="{ width: percentage + '%' }"
+                            >
+                              {{ percentage }}%
+                            </div>
+                        </div>
                 </div>	
                 <form method="post" class="c-form">
-                    <textarea id="emojionearea1" placeholder="What's On Your Mind?"></textarea>
-                    <div class="activity-post">
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox" checked>
-                            <label for="checkbox"><span>Activity Feed</span></label>
-                        </div>
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox2" checked>
-                            <label for="checkbox2"><span>My Story</span></label>
-                        </div>
-                    </div>
-                    <div class="select-box">
-                        <div class="select-box__current" tabindex="1">
-                            <div class="select-box__value"><input class="select-box__input" type="radio" id="0" value="1" name="Ben" checked="checked" />
-                                <p class="select-box__input-text"><i class="icofont-globe-alt"></i> Public</p>
-                            </div>
-                            <div class="select-box__value"><input class="select-box__input" type="radio" id="1" value="2" name="Ben" checked="checked" />
-                                <p class="select-box__input-text"><i class="icofont-lock"></i> Private</p>
-                            </div>
-                            <div class="select-box__value"><input class="select-box__input" type="radio" id="2" value="3" name="Ben" checked="checked" />
-                                <p class="select-box__input-text"><i class="icofont-user"></i> My department</p>
-                            </div>
-                            
-                            <img class="select-box__icon" src="assets/images/arrow-down.svg" alt="Arrow Icon" aria-hidden="true" />
-                        </div>
-                        <ul class="select-box__list">
-                            <li><label class="select-box__option" for="0"><i class="icofont-globe-alt"></i> Public</label></li>
-                            <li><label class="select-box__option" for="1"><i class="icofont-lock"></i> Private</label></li>
-                            <li><label class="select-box__option" for="2"><i class="icofont-user"></i> My department</label></li>
-                        </ul>
-                    </div>
-                    <input class="schedule-btn" type="text" id="datetimepicker" readonly>
-                    <input type="text" placeholder="https://www.youtube.com/watch?v=vgvsuiFlA-Y&t=56s">
-                    <button type="submit" class="main-btn">Publish</button>
+                    <input id="subject" [(ngModel)]="blog.subject" [attr.maxlength]="200" name="subject"  placeholder="Subject?">
+
+                    <textarea id="content" [(ngModel)]="blog.content" name="content"  placeholder="What's On Your Mind?"></textarea>
+                    <mat-form-field class="example-chip-list" appearance="fill">
+                        <mat-label>Tags</mat-label>
+                        <mat-chip-list #chipList aria-label="Tag selection">
+                          <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                            {{tag}}
+                            <button matChipRemove>
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                          </mat-chip>
+                          <input placeholder="New tag..."
+                                 [matChipInputFor]="chipList"
+                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                 [matChipInputAddOnBlur]="addOnBlur"
+                                 (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                      </mat-form-field>
+                    
+                    
+                    
+                    <button type="submit" class="main-btn" (click)= "addBlog() ">Publish</button>
                 </form>
             </div>
         </div>

@@ -1,0 +1,76 @@
+<app-header></app-header>
+<app-side-bar></app-side-bar>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="col-sm-5 mx-auto">
+    <div class="main-wraper">
+        <div class="user-post">
+            <div class="friend-info">
+                <figure>
+                    <em>
+    <svg style="vertical-align: middle;"  xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="#7fba00" stroke="#7fba00" d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"></path></svg></em>
+                    <img alt="" src="assets/images/resources/user3.jpg">
+                </figure>
+                <div class="friend-name">
+                    <div class="more">
+                        <div class="more-post-optns">
+                            <i class="">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></i>
+                            <ul>
+                                <li *ngIf="p.user.id==1">
+                                    <i class="icofont-pen-alt-1"></i>Edit Post
+                                    <span>Edit This Post within a Hour</span>
+                                </li>
+                                
+                                <li  *ngIf="p.user.id==1">
+                                    <i class="icofont-ui-delete" (click)="deletePost(p.id)"></i>Delete Post
+                                    <span>If inappropriate Post By Mistake</span>
+                                </li>
+                                <li>
+                                    <i class="icofont-flag" (click)="reportPost(p.id)"></i>Report
+                                    <span>Inappropriate content</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ins><a title="" href="time-line.html">Turgut Alp</a> Create Post</ins>
+                    <span><i class="icofont-globe"></i> published: {{p.createdAt | dateAsAgo}}</span>
+                </div>
+                <div class="post-meta">
+                    <figure *ngIf="p.file!=null">
+                        <a data-toggle="modal" data-target="#img-comt" href="assets/images/resources/album1.jpg">
+                            <img [src]='p.file' alt="">
+                        </a>	
+                    </figure>
+                    <a href="post-detail.html" class="post-title">{{p.subject}}</a>
+                    <p>{{p.content}}  </p>
+                    <div class="we-video-info">
+                        <ul>
+                        
+                            <li>
+                                <span title="Comments" class="Recommend">
+                                    <i>
+    <svg class="feather feather-message-square" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></i>
+                                    <ins>{{p.comments.length}}</ins>
+                                </span>
+                                
+                            </li>
+                            
+                        </ul>
+                        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>
+                    </div>
+                    <div class="stat-tools">
+                        
+                        <app-reaction [itemId]="p.id"></app-reaction>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
