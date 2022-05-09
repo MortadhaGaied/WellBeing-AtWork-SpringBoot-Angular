@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public interface IActivityService {
     public void addEvent(Event e, MultipartFile file) throws IOException ;

@@ -11,6 +11,7 @@ import com.wellbeignatwork.backend.util.OfferPDFExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 @RequestMapping("/Offer")
 public class OfferController {
 
@@ -37,7 +39,7 @@ public class OfferController {
     //http://localhost:8081/Wellbeignatwork/Offer/addOffer/1
     @PostMapping("/addOffer/{idCollaboration}")
     @ResponseBody
-    public void addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
+    public Offer addOffer(@RequestBody Offer o, @PathVariable long idCollaboration, HttpServletResponse response) throws DocumentException, IOException{
         byte[] image = new byte[0];
         try {
 
@@ -58,7 +60,7 @@ public class OfferController {
         String qrcode = Base64.getEncoder().encodeToString(image);
         // log.info(qrcode);
 
-        offerService.addOffer(o,idCollaboration);
+        return offerService.addOffer(o,idCollaboration);
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/deleteOffer/id
@@ -69,10 +71,10 @@ public class OfferController {
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/updateOffer/1
-    @PutMapping("/updateOffer/{idOffer}")
+    @PutMapping("/updateOffer")
     @ResponseBody
-    public Offer updateOffer(@RequestBody Offer o , @PathVariable Long idOffer){
-        return offerService.updateOffer(o,idOffer);
+    public Offer updateOffer(@RequestBody Offer o){
+        return offerService.updateOffer(o);
     }
 
     //http://localhost:8081/Wellbeignatwork/Offer/retrieveAllOffers
@@ -116,8 +118,14 @@ public class OfferController {
 
     //http://localhost:8081/Wellbeignatwork/Offer/weather?idOffer=1
     @GetMapping("/weather")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+   // @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object getOfferWeather(@RequestParam Long idOffer) {
         return offerService.getOfferWeather(idOffer);
+    }
+
+    //http://localhost:8081/Wellbeignatwork/Offer/uploadImageToOffer/1
+    @PostMapping("/uploadImageToOffer/{idOffer}")
+    void uploadImageToOffer(@RequestParam("image") MultipartFile img, @PathVariable Long idOffer) throws IOException {
+        offerService.uploadImageToOffer(img, idOffer);
     }
 }

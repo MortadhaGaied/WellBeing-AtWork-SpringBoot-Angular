@@ -5,11 +5,14 @@ import com.wellbeignatwork.backend.entity.Collaboration.Collaboration;
 import com.wellbeignatwork.backend.service.Collaboration.ICollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 @RequestMapping("/Collaboration")
 public class CollaborationController {
 	@Autowired
@@ -23,11 +26,11 @@ public class CollaborationController {
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/UpdateCollaboration/1
-	@PutMapping("/UpdateCollaboration/{id}")
+	@PutMapping("/UpdateCollaboration")
 	@ResponseBody
-	public void UpdateCollaboration(@RequestBody Collaboration c, @PathVariable long idUser)
+	public void UpdateCollaboration(@RequestBody Collaboration c)
 	{
-		collaborationService.updateCollaboration(c,idUser);
+		collaborationService.updateCollaboration(c);
 	}
 
 	//http://localhost:8081/Wellbeignatwork/Collaboration/deleteCollaboration/1
@@ -51,5 +54,11 @@ public class CollaborationController {
 	@ResponseBody
 	public Collaboration retrieveCollaboration(@PathVariable Long id){
 		return collaborationService.retrieveCollaboration(id);
+	}
+
+	//http://localhost:8081/Wellbeignatwork/Collaboration/uploadImageToCollabotration/1
+	@PostMapping("/uploadImageToCollabotration/{idCollaboration}")
+	void uploadImageToCollabotration(@RequestParam("image") MultipartFile img, @PathVariable Long idCollaboration) throws IOException {
+		collaborationService.uploadImageToCollabotration(img, idCollaboration);
 	}
 }

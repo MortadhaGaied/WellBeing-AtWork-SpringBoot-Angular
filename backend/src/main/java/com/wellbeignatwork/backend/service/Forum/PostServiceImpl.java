@@ -1,13 +1,9 @@
 package com.wellbeignatwork.backend.service.Forum;
 
-import com.google.zxing.WriterException;
-
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfWriter;
 
-import com.wellbeignatwork.backend.entity.Chat.Message;
-import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.Forum.*;
 import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
@@ -25,11 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import com.lowagie.text.*;
-import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
-
-import com.lowagie.text.pdf.*;
 
 
 import java.awt.*;

@@ -3,6 +3,7 @@ package com.wellbeignatwork.backend.controller.Collaboration;
 
 import com.sun.mail.iap.Response;
 
+import com.wellbeignatwork.backend.entity.Collaboration.Collaboration;
 import com.wellbeignatwork.backend.entity.Collaboration.Publicity;
 import com.wellbeignatwork.backend.service.Collaboration.IPublicityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class publicitycontroller {
     public Publicity addPublicity(@RequestBody Publicity p ,@PathVariable long idOffer){
         return publicityService.addPublicity(p,idOffer);
     }
+    //http://localhost:8081/Wellbeignatwork/Publicity/retrievePublicity/1
+    @GetMapping("/retrievePublicity/{idPub}")
+    @ResponseBody
+    public Publicity retrievePublicity(@PathVariable Long idPub){
+        return publicityService.retrievePublicity(idPub);
+    }
+
 
     //http://localhost:8081/Wellbeignatwork/Publicity/datePublicity/idPublicity/starDate/finDate
     @GetMapping("/datePublicity/{idPublicity}/{starDateOf}/{finDateOf}")
@@ -98,5 +106,15 @@ public class publicitycontroller {
         return publicityService.retrieveByOfferLocalisation(loc);
     }
 
+    //http://localhost:8081/Wellbeignatwork/Publicity/retriveAllPub
+    @GetMapping("/retriveAllPub")
+    public List<Publicity> retrieveAllPublicitys(){
+        return publicityService.retrieveAllPublicitys();
+    }
+    //http://localhost:8081/Wellbeignatwork/Publicity/uploadImageToPub/1
+    @PostMapping("/uploadImageToPub/{idPub}")
+    void uploadImageToOffer(@RequestParam("image") MultipartFile img, @PathVariable Long idPub) throws IOException {
+        publicityService.uploadImageToPub(img, idPub);
+    }
 }
 

@@ -28,7 +28,7 @@ public class GameService  {
         return game;
     }
 
-    public Game connectToGame(User player2,String gameId) throws InvalidParamException, InvalidGameException
+    public Game connectToGame(User player2, String gameId) throws InvalidParamException, InvalidGameException
     {
 
         if(! GameStorage.getInstance().getGames().containsKey(gameId))

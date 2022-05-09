@@ -47,19 +47,6 @@ export const Approutes: Routes = [
             (m) => m.CollaborationModule
           ),
       },
-      {
-        path: "show-collabs",
-        component: ShowCollabsComponent,
-      },
-      {
-        path: "add-collab",
-        component: NewCollabComponent,
-      },
-      {
-        path: "users",
-        loadChildren: () =>
-          import("./user/user.module").then((m) => m.UserModule),
-      },
     ],
   },
   {

@@ -5,7 +5,6 @@ import com.wellbeignatwork.backend.entity.Chat.ChatRoom;
 import com.wellbeignatwork.backend.entity.Chat.Message;
 import com.wellbeignatwork.backend.entity.Collaboration.Profession;
 import com.wellbeignatwork.backend.entity.Collaboration.Reservation;
-import com.wellbeignatwork.backend.entity.Collaboration.Test;
 import com.wellbeignatwork.backend.entity.Evaluation.Badge;
 import com.wellbeignatwork.backend.entity.Evaluation.UserGift;
 import com.wellbeignatwork.backend.entity.Event.Event;
@@ -38,7 +37,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 65981149772133526L;
 
-	public User(String displayName,String password){
+	public User(String displayName, String password){
 		this.displayName=displayName;
 		this.password=password;
 	}
@@ -79,7 +78,7 @@ public class User implements Serializable {
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	@JoinTable(name = "user_rolee", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
 
 	@JsonIgnore
@@ -117,15 +116,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Opinion> opinions;
 	private String picture;
-	@ManyToMany(mappedBy = "intern", fetch = FetchType.EAGER
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-	@JsonIgnore
-	private Set<Test> TestIntern;
 
-	@ManyToMany(mappedBy = "employee", fetch = FetchType.EAGER
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-	@JsonIgnore
-	private Set<Test> TestEmployee;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 	@OneToMany(mappedBy = "userRes",fetch =FetchType.EAGER,cascade = CascadeType.ALL)

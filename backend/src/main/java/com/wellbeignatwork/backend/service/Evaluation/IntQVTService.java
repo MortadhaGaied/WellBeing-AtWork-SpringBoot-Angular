@@ -5,7 +5,6 @@ package com.wellbeignatwork.backend.service.Evaluation;
 
 import com.wellbeignatwork.backend.entity.Evaluation.Answer;
 import com.wellbeignatwork.backend.entity.Evaluation.Question;
-import com.wellbeignatwork.backend.entity.Evaluation.Survey;
 import com.wellbeignatwork.backend.entity.User.User;
 
 import java.io.ByteArrayInputStream;

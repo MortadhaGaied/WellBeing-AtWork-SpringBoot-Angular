@@ -1,7 +1,6 @@
 package com.wellbeignatwork.backend.controller.Collaboration;
 
 
-import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 
 import com.stripe.exception.StripeException;
@@ -11,19 +10,16 @@ import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
 import com.wellbeignatwork.backend.service.Collaboration.IReservationService;
 import com.wellbeignatwork.backend.service.Collaboration.ISendEmailService;
-import com.wellbeignatwork.backend.service.Evaluation.QRCodeGenerator;
 import com.wellbeignatwork.backend.util.PDFGeneratorService;
 import com.wellbeignatwork.backend.util.StripeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 
 @RequestMapping("/Reservation")

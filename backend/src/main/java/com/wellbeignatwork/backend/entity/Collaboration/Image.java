@@ -23,4 +23,5 @@ public class Image implements Serializable {
     @JsonIgnore
     @ManyToOne
     Publicity publicity;
+
 }

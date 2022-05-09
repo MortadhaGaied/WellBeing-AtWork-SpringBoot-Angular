@@ -68,10 +68,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public User findUserById(@PathVariable Long id) {
         return userService.findUserById(id);
     }
+
 
 
     // from  Amine .. just for testing front

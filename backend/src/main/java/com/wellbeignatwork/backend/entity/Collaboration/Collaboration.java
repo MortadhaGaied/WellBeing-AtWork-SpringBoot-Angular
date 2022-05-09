@@ -35,8 +35,11 @@ public class Collaboration implements Serializable {
 	@OneToMany(mappedBy="collaboration", cascade=CascadeType.ALL)
 	private Set<Offer> offers;
 
+	@OneToOne(cascade = CascadeType.REMOVE)
+	Image imagesCollab;
+
 	@JsonIgnore
 	@ManyToOne
-	User users;
+    User users;
 
 }
