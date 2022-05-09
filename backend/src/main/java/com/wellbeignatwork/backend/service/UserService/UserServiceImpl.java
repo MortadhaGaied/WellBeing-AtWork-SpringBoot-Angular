@@ -133,7 +133,11 @@ public class UserServiceImpl implements UserService {
     public User findUserById(Long id) {
         return userRepository.findById(id).get();
 
+    }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Transactional

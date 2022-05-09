@@ -63,7 +63,7 @@ public class PasswordResetService {
         }
         String token = UUID.randomUUID().toString();
         createPasswordResetTokenForUser(user, token);
-        String passwordResetLink = "http://localhost:8081/Wellbeignatwork/api/auth/reset-password?token=" + token;
+        String passwordResetLink = "http://localhost:4200/change-password?token=" + token;
         String content = buildEmail(user.getDisplayName(), passwordResetLink);
         mailService.sendMail(userEmail, "Reset Your Password", content, true);
     }

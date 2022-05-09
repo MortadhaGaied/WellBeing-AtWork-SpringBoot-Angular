@@ -27,6 +27,10 @@ import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { provideFirebaseApp, getApp, initializeApp } from "@angular/fire/app";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { environment } from "../environments/environment";
+import {
+  AuthInterceptor,
+  authInterceptorProviders,
+} from "./services/auth-services/auth.interceptor";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -68,6 +72,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
+    authInterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })

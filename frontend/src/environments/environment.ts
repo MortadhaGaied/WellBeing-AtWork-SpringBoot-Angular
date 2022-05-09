@@ -16,8 +16,12 @@ export const environment = {
 
     vapidKey:
       'BLQYIx6Ck9Q1L06GYYIe0ZlGrahOiDivygJE5oLwDRibfZIKJHpvWaD9sqytIDGHVRQFMRZowUQwS65UwQUCR74',
-  },
-};
+
+},
+recaptcha: {
+  siteKey: '6LfDwskfAAAAAB2zqHoxaUuvHzGHgtrSe2heGd-T',
+  secretKey: '6LfDwskfAAAAAKNYPORn6LJHVxNmXe_ufWzgHsOk',
+},
 
 /*
  * For easier debugging in development mode, you can import the following file

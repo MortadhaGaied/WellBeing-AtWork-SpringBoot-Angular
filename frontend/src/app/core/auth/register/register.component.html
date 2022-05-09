@@ -1,0 +1,136 @@
+<!-- page loader -->
+<div class="theme-layout">
+  <div class="authtication bluesh high-opacity">
+    <div class="verticle-center">
+      <div class="welcome-note">
+        <div class="logo">
+          <img src="assets/images/logo.png" alt="" /><span>Socimo</span>
+        </div>
+        <h1>Welcome to Socimo</h1>
+        <p>
+          Socimo is a one and only plateform for the researcheres, students, and
+          Acdamic people. Every one can join this plateform free and share his
+          ideas and research with seniors and juniours comments and openions.
+        </p>
+      </div>
+      <div
+        class="bg-image"
+        style="background-image: url(assets/images/resources/login-bg.png)"
+      ></div>
+    </div>
+  </div>
+  <div class="auth-login">
+    <div class="verticle-center">
+      <div class="signup-form">
+        <h4><i class="icofont-lock"></i> Singup</h4>
+        <form
+          class="c-form"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegister()"
+        >
+          <div class="row merged-10">
+            <div class="col-lg-12">
+              <h4>Create an account</h4>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input
+                type="text"
+                placeholder="First Name"
+                formControlName="firstName"
+              />
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input
+                type="text"
+                placeholder="Last Name"
+                formControlName="lastName"
+              />
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input type="text" placeholder="Email@" formControlName="email" />
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input
+                type="text"
+                placeholder="Username"
+                formControlName="displayName"
+              />
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                formControlName="matchingPassword"
+              />
+            </div>
+
+            <!--<div class="col-lg-6 col-sm-6 col-md-6 mb-4">
+              <select formControlName="departement" [(ngModel)]="selected">
+                <option [ngValue]="null" disabled>
+                  Choose Your Departement
+                </option>
+                <option *ngFor="let item of dep" [ngValue]="item.id">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div> -->
+
+            <div class="col-lg-12">
+              <div class="gender">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="male"
+                  formControlName="gender"
+                />
+                <label for="male">Male</label>
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="female"
+                  formControlName="gender"
+                />
+                <label for="female">Female</label>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="checkbox">
+                <input type="checkbox" id="checkbox" checked />
+                <label for="checkbox"
+                  ><span
+                    >I agree the terms of Services and acknowledge the privacy
+                    policy</span
+                  ></label
+                >
+              </div>
+              <re-captcha
+                formControlName="recaptchaReactive"
+                siteKey="6LfDwskfAAAAAB2zqHoxaUuvHzGHgtrSe2heGd-T"
+              ></re-captcha>
+              <button
+                class="main-btn"
+                type="submit"
+                [disabled]="registerForm.invalid"
+              >
+                <i class="icofont-key"></i> Register
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center mt-4">
+          <span class="mr-2">Already Have Account ?</span>
+          <a routerLink="/login" style="color: #3498db">Login Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

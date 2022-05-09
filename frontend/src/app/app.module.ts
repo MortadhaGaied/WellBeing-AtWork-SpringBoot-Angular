@@ -22,9 +22,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { StreamScreenComponent } from './live-stream/stream-screen/stream-screen.component';
 import { StreamChatBoxComponent } from './live-stream/stream-chat-box/stream-chat-box.component';
 import { StreamConfigBoxComponent } from './live-stream/stream-config-box/stream-config-box.component';
-import { FormsModule } from '@angular/forms';
+
 import { MockLoginComponent } from './live-stream/mock-login/mock-login.component';
-import { HttpClientModule } from '@angular/common/http';
+
 import { StreamViwerScreenComponent } from './live-stream/stream-viwer-screen/stream-viwer-screen.component';
 import { ChatroomsComponent } from './chatroom/chatrooms/chatrooms.component';
 import { ChatroomComponent } from './chatroom/chatroom/chatroom.component';
@@ -34,11 +34,22 @@ import { RoomSearchFilterPipe } from './live-stream/pipes/room-search-filter.pip
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { RoomUserListComponent } from './chatroom/room-user-list/room-user-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UserSeachFilterPipe } from './chatroom/pipes/user-seach-filter.pipe';
 import { NotificationsPopupComponent } from './notification/notifications-popup/notifications-popup.component';
+
+import { authInterceptorProviders } from './services/auth.interceptor';
+import { ChangePasswordComponent } from './core/auth/change-password/change-password.component';
+import { LoginComponent } from './core/auth/login/login.component';
+import { RegisterComponent } from './core/auth/register/register.component';
+import { ForgetPasswordComponent } from './core/auth/forget-password/forget-password.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 initializeApp(environment.firebase);
 @NgModule({
   declarations: [
@@ -72,6 +83,10 @@ initializeApp(environment.firebase);
     RoomUserListComponent,
     UserSeachFilterPipe,
     NotificationsPopupComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForgetPasswordComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     MatDialogModule,
@@ -81,8 +96,18 @@ initializeApp(environment.firebase);
     FormsModule,
     HttpClientModule,
     CarouselModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
+
+
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

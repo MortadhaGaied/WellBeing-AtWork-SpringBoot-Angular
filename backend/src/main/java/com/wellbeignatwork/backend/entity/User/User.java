@@ -111,6 +111,9 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Badge badge;
+
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<Opinion> opinions;
 	private String picture;

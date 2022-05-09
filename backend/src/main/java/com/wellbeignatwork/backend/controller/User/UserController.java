@@ -55,6 +55,12 @@ public class UserController {
         return ResponseEntity.ok("Moderator content goes here");
     }
 
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteuser(@PathVariable Long id) {
