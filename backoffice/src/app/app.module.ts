@@ -36,6 +36,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarComponent } from './event/calendar/calendar.component';
+
+import {NgxPaginationModule} from 'ngx-pagination';
 FullCalendarModule.registerPlugins([interactionPlugin, dayGridPlugin]);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -71,6 +73,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     FullCalendarModule,
+    NgxPaginationModule
   ],
   providers: [
     {

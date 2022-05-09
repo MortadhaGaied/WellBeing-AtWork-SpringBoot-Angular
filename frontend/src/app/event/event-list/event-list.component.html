@@ -180,7 +180,7 @@
 								<div class="main-wraper">
 									<div class="main-title">Daily Recommendations</div>
 									<div class="row" >
-										<div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let event of listEvent">
+										<div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let event of listEvent | paginate: { itemsPerPage: 10, currentPage: p }">
 											<div class="event-post mb-3" >
 											
 												<figure><a  title=""><img [src]='event.image' alt=""></a></figure>
@@ -228,7 +228,7 @@
 				</div>
 			</div>
 		</div>
-		
+		<pagination-controls (pageChange)="p = $event"></pagination-controls>
 	</section>
 	
 	<app-footer></app-footer>

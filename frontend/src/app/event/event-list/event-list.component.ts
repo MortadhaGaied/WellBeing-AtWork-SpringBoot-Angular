@@ -11,6 +11,7 @@ import { GameComponent } from '../game/game.component';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
+  p:number=1;
   popularEvent : Event =new Event();
   search:string;
   constructor(private _service:EventService ,   

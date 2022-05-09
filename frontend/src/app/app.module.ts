@@ -37,6 +37,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {NgxPrintModule} from 'ngx-print';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 FullCalendarModule.registerPlugins([interactionPlugin, dayGridPlugin]);
 import {
   HammerGestureConfig,
@@ -94,6 +96,7 @@ class HammerConfig extends HammerGestureConfig {
     FullCalendarModule,
     HammerModule,
     MatDialogModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

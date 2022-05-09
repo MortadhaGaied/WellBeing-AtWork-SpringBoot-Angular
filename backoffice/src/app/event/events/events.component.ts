@@ -13,6 +13,7 @@ import { UpdateEventComponent } from '../update-event/update-event.component';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
+  p:number=1;
   search:string;
   Events :any= [];
   calendarOptions: CalendarOptions;
