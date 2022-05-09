@@ -138,6 +138,9 @@ ins{background: transparent;}
     -o-box-shadow: 0 0 6px #747474;
     box-shadow: 0 0 6px #747474;
 }
+.checked{
+    color: rebeccapurple;
+}
 .col-1-5{
     width: 20%;
 	max-width: 20%;
@@ -13725,4 +13728,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
 .align-center {
     text-align: center;
 }
+
+
+/*game*/
 

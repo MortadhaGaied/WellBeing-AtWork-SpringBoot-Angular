@@ -28,6 +28,22 @@ export const ROUTES: RouteInfo[] = [
     ],
   },
   {
+    path: "/event/events",
+    title: "Event",
+    icon: "bi bi-speedometer2",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
+    path: "/event/calendar",
+    title: "Calendar",
+    icon: "bi bi-calendar-month",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/forum/posts",
     title: "Posts",
     icon: "bi bi-flag-fill",

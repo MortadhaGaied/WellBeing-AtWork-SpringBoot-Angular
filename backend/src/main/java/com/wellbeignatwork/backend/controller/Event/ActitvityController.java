@@ -4,6 +4,7 @@ package com.wellbeignatwork.backend.controller.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import com.wellbeignatwork.backend.entity.Forum.Post;
+import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 
 import com.lowagie.text.DocumentException;
@@ -40,10 +41,10 @@ public class ActitvityController {
         activityService.addEvent(e,file);
 
     }
-    @PostMapping("/AddE")
+    @PostMapping("/AddE/{idU}")
     @ResponseBody
-    public void addEvent (@RequestBody Event event){
-        activityService.addEvent(event);
+    public void addEvent (@RequestBody Event event , @PathVariable("idU") Long idUser){
+        activityService.addEvent(event,idUser);
     }
 
     @DeleteMapping("/removeE/{event-id}")
@@ -62,6 +63,12 @@ public class ActitvityController {
     @ResponseBody
     public List<Event> getAllEvents(){
         return activityService.getAllEvents();
+    }
+
+    @GetMapping("/getEventById/{id_event}")
+    @ResponseBody
+    public Event getEventById (@PathVariable("id_event") Long idEvent){
+        return activityService.getEventById(idEvent);
     }
 
     @GetMapping("/assign-user-to-event/{id_user}/{id_event}")
@@ -88,6 +95,13 @@ public class ActitvityController {
          activityService.getNbrOfParticipant();
 
     }
+    @GetMapping("/nbrByEvent/{id-event}")
+    @ResponseBody
+    public  int nbrParticipantByEvent(@PathVariable ("id-event") Long idEvent) {
+   return activityService.nbrParticipantByEvent(idEvent);
+
+    }
+
     @GetMapping("/distance/{a}/{b}")
     @ResponseBody
     public double calculDistance (@PathVariable("a") String a ,
@@ -239,5 +253,9 @@ public class ActitvityController {
     public List<Integer> PostSatisfaction(@PathVariable Long idEvent){
         return activityService.EventSatisfaction(idEvent);
     }
-
+    @GetMapping("/EventTag/{tag}")
+    @ResponseBody
+    public List<Event> getEventTags(@PathVariable ("tag") Tags tag){
+        return activityService.getEventTags(tag);
+    }
 }

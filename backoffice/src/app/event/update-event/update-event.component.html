@@ -1,0 +1,133 @@
+<div class="row clearfix">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+        <label for="event_name">Event Name</label>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+        <div class="form-group">
+            <div class="form-line">
+                <input name="event_name" [(ngModel)]="event.eventName" type="text" id="event_name" class="form-control" placeholder="Enter the event name">
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+        <label for="event_season">Event Season</label>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+        <div class="form-group">
+            <div class="form-line">
+                <input name="event_season" [(ngModel)]="event.eventSeason" type="text" id="event_season" class="form-control" placeholder="Enter the season">
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="row clearfix">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+        <label for="frais">frais</label>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+        <div class="form-group">
+             <div class= "form-line " >
+  <input name= "frais " [(ngModel)]= "event.frais" type= "number " id= "frais " class= "form-control " placeholder= "Enter the fee" >
+  </div >
+  </div >
+  </div >
+  </div >
+  <div class= "row clearfix " >
+  <div class= "col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label " >
+  <label for= "paticipant" >Participant </label >
+  </div >
+  <div class= "col-lg-10 col-md-10 col-sm-8 col-xs-7 " >
+  <div class= "form-group " >
+  <div class= "form-line " >
+  <input name= "paticipant " [(ngModel)]= "event.nbrMaxParticipant" type= "text " id= "paticipant " class= "form-control " placeholder= "Enter the max number of the participant " >
+  </div >
+  </div >
+  </div >
+  </div >
+  <div class= "row clearfix " >
+      <div class= "col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label " >
+      <label for= "localisation" >Localisation </label >
+      </div >
+      <div class= "col-lg-10 col-md-10 col-sm-8 col-xs-7 " >
+      <div class= "form-group " >
+      <div class= "form-line " >
+      <input name= "localisation " [(ngModel)]= "event.eventLocalisation" type= "text " id= "localisation " class= "form-control " placeholder= "Enter the localisation" >
+      </div >
+      </div >
+      </div >
+      </div >
+  <div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+  <label for="image">Image</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+  <div class="form-group">
+  <div class="form-line">
+    <input type="file"  class="form-control" id="image" name="image" (change)="selectFile($event)" >                                </div>
+  </div>
+  </div>
+  </div>
+  
+  <div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+  <label for="startDate">start Date</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+  <div class="form-group">
+  <div class="form-line">
+  <input type="datetime-local" [(ngModel)]="event.startDate" class="form-control" id="startDate" name="startDate" >                                </div>
+  </div>
+  </div>
+  </div>
+  
+  <div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+  <label for="endDate">end Date</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+  <div class="form-group">
+  <div class="form-line">
+  <input type="datetime-local" [(ngModel)]="event.endDate" class="form-control" id="endDate" name="endDate" >                                </div>
+  </div>
+  </div>
+  </div>
+  <mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Tags</mat-label>
+  <mat-chip-list #chipList aria-label="Tag selection">
+  <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+  {{tag}}
+  <button matChipRemove>
+  <mat-icon>cancel</mat-icon>
+  </button>
+  </mat-chip>
+  <input placeholder="New tag..."
+  [matChipInputFor]="chipList"
+  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+  [matChipInputAddOnBlur]="addOnBlur"
+  (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+  </mat-form-field>
+  <br>
+  <div class= "row clearfix " >
+  <div class= "col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5 " >
+  <button (click)= "updateEvent() " type= "button " class= "btn btn-primary m-t-15 waves-effect " >Update </button >
+    <button (click)="deleteEvent(event.idEvent)" class="btn bg-light-danger">Delete</button>    
+
+  </div >
+  </div >
+  <div *ngIf="currentFileUpload" class="progress mt-2">
+  <div
+  class="progress-bar progress-bar-info"
+  role="progressbar"
+  attr.aria-valuenow="{{ percentage }}"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  [ngStyle]="{ width: percentage + '%' }"
+  >
+  {{ percentage }}%
+  </div>
+  </div>
+  

@@ -1,0 +1,47 @@
+<div style="padding: 3em;">
+ 
+  <button (click)="cadeau()" style="background:#40E0D0;color:white;" class="btn btn-primary">Gift For User</button>
+</div>
+<input type="text" #myInput [(ngModel)]="search" (input)="Search()" class="form-control" placeholder="Search …">
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-3 col-md-6" *ngFor="let event of listEvent">
+      <!-- Card -->
+      <!-- ---------------------
+                        start Card title
+                    ---------------- -->
+      <div class="card">
+        <img
+          class="card-img-top img-responsive"
+          [src]='event.image'
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <b
+          class="card-title" style="color: #DC143C;">{{event.eventName}}</b>
+          <p></p>
+          <p class="card-text" style="color:#6668cd">Frai  :{{event.frais}}</p>
+          <p class="card-text" style="color:#6668cd">season :{{event.eventSeason}}</p>
+          <p class="card-text" style="color:#6668cd">Localisation :{{event.eventLocalisation}}</p>
+          <p class="card-text" style="color:#6668cd">Participant :{{event.nbrMaxParticipant}}</p>
+
+
+          <span class="mb-1 me-2 badge rounded-pill bg-dark" *ngFor="let t of event.eventTags">{{t}}</span>
+      <div>
+        <button (click)="deleteEvent(event.idEvent)" style= "background:#40E0D0;color:white;"
+        class="btn btn-light"><span class="bi bi-trash"></span> </button>   
+       <button (click)="updateEvent(event.idEvent)"  style= "background:#D8BFD8;color:white;"
+       class="btn btn-light"><span class="bi bi-pencil-fill"></span> </button>  
+       <a (click)=" onOpenDialogClick()" style="background: #87CEEB;color:white;" 
+       class="btn btn-light"><span class="bi bi-plus-square"></span></a>
+      </div>
+        </div>
+      </div>
+      
+      <!-- ---------------------
+                        end Card title
+                    ---------------- -->
+      <!-- Card -->
+    </div>
+   
+  </div>

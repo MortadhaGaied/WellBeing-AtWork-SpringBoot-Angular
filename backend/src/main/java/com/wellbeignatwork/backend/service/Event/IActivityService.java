@@ -4,6 +4,7 @@ import com.google.zxing.WriterException;
 import com.lowagie.text.DocumentException;
 import com.wellbeignatwork.backend.entity.User.Departement;
 import com.wellbeignatwork.backend.entity.Event.*;
+import com.wellbeignatwork.backend.entity.User.Tags;
 import com.wellbeignatwork.backend.entity.User.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 
 public interface IActivityService {
     public void addEvent(Event e, MultipartFile file) throws IOException ;
-    public void addEvent(Event e);
+    public void addEvent(Event e,Long idUser);
     public void deleteEvent(Event e);
     public Event updateEvent(Event e);
     public List<Event> getAllEvents();
@@ -35,7 +36,7 @@ public interface IActivityService {
     public Event popularEvent();
     public void assignPointToUser (Long idUser, Long idEvent);
     public List<Event> filtreByDepartement(Departement departement);
-
+    public Event getEventById (Long idEvent);
 
      public void addSubscription(Subscription s);
      public void deleteSubscription(Subscription s);
@@ -49,5 +50,12 @@ public interface IActivityService {
     Float getAverageRateEvent(Long idEvent);
     public void findMostPopularTag();
     public List<Integer> EventSatisfaction(Long idEvent);
+
+    public int nbrParticipantByEvent(Long idEvent);
+
+    public List<Event> getEventTags(Tags tag);
+
+
+
 
 }

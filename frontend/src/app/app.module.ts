@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from'@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
@@ -19,6 +19,41 @@ import { RecentBlogComponent } from './core/recent-blog/recent-blog.component';
 import { CompleteProfileComponent } from './core/complete-profile/complete-profile.component';
 import { StreamComponent } from './live-stream/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EventListComponent } from './event/event-list/event-list.component';
+import { EventDetailComponent } from './event/event-detail/event-detail.component';
+import { NgxMaterialRatingModule } from 'ngx-material-rating';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { GameComponent } from './event/game/game.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import * as Hammer from 'hammerjs';
+import {MatDialogModule} from '@angular/material/dialog';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import {NgxPrintModule} from 'ngx-print';
+import {NgxPaginationModule} from 'ngx-pagination';
+
+FullCalendarModule.registerPlugins([interactionPlugin, dayGridPlugin]);
+import {
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+  HammerModule,
+} from '@angular/platform-browser';
+import { WeatherComponent } from './event/weather/weather.component';
+import { CalendarComponent } from './event/calendar/calendar.component';
+import { FeedbackComponent } from './event/feedback/feedback.component';
+
+class HammerConfig extends HammerGestureConfig {
+  override overrides = <any>{
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -55,6 +90,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     RecentBlogComponent,
     CompleteProfileComponent,
     StreamComponent,
+    EventListComponent,
+    EventDetailComponent,
+    GameComponent,
+    WeatherComponent,
+    CalendarComponent,
+    FeedbackComponent,
     ReactionComponent,
     DateAsAgoPipe,
     BlogListComponent,
@@ -75,8 +116,31 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatChipsModule,
     MatIconModule,MatFormFieldModule,
     MatPaginatorModule
+    NgxMaterialRatingModule,
+    PdfViewerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxStarRatingModule,
+    NgxPrintModule,
+    FullCalendarModule,
+    HammerModule,
+    MatDialogModule,
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
-  providers: [],
+ 
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: HammerConfig,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [
     DateAsAgoPipe

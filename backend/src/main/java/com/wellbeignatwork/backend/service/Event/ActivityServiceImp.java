@@ -120,7 +120,7 @@ public class ActivityServiceImp implements IActivityService {
 
     @Override
     public void deleteEvent(Event e) {
-        if(e.getUsers()==null){
+        if(e.getUsers().size()==0){
             eventRepository.delete(e);
         }
         else{
@@ -154,9 +154,17 @@ public class ActivityServiceImp implements IActivityService {
         if(event.getStartDate().isBefore(LocalDateTime.now()) ){
             throw new BadRequestException("event already started");
         }
-        if (event.getUsers().size() - 1 >= event.getNbrMaxParticipant()) {
-            throw new BadRequestException("event is full");
+        if (event.getUsers()!=null){
+            if ( event.getUsers().size() - 1 >= event.getNbrMaxParticipant()) {
+                throw new BadRequestException("event is full");
+            }
+            else {
+                user.getEvents().add(event);
+                event.setRevenue(event.getRevenue() + event.getFrais());
+                userRepo.save(user);
+            }
         }
+
         else {
             user.getEvents().add(event);
             event.setRevenue(event.getRevenue() + event.getFrais());
@@ -366,9 +374,17 @@ public class ActivityServiceImp implements IActivityService {
 
         List<Event> result = new ArrayList<>(preferenceEvent.keySet());
 
+        Iterator<Event> iterator = result.iterator();
+        while (iterator.hasNext()){
+            if (iterator.next().getEndDate().isBefore(LocalDateTime.now())){
+                iterator.remove();
+            }
+        }
         for (int i = 0, j = result.size() - 1; i < j; i++) {
             result.add(i, result.remove(j));
         }
+
+
         return result;
 
 
@@ -536,6 +552,11 @@ public class ActivityServiceImp implements IActivityService {
         return new ArrayList<Event>(reverseSortedMap.keySet());
     }
 
+    @Override
+    public Event getEventById(Long idEvent) {
+        return eventRepository.findById(idEvent).orElse(null);
+    }
+
     public boolean compareTags(Set<Tags> eventTags, Set<Tags> userTags) {
         return eventTags.containsAll(userTags);
     }
@@ -556,15 +577,10 @@ public class ActivityServiceImp implements IActivityService {
         List<Event> events = new ArrayList<>();
         eventRepository.findAll().forEach(events::add);
         List<Integer> nbParticipantByEvent = new ArrayList<>(Collections.nCopies(events.size(), 0));
-
-
         for (int i = 0; i < events.size(); i++) {
 
-
             nbParticipantByEvent.set(i, events.get(i).getUsers().size());
-
         }
-
 
         System.out.println(nbParticipantByEvent);
     }
@@ -706,8 +722,9 @@ public class ActivityServiceImp implements IActivityService {
         userRepo.save(u);
     }
     @Override
-    public void addEvent(Event e){
+    public void addEvent(Event e,Long idUser){
         eventRepository.save(e);
+        assignUserToEvent(idUser,e.getIdEvent());
     }
 
     @Override
@@ -746,7 +763,7 @@ public class ActivityServiceImp implements IActivityService {
 
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }
-        if (event.getEndDate().isAfter(LocalDateTime.now())) {
+        if (event.getEndDate().isBefore(LocalDateTime.now())) {
 
             throw new BadRequestException("You can't decline an invitation where you are not invited");
         }
@@ -812,6 +829,16 @@ public class ActivityServiceImp implements IActivityService {
 
     }
 
+    @Override
+    public int nbrParticipantByEvent(Long idEvent) {
+        Event e =eventRepository.findById(idEvent).orElse(null);
+        if (e.getUsers()!=null){
+            return e.getUsers().size();
+
+        }
+        return 0;
+    }
+
     public int findSentiment(String content) {
         int mainSentiment = 0;
         String cleancontent = cleancontent(content);
@@ -837,6 +864,14 @@ public class ActivityServiceImp implements IActivityService {
         System.out.println(commentContent);
         return commentContent;
     }
-
+    public List<Event> getEventTags(Tags tag){
+        List<Event> result = new ArrayList<>();
+        for (Event e: eventRepository.findAll()){
+            if (e.getEventTags().contains(tag)){
+                result.add(e);
+            }
+        }
+        return result;
+    }
 
 }
