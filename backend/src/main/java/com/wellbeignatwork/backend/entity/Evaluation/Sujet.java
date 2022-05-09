@@ -20,12 +20,12 @@ public class Sujet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     private String nomSujet;
     private String description;
     @Temporal(TemporalType.DATE)
     private Date dateAjout;
+    private String imageUrl;
     private int nbYes;
     private int nbNo;
     private int nbpoint;

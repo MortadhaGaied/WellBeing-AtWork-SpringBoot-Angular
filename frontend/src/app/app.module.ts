@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
@@ -43,6 +44,28 @@ import {
 import { WeatherComponent } from './event/weather/weather.component';
 import { CalendarComponent } from './event/calendar/calendar.component';
 import { FeedbackComponent } from './event/feedback/feedback.component';
+import { SurveyComponent } from './Evaluation/survey/survey.component';
+import {MatSliderModule} from "@angular/material/slider";
+import { RatingComponent } from './Evaluation/rating/rating.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { StarRatingComponent } from './Evaluation/survey/star-rating/star-rating.component';
+import { GiftsComponent } from './Evaluation/gifts/gifts.component';
+import { HttpClientModule } from '@angular/common/http';
+import { VoteComponent } from './Evaluation/vote/vote.component';
 
 class HammerConfig extends HammerGestureConfig {
   override overrides = <any>{
@@ -86,6 +109,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     RecentBlogComponent,
     CompleteProfileComponent,
     StreamComponent,
+    SurveyComponent,
+    RatingComponent,
+    StarRatingComponent,
+    GiftsComponent,
+    VoteComponent,
     EventListComponent,
     EventDetailComponent,
     GameComponent,
@@ -122,6 +150,32 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     HammerModule,
     MatDialogModule,
     NgxPaginationModule,
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSliderModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatInputModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatListModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -130,7 +184,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
- 
   providers: [
     {
       provide: HAMMER_GESTURE_CONFIG,

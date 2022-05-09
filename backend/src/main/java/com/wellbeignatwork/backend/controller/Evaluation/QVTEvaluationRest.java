@@ -29,16 +29,23 @@ public class QVTEvaluationRest {
 
   @GetMapping("/Survey")
   public List<Question> SendAllSurveys()
-  {
-    return MyQVTService.SendSurvey();
+  { return MyQVTService.SendSurvey(); }
 
-  }
+
     @PostMapping("/PutYourAnswerAndGetYourAdvice")
     public void UserAnswer(@RequestBody List<Answer>  answer)
     {  MyQVTService.UserAnswer(answer); }
+
+
+
      @GetMapping("/Stastic")
      public String nbreSentiment()
     { return MyQVTService.nbreSentiment();}
+
+    @PostMapping("/UpDateSurvey")
+    public Survey UpdateSurvey(@RequestBody Survey survey)
+    {return MyQVTService.UpdateSurvey(survey);}
+
 
   @GetMapping("/download")
   public ResponseEntity<InputStreamResource> getFile() {
@@ -78,9 +85,6 @@ public class QVTEvaluationRest {
 
 
  */
-
-
-
 
 
 

@@ -6,17 +6,23 @@ import com.wellbeignatwork.backend.entity.User.User;
 import com.wellbeignatwork.backend.repository.Evaluation.IntVoteIdeaRepo;
 import com.wellbeignatwork.backend.repository.Evaluation.SujetRepo;
 import com.wellbeignatwork.backend.repository.User.UserRepository;
+import com.wellbeignatwork.backend.service.UserService.MailService;
+import com.wellbeignatwork.backend.util.FirebaseStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 ;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @Transactional
 public class VoteService implements IntVoteService {
+
+    private MailService mailService;
+
     @Autowired
     private SujetRepo MySUjetRepo;
     @Autowired
@@ -30,6 +36,22 @@ public class VoteService implements IntVoteService {
         MySUjetRepo.save(sujet);
 
     }
+
+    @Override
+    public List<Sujet> FindSujet() {
+        return (List<Sujet>) MySUjetRepo.findAll();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public int AddYes(VoteIdea v, int sujetId, Long userId) {
@@ -65,6 +87,17 @@ public class VoteService implements IntVoteService {
         return MyVoteIdeaRepo.getVoteBySujetAndUser(sujetId,userId);
     }
 
+    @Override
+    public void DeleteSujet(int sujetId) {
+        Sujet sujet = MySUjetRepo.findById(sujetId).orElse(null);
+        MySUjetRepo.deleteById(sujetId);
+    }
+
+    @Override
+    public void updateSujet(int sujetId, Sujet sujet) {
+
+
+    }
 
 
     @Override
@@ -84,6 +117,12 @@ public class VoteService implements IntVoteService {
     }
 
     @Override
+    public Sujet getSujetById(int sujetId) {
+        return MySUjetRepo.findById(sujetId).orElse(null);
+    }
+
+
+    @Override
     public int countYes(int sujetId) {
     int nbYes = MyVoteIdeaRepo.countYes( sujetId);
         Sujet sujet = MySUjetRepo.findById(sujetId).get();
@@ -91,19 +130,30 @@ public class VoteService implements IntVoteService {
         MySUjetRepo.save(sujet);
         return (nbYes);
 
-
-
-
     }
 
     @Override
     public int countNo(int sujetId) {
           int nbNo = MyVoteIdeaRepo.countNo(sujetId);
         Sujet sujet = MySUjetRepo.findById(sujetId).get();
-        sujet.setNbYes(nbNo);
+        sujet.setNbNo(nbNo);
         MySUjetRepo.save(sujet);
         return (nbNo);
 
+    }
+
+    @Override
+    public  List<Sujet>  countYesandNo(int sujetId) {
+        int nbYes = MyVoteIdeaRepo.countYes( sujetId);
+        Sujet sujet = MySUjetRepo.findById(sujetId).get();
+        sujet.setNbYes(nbYes);
+        MySUjetRepo.save(sujet);
+        int nbNo = MyVoteIdeaRepo.countNo(sujetId);
+        sujet.setNbNo(nbNo);
+        MySUjetRepo.save(sujet);
+
+
+        return Collections.singletonList(MySUjetRepo.findById(sujetId).orElse(null));
     }
 
     @Override
@@ -147,6 +197,10 @@ public class VoteService implements IntVoteService {
             return false;
         return true;
     }
+
+
+
+
 
 
 

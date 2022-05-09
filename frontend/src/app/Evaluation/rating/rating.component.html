@@ -1,0 +1,34 @@
+<app-header>   </app-header>
+<app-side-bar></app-side-bar>
+<div class="mat-h2">Please rate the Departements</div>
+<p > How Many Stars For It Departement</p>
+<button  mat-icon-button color="accent" *ngFor="let r of ratingArr; index as i"
+        (click)="onClick(i)">
+
+  <mat-icon>
+
+    {{ returnStar(i) }}
+
+  </mat-icon>
+
+</button>
+<p> How Many Stars For Hr Departement</p>
+<button mat-icon-button color="accent" *ngFor="let r of ratingArr2; index as p"
+        (click)="onClick2(p)">
+
+  <mat-icon>  {{ returnStar2(p) }}</mat-icon>
+
+
+</button>
+
+<p> How Many Stars For Maintenance Departement</p>
+<button mat-icon-button color="accent" *ngFor="let r of ratingArr3; index as x"
+        (click)="onClick3(x)">
+
+  <mat-icon>  {{ returnStar3(x) }}</mat-icon>
+
+
+</button>
+
+<app-footer></app-footer>
+

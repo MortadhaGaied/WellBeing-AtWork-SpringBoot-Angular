@@ -1,0 +1,50 @@
+<!--
+ <div class="mat-elevation-z8">
+  <table mat-table  [dataSource]="dataSource">
+  <ng-container matColumnDef="nomSujet">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let sujet" > {{sujet.nomSujet| uppercase }} </td>
+    </ng-container>
+    <ng-container matColumnDef="dateAjout">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let sujet"> {{sujet.dateAjout}} </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let sujet"> {{sujet.description}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+
+
+-->
+
+<table>
+  <thead>
+    <th>
+      Name
+    </th>
+    <th>
+      Desc
+    </th>
+    <th>
+      Date
+    </th>
+  </thead>
+<tbody *ngFor="let sujet of sujets">
+  <tr>{{sujet.nomSujet}}</tr>
+  <tr>{{sujet.description}}</tr>
+
+<tr>
+  {{sujet.dateAjout}}
+</tr>
+</tbody>
+
+  </table>
+

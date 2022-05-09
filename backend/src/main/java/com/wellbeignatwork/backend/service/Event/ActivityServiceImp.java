@@ -439,6 +439,7 @@ public class ActivityServiceImp implements IActivityService {
     @Transactional
     @Scheduled(cron = "*/30 * * * * *")
     public String reminderEvent() {
+
         String a = "Mail Send Successfully";
 
         List<Event> events = eventRepository.reminder
@@ -448,6 +449,7 @@ public class ActivityServiceImp implements IActivityService {
                 for (User u : e.getUsers()) {
                     System.out.println("vous avez un evenement : " + u.getFirstName());
                     mailService.sendMail(u.getEmail(),"event","you have an event",false);
+
 /*
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setFrom("wellbeingatworkevent@gmail.com");

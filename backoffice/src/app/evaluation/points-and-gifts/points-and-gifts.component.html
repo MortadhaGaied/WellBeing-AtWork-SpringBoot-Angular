@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-subtitle text-muted">Overview of the Users points </h5>
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+              <thead>
+                  <tr>
+                    <th class="text-dark font-medium fs-4">Name</th>
+                    <th class="text-dark font-medium fs-4">Points</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor='let ts of user'>
+                      <td>
+                          <div class="d-flex align-items-center">
+
+                              <div class="ms-3">
+                                <span class="text-muted">{{ts.firstName}}</span>
+
+                              </div>
+
+                          </div>
+                        </td>
+                          <td class="fs-4">{{ts.pointFidelite}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>

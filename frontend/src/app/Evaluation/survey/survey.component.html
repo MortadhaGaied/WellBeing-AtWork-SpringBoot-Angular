@@ -1,0 +1,73 @@
+<app-header></app-header>
+<app-side-bar></app-side-bar>
+<mat-divider></mat-divider><br>
+
+<p>QVT Survey</p>
+<mat-divider></mat-divider><br>
+<br><mat-divider></mat-divider><br>
+
+<form [formGroup]="starForm">
+  <mat-form-field appearance="outline">
+    <mat-label>you feel physicaly safe in job ?</mat-label>
+    <input matInput   formControlName="question1">
+    <div *ngIf="(
+      starForm.get('question1').dirty ||
+      starForm.get('question1').touched
+                ) &&
+                starForm.get('question1').invalid"
+    >
+    this field is required and can't match restricted Words
+    </div>
+  </mat-form-field>
+  <app-star-rating formControlName="stars1"></app-star-rating>
+  <br>
+  <mat-form-field appearance="outline">
+    <mat-label>your job provides good health benefits ?</mat-label>
+    <input matInput  formControlName="question2">
+    <div *ngIf="(
+      starForm.get('question2').dirty ||
+      starForm.get('question2').touched
+                ) &&
+                starForm.get('question2').invalid"
+    >
+    this field is required and can't match restricted Words
+    </div>
+  </mat-form-field>
+  <app-star-rating formControlName="stars2"></app-star-rating>
+  <br>
+  <mat-form-field appearance="outline">
+    <mat-label>your salary job does well with your familly needs  ?</mat-label>
+    <input matInput   formControlName="question3">
+    <div *ngIf="(
+      starForm.get('question3').dirty ||
+      starForm.get('question3').touched
+                ) &&
+                starForm.get('question3').invalid"
+    >
+    this field is required and can't match restricted Words
+    </div>
+  </mat-form-field>
+  <app-star-rating formControlName="stars3"></app-star-rating>
+  <br>
+  <mat-form-field appearance="outline">
+    <mat-label>Any suggestions ?</mat-label>
+    <input matInput  formControlName="question4">
+    <div *ngIf="(
+      starForm.get('question4').dirty ||
+      starForm.get('question4').touched
+                ) &&
+                starForm.get('question4').invalid"
+    >
+    this field is required and can't match restricted Words
+    </div>
+  </mat-form-field>
+
+
+  <br>
+
+
+
+
+  <button mat-raised-button color="accent" (click)="onSubmitStarForm()" [disabled]="!starForm.valid">Submit</button>
+</form>
+<app-footer></app-footer>

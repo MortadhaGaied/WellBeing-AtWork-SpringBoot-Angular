@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/PointsAndGift")
+@CrossOrigin("*")
 public class PointsAndGiftControl {
+
     @Autowired
     IntPointsAndGiftService intPointsAndGiftService;
 
@@ -30,6 +32,9 @@ public class PointsAndGiftControl {
     {
         return intPointsAndGiftService.UserGift(idUser);
     }
+
+
+
     @GetMapping("/PointRanking")
     public Iterable<User> PointRanking()
     {

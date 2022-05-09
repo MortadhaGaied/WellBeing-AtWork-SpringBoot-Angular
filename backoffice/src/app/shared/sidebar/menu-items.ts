@@ -18,6 +18,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "/evaluation/evaluation",
+    title: "Evaluation",
+    icon: "bi bi-speedometer2",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/forum/blogs",
     title: "Blogs",
     icon: "bi bi-file-post",

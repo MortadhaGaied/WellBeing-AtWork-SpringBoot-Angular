@@ -11,8 +11,18 @@ import { GameComponent } from './event/game/game.component';
 import { WeatherComponent } from './event/weather/weather.component';
 import { CalendarComponent } from './event/calendar/calendar.component';
 import { FeedbackComponent } from './event/feedback/feedback.component';
+import {SurveyComponent} from "./Evaluation/survey/survey.component";
+import {RatingComponent} from "./Evaluation/rating/rating.component";
+import { GiftsComponent } from './Evaluation/gifts/gifts.component';
+import { VoteComponent } from './Evaluation/vote/vote.component';
+
 const routes: Routes = [
+  {path:'Survey',component:SurveyComponent},
+  {path:'Gifts',component:GiftsComponent},
+  {path:'vote',component:VoteComponent},
   { path: '', component: HomePageComponent },
+
+  {path:'Rating',component:RatingComponent},
   { path: 'live-stream', component: StreamComponent },
   {path: 'event-list',component:EventListComponent},
   {path: 'event-detail/:id',component:EventDetailComponent},
@@ -24,7 +34,6 @@ const routes: Routes = [
   { path: 'blog-detail/:id', component: BlogDetailComponent },
   { path: 'post-detail/:id', component: PostDetailComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
-  
 ];
 
 @NgModule({

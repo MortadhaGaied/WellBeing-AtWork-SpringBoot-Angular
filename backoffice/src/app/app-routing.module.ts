@@ -43,10 +43,15 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./event/event.module").then((m) => m.EventModule),
       },
+      {
    
+        path: "evaluation",
+        loadChildren: () =>
+          import("./evaluation/evaluation.module").then((m) => m.EvaluationModule),
+      },
+
     ],
-  },
-  {
+  },  {
     path: "**",
     redirectTo: "/starter",
   },
