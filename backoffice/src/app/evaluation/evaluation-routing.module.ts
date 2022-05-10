@@ -24,25 +24,9 @@ export const routes: Routes = [
       {path:'detail-vote/:sujetId',component: DeatailVoteComponent},
       {path:'showSurvey',component:ShowSurveyComponent},
       {path:'Update',component:ShowComponent}
-
-
-
-
-
-
-
-
-
-
-
-
     ],
   },
-
-
 ];
-
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

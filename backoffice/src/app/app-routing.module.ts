@@ -4,7 +4,6 @@ import { AddEventComponentComponent } from "./event/add-event-component/add-even
 import { EventsComponent } from "./event/events/events.component";
 
 import { FullComponent } from "./layouts/full/full.component";
-
 export const Approutes: Routes = [
   {
     path: "",
@@ -49,9 +48,10 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./evaluation/evaluation.module").then((m) => m.EvaluationModule),
       },
-
+   
     ],
-  },  {
+  },
+  {
     path: "**",
     redirectTo: "/starter",
   },

@@ -1,6 +1,6 @@
 import { Component, OnInit , Inject, Input} from '@angular/core';
 import { Router } from '@angular/router';
-import { EventService } from 'app/event/event.service';
+import { EventService } from '../../event/event.service';
 import { Event } from '../../Models/Forum/Event/Event';
 import { FileUpload } from '../../Models/file-upload.model';
 import { ImageService } from '../../image.service';

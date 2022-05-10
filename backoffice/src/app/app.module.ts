@@ -60,11 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FullComponent,
     NavigationComponent,
     SidebarComponent,
-    CalendarComponent,
-
-
-
-
+    CalendarComponent
   ],
   imports: [ 
     MbscModule, 

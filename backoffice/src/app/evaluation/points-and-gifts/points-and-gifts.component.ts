@@ -1,11 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
-
-
-
-
-
-
 import{PointAndGiftsService} from '../point-and-gifts.service';
 import { User } from '../user';
 
