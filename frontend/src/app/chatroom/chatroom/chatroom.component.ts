@@ -5,6 +5,8 @@ import { Room } from '../models/room';
 import { ChatroomServiceService } from '../services/chatroom-service.service';
 import { WebsocketsService } from '../services/websockets.service';
 import { Message } from '../models/message';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { Router } from 'express';
 @Component({
   selector: 'app-chatroom',
   templateUrl: './chatroom.component.html',
@@ -14,12 +16,13 @@ export class ChatroomComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private webSocketsService: WebsocketsService,
-    private chatroomService: ChatroomServiceService
+    private chatroomService: ChatroomServiceService,
+    private tokenService: TokenStorageService
   ) {
     const localstorageData = JSON.parse(
       JSON.stringify(localStorage.getItem('user'))
     );
-    this.user = JSON.parse(localstorageData);
+    this.user = tokenService.getUser();
   }
   initialRoom: Room;
   title = 'chat';

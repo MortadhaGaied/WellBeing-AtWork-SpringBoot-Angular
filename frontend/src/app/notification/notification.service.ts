@@ -3,23 +3,21 @@ import { Router } from '@angular/router';
 import { RxStomp } from '@stomp/rx-stomp';
 import { map } from 'rxjs';
 import * as SockJS from 'sockjs-client';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   user: any;
-  constructor(private router: Router) {
-    if (localStorage.getItem('user')) {
-      const localstorageData = JSON.parse(
-        JSON.stringify(localStorage.getItem('user'))
-      );
-      this.user = JSON.parse(localstorageData);
-      console.log(this.user.id);
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+  constructor(
+    private router: Router,
+    private tokenService: TokenStorageService
+  ) {
+    this.user = tokenService.getUser();
+    console.log(this.user.id);
   }
+
   client: RxStomp | null;
   public notifications: any[] = [];
   connectClicked() {

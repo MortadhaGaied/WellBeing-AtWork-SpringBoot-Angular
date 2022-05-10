@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../../Service/quiz.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from "@angular/core";
+import { QuizService } from "../../Service/quiz.service";
+import Swal from "sweetalert2";
 @Component({
-  selector: 'app-view-quizzes',
-  templateUrl: './view-quizzes.component.html',
-  styleUrls: ['./view-quizzes.component.scss']
+  selector: "app-view-quizzes",
+  templateUrl: "./view-quizzes.component.html",
+  styleUrls: ["./view-quizzes.component.scss"],
 })
 export class ViewQuizzesComponent implements OnInit {
-
-
-  quizzes = [];
+  quizzes: any[] = [];
 
   constructor(private _quiz: QuizService) {}
 
@@ -21,17 +19,16 @@ export class ViewQuizzesComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        Swal.fire('Error !', 'Error in loading data !', 'error');
+        Swal.fire("Error !", "Error in loading data !", "error");
       }
     );
   }
 
-
-  deleteQuiz(qId:any) {
+  deleteQuiz(qId: any) {
     Swal.fire({
-      icon: 'info',
-      title: 'Are you sure ?',
-      confirmButtonText: 'Delete',
+      icon: "info",
+      title: "Are you sure ?",
+      confirmButtonText: "Delete",
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
@@ -39,15 +36,14 @@ export class ViewQuizzesComponent implements OnInit {
 
         this._quiz.deleteQuiz(qId).subscribe(
           (data) => {
-            this.quizzes = this.quizzes.filter((quiz) => quiz['qId'] != qId);
-            Swal.fire('Success', 'Quiz deleted ', 'success');
+            this.quizzes = this.quizzes.filter((quiz) => quiz["qId"] != qId);
+            Swal.fire("Success", "Quiz deleted ", "success");
           },
           (error) => {
-            Swal.fire('Error', 'Error in deleting quiz', 'error');
+            Swal.fire("Error", "Error in deleting quiz", "error");
           }
         );
       }
     });
   }
-
 }

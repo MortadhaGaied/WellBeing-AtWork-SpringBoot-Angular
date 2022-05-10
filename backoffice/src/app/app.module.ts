@@ -7,8 +7,8 @@ import {
 } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { Routes, RouterModule } from "@angular/router";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
@@ -21,32 +21,22 @@ import { Approutes } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SpinnerComponent } from "./shared/spinner.component";
 
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
-import { provideFirebaseApp, getApp, initializeApp } from "@angular/fire/app";
-import { getFirestore, provideFirestore } from "@angular/fire/firestore";
-import { environment } from "../environments/environment";
 import {
-  AuthInterceptor,
-  authInterceptorProviders,
-} from "./services/auth-services/auth.interceptor";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+  PerfectScrollbarModule,
+  PERFECT_SCROLLBAR_CONFIG,
+} from "ngx-perfect-scrollbar";
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { authInterceptorProviders } from "./services/auth-services/auth.interceptor";
 
-import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MatCardModule } from "@angular/material/card";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 // import {MatSelectModule} from '@angular/material';
-import { MatSelectModule } from "@angular/material/select";
 // import { MatFormFieldModule } from '@angular/material';
-import { MatInputModule } from "@angular/material/input";
 // import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from "ngx-ui-loader";
 import { NgxPaginationModule } from "ngx-pagination";
+import { provideFirebaseApp } from "@angular/fire/app";
+import { provideFirestore } from "@angular/fire/firestore";
+import { environment } from "../environments/environment.prod";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -71,28 +61,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    BrowserModule,
+    NgxPaginationModule,
 
-    [BrowserModule, NgxPaginationModule],
     RouterModule.forRoot(Approutes, {
       useHash: false,
       relativeLinkResolution: "legacy",
     }),
     PerfectScrollbarModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    // CKEditorModule
-    MatProgressSpinnerModule,
-
-    NgxUiLoaderModule,
-    NgxUiLoaderHttpModule.forRoot({
-      showForeground: true,
-    }),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [
     {
@@ -103,6 +81,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
+
     authInterceptorProviders,
   ],
   bootstrap: [AppComponent],

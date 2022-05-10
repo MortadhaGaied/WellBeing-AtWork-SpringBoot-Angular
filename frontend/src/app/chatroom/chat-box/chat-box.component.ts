@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import Swal from 'sweetalert2';
 import { Message } from '../models/message';
 
@@ -32,12 +33,13 @@ export class ChatBoxComponent implements OnInit, OnChanges {
     private http: HttpClient,
     private webSocketsService: WebsocketsService,
     private dialog: MatDialog,
-    private service: ChatroomServiceService
+    private service: ChatroomServiceService,
+    private tokenService: TokenStorageService
   ) {
     const localstorageData = JSON.parse(
       JSON.stringify(localStorage.getItem('user'))
     );
-    this.user = JSON.parse(localstorageData);
+    this.user = this.tokenService.getUser();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.getUsersByCHatROom();

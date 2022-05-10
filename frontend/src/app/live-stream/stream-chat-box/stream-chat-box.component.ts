@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CompatClient, IMessage, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-stream-chat-box',
@@ -8,7 +9,7 @@ import * as SockJS from 'sockjs-client';
   styleUrls: ['./stream-chat-box.component.css'],
 })
 export class StreamChatBoxComponent implements OnInit {
-  constructor() {}
+  constructor(private tokenService: TokenStorageService) {}
   isVisible: boolean = true;
   senderId: string;
   stompClient: CompatClient;
@@ -25,7 +26,7 @@ export class StreamChatBoxComponent implements OnInit {
     const localstorageData = JSON.parse(
       JSON.stringify(localStorage.getItem('user'))
     );
-    this.senderId = JSON.parse(localstorageData).id;
+    this.senderId = this.tokenService.getUser().id;
     console.log(this.senderId);
   }
 

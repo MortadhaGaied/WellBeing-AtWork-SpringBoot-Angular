@@ -4,20 +4,17 @@ import { Router } from '@angular/router';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { TokenStorageService } from '../services/token-storage.service';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
-  constructor(private http: HttpClient, private router: Router) {
-    if (localStorage.getItem('user')) {
-      const localstorageData = JSON.parse(
-        JSON.stringify(localStorage.getItem('user'))
-      );
-      this.user = JSON.parse(localstorageData);
-      console.log(this.user.id);
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private tokenService: TokenStorageService
+  ) {
+    this.user = this.tokenService.getUser();
   }
   user: any;
   message: any = null;

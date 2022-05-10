@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import Swal from 'sweetalert2';
 import { Room } from '../models/room';
 import { ChatroomServiceService } from '../services/chatroom-service.service';
@@ -15,17 +16,10 @@ export class RoomUserListComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Room,
     private service: ChatroomServiceService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenStorageService
   ) {
-    if (localStorage.getItem('user')) {
-      const localstorageData = JSON.parse(
-        JSON.stringify(localStorage.getItem('user'))
-      );
-      this.currentUser = JSON.parse(localstorageData);
-      console.log(this.currentUser.id);
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+    this.currentUser = tokenService.getUser();
   }
   currentUser: any;
   public searchValue: string = '';

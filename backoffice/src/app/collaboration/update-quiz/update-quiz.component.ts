@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryService } from '../../Service/category.service';
-import { QuizService } from '../../Service/quiz.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CategoryService } from "../../Service/category.service";
+import { QuizService } from "../../Service/quiz.service";
+import Swal from "sweetalert2";
 @Component({
-  selector: 'app-update-quiz',
-  templateUrl: './update-quiz.component.html',
-  styleUrls: ['./update-quiz.component.scss']
+  selector: "app-update-quiz",
+  templateUrl: "./update-quiz.component.html",
+  styleUrls: ["./update-quiz.component.scss"],
 })
 export class UpdateQuizComponent implements OnInit {
-
   constructor(
     private _route: ActivatedRoute,
     private _quiz: QuizService,
@@ -18,11 +17,11 @@ export class UpdateQuizComponent implements OnInit {
   ) {}
 
   qId = 0;
-  quiz:any;
-  categories=[];
+  quiz: any;
+  categories: any[] = [];
 
   ngOnInit(): void {
-    this.qId = this._route.snapshot.params['qid'];
+    this.qId = this._route.snapshot.params["qid"];
     // alert(this.qId);
     this._quiz.getQuiz(this.qId).subscribe(
       (data: any) => {
@@ -39,7 +38,7 @@ export class UpdateQuizComponent implements OnInit {
         this.categories = data;
       },
       (error) => {
-        alert('error in loading categories');
+        alert("error in loading categories");
       }
     );
   }
@@ -50,15 +49,14 @@ export class UpdateQuizComponent implements OnInit {
 
     this._quiz.updateQuiz(this.quiz).subscribe(
       (data) => {
-        Swal.fire('Success !!', 'quiz updated', 'success').then((e) => {
-          this._router.navigate(['/admin/quizzes']);
+        Swal.fire("Success !!", "quiz updated", "success").then((e) => {
+          this._router.navigate(["/admin/quizzes"]);
         });
       },
       (error) => {
-        Swal.fire('Error', 'error in updating quiz', 'error');
+        Swal.fire("Error", "error in updating quiz", "error");
         console.log(error);
       }
     );
   }
-
 }

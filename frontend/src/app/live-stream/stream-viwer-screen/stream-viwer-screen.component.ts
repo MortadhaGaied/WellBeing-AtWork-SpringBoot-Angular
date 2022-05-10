@@ -19,9 +19,9 @@ export class StreamViwerScreenComponent implements OnInit {
   public video: ElementRef;
   stream: MediaStream;
   ngOnInit(): void {
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.startStream();
-    }, 2000);
+    }, 1000);*/
     //this.startStream();
   }
   async startStream() {

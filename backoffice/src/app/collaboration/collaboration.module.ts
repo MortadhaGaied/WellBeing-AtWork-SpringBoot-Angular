@@ -50,6 +50,7 @@ import { ReservationComponent } from "./reservation/reservation.component";
 import { AddReservationComponent } from "./add-reservation/add-reservation.component";
 import { PdfOffersComponent } from "./pdf-offers/pdf-offers.component";
 import { CollabSearchFilterPipe } from "./pipes/collab-search-filter.pipe";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { CollabSearchFilterPipe } from "./pipes/collab-search-filter.pipe";
     MatProgressSpinnerModule,
     NgxUiLoaderModule,
     RecaptchaModule,
+    MatDialogModule,
   ],
 })
 export class CollaborationModule {}

@@ -13,6 +13,7 @@ import com.wellbeignatwork.backend.entity.Chat.Notification;
 import com.wellbeignatwork.backend.entity.Chat.NotificationType;
 import com.wellbeignatwork.backend.entity.Event.Event;
 import com.wellbeignatwork.backend.entity.User.User;
+import com.wellbeignatwork.backend.exceptions.Event.BadRequestException;
 import com.wellbeignatwork.backend.exceptions.chatExceptions.ResourceNotFoundException;
 import com.wellbeignatwork.backend.payload.PushNotificationRequest;
 import com.wellbeignatwork.backend.repository.Chat.ChatRoomRepository;
